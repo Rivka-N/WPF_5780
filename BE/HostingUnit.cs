@@ -26,7 +26,7 @@ namespace BE
             this.host = host;
             this.hostingUnitName = hostingUnitName;
             this.hostingUnitType = hostingUnitType;
-            this.hostingUnitKey = Configuration.HostingUnit;
+            this.hostingUnitKey = Configuration.HostingUnit++;
         }
         #endregion
         public Enums.HostingUnitType HostingUnitType { get => hostingUnitType; }

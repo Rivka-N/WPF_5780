@@ -10,6 +10,8 @@ namespace BE
     public class Configuration
     {
         public static string TypeDAL = ConfigurationSettings.AppSettings.Get("TypeDS");
-        public static int HostingUnit;
+        public static int HostingUnit=0;
+        public static int Order=0;
+        public static int GuestRequest=0;
     }
 }

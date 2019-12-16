@@ -12,7 +12,7 @@ namespace BE
         private int hostingUnitKey;//from static number in configuration
         private int guestRequestKey;
         private int orderKey;
-        //private Enums.OrderStatus orderStatus;
+        //private Enums.OrderStatus orderStatus;//only place order once the status is closed
         private DateTime createDate;
         public DateTime OrderDate { get; set; }//sent mail
         #endregion
@@ -22,7 +22,7 @@ namespace BE
             this.createDate = createDate;
             this.orderKey = Configuration.Order;
             this.guestRequestKey = guest.guestRequestKey;
-            this.hostingUnitKey= hosting.
+            this.hostingUnitKey = hosting.HostingUnitKey;
         }
         public override string ToString()
         {
