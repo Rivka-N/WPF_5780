@@ -8,13 +8,30 @@ namespace BE
 {
     public class Order
     {
-        private Enums.OrderStatus orderStatus;
+        #region fields
+        private int hostingUnitKey;//from static number in configuration
+        private int guestRequestKey;
+        private int orderKey;
+        //private Enums.OrderStatus orderStatus;
         private DateTime createDate;
-
-        public Order(Enums.OrderStatus orderStatus, DateTime createDate)
+        public DateTime OrderDate { get; set; }//sent mail
+        #endregion
+        #region functions
+        public Order(DateTime createDate, GuestRequest guest, HostingUnit hosting)
         {
-            this.orderStatus = orderStatus;
             this.createDate = createDate;
+            this.orderKey = Configuration.Order;
+            this.guestRequestKey = guest.guestRequestKey;
+            this.hostingUnitKey= hosting.
+        }
+        public override string ToString()
+        {
+            return "Hosting Unit Key: " + hostingUnitKey + " Guest Request Key: " + guestRequestKey + " Order Key: " + orderKey
+                + " Order Status " + orderStatus + " Date Created: " + createDate + " Order Date: " + OrderDate;
+
+     
         }
     }
+    #endregion
+
 }

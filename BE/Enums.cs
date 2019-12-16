@@ -18,6 +18,13 @@
         {
             Closed,
             Mailed,
+          
+        }
+        public enum Preference
+        {
+            Yes,
+            No,
+            Maybe
         }
     }
 
