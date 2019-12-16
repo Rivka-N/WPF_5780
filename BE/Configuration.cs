@@ -14,5 +14,6 @@ namespace BE
         public static Int32 Order=0;
         public static Int32 GuestRequest=0;
         public static Int32 BankAccountKey = 0;
+        public const Int32 TransactionFee= 10;//amount to charge host for every successful. has to be static?
     }
 }
