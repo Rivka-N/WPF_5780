@@ -8,17 +8,17 @@ namespace BE
 {
     public class GuestRequest
     {
-        public int guestRequestKey { get; }
+        public int GuestRequestKey { get; }
         string name;
-        string LastName;
-        string Mail;
+        string lastName;
+        string mail;
         public Enums.OrderStatus Status { get; set; }
-        DateTime Registration;
+        DateTime registration;
         DateTime entryDate;
         DateTime releaseDate;
         string area;
         string subArea;
-        Enums.HostingUnitType TypeOfUnit;
+        Enums.HostingUnitType typeOfUnit;
         int numAdult;
         int numChildren;
         Enums.Preference pool;
@@ -26,14 +26,34 @@ namespace BE
         Enums.Preference garden;
         Enums.Preference childrenAttractions;
         //tostring
-        public GuestRequest(int fName, int lName, string mail, DateTime enter, DateTime rel, string area, string sArea, Enums.HostingUnitType type, int nAdult, int Nchild, Enums.Preference isPool, Enums.Preference isJacuzzi, Enums.Preference isGarden, Enums.Preference.isAttractions)
+        public GuestRequest(string fName, string lName, string em, DateTime enter, DateTime rel, string ar, string sArea, Enums.HostingUnitType type, int nAdult, int Nchild, Enums.Preference isPool, Enums.Preference isJacuzzi, Enums.Preference isGarden, Enums.Preference isAttractions)
         {
-            guestRequestKey = Configuration.GuestRequest;
+            //add default to enum type 
+            
+            GuestRequestKey = Configuration.GuestRequest;
+            name = fName;
+            lastName = lName;
+            mail = em;
+            registration = new DateTime();
+            entryDate = enter;
+            releaseDate = rel;
+            area = ar;
+            subArea = sArea;
+            typeOfUnit = type;
+            numAdult = nAdult;
+            numChildren = Nchild;
+            pool = isPool;
+            jacuzzi = isJacuzzi;
+            garden = isGarden;
+            childrenAttractions = isAttractions;
 
+            Configuration.GuestRequest++;
+
+            
         }
         public override string ToString()
         {
-            return "First Name: " + name + "Last Name: " + LastName + "Mail: " + Mail + "Order status: " + Status + "Date of registration: " + Registration + "Entry day: " + entryDate + "Release date: " + releaseDate + "Area: " + area + "Sub area: " + subArea + "Type of unit: " + TypeOfUnit +
+            return "First Name: " + name + "Last Name: " + lastName + "Mail: " + mail + "Order status: " + Status + "Date of registration: " + registration + "Entry day: " + entryDate + "Release date: " + releaseDate + "Area: " + area + "Sub area: " + subArea + "Type of unit: " + typeOfUnit +
                 "Number of adults: " + numAdult + "Number of children: " + numChildren + "Want pool: " + pool + "Want jecuzzi: " + jacuzzi + "Want garden: " + garden + "want children attractions" + childrenAttractions;
         }
         
