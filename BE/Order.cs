@@ -16,7 +16,7 @@ namespace BE
         private DateTime createDate;
         private DateTime orderDate;//sent mail
         #endregion
-        #region functions
+        #region ctor
         public Order (DateTime createDate)//erase or change function at end
         {
             this.createDate = createDate;
@@ -30,6 +30,9 @@ namespace BE
             this.orderKey = Configuration.Order++;
 
         }
+#endregion
+        #region functions
+
         public override string ToString()
         {
             return "Hosting Unit Key: " + hostingUnitKey + " Guest Request Key: " + guestRequestKey + " Order Key: " + orderKey

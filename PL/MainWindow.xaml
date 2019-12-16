@@ -5,9 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <ListBox x:Name="lb_HostingUnits" HorizontalAlignment="Left" ItemsSource="{Binding}" Height="100" Margin="125,74,0,0" VerticalAlignment="Top" Width="100"/>
-
+        <!--<Viewbox Name="vb_Calendar_RequestDate" HorizontalAlignment="Left" Height="131" Margin="238,67,0,0" VerticalAlignment="Top" Width="147">
+            <Calendar Name="cl_RequestDate" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Viewbox>-->
+        <DatePicker Name="dp_RequestDate" HorizontalAlignment="Left" Margin="330,74,0,0" VerticalAlignment="Top"
+                    DisplayDateStart="12/16/2019"/>
     </Grid>
 </Window>
