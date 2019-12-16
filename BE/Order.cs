@@ -9,25 +9,27 @@ namespace BE
     public class Order
     {
         #region fields
-        private int hostingUnitKey;//from static number in configuration
-        private int guestRequestKey;
-        private int orderKey;
+        private Int32 hostingUnitKey;//from static number in configuration
+        private Int32 guestRequestKey;
+        private Int32 orderKey;
         //private Enums.OrderStatus orderStatus;//only place order once the status is closed
         private DateTime createDate;
-        public DateTime OrderDate { get; set; }//sent mail
+        private DateTime orderDate;//sent mail
         #endregion
         #region functions
-        public Order(DateTime createDate, GuestRequest guest, HostingUnit hosting)
+        public Order(DateTime createDate, DateTime orderDate, GuestRequest guest, HostingUnit hosting)
         {
             this.createDate = createDate;
-            this.orderKey = Configuration.Order;
+            this.orderDate = orderDate;
             this.guestRequestKey = guest.guestRequestKey;
             this.hostingUnitKey = hosting.HostingUnitKey;
+            this.orderKey = Configuration.Order++;
+
         }
         public override string ToString()
         {
             return "Hosting Unit Key: " + hostingUnitKey + " Guest Request Key: " + guestRequestKey + " Order Key: " + orderKey
-                + " Order Status " + orderStatus + " Date Created: " + createDate + " Order Date: " + OrderDate;
+                + " Date Created: " + createDate + " Order Date: " + orderDate;
 
      
         }

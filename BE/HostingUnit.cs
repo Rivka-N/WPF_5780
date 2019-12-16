@@ -8,19 +8,20 @@ namespace BE
 {
     public class HostingUnit
     {
-        
+        #region fields
         private Host host;
         private string hostingUnitName;
-        private int hostingUnitKey;
-        public int HostingUnitKey { get; }
+        readonly private Int32 hostingUnitKey;
         private Enums.HostingUnitType hostingUnitType;
         public bool[,] Diary { get; set; }
 
+        public Enums.HostingUnitType HostingUnitType { get => hostingUnitType; }
+        public Int32 HostingUnitKey { get => hostingUnitKey; }
+        #endregion
         #region ctors
         public HostingUnit()
         {
         }
-
         public HostingUnit(Host host, string hostingUnitName, Enums.HostingUnitType hostingUnitType)
         {
             this.host = host;
@@ -29,11 +30,10 @@ namespace BE
             this.hostingUnitKey = Configuration.HostingUnit++;
         }
         #endregion
-        public Enums.HostingUnitType HostingUnitType { get => hostingUnitType; }
 
         public override string ToString()
         {
-            return this.hostingUnitName + " " + HostingUnitType ;
+            return "Name: " + this.hostingUnitName + " Type of Unit " + HostingUnitType + "Unit Name: " + hostingUnitName +;
         }
     }
 }
