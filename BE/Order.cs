@@ -17,11 +17,15 @@ namespace BE
         private DateTime orderDate;//sent mail
         #endregion
         #region functions
+        public Order (DateTime createDate)//erase or change function at end
+        {
+            this.createDate = createDate;
+        }
         public Order(DateTime createDate, DateTime orderDate, GuestRequest guest, HostingUnit hosting)
         {
             this.createDate = createDate;
             this.orderDate = orderDate;
-            this.guestRequestKey = guest.guestRequestKey;
+            this.guestRequestKey = guest.GuestRequestKey;
             this.hostingUnitKey = hosting.HostingUnitKey;
             this.orderKey = Configuration.Order++;
 

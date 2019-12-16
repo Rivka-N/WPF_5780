@@ -33,7 +33,7 @@ namespace BE
 
         public override string ToString()
         {
-            return "Name: " + this.hostingUnitName + " Type of Unit " + HostingUnitType + "Unit Name: " + hostingUnitName +;
+            return "Name: " + this.hostingUnitName + " Type of Unit " + HostingUnitType + "Unit Name: " + hostingUnitName;
         }
     }
 }

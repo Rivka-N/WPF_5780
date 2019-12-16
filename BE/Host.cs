@@ -16,8 +16,9 @@ namespace BE
         private BankAccount bank;
         public  bool CollectionClearance { get; set; }
         public Host() { }
-        public Host(string first, string last, string mail, Int32 phone, BankAccount bank, bool CollectionClearance=false)
+        public Host(int id, string first, string last, string mail, Int32 phone, BankAccount bank, bool CollectionClearance=false)
         {
+            hostKey = id;
             name = first;
             lastName = last;
             this.mail = mail;
