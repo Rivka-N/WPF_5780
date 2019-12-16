@@ -13,6 +13,6 @@ namespace BE
         public static Int32 HostingUnit=0;
         public static Int32 Order=0;
         public static Int32 GuestRequest=0;
-        public 
+        public static Int32 BankAccountKey = 0;
     }
 }
