@@ -8,10 +8,19 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
-        <!--<ListBox x:Name="lb_HostingUnits" HorizontalAlignment="Left" ItemsSource="{Binding}" Height="100" Margin="125,74,0,0" VerticalAlignment="Top" Width="100"/>-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Name="pb_guest" Click="pb_guest_Click" Grid.Row="0" Content="אורח במלון" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Button Name="pb_host" Click="pb_host_Click" Grid.Row="1" Content="בעל יחידות אירוח" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Name="pb_owner" Click="pb_owner_Click" Grid.Row="2" Content="בעל האתר" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Grid>
+</Window>
+<!--<ListBox x:Name="lb_HostingUnits" HorizontalAlignment="Left" ItemsSource="{Binding}" Height="100" Margin="125,74,0,0" VerticalAlignment="Top" Width="100"/>-->
         <!--<Viewbox Name="vb_Calendar_RequestDate" HorizontalAlignment="Left" Height="131" Margin="238,67,0,0" VerticalAlignment="Top" Width="147">
             <Calendar Name="cl_RequestDate" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Viewbox>-->
-    </Grid>
-</Window>
+
+

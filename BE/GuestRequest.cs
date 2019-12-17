@@ -51,6 +51,10 @@ namespace BE
 
             
         }
+        public GuestRequest()
+        {
+
+        }
         public override string ToString()
         {
             return "First Name: " + name + "Last Name: " + lastName + "Mail: " + mail + "Order status: " + Status + "Date of registration: " + registration + "Entry day: " + entryDate + "Release date: " + releaseDate + "Area: " + area + "Sub area: " + subArea + "Type of unit: " + typeOfUnit +

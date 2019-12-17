@@ -34,5 +34,21 @@ namespace PL
             //// lb_HostingUnits.DataContext = bL.getAllHostingUnits();
             //lb_HostingUnits.DataContext = bL.getHostingUnits(hostingUnit => hostingUnit.HostingUnitType == Enums.HostingUnitType.Zimmer);
         }
+
+        private void pb_owner_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void pb_guest_Click(object sender, RoutedEventArgs e)
+        {
+            guestOptions guestWindow = new guestOptions();
+            guestWindow.Show();
+        }
+
+        private void pb_host_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
