@@ -4,18 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="guestOptions" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Viewbox Name="vb_Calendar_StartDate" HorizontalAlignment="Left" Height="131" Margin="137,24,0,0" VerticalAlignment="Top" Width="147">
-            <Calendar Name="cl_StartDate" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Calendar Name="cl_StartDate" HorizontalAlignment="Center" VerticalAlignment="Center" DisplayDateStart="{x:Static sys:DateTime.Now}" SelectedDatesChanged="cl_addStartDate"/>
         </Viewbox>
         <Viewbox Name="vb_Calendar_EndDate" HorizontalAlignment="Left" Height="131" VerticalAlignment="Top" Width="147" Margin="137,171,0,0">
-            <Calendar Name="cl_EndDate" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Calendar Name="cl_EndDate" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
         </Viewbox>
-        <TextBlock HorizontalAlignment="Left" Margin="289,36,0,0" TextWrapping="Wrap" Text="בחר תאריך התחלה" VerticalAlignment="Top" Padding="10"/>
-        <TextBlock HorizontalAlignment="Left" Margin="284,171,0,0" TextWrapping="Wrap" Text="בחר תאריך סיום" VerticalAlignment="Top" Padding="10"/>
+        <TextBlock Name="tb_StartDate" HorizontalAlignment="Left" Margin="289,36,0,0" TextWrapping="Wrap" Text="בחר תאריך התחלה" VerticalAlignment="Top" Padding="10"/>
+        <TextBlock  Name="tb_EndDate" HorizontalAlignment="Left" Margin="284,171,0,0" TextWrapping="Wrap" Text="בחר תאריך סיום" VerticalAlignment="Top" Padding="10" Visibility="Collapsed"/>
         <CheckBox Content="בריכה" HorizontalAlignment="Left" Margin="481,36,0,0" VerticalAlignment="Top" IsThreeState="True" IsChecked="{x:Null}"/>
-        
+
     </Grid>
 </Window>
