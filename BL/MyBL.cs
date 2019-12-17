@@ -31,24 +31,24 @@ namespace BL
         private MyBL() { }
         #endregion        
 
-        public void addHostingUnit(HostingUnit hostingUnit)
-        {
-            myDAL.addHostingUnit(hostingUnit);
-        }
+        //public void addHostingUnit(HostingUnit hostingUnit)
+        //{
+        //    myDAL.addHostingUnit(hostingUnit);
+        //}
 
-        public void addOrder(Order order)
-        {
-           myDAL.addOrder(order);
-        }
+        //public void addOrder(Order order)
+        //{
+        //   myDAL.addOrder(order);
+        //}
 
-        public List<HostingUnit> getAllHostingUnits()
-        {
-           return myDAL.getAllHostingUnits();
-        }
+        //public List<HostingUnit> getAllHostingUnits()
+        //{
+        //   return myDAL.getAllHostingUnits();
+        //}
 
-        public List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> p)
-        {
-            return myDAL.getHostingUnits(p);
-        }
+        //public List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> p)
+        //{
+        //    return myDAL.getHostingUnits(p);
+        //}
     }
 }
