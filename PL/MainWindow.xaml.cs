@@ -26,13 +26,13 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
-            bL = MyBL.Instance;
-            string hostingUnitName = "Nave Mahmad";
-            bL.addHostingUnit(new HostingUnit(new Host(), hostingUnitName, Enums.HostingUnitType.Zimmer));
-            bL.addOrder(new BE.Order(DateTime.Now));
+            //bL = MyBL.Instance;
+            //string hostingUnitName = "Nave Mahmad";
+            //bL.addHostingUnit(new HostingUnit(new Host(), hostingUnitName, Enums.HostingUnitType.Zimmer));
+            //bL.addOrder(new BE.Order(DateTime.Now));
 
-            // lb_HostingUnits.DataContext = bL.getAllHostingUnits();
-            lb_HostingUnits.DataContext = bL.getHostingUnits(hostingUnit => hostingUnit.HostingUnitType == Enums.HostingUnitType.Zimmer);
+            //// lb_HostingUnits.DataContext = bL.getAllHostingUnits();
+            //lb_HostingUnits.DataContext = bL.getHostingUnits(hostingUnit => hostingUnit.HostingUnitType == Enums.HostingUnitType.Zimmer);
         }
     }
 }
