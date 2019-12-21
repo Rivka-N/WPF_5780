@@ -27,6 +27,14 @@
             No,
             Maybe
         }
+        public enum Area
+        {
+            Center,
+            Galil,
+            Golan,
+            South,
+            Eilat
+        }
     }
 
 

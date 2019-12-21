@@ -10,26 +10,40 @@ namespace BE
     {
         public int GuestRequestKey { get; }
         string name;
+        public string Name { get => name; set { name = value; } }
         string lastName;
+        public string LastName { get => lastName; set { lastName = value; } }
         string mail;
+        public string Mail { get => mail; set { mail = Mail; } }
         public Enums.OrderStatus Status { get; set; }
         DateTime registration;
         DateTime entryDate;
+        public DateTime EntryDate { get => entryDate; set { entryDate = value; } }
         DateTime releaseDate;
-        string area;
+        public DateTime ReleaseDate { get => releaseDate; set { releaseDate = value; } }
+        Enums.Area area;
+        public Enums.Area AreaVacation { get => area; set { area = value; } }
         string subArea;
+        public string  SubArea { get => subArea; set { subArea = value; } }
         Enums.HostingUnitType typeOfUnit;
+        public Enums.HostingUnitType TypeOfUnit { get => typeOfUnit; set { typeOfUnit = value; } }
         int numAdult;
+        public int NumAdult { get => numAdult; set { numAdult = value; } }
         int numChildren;
+        public int NumChildren{ get => numChildren; set { numChildren= value; } }
         Enums.Preference pool;
+        public Enums.Preference Pool { get=>pool; set { pool = value; } }
         Enums.Preference jacuzzi;
+        public Enums.Preference Jacuzzi { get => jacuzzi; set { jacuzzi = value; } }
         Enums.Preference garden;
+        public Enums.Preference Garden { get => garden; set { garden = value; } }
         Enums.Preference childrenAttractions;
-        int numSuggestions;//number of hosting suggestions
+        public Enums.Preference ChildrenAttractions { get => childrenAttractions; set { childrenAttractions = value; } }
+        public int NumSuggestions { get; set; }//number of hosting suggestions
 
        
         //tostring
-        public GuestRequest(string fName, string lName, string em, DateTime enter, DateTime rel, string ar, string sArea, Enums.HostingUnitType type, int nAdult, int Nchild, Enums.Preference isPool, Enums.Preference isJacuzzi, Enums.Preference isGarden, Enums.Preference isAttractions)
+        public GuestRequest(string fName, string lName, string em, DateTime enter, DateTime rel, Enums.Area ar, string sArea, Enums.HostingUnitType type, int nAdult, int Nchild, Enums.Preference isPool, Enums.Preference isJacuzzi, Enums.Preference isGarden, Enums.Preference isAttractions)
         {
             //add default to enum type 
 
@@ -49,15 +63,33 @@ namespace BE
             jacuzzi = isJacuzzi;
             garden = isGarden;
             childrenAttractions = isAttractions;
-            numSuggestions = -1;//none yet
-            Status = Started;
+            NumSuggestions = -1;//none yet
+            Status = Enums.OrderStatus.Started;
             Configuration.GuestRequest++;
 
 
         }
         public GuestRequest()
         {
-
+            GuestRequestKey = Configuration.GuestRequest;
+            Configuration.GuestRequest++;
+            name = null;
+            lastName = null;
+            mail = null;
+            registration = new DateTime();
+            entryDate = new DateTime();
+            releaseDate = new DateTime();
+            area = Enums.Area.Center;
+            subArea = null;
+            typeOfUnit = Enums.HostingUnitType.Hotel;
+            numAdult = 0;
+            numChildren = 0;
+            pool = Enums.Preference.Maybe;
+            jacuzzi = Enums.Preference.Maybe;
+            garden = Enums.Preference.Maybe;
+            childrenAttractions = Enums.Preference.Maybe;
+            NumSuggestions = -1;//none yet
+            Status = Enums.OrderStatus.Started;
         }
         public override string ToString()
         {
