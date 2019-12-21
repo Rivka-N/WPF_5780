@@ -17,6 +17,8 @@ namespace DAL
 
         #region GuestRequest
         void addGuest(GuestRequest guest);
+        void addHostingUnit(HostingUnit unit);
+        void addOrder(Order ord);
         #endregion
 
         //#region Order

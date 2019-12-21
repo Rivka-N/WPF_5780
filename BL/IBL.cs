@@ -8,9 +8,12 @@ namespace BL
     public interface IBL
     {
         void addGuest(GuestRequest guest);
-
-        #region HostingUnit
+        void addHostingUnit(HostingUnit unit);
+        void addOrder(Order ord);
+        void deleteUnit(HostingUnit unit);
+        
+        //#region HostingUnit
         //List<HostingUnit> getAllHostingUnits();
-        #endregion
+       // #endregion
     }
 }

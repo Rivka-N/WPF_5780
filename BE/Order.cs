@@ -9,22 +9,25 @@ namespace BE
     public class Order
     {
         #region fields
-        private Int32 hostingUnitKey;//from static number in configuration
-        private Int32 guestRequestKey;
-        private Int32 orderKey;
+        public Int32 hostingUnitKey { get => hostingUnitKey; set { hostingUnitKey = value; } }//from static number in configuration
+        public Int32 guestRequestKey { get => guestRequestKey; set { guestRequestKey = value; } }
+        public Int32 orderKey { get => orderKey; set { orderKey = value; } }
         //private Enums.OrderStatus orderStatus;//only place order once the status is closed
-        private DateTime createDate;
-        private DateTime orderDate;//sent mail
+        DateTime createDate;
+        public DateTime CreateDate { get => createDate; }
+        DateTime orderDate;
+        public DateTime OrderDate { get => orderDate; }//sent mail
         #endregion
         #region ctor
-        public Order (DateTime createDate)//erase or change function at end
+        public Order (DateTime create, DateTime order)//erase or change function at end
         {
-            this.createDate = createDate;
+            createDate = create;
+            orderDate = order;
         }
-        public Order(DateTime createDate, DateTime orderDate, GuestRequest guest, HostingUnit hosting)
+        public Order(DateTime create, DateTime order, GuestRequest guest, HostingUnit hosting)
         {
-            this.createDate = createDate;
-            this.orderDate = orderDate;
+            createDate = create;
+            orderDate = order;
             this.guestRequestKey = guest.GuestRequestKey;
             this.hostingUnitKey = hosting.HostingUnitKey;
             this.orderKey = Configuration.Order++;

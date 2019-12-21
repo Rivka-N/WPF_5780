@@ -30,5 +30,24 @@ namespace DAL
             target.Status = original.Status;
             return target;
         }
+
+        public static HostingUnit Clone(this HostingUnit original)
+        {
+            HostingUnit target = new HostingUnit(original.host);
+            target.hostingUnitName = original.hostingUnitName;
+            target.HostingUnitType = original.HostingUnitType;
+            target.HostingUnitKey = original.HostingUnitKey;
+            return target;
+        }
+
+        public static Order Clone(this Order original)
+        {
+            Order target = new Order(original.CreateDate, original.OrderDate);
+            target.hostingUnitKey = original.hostingUnitKey;
+            target.guestRequestKey = original.guestRequestKey;
+            target.orderKey = original.orderKey;
+
+            return target;
+        }
     }
 }

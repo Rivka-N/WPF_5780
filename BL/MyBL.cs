@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-    public class MyBL: IBL
+    public class MyBL : IBL
     {
         static IDAL myDAL;
 
@@ -35,6 +35,32 @@ namespace BL
         {
             myDAL.addGuest(guest.Clone());
         }
+
+        public void addHostingUnit(HostingUnit unit)
+        {
+            myDAL.addHostingUnit(unit.Clone());
+        }
+
+        public void addOrder(Order ord)
+        {
+            myDAL.addOrder(ord.Clone());
+        }
+
+        public void order(HostingUnit unit, GuestRequest guest)
+        {
+            DateTime end = guest.ReleaseDate;
+            for(DateTime start = guest.EntryDate; start<= end; start.AddDays(1))
+            {
+                
+                if (unit.Diary[start.Month,start.Day] == true)
+                {
+                    return;
+                }
+                DateTime mail = new DateTime();
+                Order ord = new Order(guest.Registration,mail);
+                
+            }
+        }
         //public void addHostingUnit(HostingUnit hostingUnit)
         //{
         //    myDAL.addHostingUnit(hostingUnit);
@@ -47,7 +73,7 @@ namespace BL
 
         //public List<HostingUnit> getAllHostingUnits()
         //{
-        //   return myDAL.getAllHostingUnits();
+        //    return myDAL.getAllHostingUnits();
         //}
 
         //public List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> p)

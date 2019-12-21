@@ -24,8 +24,20 @@ namespace DAL
 
         public void addGuest(GuestRequest guest)
         {
-
+            DS.DataSource.guestRequests.Add(guest);
         }
+
+        public void addHostingUnit(HostingUnit unit)
+        {
+            DS.DataSource.hostingUnits.Add(unit);
+        }
+
+        public void addOrder(Order ord)
+        {
+            DS.DataSource.orders.Add(ord);
+        }
+
+
 
         //public void addHostingUnit(HostingUnit hostingUnit)
         //{
