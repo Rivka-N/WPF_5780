@@ -13,6 +13,6 @@
             <Calendar Name="cl_RequestDate" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Viewbox>-->
         <DatePicker Name="dp_RequestDate" HorizontalAlignment="Left" Margin="330,74,0,0" VerticalAlignment="Top"
-                    DisplayDateStart="12/16/2019"/>
+                    DisplayDateStart="12/16/2019" />
     </Grid>
 </Window>
