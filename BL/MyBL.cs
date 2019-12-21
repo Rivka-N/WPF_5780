@@ -46,21 +46,47 @@ namespace BL
             myDAL.addOrder(ord.Clone());
         }
 
-        public void order(HostingUnit unit, GuestRequest guest)
+        public void order(HostingUnit unit, GuestRequest guest, DateTime mailed)
         {
             DateTime end = guest.ReleaseDate;
-            for(DateTime start = guest.EntryDate; start<= end; start.AddDays(1))
+            for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//Check availability
             {
-                
-                if (unit.Diary[start.Month,start.Day] == true)
+
+                if (unit.Diary[start.Month, start.Day] == true)
                 {
                     return;
                 }
-                DateTime mail = new DateTime();
-                Order ord = new Order(guest.Registration,mail);
-                
+
             }
+            for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//set the days
+            {
+                unit.Diary[start.Month, start.Day] = true;
+            }
+              
+            Order ord = new Order(guest.Registration, mailed);
+            ord.hostingUnitKey = unit.HostingUnitKey;
+            ord.guestRequestKey = guest.GuestRequestKey;
+            addOrder(ord);
+            
         }
+
+        public void mail(List<HostingUnit> Offers)
+        {
+            //sends mail to the guest
+            DateTime today = new DateTime();//find out how to sends this to order function
+           
+        }
+
+        public void findUnit(List<HostingUnit> units, GuestRequest guest)
+        {
+           
+            List<HostingUnit> listOfUnits;
+            //code
+            mail(listOfUnits);
+           
+
+        }
+
         //public void addHostingUnit(HostingUnit hostingUnit)
         //{
         //    myDAL.addHostingUnit(hostingUnit);
