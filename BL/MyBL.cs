@@ -31,15 +31,16 @@ namespace BL
         private MyBL() { }
         #endregion        
 
+
         //public void addHostingUnit(HostingUnit hostingUnit)
         //{
         //    myDAL.addHostingUnit(hostingUnit);
         //}
 
-        //public void addOrder(Order order)
-        //{
-        //   myDAL.addOrder(order);
-        //}
+        public void addOrder(Order order)
+        {
+            myDAL.addOrder(order);
+        }
 
         //public List<HostingUnit> getAllHostingUnits()
         //{

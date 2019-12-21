@@ -8,6 +8,7 @@ namespace BE
 {
     public class GuestRequest
     {
+        #region fields
         public int GuestRequestKey { get; }
         string name;
         public string Name { get => name; set { name = value; } }
@@ -17,6 +18,7 @@ namespace BE
         public string Mail { get => mail; set { mail = Mail; } }
         public Enums.OrderStatus Status { get; set; }
         DateTime registration;
+        public DateTime Registration { get => registration; }
         DateTime entryDate;
         public DateTime EntryDate { get => entryDate; set { entryDate = value; } }
         DateTime releaseDate;
@@ -41,7 +43,8 @@ namespace BE
         public Enums.Preference ChildrenAttractions { get => childrenAttractions; set { childrenAttractions = value; } }
         public int NumSuggestions { get; set; }//number of hosting suggestions
 
-       
+        #endregion
+        #region ctors
         //tostring
         public GuestRequest(string fName, string lName, string em, DateTime enter, DateTime rel, Enums.Area ar, string sArea, Enums.HostingUnitType type, int nAdult, int Nchild, Enums.Preference isPool, Enums.Preference isJacuzzi, Enums.Preference isGarden, Enums.Preference isAttractions)
         {
@@ -69,14 +72,14 @@ namespace BE
 
 
         }
-        public GuestRequest()
+        public GuestRequest(int guestKey=0, DateTime registerDate=default(DateTime))
         {
-            GuestRequestKey = Configuration.GuestRequest;
+            GuestRequestKey = guestKey == 0 ? Configuration.GuestRequest : GuestRequestKey = guestKey;
             Configuration.GuestRequest++;
             name = null;
             lastName = null;
             mail = null;
-            registration = new DateTime();
+            registration = registerDate == default(DateTime) ? new DateTime() : registerDate;
             entryDate = new DateTime();
             releaseDate = new DateTime();
             area = Enums.Area.Center;
@@ -91,6 +94,7 @@ namespace BE
             NumSuggestions = -1;//none yet
             Status = Enums.OrderStatus.Started;
         }
+        #endregion
         public override string ToString()
         {
             return "First Name: " + name + "Last Name: " + lastName + "Mail: " + mail + "Order status: " + Status + "Date of registration: " + registration + "Entry day: " + entryDate + "Release date: " + releaseDate + "Area: " + area + "Sub area: " + subArea + "Type of unit: " + typeOfUnit +

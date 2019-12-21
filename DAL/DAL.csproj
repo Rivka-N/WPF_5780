@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cloning.cs" />
     <Compile Include="DALList .cs" />
     <Compile Include="factoryDAL.cs" />
     <Compile Include="IDAL.cs" />
