@@ -8,7 +8,7 @@ namespace BL
     public interface IBL
     {
         #region HostingUnit
-        List<HostingUnit> getAllHostingUnits();
+        //List<HostingUnit> getAllHostingUnits();
         #endregion
     }
 }
