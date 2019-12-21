@@ -25,11 +25,13 @@ namespace BE
         Enums.Preference jacuzzi;
         Enums.Preference garden;
         Enums.Preference childrenAttractions;
+
+       
         //tostring
         public GuestRequest(string fName, string lName, string em, DateTime enter, DateTime rel, string ar, string sArea, Enums.HostingUnitType type, int nAdult, int Nchild, Enums.Preference isPool, Enums.Preference isJacuzzi, Enums.Preference isGarden, Enums.Preference isAttractions)
         {
             //add default to enum type 
-            
+
             GuestRequestKey = Configuration.GuestRequest;
             name = fName;
             lastName = lName;
@@ -49,7 +51,11 @@ namespace BE
 
             Configuration.GuestRequest++;
 
-            
+
+        }
+        public GuestRequest()
+        {
+
         }
         public override string ToString()
         {
