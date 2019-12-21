@@ -48,7 +48,8 @@ namespace PL
 
         private void pb_host_Click(object sender, RoutedEventArgs e)
         {
-
+            HostOptions HosttWindow = new HostOptions();
+            guestWindow.Show();
         }
     }
 }
