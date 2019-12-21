@@ -50,7 +50,7 @@ namespace BE
             garden = isGarden;
             childrenAttractions = isAttractions;
             numSuggestions = -1;//none yet
-            Status=
+            Status = Started;
             Configuration.GuestRequest++;
 
 

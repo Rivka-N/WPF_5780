@@ -18,6 +18,7 @@
         {
             Closed,
             Mailed,
+            Started
           
         }
         public enum Preference
