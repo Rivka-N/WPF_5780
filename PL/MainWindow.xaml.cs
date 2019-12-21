@@ -22,7 +22,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MyBL bL;
+        private IBL bL;
         public MainWindow()
         {
             InitializeComponent();
@@ -48,8 +48,7 @@ namespace PL
 
         private void pb_host_Click(object sender, RoutedEventArgs e)
         {
-            HostOptions HosttWindow = new HostOptions();
-            guestWindow.Show();
+           
         }
     }
 }

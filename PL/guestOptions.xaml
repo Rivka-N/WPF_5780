@@ -6,20 +6,42 @@
         xmlns:local="clr-namespace:PL"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
+        xmlns:sys1="clr-namespace:BE;assembly=BE"
+
         Title="guestOptions" Height="450" Width="800">
+    <Window.Resources>
+        <ObjectDataProvider ObjectType="{x:Type sys:Enum}" MethodName="getValues" x:Key="cb_area">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="sys1:Enums"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="158*"/>
+            <RowDefinition Height="261*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Viewbox Name="vb_Calendar_StartDate" HorizontalAlignment="Left" Height="131" Margin="137,24,0,0" VerticalAlignment="Top" Width="147">
-            <Calendar Name="cl_StartDate" HorizontalAlignment="Center" VerticalAlignment="Center" DisplayDateStart="{x:Static sys:DateTime.Now}" SelectedDatesChanged="cl_addStartDate"/>
+        <Viewbox Name="vb_Calendar_EnterDate" HorizontalAlignment="Left" Height="131" Margin="137,24,0,0" VerticalAlignment="Top" Width="147">
+            <Calendar Name="cl_EnterDate" HorizontalAlignment="Center" VerticalAlignment="Center" DisplayDateStart="{x:Static sys:DateTime.Now}" SelectedDatesChanged="cl_addEntryDate"/>
         </Viewbox>
-        <Viewbox Name="vb_Calendar_EndDate" HorizontalAlignment="Left" Height="131" VerticalAlignment="Top" Width="147" Margin="137,171,0,0">
-            <Calendar Name="cl_EndDate" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
+        <Viewbox Name="vb_Calendar_LeaveDate" HorizontalAlignment="Left" Height="131" VerticalAlignment="Top" Width="147" Margin="137,13,0,0" Grid.Row="1">
+            <Calendar Name="cl_LeaveDate" HorizontalAlignment="Center" VerticalAlignment="Center" DisplayDateStart="{x:Static sys:DateTime.Now}" SelectedDatesChanged="Cl_addEndDate"/>
         </Viewbox>
         <TextBlock Name="tb_StartDate" HorizontalAlignment="Left" Margin="289,36,0,0" TextWrapping="Wrap" Text="בחר תאריך התחלה" VerticalAlignment="Top" Padding="10"/>
-        <TextBlock  Name="tb_EndDate" HorizontalAlignment="Left" Margin="284,171,0,0" TextWrapping="Wrap" Text="בחר תאריך סיום" VerticalAlignment="Top" Padding="10" Visibility="Collapsed"/>
-        <CheckBox Content="בריכה" HorizontalAlignment="Left" Margin="481,36,0,0" VerticalAlignment="Top" IsThreeState="True" IsChecked="{x:Null}"/>
+        <TextBlock  Name="tb_EndDate" HorizontalAlignment="Left" Margin="284,13,0,0" TextWrapping="Wrap" Text="בחר תאריך סיום" VerticalAlignment="Top" Padding="10" Grid.Row="1"/>
+        <CheckBox Name="sb_pool" Content="בריכה" HorizontalAlignment="Left" Margin="481,36,0,0" VerticalAlignment="Top" IsThreeState="True" IsChecked="{x:Null}"/>
+        <CheckBox Name="sb_garden" Content="גינה" HorizontalAlignment="Left" Margin="481,60,0,0" VerticalAlignment="Top" IsThreeState="True" IsChecked="{x:Null}"/>
+        <CheckBox Name="sb_attractions" Content="אטרקציות ילדים" HorizontalAlignment="Left" Margin="481,90,0,0" VerticalAlignment="Top" IsThreeState="True" IsChecked="{x:Null}"/>
+        <CheckBox Name="sb_jaccuzi" Content="גקוזי" HorizontalAlignment="Left" Margin="481,117,0,0" VerticalAlignment="Top" IsThreeState="True" IsChecked="{x:Null}" Checked="CheckBox_jaccuziChecked"/>
+        <!--<ComboBox Name="cb_area" ItemsSource="{Binding Source={StaticResource }}" HorizontalAlignment="Left" Margin="481,157,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox Name="cb_hostingUnitType" HorizontalAlignment="Left" Margin="481,262,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.483,2.545" />-->
+        <TextBlock  x:Name="tb_area" HorizontalAlignment="Left" Margin="626,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10" Grid.RowSpan="2"><Run FlowDirection="RightToLeft" Text="בחר איזור"/></TextBlock>
+        <TextBlock  x:Name="tb_subArea" HorizontalAlignment="Left" Margin="626,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10" Grid.Row="1"><Span FlowDirection="RightToLeft"><Run Text=" "/><Run Text="תת איזור"/></Span></TextBlock>
+        <TextBlock  x:Name="tb_unitType" HorizontalAlignment="Left" Margin="626,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10" Grid.Row="1"><Run FlowDirection="RightToLeft" Text="סוג יחידת אירוח"/></TextBlock>
+        <TextBox x:Name="tb_subAreaInput"  HorizontalAlignment="Left" Height="23" Margin="481,48,0,0" Grid.Row="1" TextWrapping="Wrap" Text="הוסף תת איזור" VerticalAlignment="Top" Width="120" TextChanged="Tb_subAreaInput_TextChanged"/>
 
     </Grid>
 </Window>

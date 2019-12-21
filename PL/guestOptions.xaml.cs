@@ -20,23 +20,43 @@ namespace PL
     /// </summary>
     public partial class guestOptions : Window
     {
+        GuestRequest g1 = new GuestRequest();
+
         public guestOptions()
         {
             InitializeComponent();
-            GuestRequest g1 = new GuestRequest();
             
         }
 
-        private void cl_addStartDate(object sender, SelectionChangedEventArgs e)
+        private void cl_addEntryDate(object sender, SelectionChangedEventArgs e)
         {
+            g1.EntryDate = (DateTime)cl_EnterDate.SelectedDate;
             #region endDate
             //cl_endDate starts from the day after start date
             //updates the statdate in guest
             //add field to guest to update date only if it's not set yet.
             //cl_EndDate.DisplayDateStart = tomorrow.AddDays(1);//sets the start date to tomorrow so the stay will be at least one day long
-            cl_EndDate.Visibility = Visibility.Visible;//makes enddate visible to choose from now
-            tb_EndDate.Visibility = Visibility.Visible;
+            
+            //change enddate visibility: works
+            //cl_EndDate.Visibility = Visibility.Visible;//makes enddate visible to choose from now
+            //tb_EndDate.Visibility = Visibility.Visible;
             #endregion
+            
+        }
+
+        private void Tb_subAreaInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            g1.SubArea = tb_subArea.Text;
+            //add check that sub area is in area
+        }
+
+        private void Cl_addEndDate(object sender, SelectionChangedEventArgs e)
+        {
+           g1.ReleaseDate = (DateTime)cl_LeaveDate.SelectedDate;//check not after start date
+        }
+
+        private void CheckBox_jaccuziChecked(object sender, RoutedEventArgs e)
+        {
             
         }
     }
