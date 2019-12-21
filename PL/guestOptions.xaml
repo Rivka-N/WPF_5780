@@ -32,16 +32,18 @@
         </Viewbox>
         <TextBlock Name="tb_StartDate" HorizontalAlignment="Left" Margin="289,36,0,0" TextWrapping="Wrap" Text="בחר תאריך התחלה" VerticalAlignment="Top" Padding="10"/>
         <TextBlock  Name="tb_EndDate" HorizontalAlignment="Left" Margin="284,13,0,0" TextWrapping="Wrap" Text="בחר תאריך סיום" VerticalAlignment="Top" Padding="10" Grid.Row="1"/>
-        <CheckBox Name="sb_pool" Content="בריכה" HorizontalAlignment="Left" Margin="481,36,0,0" VerticalAlignment="Top" IsThreeState="True" IsChecked="{x:Null}"/>
-        <CheckBox Name="sb_garden" Content="גינה" HorizontalAlignment="Left" Margin="481,60,0,0" VerticalAlignment="Top" IsThreeState="True" IsChecked="{x:Null}"/>
-        <CheckBox Name="sb_attractions" Content="אטרקציות ילדים" HorizontalAlignment="Left" Margin="481,90,0,0" VerticalAlignment="Top" IsThreeState="True" IsChecked="{x:Null}"/>
-        <CheckBox Name="sb_jaccuzi" Content="גקוזי" HorizontalAlignment="Left" Margin="481,117,0,0" VerticalAlignment="Top" IsThreeState="True" IsChecked="{x:Null}" Checked="CheckBox_jaccuziChecked"/>
+        <CheckBox Name="cb_pool" Content="בריכה" HorizontalAlignment="Left" Margin="481,36,0,0" VerticalAlignment="Top" IsThreeState="True" IsChecked="{x:Null}" Checked="Cb_pool_Checked"/>
+        <CheckBox Name="cb_garden" Content="גינה" HorizontalAlignment="Left" Margin="481,60,0,0" VerticalAlignment="Top" IsThreeState="True" IsChecked="{x:Null}" Checked="Cb_garden_Checked"/>
+        <CheckBox Name="cb_attractions" Content="אטרקציות ילדים" HorizontalAlignment="Left" Margin="481,90,0,0" VerticalAlignment="Top" IsThreeState="True" IsChecked="{x:Null}" Checked="CheckBox_attractionsChecked"/>
+        <CheckBox Name="cb_jaccuzi" Content="גקוזי" HorizontalAlignment="Left" Margin="481,117,0,0" VerticalAlignment="Top" IsThreeState="True" IsChecked="{x:Null}" Checked="CheckBox_jaccuziChecked"/>
         <!--<ComboBox Name="cb_area" ItemsSource="{Binding Source={StaticResource }}" HorizontalAlignment="Left" Margin="481,157,0,0" VerticalAlignment="Top" Width="120"/>
         <ComboBox Name="cb_hostingUnitType" HorizontalAlignment="Left" Margin="481,262,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.483,2.545" />-->
         <TextBlock  x:Name="tb_area" HorizontalAlignment="Left" Margin="626,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10" Grid.RowSpan="2"><Run FlowDirection="RightToLeft" Text="בחר איזור"/></TextBlock>
         <TextBlock  x:Name="tb_subArea" HorizontalAlignment="Left" Margin="626,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10" Grid.Row="1"><Span FlowDirection="RightToLeft"><Run Text=" "/><Run Text="תת איזור"/></Span></TextBlock>
         <TextBlock  x:Name="tb_unitType" HorizontalAlignment="Left" Margin="626,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10" Grid.Row="1"><Run FlowDirection="RightToLeft" Text="סוג יחידת אירוח"/></TextBlock>
         <TextBox x:Name="tb_subAreaInput"  HorizontalAlignment="Left" Height="23" Margin="481,48,0,0" Grid.Row="1" TextWrapping="Wrap" Text="הוסף תת איזור" VerticalAlignment="Top" Width="120" TextChanged="Tb_subAreaInput_TextChanged"/>
+
+        <Button Name="pb_continue" Content="המשך" HorizontalAlignment="Left" Margin="677,144,0,0" VerticalAlignment="Top" Width="75" Click="Continue_Clicked" Height="36" Grid.Row="1"/>
 
     </Grid>
 </Window>

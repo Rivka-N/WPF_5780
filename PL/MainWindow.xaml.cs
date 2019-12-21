@@ -26,6 +26,7 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
+            bL = factoryBL.getBL();
             //bL = MyBL.Instance;
             //string hostingUnitName = "Nave Mahmad";
             //bL.addHostingUnit(new HostingUnit(new Host(), hostingUnitName, Enums.HostingUnitType.Zimmer));
