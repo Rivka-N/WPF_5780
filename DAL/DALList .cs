@@ -22,6 +22,11 @@ namespace DAL
 
         #endregion
 
+        public void addGuest(GuestRequest guest)
+        {
+
+        }
+
         //public void addHostingUnit(HostingUnit hostingUnit)
         //{
         //    DataSource.hostingUnits.Add(hostingUnit);

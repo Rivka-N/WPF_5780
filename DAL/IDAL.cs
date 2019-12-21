@@ -15,10 +15,9 @@ namespace DAL
         //List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> predicate = null);
         //#endregion
 
-        //#region GuestRequest
-
-        //void addGuestRequest(String id, String name, int age);
-        //#endregion
+        #region GuestRequest
+        void addGuest(GuestRequest guest);
+        #endregion
 
         //#region Order
         //void addOrder(Order order);

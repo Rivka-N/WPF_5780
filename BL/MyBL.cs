@@ -31,16 +31,19 @@ namespace BL
         private MyBL() { }
         #endregion        
 
-
+        public void addGuest(GuestRequest guest)
+        {
+            myDAL.addGuest(guest.Clone());
+        }
         //public void addHostingUnit(HostingUnit hostingUnit)
         //{
         //    myDAL.addHostingUnit(hostingUnit);
         //}
 
-        public void addOrder(Order order)
-        {
-            myDAL.addOrder(order);
-        }
+        //public void addOrder(Order order)
+        //{
+        //    myDAL.addOrder(order);
+        //}
 
         //public List<HostingUnit> getAllHostingUnits()
         //{
