@@ -25,6 +25,7 @@ namespace BE
         Enums.Preference jacuzzi;
         Enums.Preference garden;
         Enums.Preference childrenAttractions;
+        int numSuggestions;//number of hosting suggestions
 
        
         //tostring
@@ -48,7 +49,8 @@ namespace BE
             jacuzzi = isJacuzzi;
             garden = isGarden;
             childrenAttractions = isAttractions;
-
+            numSuggestions = -1;//none yet
+            Status=
             Configuration.GuestRequest++;
 
 
