@@ -59,6 +59,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="HostOptions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -69,6 +73,9 @@
     </Compile>
     <Compile Include="guestOptions.xaml.cs">
       <DependentUpon>guestOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HostOptions.xaml.cs">
+      <DependentUpon>HostOptions.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -100,16 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BE\BE.csproj">
-      <Project>{4d20a032-1774-4579-80d6-d4a11b7ecc4d}</Project>
-      <Name>BE</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BL\BL.csproj">
-      <Project>{2b968dd1-0f23-4c78-b2fb-745ba1fa07e4}</Project>
-      <Name>BL</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
