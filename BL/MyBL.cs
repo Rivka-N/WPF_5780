@@ -31,22 +31,58 @@ namespace BL
         private MyBL() { }
         #endregion        
 
-        public void addGuest(GuestRequest guest)
+        public void addGuest(GuestRequest guest)//add guest to the data list in DS
         {
             myDAL.addGuest(guest.Clone());
         }
 
-        public void addHostingUnit(HostingUnit unit)
+        public void addHostingUnit(HostingUnit unit)//add hostingUnit to the hostingUnit list in DS
         {
             myDAL.addHostingUnit(unit.Clone());
         }
 
-        public void addOrder(Order ord)
+        public void addOrder(Order ord)//add order to the order list in DS
         {
             myDAL.addOrder(ord.Clone());
         }
 
-        public void order(HostingUnit unit, GuestRequest guest, DateTime mailed)
+        public void order(HostingUnit unit, GuestRequest guest)//makes sure that the days in the request available
+        {
+            DateTime end = guest.ReleaseDate;
+            for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//Check availability
+            { 
+                if (unit.Diary[start.Month, start.Day] == true)
+                {
+                    //code to send message to the host
+                    return;//if its already occupied
+                }
+            }
+            for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//set the days
+            {
+                unit.Diary[start.Month, start.Day] = true;
+            }
+            guest.Status = Enums.OrderStatus.Closed;//closed status
+            Order ord = new Order(guest.Registration);//makes new order
+            ord.hostingUnitKey = unit.HostingUnitKey;
+            ord.guestRequestKey = guest.GuestRequestKey;
+            ord.OrderDate = guest.Mailed;
+            addOrder(ord);//send to the function which adds the order to the order list
+
+        }
+
+        public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with the list of units to the guest
+        {
+            //sends mail to the guest
+           
+            guest.Mailed = new DateTime();
+        }
+
+        public void notFounde()//if there are no units that match
+        {
+
+        }
+
+        public bool available(HostingUnit unit, GuestRequest guest)
         {
             DateTime end = guest.ReleaseDate;
             for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//Check availability
@@ -54,57 +90,51 @@ namespace BL
 
                 if (unit.Diary[start.Month, start.Day] == true)
                 {
-                    return;
+                    return false;
                 }
 
             }
-            for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//set the days
-            {
-                unit.Diary[start.Month, start.Day] = true;
-            }
-              
-            Order ord = new Order(guest.Registration, mailed);
-            ord.hostingUnitKey = unit.HostingUnitKey;
-            ord.guestRequestKey = guest.GuestRequestKey;
-            addOrder(ord);
-            
-        }
-
-        public void mail(List<HostingUnit> Offers)
-        {
-            //sends mail to the guest
-            DateTime today = new DateTime();//find out how to sends this to order function
-           
+            return true;
         }
 
         public void findUnit(List<HostingUnit> units, GuestRequest guest)
         {
-           
-            List<HostingUnit> listOfUnits;
+
+            List <HostingUnit> listOfUnits = new List<HostingUnit>(); ;
             //code
-            mail(listOfUnits);
-           
+
+            for (int i = 0; i < units.Count(); i++)
+            {
+                if (guest.TypeOfUnit == units[i].HostingUnitType && guest.AreaVacation == units[i].AreaVacation && available(units[i], guest))
+                {
+                    listOfUnits.Add(units[i]);//adds to the guest list
+                }
+            }
+            if (listOfUnits.Count() == 0)
+                   notFounde();
+            else
+            {
+               if (listOfUnits.Count() <= 5)
+                   mail(listOfUnits, guest);
+               else
+                {
+                    //code how to delete units
+                }
+                
+
+            }
+
 
         }
 
-        //public void addHostingUnit(HostingUnit hostingUnit)
-        //{
-        //    myDAL.addHostingUnit(hostingUnit);
-        //}
+        public List<HostingUnit> getAllHostingUnits()
+        {
+            return myDAL.getAllHostingUnits();
+        }
 
-        //public void addOrder(Order order)
-        //{
-        //    myDAL.addOrder(order);
-        //}
-
-        //public List<HostingUnit> getAllHostingUnits()
-        //{
-        //    return myDAL.getAllHostingUnits();
-        //}
-
-        //public List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> p)
-        //{
-        //    return myDAL.getHostingUnits(p);
-        //}
+        public List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> p)
+        {
+            return myDAL.getHostingUnits(p);
+        }
     }
 }

@@ -16,13 +16,13 @@ namespace BE
         DateTime createDate;
         public DateTime CreateDate { get => createDate; }
         DateTime orderDate;
-        public DateTime OrderDate { get => orderDate; }//sent mail
+        public DateTime OrderDate { get => orderDate; set{ orderDate = OrderDate; }//sent mail
         #endregion
         #region ctor
-        public Order (DateTime create, DateTime order)//erase or change function at end
+        public Order (DateTime create)//erase or change function at end
         {
             createDate = create;
-            orderDate = order;
+            
         }
         public Order(DateTime create, DateTime order, GuestRequest guest, HostingUnit hosting)
         {

@@ -16,6 +16,8 @@ namespace BE
         public string LastName { get => lastName; set { lastName = value; } }
         string mail;
         public string Mail { get => mail; set { mail = Mail; } }
+        DateTime mailed;
+        public DateTime Mailed { get => mailed; set { mail = Mail; } }
         public Enums.OrderStatus Status { get; set; }
         DateTime registration;
         public DateTime Registration { get => registration; }
@@ -42,6 +44,7 @@ namespace BE
         Enums.Preference childrenAttractions;
         public Enums.Preference ChildrenAttractions { get => childrenAttractions; set { childrenAttractions = value; } }
         public int NumSuggestions { get; set; }//number of hosting suggestions
+        
 
         #endregion
         #region ctors
@@ -69,6 +72,7 @@ namespace BE
             NumSuggestions = -1;//none yet
             Status = Enums.OrderStatus.Started;
             Configuration.GuestRequest++;
+            
 
 
         }

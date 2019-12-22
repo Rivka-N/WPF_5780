@@ -14,6 +14,8 @@ namespace BE
         readonly private Int32 hostingUnitKey;
         private Enums.HostingUnitType hostingUnitType;
         public bool[,] Diary { get; set; }
+        Enums.Area area;
+        public Enums.Area AreaVacation { get => area; set { area = value; } }
 
         public Enums.HostingUnitType HostingUnitType { get => HostingUnitType; set { HostingUnitType = value; } }
         public Int32 HostingUnitKey { get => hostingUnitKey; set { HostingUnitKey = value; } }
@@ -24,12 +26,14 @@ namespace BE
             this.host = host;
             Diary = new bool[12, 31];
         }
-        public HostingUnit(Host host, string hostingUnitName, Enums.HostingUnitType hostingUnitType)
+        public HostingUnit(Host host, string hostingUnitName, Enums.HostingUnitType hostingUnitType, Enums.Area area)
         {
             this.host = host;
             this.hostingUnitName = hostingUnitName;
             this.hostingUnitType = hostingUnitType;
             this.hostingUnitKey = Configuration.HostingUnit++;
+            this.AreaVacation = area;
+
             Diary = new bool[12,31];
         }
         #endregion
