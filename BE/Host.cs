@@ -15,7 +15,8 @@ namespace BE
         private Int32 phoneNumber;
         private BankAccount bank;
         public  bool CollectionClearance { get; set; }
-        /*public Host(int id, string first, string last, string mail, Int32 phone, BankAccount bank, bool CollectionClearance=false)
+        public string Name { get; }
+        public Host(int id, string first, string last, string mail, Int32 phone, BankAccount bank, bool CollectionClearance=false)
         {
             hostKey = id;
             name = first;
@@ -24,7 +25,7 @@ namespace BE
             phoneNumber = phone;
             this.bank = bank;
             this.CollectionClearance = CollectionClearance;
-        }*/
+        }
         public override string ToString()
         {
             return "Owner id: " + hostKey + "Name: " + name + " " + lastName + "Phone number: " + phoneNumber +

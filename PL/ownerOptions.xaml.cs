@@ -22,6 +22,7 @@ namespace PL
         public ownerOptions()
         {
             InitializeComponent();
+            //show all hosting units: binding: bL.getAllHostingUnits()
         }
     }
 }

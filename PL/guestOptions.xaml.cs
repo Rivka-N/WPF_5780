@@ -28,6 +28,8 @@ namespace PL
         {
             InitializeComponent();
             bL = factoryBL.getBL();
+            //cb_hostingUnitType.DataContext = bL.getAllHostingUnits();
+            //cb_area.DataContext = Enums.Area;
         }
 
         private void cl_addEntryDate(object sender, SelectionChangedEventArgs e)

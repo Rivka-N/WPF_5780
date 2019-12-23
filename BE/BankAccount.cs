@@ -13,10 +13,11 @@ namespace BE
         public string BranchAddress { get; set; }
         public string BranchCity { get; set; }
         public int BankAcountNumber { get; set; }
+        public Host owner { get; set; }
         public override string ToString()
         {
             return "Bank Name: " + BankName + "Bank Number: " + BankNumber + "Branch Number: " + BranchNumber + "BranchAddress: " +
-                BranchCity + BranchAddress + "Bank Acount Number: " + BankAcountNumber;
+                BranchCity + BranchAddress + "Bank Acount Number: " + BankAcountNumber + "Owner: "+ owner.Name;
 
         }
 
