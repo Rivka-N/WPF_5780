@@ -39,6 +39,7 @@ namespace DAL
 
         public List<HostingUnit> getAllHostingUnits()
         {
+            throw new NotImplementedException();
             //return hosting units
         }
 
