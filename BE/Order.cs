@@ -16,7 +16,7 @@ namespace BE
         DateTime createDate;
         public DateTime CreateDate { get => createDate; }
         DateTime orderDate;
-        public DateTime OrderDate { get => orderDate; set{ orderDate = OrderDate; }//sent mail
+        public DateTime OrderDate { get => orderDate; set { orderDate = OrderDate; } }//sent mail
         #endregion
         #region ctor
         public Order (DateTime create)//erase or change function at end
@@ -33,7 +33,12 @@ namespace BE
             this.orderKey = Configuration.Order++;
 
         }
-#endregion
+
+        public Order(DateTime create, DateTime orderDate) : this(create)
+        {
+            this.orderDate = orderDate;
+        }
+        #endregion
         #region functions
 
         public override string ToString()

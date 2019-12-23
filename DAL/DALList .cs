@@ -37,6 +37,17 @@ namespace DAL
             DS.DataSource.orders.Add(ord);
         }
 
+        public List<HostingUnit> getAllHostingUnits()
+        {
+            //return hosting units
+        }
+
+        //add to function to make it work
+        public List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> predicate = null)
+        {
+            throw new NotImplementedException();
+        }
+
 
 
         //public void addHostingUnit(HostingUnit hostingUnit)

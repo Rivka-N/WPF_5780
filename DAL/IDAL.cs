@@ -9,12 +9,13 @@ namespace DAL
 {
     public interface IDAL
     {
-        //#region HostingUnit        
-        //void addHostingUnit(HostingUnit hostingUnit);
-        //List<HostingUnit> getAllHostingUnits();
-        //List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> predicate = null);
-        //#endregion
-
+        
+        #region HostingUnit        
+        //void addHostingUnit(HostingUnit hostingUnit);//duplicate function
+        List<HostingUnit> getAllHostingUnits();
+        List <HostingUnit> getHostingUnits(Func<HostingUnit, bool> predicate = null);
+        #endregion
+        
         #region GuestRequest
         void addGuest(GuestRequest guest);
         void addHostingUnit(HostingUnit unit);
