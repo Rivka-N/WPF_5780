@@ -11,6 +11,7 @@ namespace BL
         void addGuest(GuestRequest guest);
         void addHostingUnit(HostingUnit unit);
         #endregion
+        HostingUnit findUnit(int unitKey);
         void addOrder(Order ord);
         void order(HostingUnit unit, GuestRequest guest);//add order
         bool available(HostingUnit unit, GuestRequest guest);

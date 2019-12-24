@@ -60,7 +60,16 @@ namespace DAL
         {
             return DataSource.orders.Select(order=>(Order)order.Clone()).ToList();
         }
-        #endregion
 
+
+        #endregion
+        #region search functions
+        public HostingUnit findUnit(int unitKey)//returns first instance of unitKey as a hosting unit key inside list of hosting units
+        {
+            return DataSource.hostingUnits.Find(hu => hu.HostingUnitKey == unitKey);
+        }
+
+
+        #endregion
     }
 }

@@ -14,8 +14,9 @@ namespace DAL
         //void addHostingUnit(HostingUnit hostingUnit);//duplicate function
         List<HostingUnit> getAllHostingUnits();
         List <HostingUnit> getHostingUnits(Func<HostingUnit, bool> predicate = null);
+        HostingUnit findUnit(int unitKey);
         #endregion
-        
+
         #region GuestRequest
         void addGuest(GuestRequest guest);
         void addHostingUnit(HostingUnit unit);

@@ -99,6 +99,7 @@ namespace BL
             return true;
         }
 
+        
         public List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest)
         {
 
@@ -129,6 +130,13 @@ namespace BL
 
 
         }
+        #region finding methods
+        public HostingUnit findUnit(int unitKey)
+        {
+            return myDAL.findUnit(unitKey);
+        }
+       
+        #endregion
 
         #region gets
         public List<HostingUnit> getAllHostingUnits()
@@ -150,6 +158,10 @@ namespace BL
         {
             return myDAL.getAllOrders();
         }
+
+  
+
+
         #endregion
     }
 }
