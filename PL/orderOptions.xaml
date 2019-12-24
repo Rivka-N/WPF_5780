@@ -1,0 +1,24 @@
+﻿<Window x:Class="PL.orderOptions"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="orderOptions" Height="450" Width="800">
+    <Grid HorizontalAlignment="Right" Width="792">
+        <TextBlock Name="tb_title" Text="הוסף פרטי הזמנה" HorizontalAlignment="Left" Margin="41,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="28" Width="116"/>
+        <TextBlock x:Name="tb_guestN" HorizontalAlignment="Left" Margin="41,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run FlowDirection="RightToLeft" Text="שם אורח"/></TextBlock>
+        <TextBlock x:Name="tb_hostN" HorizontalAlignment="Left" Margin="409,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run FlowDirection="RightToLeft" Text="שם מארח"/></TextBlock>
+        <TextBox Name ="tb_guestLast" HorizontalAlignment="Left" Height="16" Margin="114,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="72"/>
+        <TextBox Name ="tb_guestFirst" HorizontalAlignment="Left" Height="16" Margin="191,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="72" TextChanged="Tb_guestFirst_TextChanged"/>
+        <TextBox x:Name ="tb_hostLast" HorizontalAlignment="Left" Height="16" Margin="496,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="72"/>
+        <TextBox x:Name ="tb_hostFirst" HorizontalAlignment="Left" Height="16" Margin="573,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="72"/>
+        <TextBox x:Name="tb_guestKey" HorizontalAlignment="Left" Height="23" Margin="114,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBlock x:Name="tb_guestKey_txt" HorizontalAlignment="Left" Margin="41,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run FlowDirection="RightToLeft" Text="מספר אורח"/><LineBreak/><Run FlowDirection="RightToLeft"/></TextBlock>
+        <TextBlock x:Name="tb_hostNum_txt" HorizontalAlignment="Left" Margin="409,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run FlowDirection="RightToLeft" Text="מספר מארח"/><LineBreak/><Run FlowDirection="RightToLeft"/></TextBlock>
+        <TextBlock x:Name="tb_hostingUnit_txt" HorizontalAlignment="Left" Margin="409,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run FlowDirection="RightToLeft" Text="מספר יחידה"/></TextBlock>
+        <TextBox x:Name ="tb_hostNum" HorizontalAlignment="Left" Height="16" Margin="496,93,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="72"/>
+        <TextBox x:Name ="tb_hostingUnit" HorizontalAlignment="Left" Height="16" Margin="496,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="72"/>
+    </Grid>
+</Window>

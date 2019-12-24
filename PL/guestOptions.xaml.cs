@@ -60,59 +60,8 @@ namespace PL
         {
             g1.SubArea = tb_subArea.Text;
             //add check that sub area is in area
-        }
-
-       
-        #region checkboxes
-        private void Cb_pool_Checked(object sender, RoutedEventArgs e)
-        {
-            if (cb_pool.IsChecked == true)//changed to true
-                g1.Pool = Enums.Preference.Yes;
-            else
-            {
-                if (cb_pool.IsChecked == false)//changed to false
-                    g1.Pool = Enums.Preference.No;
-                else
-                    g1.Pool = Enums.Preference.Maybe;//otherwise it's the third state
-            }
-        }
-        private void Cb_garden_Checked(object sender, RoutedEventArgs e)
-        {
-            if (cb_garden.IsChecked == true)//changed to true
-                g1.Garden = Enums.Preference.Yes;
-            else
-            {
-                if (cb_garden.IsChecked == false)//changed to false
-                    g1.Garden = Enums.Preference.No;
-                else
-                    g1.Garden= Enums.Preference.Maybe;//otherwise it's the third state
-            }
-        }
-        private void CheckBox_attractionsChecked(object sender, RoutedEventArgs e)
-        {
-            if ( cb_attractions.IsChecked == true)//changed to true
-                g1.ChildrenAttractions = Enums.Preference.Yes;
-            else
-            {
-                if (cb_attractions.IsChecked == false)//changed to false
-                    g1.ChildrenAttractions = Enums.Preference.No;
-                else
-                    g1.ChildrenAttractions = Enums.Preference.Maybe;//otherwise it's the third state
-            }
-        }
-        private void CheckBox_jaccuziChecked(object sender, RoutedEventArgs e)
-        {
-            if (cb_jaccuzi.IsChecked == true)//changed to true
-                g1.Jacuzzi = Enums.Preference.Yes;
-            else
-            {
-                if (cb_jaccuzi.IsChecked == false)//changed to false
-                    g1.Jacuzzi = Enums.Preference.No;
-                else
-                    g1.Jacuzzi = Enums.Preference.Maybe;//otherwise it's the third state
-            }
-        }
-        #endregion
+        }     
+        
         private void Continue_Clicked(object sender, RoutedEventArgs e)
         {
             if (g1.EntryDate<g1.ReleaseDate)//checks that dates are valid. also check that num of people is valid
@@ -121,7 +70,9 @@ namespace PL
                 tb_StartDate.Background = Brushes.White;
                 tb_EndDate.Background = Brushes.White;
                 pb_continue.Content += "\n" + "בקשתך התקבלה";
-                Close();//closes window
+                bL.findUnit(bL.getAllHostingUnits(), g1);
+                /*var unitsList= 
+                 display message of what was found?*/
             }
             if (!(g1.EntryDate < g1.ReleaseDate))
             {
@@ -194,5 +145,56 @@ namespace PL
             }
         }
         #endregion
+        #region checkboxes
+        private void Cb_pool_Checked(object sender, RoutedEventArgs e)
+        {
+            if (cb_pool.IsChecked == true)//changed to true
+                g1.Pool = Enums.Preference.Yes;
+            else
+            {
+                if (cb_pool.IsChecked == false)//changed to false
+                    g1.Pool = Enums.Preference.No;
+                else
+                    g1.Pool = Enums.Preference.Maybe;//otherwise it's the third state
+            }
+        }
+        private void Cb_garden_Checked(object sender, RoutedEventArgs e)
+        {
+            if (cb_garden.IsChecked == true)//changed to true
+                g1.Garden = Enums.Preference.Yes;
+            else
+            {
+                if (cb_garden.IsChecked == false)//changed to false
+                    g1.Garden = Enums.Preference.No;
+                else
+                    g1.Garden = Enums.Preference.Maybe;//otherwise it's the third state
+            }
+        }
+        private void CheckBox_attractionsChecked(object sender, RoutedEventArgs e)
+        {
+            if (cb_attractions.IsChecked == true)//changed to true
+                g1.ChildrenAttractions = Enums.Preference.Yes;
+            else
+            {
+                if (cb_attractions.IsChecked == false)//changed to false
+                    g1.ChildrenAttractions = Enums.Preference.No;
+                else
+                    g1.ChildrenAttractions = Enums.Preference.Maybe;//otherwise it's the third state
+            }
+        }
+        private void CheckBox_jaccuziChecked(object sender, RoutedEventArgs e)
+        {
+            if (cb_jaccuzi.IsChecked == true)//changed to true
+                g1.Jacuzzi = Enums.Preference.Yes;
+            else
+            {
+                if (cb_jaccuzi.IsChecked == false)//changed to false
+                    g1.Jacuzzi = Enums.Preference.No;
+                else
+                    g1.Jacuzzi = Enums.Preference.Maybe;//otherwise it's the third state
+            }
+        }
+        #endregion
     }
+
 }

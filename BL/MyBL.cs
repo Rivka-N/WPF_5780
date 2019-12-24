@@ -99,7 +99,7 @@ namespace BL
             return true;
         }
 
-        public void findUnit(List<HostingUnit> units, GuestRequest guest)
+        public List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest)
         {
 
             List <HostingUnit> listOfUnits = new List<HostingUnit>(); ;
@@ -120,11 +120,12 @@ namespace BL
                    mail(listOfUnits, guest);
                else
                 {
-                    //code how to delete units
+                    //code to delete units
                 }
                 
 
             }
+            return listOfUnits;
 
 
         }

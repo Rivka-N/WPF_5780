@@ -77,8 +77,7 @@ namespace BE
         }
         public GuestRequest(int guestKey=0, DateTime registerDate=default(DateTime))
         {
-            GuestRequestKey = guestKey == 0 ? Configuration.GuestRequest : GuestRequestKey = guestKey;
-            Configuration.GuestRequest++;
+            GuestRequestKey = guestKey == 0 ? Configuration.GuestRequest++ : GuestRequestKey = guestKey;
             name = null;
             lastName = null;
             mail = null;

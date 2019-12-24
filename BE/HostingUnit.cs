@@ -9,16 +9,17 @@ namespace BE
     public class HostingUnit
     {//makes sure running number is set correctly for all of them(Hosting Unit Key)
         #region fields
-        public Host host { get; }
+        private Enums.HostingUnitType zimmer;
         private string hostingUnitName;
         readonly private Int32 hostingUnitKey;
         private Enums.HostingUnitType hostingUnitType;
+        private Enums.Area area;
+        #endregion
+        #region properties
         public bool[,] Diary { get; set; }
-        Enums.Area area;
-        private Enums.HostingUnitType zimmer;
         public string HostingUnitName { get => hostingUnitName; set { hostingUnitName = value; } }
         public Enums.Area AreaVacation { get => area; set { area = value; } }
-
+        public Host host { get; }
         public Enums.HostingUnitType HostingUnitType { get => hostingUnitType; set { hostingUnitType = value; } }
         public Int32 HostingUnitKey { get => hostingUnitKey; }
         #endregion
