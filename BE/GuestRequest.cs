@@ -49,6 +49,7 @@ namespace BE
         #endregion
         #region ctors
         //tostring
+
         public GuestRequest(string fName, string lName, string em, DateTime enter, DateTime rel, Enums.Area ar, string sArea, Enums.HostingUnitType type, int nAdult, int Nchild, Enums.Preference isPool, Enums.Preference isJacuzzi, Enums.Preference isGarden, Enums.Preference isAttractions)
         {
             //add default to enum type 
@@ -57,7 +58,7 @@ namespace BE
             name = fName;
             lastName = lName;
             mail = em;
-            registration = new DateTime();
+            registration = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
             entryDate = enter;
             releaseDate = rel;
             area = ar;
@@ -72,8 +73,6 @@ namespace BE
             NumSuggestions = -1;//none yet
             Status = Enums.OrderStatus.Started;
             Configuration.GuestRequest++;
-            
-
 
         }
         public GuestRequest(int guestKey=0, DateTime registerDate=default(DateTime))
@@ -83,7 +82,7 @@ namespace BE
             name = null;
             lastName = null;
             mail = null;
-            registration = registerDate == default(DateTime) ? new DateTime() : registerDate;
+            registration = registerDate == default(DateTime) ? new DateTime(DateTime.Today.Year,DateTime.Today.Month,DateTime.Today.Day) : registerDate;
             entryDate = new DateTime();
             releaseDate = new DateTime();
             area = Enums.Area.Center;
@@ -102,7 +101,7 @@ namespace BE
         public override string ToString()
         {
             return "First Name: " + name + "Last Name: " + lastName + "Mail: " + mail + "Order status: " + Status + "Date of registration: " + registration + "Entry day: " + entryDate + "Release date: " + releaseDate + "Area: " + area + "Sub area: " + subArea + "Type of unit: " + typeOfUnit +
-                "Number of adults: " + numAdult + "Number of children: " + numChildren + "Want pool: " + pool + "Want jecuzzi: " + jacuzzi + "Want garden: " + garden + "want children attractions" + childrenAttractions;
+                "Number of adults: " + numAdult + "Number of children: " + numChildren + "Want pool: " + pool + "Want jacuzzi: " + jacuzzi + "Want garden: " + garden + "want children attractions" + childrenAttractions;
         }
         
     }

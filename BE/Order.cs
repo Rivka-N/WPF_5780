@@ -44,12 +44,12 @@ namespace BE
             this.orderDate = orderDate;
         }
         #endregion
-        #region functions
+        #region toString
 
         public override string ToString()
         {
             return "Hosting Unit Key: " + hostingUnitKey + " Guest Request Key: " + guestRequestKey + " Order Key: " + orderKey
-                + " Date Created: " + createDate + " Order Date: " + orderDate;
+                + " Date Created: " + createDate + " Order Date:" + orderDate;
 
      
         }

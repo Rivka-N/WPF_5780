@@ -28,6 +28,7 @@ namespace BL
 
         #region HostingUnit
         List<HostingUnit> getAllHostingUnits();
+        List<Order> getAllOrders();
         #endregion
     }
 }

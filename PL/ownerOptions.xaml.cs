@@ -26,7 +26,7 @@ namespace PL
             bL=factoryBL.getBL();
             //show all hosting units: binding: bL.getAllHostingUnits()
         }
-
+        #region button clicks
         private void Pb_Orders_Click(object sender, RoutedEventArgs e)
         {
             pb_Orders.BorderBrush = Brushes.DarkMagenta;
@@ -35,13 +35,14 @@ namespace PL
             pb_Requests.FontSize = 12;
             pb_Units.FontSize = 12;
             pb_Units.BorderBrush = Brushes.Black;
-           string s = "";
-            var hostings = bL.getAllHostingUnits();
-            foreach (var h in hostings)
-                s += h.ToString();
-            tb_printInfo.Text = "הזמנות" + "\n"+s;
+            tb_printInfo.Text = "הזמנות" + "\n";
+
+            List<BE.Order> orders = bL.getAllOrders();
+            foreach(var ord in orders)
+            {
+                tb_printInfo.Text += ord;
+            }
             
-            //add applicable toString(). tb_printInfo.Text=
         }
 
         private void Pb_Requests_Click(object sender, RoutedEventArgs e)
@@ -52,7 +53,10 @@ namespace PL
             pb_Requests.FontSize = 20;
             pb_Units.FontSize = 12;
             pb_Units.BorderBrush = Brushes.Black;
-            //applicable text
+            tb_printInfo.Text = "בקשות אירוח" + "\n";
+            var gRequests = bL.getRequests();
+            foreach (var g in gRequests)
+                tb_printInfo.Text += g;
         }
 
         private void Pb_Units_Click(object sender, RoutedEventArgs e)
@@ -63,8 +67,12 @@ namespace PL
             pb_Requests.FontSize = 12;
             pb_Units.FontSize = 20;
             pb_Units.BorderBrush = Brushes.DarkMagenta;
-            //applicable text
-
+            string s = "";
+            var hostings = bL.getAllHostingUnits();
+            foreach (var h in hostings)
+                s += h.ToString();
+            tb_printInfo.Text = "יחידות אירוח" + "\n"+s;
         }
+        #endregion
     }
 }

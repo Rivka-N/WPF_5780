@@ -55,6 +55,11 @@ namespace DAL
         {
             return DS.DataSource.guestRequests.Select(guestReq => (GuestRequest)guestReq.Clone()).ToList();
         }
+
+        public List<Order> getAllOrders()
+        {
+            return DataSource.orders.Select(order=>(Order)order.Clone()).ToList();
+        }
         #endregion
 
     }

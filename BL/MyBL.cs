@@ -29,8 +29,9 @@ namespace BL
             myDAL = factoryDAL.getDAL(TypeDAL);
         }
         private MyBL() { }
-        #endregion        
+        #endregion
 
+        #region add items
         public void addGuest(GuestRequest guest)//add guest to the data list in DS
         {
             myDAL.addGuest(guest.Clone());
@@ -40,7 +41,6 @@ namespace BL
         {
             myDAL.addHostingUnit(unit.Clone());
         }
-
         public void addOrder(Order ord)//add order to the order list in DS
         {
             myDAL.addOrder(ord.Clone());
@@ -50,7 +50,7 @@ namespace BL
         {
             DateTime end = guest.ReleaseDate;
             for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//Check availability
-            { 
+            {
                 if (unit.Diary[start.Month, start.Day] == true)
                 {
                     //code to send message to the host
@@ -69,6 +69,8 @@ namespace BL
             addOrder(ord);//send to the function which adds the order to the order list
 
         }
+        #endregion
+
 
         public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with the list of units to the guest
         {
@@ -127,6 +129,7 @@ namespace BL
 
         }
 
+        #region gets
         public List<HostingUnit> getAllHostingUnits()
         {
             return myDAL.getAllHostingUnits();
@@ -141,5 +144,11 @@ namespace BL
         {
             return myDAL.getRequests();
         }
+
+        public List<Order> getAllOrders()
+        {
+            return myDAL.getAllOrders();
+        }
+        #endregion
     }
 }

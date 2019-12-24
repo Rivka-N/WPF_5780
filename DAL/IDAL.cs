@@ -21,6 +21,7 @@ namespace DAL
         void addHostingUnit(HostingUnit unit);
         void addOrder(Order ord);
         List<GuestRequest> getRequests();
+        List<Order> getAllOrders();
         #endregion
 
         //#region Order
