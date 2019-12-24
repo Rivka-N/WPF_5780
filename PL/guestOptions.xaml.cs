@@ -28,10 +28,13 @@ namespace PL
         {
             InitializeComponent();
             bL = factoryBL.getBL();
+            //cb_hostingUnitType.DataContext=;
+            
             //cb_hostingUnitType.DataContext = bL.getAllHostingUnits();
             //cb_area.DataContext = Enums.Area;
         }
 
+        #region dates
         private void cl_addEntryDate(object sender, SelectionChangedEventArgs e)
         {
             g1.EntryDate = (DateTime)cl_EnterDate.SelectedDate;
@@ -47,6 +50,11 @@ namespace PL
             #endregion
             
         }
+        private void Cl_addEndDate(object sender, SelectionChangedEventArgs e)
+        {
+            g1.ReleaseDate = (DateTime)cl_LeaveDate.SelectedDate;//check not after start date
+        }
+        #endregion
 
         private void Tb_subAreaInput_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -54,10 +62,7 @@ namespace PL
             //add check that sub area is in area
         }
 
-        private void Cl_addEndDate(object sender, SelectionChangedEventArgs e)
-        {
-           g1.ReleaseDate = (DateTime)cl_LeaveDate.SelectedDate;//check not after start date
-        }
+       
         #region checkboxes
         private void Cb_pool_Checked(object sender, RoutedEventArgs e)
         {
@@ -110,7 +115,7 @@ namespace PL
         #endregion
         private void Continue_Clicked(object sender, RoutedEventArgs e)
         {
-            if (g1.EntryDate<g1.ReleaseDate)//checks that dates are valid
+            if (g1.EntryDate<g1.ReleaseDate)//checks that dates are valid. also check that num of people is valid
             {
                 bL.addGuest(g1);//adds it as guest
                 tb_StartDate.Background = Brushes.White;
@@ -118,15 +123,76 @@ namespace PL
                 pb_continue.Content += "\n" + "בקשתך התקבלה";
                 Close();//closes window
             }
-            else
+            if (!(g1.EntryDate < g1.ReleaseDate))
             {
                 tb_StartDate.Background = Brushes.Red;
                 tb_EndDate.Background = Brushes.Red;
                 tb_StartDate.Text += "\n" + "תאריך כניסה ויציאה לא תקין";//fix after they fix
             }
+        /*    if (tb_Enter_Child==null)
+            {
+
+                tb_Enter_Child.Background = Brushes.OrangeRed;
+                tb_Enter_Child.Text = ""; 
+            }
+            if (tb_Enter_Adults==null)
+            {
+                tb_Enter_Adults.Background = Brushes.OrangeRed;
+                tb_Enter_Adults.Text = "";
+            }*/
 
         }
+        #region num people
+        private void Tb_Enter_Adults_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int text=0;
+            try
+            {
+                Int32.TryParse(tb_Enter_Adults.Text, out text);
+            
+            if (text < 0)
+            {
+                tb_Enter_Adults.Background = Brushes.OrangeRed;
+                tb_Enter_Adults.Text = "";
+            }
+            else
+            {
+                g1.NumAdult = text;
+                tb_Enter_Adults.Background = Brushes.White;
 
-     
+            }
+            }
+            catch (Exception)
+            {
+                tb_Enter_Adults.Background = Brushes.OrangeRed;
+                tb_Enter_Adults.Text = "";
+            }
+        }
+
+        private void Tb_Enter_Child_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int text = 0;
+            try
+            {
+                Int32.TryParse(tb_Enter_Child.Text, out text);
+            
+            if (text < 0)
+            {
+                tb_Enter_Child.Background = Brushes.OrangeRed;
+                tb_Enter_Child.Text = "";
+            }
+            else
+            {
+                g1.NumChildren = text;
+                tb_Enter_Child.Background = Brushes.White;
+            }
+            }
+            catch (Exception)
+            {
+                tb_Enter_Child.Background = Brushes.OrangeRed;
+                tb_Enter_Child.Text = "";
+            }
+        }
+        #endregion
     }
 }
