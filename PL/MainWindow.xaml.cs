@@ -23,17 +23,21 @@ namespace PL
     public partial class MainWindow : Window
     {
         private IBL bL;
+        
         public MainWindow()
         {
             InitializeComponent();
             bL = factoryBL.getBL();
-            var hostingUnits = bL.getAllHostingUnits();
-            List<GuestRequest> guestRequests = bL.getRequests();
-            //string hostingUnitName = "Nave Mahmad";
-            //bL.addHostingUnit(new HostingUnit(new Host(), hostingUnitName, Enums.HostingUnitType.Zimmer));
-            //bL.addOrder(new BE.Order(DateTime.Now));
+           //var hostingUnits = bL.getAllHostingUnits();
+           //var guestRequests = bL.getRequests();
+           string hostingUnitName = "Nave Mahmad";
+           bL.addHostingUnit(new HostingUnit(new Host(), hostingUnitName, Enums.HostingUnitType.Zimmer));
+           bL.addOrder(new BE.Order(DateTime.Now));
 
-            //// lb_HostingUnits.DataContext = bL.getAllHostingUnits();
+            //bL.addHostingUnit (new HostingUnit(new Host(12, "shomo", "tenen", "shlomo@sh.com", 123, new BankAccount(), true), "neve shlomo", Enums.HostingUnitType.Camping, Enums.Area.Center));
+            //hostingUnits = bL.getAllHostingUnits();
+            
+            // lb_HostingUnits.DataContext = bL.getAllHostingUnits();
             //lb_HostingUnits.DataContext = bL.getHostingUnits(hostingUnit => hostingUnit.HostingUnitType == Enums.HostingUnitType.Zimmer);
         }
 

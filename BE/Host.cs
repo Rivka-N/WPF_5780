@@ -26,6 +26,11 @@ namespace BE
             this.bank = bank;
             this.CollectionClearance = CollectionClearance;
         }
+
+        public Host()
+        {
+        }
+
         public override string ToString()
         {
             return "Owner id: " + hostKey + "Name: " + name + " " + lastName + "Phone number: " + phoneNumber +

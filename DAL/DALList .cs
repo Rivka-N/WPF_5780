@@ -22,34 +22,34 @@ namespace DAL
 
         #endregion
 
-        #region add
+        #region add Items
         public void addGuest(GuestRequest guest)
         {
-            DS.DataSource.guestRequests.Add(guest);
+            DS.DataSource.guestRequests.Add(guest.Clone());
         }
 
         public void addHostingUnit(HostingUnit unit)
         {
-            DS.DataSource.hostingUnits.Add(unit);
+            DS.DataSource.hostingUnits.Add(unit.Clone());
         }
 
         public void addOrder(Order ord)
         {
-            DS.DataSource.orders.Add(ord);
+            DS.DataSource.orders.Add(ord.Clone());
         }
         #endregion
-        #region getLists
+        #region get Lists
+
         public List<HostingUnit> getAllHostingUnits()
         {
             return DS.DataSource.hostingUnits.Select(hus=>(HostingUnit)hus.Clone()).ToList();
             //return hosting units
         }
 
-        //add to function to make it work
         public List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> predicate = null)
         {
-            //use clone!
-            throw new NotImplementedException();
+            return DataSource.hostingUnits.Where(predicate).Select(hu => (HostingUnit)hu.Clone()).ToList();
+
         }
         public List<GuestRequest> getRequests()
         {
@@ -57,53 +57,5 @@ namespace DAL
         }
         #endregion
 
-        /* void IDAL.addGuest(GuestRequest guest)
-         {
-             DataSource.guestRequests.Add(guest);
-         }
-
-         void IDAL.addHostingUnit(HostingUnit unit)
-         {
-             DS.DataSource.hostingUnits.Add(unit);
-         }
-
-         void IDAL.addOrder(Order ord)
-         {
-             DS.DataSource.orders.Add(ord);
-         }
-
-      
-         */
-
-
-        //public void addHostingUnit(HostingUnit hostingUnit)
-        //{
-        //    DataSource.hostingUnits.Add(hostingUnit);
-        //}
-
-        //public void addOrder(Order order)
-        //{
-        //    DataSource.orders.Add(order);
-        //}
-
-        //public List<HostingUnit> getAllHostingUnits()
-        //{
-        //   return DataSource.hostingUnits;
-        //}
-
-        //public List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> predicate = null)
-        //{
-        //    return DataSource.hostingUnits.Where(predicate).ToList();
-        //}
-
-        //public void addGuestRequest(string id, string name, int age)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public List<Order> getOrders(Func<Order, bool> predicate)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

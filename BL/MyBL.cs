@@ -63,8 +63,8 @@ namespace BL
             }
             guest.Status = Enums.OrderStatus.Closed;//closed status
             Order ord = new Order(guest.Registration);//makes new order
-            ord.hostingUnitKey = unit.HostingUnitKey;
-            ord.guestRequestKey = guest.GuestRequestKey;
+            ord.HostingUnitKey = unit.HostingUnitKey;
+            ord.GuestRequestKey = guest.GuestRequestKey;
             ord.OrderDate = guest.Mailed;
             addOrder(ord);//send to the function which adds the order to the order list
 

@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BL;
 namespace PL
 {
     /// <summary>
@@ -19,9 +19,11 @@ namespace PL
     /// </summary>
     public partial class ownerOptions : Window
     {
+        private IBL bL; 
         public ownerOptions()
         {
             InitializeComponent();
+            bL=factoryBL.getBL();
             //show all hosting units: binding: bL.getAllHostingUnits()
         }
 
@@ -33,6 +35,12 @@ namespace PL
             pb_Requests.FontSize = 12;
             pb_Units.FontSize = 12;
             pb_Units.BorderBrush = Brushes.Black;
+           string s = "";
+            var hostings = bL.getAllHostingUnits();
+            foreach (var h in hostings)
+                s += h.ToString();
+            tb_printInfo.Text = "הזמנות" + "\n"+s;
+            
             //add applicable toString(). tb_printInfo.Text=
         }
 

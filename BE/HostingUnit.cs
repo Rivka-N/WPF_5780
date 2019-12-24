@@ -7,18 +7,20 @@ using System.Threading.Tasks;
 namespace BE
 {
     public class HostingUnit
-    {
+    {//makes sure running number is set correctly for all of them(Hosting Unit Key)
         #region fields
         public Host host { get; }
-        public string hostingUnitName { get => hostingUnitName; set { hostingUnitName = value; } }
+        private string hostingUnitName;
         readonly private Int32 hostingUnitKey;
         private Enums.HostingUnitType hostingUnitType;
         public bool[,] Diary { get; set; }
         Enums.Area area;
+        private Enums.HostingUnitType zimmer;
+        public string HostingUnitName { get => hostingUnitName; set { hostingUnitName = value; } }
         public Enums.Area AreaVacation { get => area; set { area = value; } }
 
-        public Enums.HostingUnitType HostingUnitType { get => HostingUnitType; set { HostingUnitType = value; } }
-        public Int32 HostingUnitKey { get => hostingUnitKey; set { HostingUnitKey = value; } }
+        public Enums.HostingUnitType HostingUnitType { get => hostingUnitType; set { hostingUnitType = value; } }
+        public Int32 HostingUnitKey { get => hostingUnitKey; }
         #endregion
         #region ctors
         public HostingUnit(Host host)
@@ -35,6 +37,17 @@ namespace BE
             this.AreaVacation = area;
 
             Diary = new bool[12,31];
+        }
+
+        public HostingUnit(Host host, string hostingUnitName, Enums.HostingUnitType zimmer) : this(host)
+        {
+            this.hostingUnitName = hostingUnitName;
+            this.zimmer = zimmer;
+        }
+
+        public HostingUnit(Host host, int hostingUnitKey) : this(host)
+        {
+            this.hostingUnitKey = hostingUnitKey;
         }
         #endregion
 

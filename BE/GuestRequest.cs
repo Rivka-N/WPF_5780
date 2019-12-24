@@ -17,7 +17,7 @@ namespace BE
         string mail;
         public string Mail { get => mail; set { mail = Mail; } }
         DateTime mailed;
-        public DateTime Mailed { get => mailed; set { mail = Mail; } }
+        public DateTime Mailed { get => mailed; set { mailed = value; } }
         public Enums.OrderStatus Status { get; set; }
         DateTime registration;
         public DateTime Registration { get => registration; }

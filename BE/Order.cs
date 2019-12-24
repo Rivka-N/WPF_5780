@@ -9,13 +9,18 @@ namespace BE
     public class Order
     {
         #region fields
-        public Int32 hostingUnitKey { get => hostingUnitKey; set { hostingUnitKey = value; } }//from static number in configuration
-        public Int32 guestRequestKey { get => guestRequestKey; set { guestRequestKey = value; } }
-        public Int32 orderKey { get => orderKey; set { orderKey = value; } }
-        //private Enums.OrderStatus orderStatus;//only place order once the status is closed
-        DateTime createDate;
-        public DateTime CreateDate { get => createDate; }
+        private Int32 hostingUnitKey;//from static number in configuration
+        private Int32 guestRequestKey;
+        private Int32 orderKey;
         DateTime orderDate;
+        DateTime createDate;
+        #endregion
+        #region properties
+        public Int32 HostingUnitKey { get => hostingUnitKey; set { hostingUnitKey = value; } }//from static number in configuration
+        public Int32 GuestRequestKey { get => guestRequestKey; set { guestRequestKey = value; } }
+        public Int32 OrderKey { get => orderKey; set { orderKey = value; } }
+        //private Enums.OrderStatus orderStatus;//only place order once the status is closed
+        public DateTime CreateDate { get => createDate; }
         public DateTime OrderDate { get => orderDate; set { orderDate = OrderDate; } }//sent mail
         #endregion
         #region ctor
