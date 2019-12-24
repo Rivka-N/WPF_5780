@@ -24,5 +24,39 @@ namespace PL
             InitializeComponent();
             //show all hosting units: binding: bL.getAllHostingUnits()
         }
+
+        private void Pb_Orders_Click(object sender, RoutedEventArgs e)
+        {
+            pb_Orders.BorderBrush = Brushes.DarkMagenta;
+            pb_Orders.FontSize = 20;
+            pb_Requests.BorderBrush = Brushes.Black;
+            pb_Requests.FontSize = 12;
+            pb_Units.FontSize = 12;
+            pb_Units.BorderBrush = Brushes.Black;
+            //add applicable toString(). tb_printInfo.Text=
+        }
+
+        private void Pb_Requests_Click(object sender, RoutedEventArgs e)
+        {
+            pb_Orders.BorderBrush = Brushes.Black;
+            pb_Orders.FontSize = 12;
+            pb_Requests.BorderBrush = Brushes.DarkMagenta;
+            pb_Requests.FontSize = 20;
+            pb_Units.FontSize = 12;
+            pb_Units.BorderBrush = Brushes.Black;
+            //applicable text
+        }
+
+        private void Pb_Units_Click(object sender, RoutedEventArgs e)
+        {
+            pb_Orders.BorderBrush = Brushes.Black;
+            pb_Orders.FontSize = 12;
+            pb_Requests.BorderBrush = Brushes.Black;
+            pb_Requests.FontSize = 12;
+            pb_Units.FontSize = 20;
+            pb_Units.BorderBrush = Brushes.DarkMagenta;
+            //applicable text
+
+        }
     }
 }

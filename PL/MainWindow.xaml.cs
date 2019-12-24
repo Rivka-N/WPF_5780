@@ -27,7 +27,8 @@ namespace PL
         {
             InitializeComponent();
             bL = factoryBL.getBL();
-            //bL = MyBL.Instance;
+            var hostingUnits = bL.getAllHostingUnits();
+            List<GuestRequest> guestRequests = bL.getRequests();
             //string hostingUnitName = "Nave Mahmad";
             //bL.addHostingUnit(new HostingUnit(new Host(), hostingUnitName, Enums.HostingUnitType.Zimmer));
             //bL.addOrder(new BE.Order(DateTime.Now));
@@ -38,7 +39,8 @@ namespace PL
 
         private void pb_owner_Click(object sender, RoutedEventArgs e)
         {
-
+            ownerOptions ownerWindow = new ownerOptions();
+            ownerWindow.Show();
         }
 
         private void pb_guest_Click(object sender, RoutedEventArgs e)
@@ -49,7 +51,8 @@ namespace PL
 
         private void pb_host_Click(object sender, RoutedEventArgs e)
         {
-           
+            hostOptions hostWinows = new hostOptions();
+            hostWinows.Show();
         }
     }
 }

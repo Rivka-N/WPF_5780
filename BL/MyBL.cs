@@ -136,5 +136,10 @@ namespace BL
         {
             return myDAL.getHostingUnits(p);
         }
+
+        public List<GuestRequest> getRequests()
+        {
+            return myDAL.getRequests();
+        }
     }
 }

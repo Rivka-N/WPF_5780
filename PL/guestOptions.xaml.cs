@@ -113,12 +113,16 @@ namespace PL
             if (g1.EntryDate<g1.ReleaseDate)//checks that dates are valid
             {
                 bL.addGuest(g1);//adds it as guest
+                tb_StartDate.Background = Brushes.White;
+                tb_EndDate.Background = Brushes.White;
+                pb_continue.Content += "\n" + "בקשתך התקבלה";
+                Close();//closes window
             }
             else
             {
                 tb_StartDate.Background = Brushes.Red;
                 tb_EndDate.Background = Brushes.Red;
-                tb_StartDate.Text += "\n" + "תאריך כניסה ויציאה לא תקין";
+                tb_StartDate.Text += "\n" + "תאריך כניסה ויציאה לא תקין";//fix after they fix
             }
 
         }

@@ -23,7 +23,8 @@ namespace BL
             */
         void notFounde();
         void findUnit(List<HostingUnit> units, GuestRequest guest);//find hostingUnit accoerding to the guestRequest
-        
+        List<GuestRequest> getRequests();
+
 
         #region HostingUnit
         List<HostingUnit> getAllHostingUnits();

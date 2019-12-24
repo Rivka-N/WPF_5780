@@ -22,6 +22,7 @@ namespace DAL
 
         #endregion
 
+        #region add
         public void addGuest(GuestRequest guest)
         {
             DS.DataSource.guestRequests.Add(guest);
@@ -36,19 +37,43 @@ namespace DAL
         {
             DS.DataSource.orders.Add(ord);
         }
-
+        #endregion
+        #region getLists
         public List<HostingUnit> getAllHostingUnits()
         {
-            throw new NotImplementedException();
+            return DS.DataSource.hostingUnits.Select(hus=>(HostingUnit)hus.Clone()).ToList();
             //return hosting units
         }
 
         //add to function to make it work
         public List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> predicate = null)
         {
+            //use clone!
             throw new NotImplementedException();
         }
+        public List<GuestRequest> getRequests()
+        {
+            return DS.DataSource.guestRequests.Select(guestReq => (GuestRequest)guestReq.Clone()).ToList();
+        }
+        #endregion
 
+        /* void IDAL.addGuest(GuestRequest guest)
+         {
+             DataSource.guestRequests.Add(guest);
+         }
+
+         void IDAL.addHostingUnit(HostingUnit unit)
+         {
+             DS.DataSource.hostingUnits.Add(unit);
+         }
+
+         void IDAL.addOrder(Order ord)
+         {
+             DS.DataSource.orders.Add(ord);
+         }
+
+      
+         */
 
 
         //public void addHostingUnit(HostingUnit hostingUnit)
