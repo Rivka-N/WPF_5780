@@ -21,7 +21,7 @@ namespace BL
         HostingUnit findUnit(int unitKey);
         List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest);//find hostingUnit accoerding to the guestRequest
         List<HostingUnit> getAllHostingUnits();
-
+        void deleteUnit(int unit);
         #endregion
         #region orders
         void addOrder(Order ord);
@@ -31,9 +31,7 @@ namespace BL
         bool available(HostingUnit unit, GuestRequest guest);
 
         //not finished functions
-        /*        void deleteUnit(HostingUnit unit);
-
-                void mail(List<HostingUnit> Offers);//sends mail to the guest with all the hostingUnits which appropriate. 
+        /*   void mail(List<HostingUnit> Offers);//sends mail to the guest with all the hostingUnits which appropriate. 
                 //needs to recieve guestRequest or mailing address too
 
             */
@@ -53,11 +51,11 @@ namespace BL
 
         #endregion
         #region grouping and queries
+        //IEnumerable<IGrouping<int, Order>>groupOrdersbyUnit()
         IEnumerable<Order> ordersByUnit(HostingUnit hu);
         IEnumerable<Order> ordersByUnit(int unitNum);
         IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupByArea();
         string printOrdersByUnit(int unitNum);
-
         #endregion
     }
 }

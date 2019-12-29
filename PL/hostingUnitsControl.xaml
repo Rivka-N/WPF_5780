@@ -35,6 +35,6 @@
         <TextBlock  x:Name="tb_id_txt" HorizontalAlignment="Left" Margin="166,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Run FlowDirection="RightToLeft" Text="הכנס מספר תעודת זהות"/></TextBlock>
         <TextBox x:Name="tb_id"  HorizontalAlignment="Left" Height="23" Margin="28,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="98"/>
         <TextBlock  x:Name="tb_unitNumber_txt" HorizontalAlignment="Left" Margin="162,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Run FlowDirection="RightToLeft" Text="הכנס מספר יחידת אירוח"/></TextBlock>
-        <TextBox x:Name="tb_unitNumber"  HorizontalAlignment="Left" Height="23" Margin="28,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="98"/>
+        <TextBox x:Name="tb_unitNumber"  HorizontalAlignment="Left" Height="23" Margin="28,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="98" TextChanged="Tb_unitNumber_TextChanged"/>
     </Grid>
 </Window>

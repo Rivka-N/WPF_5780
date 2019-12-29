@@ -60,7 +60,15 @@ namespace DAL
         {
             return DataSource.orders.Select(order=>(Order)order.Clone()).ToList();
         }
-
+        public List<GuestRequest> getRequests(Func<GuestRequest, bool> predicate)
+        {
+            var requests = from guest in DataSource.guestRequests
+                           let p = predicate(guest)
+                           where p
+                           select guest.Clone();
+            return requests.ToList();
+            //alternative: return DataSource.guestRequests.Where(predicate).Select(gr => (GuestRequest)gr.Clone()).ToList();
+        }
 
         #endregion
         #region search functions
@@ -71,9 +79,22 @@ namespace DAL
 
         public GuestRequest findGuest(GuestRequest g1)
         {
-            return DataSource.guestRequests.Find(guest => guest.GuestRequestKey == g1.GuestRequestKey).Clone();
+            return findGuest(g1.GuestRequestKey);
+        }
+        public GuestRequest findGuest(int g1)
+        {
+            return DataSource.guestRequests.Find(guest => guest.GuestRequestKey == g1).Clone();
         }
 
+        #endregion
+        #region delete
+        public void deleteUnit(HostingUnit toDelete)
+        {
+            if (!DataSource.hostingUnits.Remove(toDelete))//removes unit from list
+                throw new dataException("unable to delete item");
+        }
+
+       
         #endregion
     }
 }

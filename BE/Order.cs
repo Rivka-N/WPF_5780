@@ -19,15 +19,13 @@ namespace BE
         public Int32 HostingUnitKey { get => hostingUnitKey; set { hostingUnitKey = value; } }//from static number in configuration
         public Int32 GuestRequestKey { get => guestRequestKey; set { guestRequestKey = value; } }
         public Int32 OrderKey { get => orderKey; set { orderKey = value; } }
-        //private Enums.OrderStatus orderStatus;//only place order once the status is closed
-        public DateTime CreateDate { get => createDate; }
+        public DateTime CreateDate { get => createDate; set { createDate = value; } }
         public DateTime OrderDate { get => orderDate; set { orderDate = OrderDate; } }//sent mail
         #endregion
         #region ctor
-        public Order (DateTime create)//erase or change function at end
+        public Order (DateTime create)
         {
             createDate = create;
-            
         }
         public Order(DateTime create, DateTime order, GuestRequest guest, HostingUnit hosting)
         {
@@ -53,7 +51,8 @@ namespace BE
 
      
         }
+        #endregion
+
     }
-    #endregion
 
 }

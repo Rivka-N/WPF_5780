@@ -47,8 +47,8 @@ namespace BL
         }
 
         public void order(HostingUnit unit, GuestRequest guest)//makes sure that the days in the request available
-            //update guest status
-            //take off transaction fee
+                                                               //update guest status
+                                                               //take off transaction fee
         {
             DateTime end = guest.ReleaseDate;
             for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//Check availability
@@ -77,13 +77,13 @@ namespace BL
         public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with the list of units to the guest
         {
             //sends mail to the guest
-           
+
             guest.Mailed = new DateTime();
         }
 
         //public void notFounde()//if there are no units that match
         //{
-
+        //throws exception instead
         //}
 
         public bool available(HostingUnit unit, GuestRequest guest)
@@ -111,19 +111,29 @@ namespace BL
                 throw new InvalidException("guest already booked");
             order(hu1, foundGuest);//adds order
         }
+        public string printOrdersByUnit(int unitNum)//return string of all orders from that unit
+        {
+            var orderUnit = ordersByUnit(unitNum);
+            string ans = "";
+            foreach (Order ord in orderUnit)
+                ans += ord;
+            return ans;
+        }
 
         #endregion
 
-
-        #region finding methods
-        public HostingUnit findUnit(int unitKey)
+        #region find methods
+        public HostingUnit findUnit(int unitKey)//finds unit based on key
         {
-            return myDAL.findUnit(unitKey);
+            if (unitKey <= 0)
+                throw new InvalidException("invalid unit key");
+            var unit = myDAL.findUnit(unitKey);
+            return (unit == null) ? throw new InvalidException("unit not found") : unit;
         }
         public List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest)
         {
 
-            List<HostingUnit> listOfUnits = new List<HostingUnit>(); 
+            List<HostingUnit> listOfUnits = new List<HostingUnit>();
             //code
 
             for (int i = 0; i < units.Count(); i++)
@@ -149,21 +159,50 @@ namespace BL
             }
             return listOfUnits;
 
-
         }
 
         public GuestRequest findGuest(GuestRequest g1, string text)
         {
             int guestNum;
-            if (!Int32.TryParse(text, out guestNum)||guestNum<=0)
+            if (!Int32.TryParse(text, out guestNum) || guestNum <= 0)
                 throw new InvalidException("invalid guest number");
             g1.GuestRequestKey = guestNum;
             return (myDAL.findGuest(g1));
-            
+
 
         }
         #endregion
-
+        #region delete
+        public void deleteUnit(int unit)
+        {
+            try
+            {
+                HostingUnit toDelete = findUnit(unit);
+                var orders = ordersByUnit(unit).ToList();//all orders with unit as their unit key into list
+                if (orders == null)//no orders for that unit
+                    myDAL.deleteUnit(toDelete);
+                else
+                {
+                    var requests = from ord in orders
+                                   let request = myDAL.findGuest(ord.GuestRequestKey)
+                                   where (DateTime.Today < request.ReleaseDate)//date of end of vacation is after today
+                                   select ord;
+                    if (requests == null)
+                        myDAL.deleteUnit(toDelete);//no orders after today
+                    else
+                        throw new InvalidException("cannot delete. vacations are booked for the future");
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new InvalidException(ex.Message);
+            }
+            
+           //if orders exist with that hostingunitkey
+            //find their guest requests based on guest request number and check if the order already passed
+            //if there are orders in unit throw
+        }
+        #endregion
         #region gets
         public List<HostingUnit> getAllHostingUnits()
         {
@@ -179,15 +218,18 @@ namespace BL
         {
             return myDAL.getRequests();
         }
-
+   
         public List<Order> getAllOrders()
         {
             return myDAL.getAllOrders();
         }
-
-        #endregion
-        #region add and check fields from pl
-        public void addEntryDate(DateTime? selectedDate, GuestRequest g1)//adds selected date to guest
+        public List<GuestRequest>GetRequests(Func<GuestRequest, bool> predicate)
+        {
+            return myDAL.getRequests(predicate);
+        }
+    #endregion
+    #region add and check fields from pl
+    public void addEntryDate(DateTime? selectedDate, GuestRequest g1)//adds selected date to guest
         {
             g1.EntryDate = (DateTime)selectedDate;
             if (g1.ReleaseDate!=default(DateTime))
@@ -286,8 +328,9 @@ namespace BL
         }
 
         #endregion
-        #region grouping
+        #region LINQ and grouping
 
+        
         public IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupByArea()
         {
             var guests=myDAL.getRequests();
@@ -296,9 +339,9 @@ namespace BL
                             select newGroup;
             return groupArea;
         }
-       public IEnumerable<Order> ordersByUnit(HostingUnit hu)
+        public IEnumerable<Order> ordersByUnit(HostingUnit hu)
         {
-            return groupOrdersByUnit(hu.HostingUnitKey);
+            return ordersByUnit(hu.HostingUnitKey);
         }
         public IEnumerable<Order>ordersByUnit(int unitNum)
         {
@@ -310,14 +353,8 @@ namespace BL
             return thisUnit;
         }
 
-        public string printOrdersByUnit(int unitNum)//return string of all orders from that unit
-        {
-            var orderUnit = ordersByUnit(unitNum);
-            string ans = "";
-            foreach (Order ord in orderUnit)
-                ans += ord;
-            return ans;
-        }
+
+
 
         #endregion
     }
