@@ -49,7 +49,7 @@ namespace BE
         public override string ToString()
         {
             return "Hosting Unit Key: " + hostingUnitKey + " Guest Request Key: " + guestRequestKey + " Order Key: " + orderKey
-                + " Date Created: " + createDate + " Order Date:" + orderDate;
+                + " Date Created: " + createDate.ToString("d") + " Order Date:" + orderDate.ToString("d");
 
      
         }

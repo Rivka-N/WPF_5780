@@ -3,6 +3,7 @@
 using BE;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BL
 {
@@ -28,7 +29,6 @@ namespace BL
         void checkOrder(Host h1, HostingUnit hu1, GuestRequest g1, GuestRequest foundGuest);
         void order(HostingUnit unit, GuestRequest guest);//add order
         bool available(HostingUnit unit, GuestRequest guest);
-       
 
         //not finished functions
         /*        void deleteUnit(HostingUnit unit);
@@ -52,8 +52,12 @@ namespace BL
         bool checkGuest(GuestRequest g1);
 
         #endregion
-        #region grouping
-        //groupByArea()
+        #region grouping and queries
+        IEnumerable<Order> ordersByUnit(HostingUnit hu);
+        IEnumerable<Order> ordersByUnit(int unitNum);
+        IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupByArea();
+        string printOrdersByUnit(int unitNum);
+
         #endregion
     }
 }

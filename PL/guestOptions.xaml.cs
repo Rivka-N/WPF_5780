@@ -29,12 +29,9 @@ namespace PL
         {
             InitializeComponent();
             bL = factoryBL.getBL();
+            //bind enums to comboboxes
             cb_area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
             cb_hostingUnitType.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
-            //cb_hostingUnitType.DataContext = Enum.GetValues(Enums.Area);
-            //cb_hostingUnitType.ItemsSource = Enum.GetValues(Enums.Area);            
-            //cb_hostingUnitType.DataContext = bL.getAllHostingUnits();
-            //cb_area.DataContext = Enums.Area;
         }
 
         #region dates
@@ -196,6 +193,7 @@ namespace PL
             try
             {
                 bL.addMail(tb_email.Text, g1);
+                tb_email_txt.Text = "כתובת מייל";
             }
             catch
             {
@@ -235,10 +233,12 @@ namespace PL
             {
                 if (cb_hostingUnitType.SelectedIndex==-1)//check if it wasn't selected
                 {
+                    tb_unitType.Background = Brushes.Red;
                     return;
                 }
                 if (cb_area.SelectedIndex==-1)//check if area wasn't selected
                     {
+                    tb_area.Background = Brushes.Red;
                     return;
                     }
                 if (bL.checkGuest(g1))//checks that g1 is valid
@@ -266,12 +266,15 @@ namespace PL
         #region comboboxes
         private void Cb_area_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            tb_area.Background = Brushes.White;
             g1.AreaVacation = (Enums.Area)(cb_area.SelectedIndex);
+
         }
         #endregion
 
         private void Cb_hostingUnitType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            tb_unitType.Background = Brushes.White;
             g1.TypeOfUnit = (Enums.HostingUnitType)(cb_hostingUnitType.SelectedIndex);
         }
     }

@@ -288,13 +288,35 @@ namespace BL
         #endregion
         #region grouping
 
-        IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupByArea()
+        public IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupByArea()
         {
             var guests=myDAL.getRequests();
             var groupArea = from GuestRequest in guests
                             group GuestRequest by GuestRequest.AreaVacation into newGroup
                             select newGroup;
             return groupArea;
+        }
+       public IEnumerable<Order> ordersByUnit(HostingUnit hu)
+        {
+            return groupOrdersByUnit(hu.HostingUnitKey);
+        }
+        public IEnumerable<Order>ordersByUnit(int unitNum)
+        {
+            var allOrders = myDAL.getAllOrders();
+            var thisUnit = from order in allOrders
+                           let orderKey = order.HostingUnitKey//saves unit key for easier access
+                           where orderKey == unitNum
+                           select order;
+            return thisUnit;
+        }
+
+        public string printOrdersByUnit(int unitNum)//return string of all orders from that unit
+        {
+            var orderUnit = ordersByUnit(unitNum);
+            string ans = "";
+            foreach (Order ord in orderUnit)
+                ans += ord;
+            return ans;
         }
 
         #endregion

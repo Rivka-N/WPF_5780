@@ -58,6 +58,11 @@ namespace BE
             this.hostingUnitKey = Configuration.HostingUnit++;
             this.AreaVacation = area;
             Diary = new bool[12,31];
+            childrenAttractions = Enums.Preference.No;
+            garden = Enums.Preference.No;
+            jacuzzi = Enums.Preference.No;
+            pool= Enums.Preference.No;
+
         }
 
         public HostingUnit(Host host, string hostingUnitName, Enums.HostingUnitType zimmer) : this(host)
