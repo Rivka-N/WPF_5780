@@ -12,20 +12,21 @@ namespace BE
         private Int32 hostKey;
         private string name;
         private string lastName;
-        private string mail;
+        private System.Net.Mail.MailAddress mail;
         private Int32 phoneNumber;
         private BankAccount bank;
         #endregion
         #region fields
-        public Int32 HostKey { get; set; }
+        public Int32 HostKey { get=>hostKey; set { hostKey = value; } }
         public string Name { get => name; set { name = value; } }
         public string LastName { get => lastName; set { lastName = value; } }
-        public Int32 Phone { get=>phoneNumber; set { phoneNumber = value; } }
-        
+        public Int32 Phone { get => phoneNumber; set { phoneNumber = value; } }
+        public System.Net.Mail.MailAddress Mail { get => mail; set { mail = value; } }
+        public BankAccount Bank { get => bank; set { bank = value; } }
         public bool CollectionClearance { get; set; }
         #endregion
         #region ctors
-        public Host(int id, string first, string last, string mail, Int32 phone, BankAccount bank, bool CollectionClearance=false)
+        public Host(int id, string first, string last, System.Net.Mail.MailAddress mail, Int32 phone, BankAccount bank, bool CollectionClearance=false)
         {
             hostKey = id;
             name = first;

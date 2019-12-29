@@ -39,10 +39,45 @@ namespace DAL
             HostingUnit target = new HostingUnit(original.Host, original.HostingUnitKey);
             target.HostingUnitName = original.HostingUnitName;
             target.HostingUnitType = original.HostingUnitType;
-            //target.HostingUnitKey = original.HostingUnitKey;
+            target.HostingUnitKey = original.HostingUnitKey;
+            target.AreaVacation = original.AreaVacation;
+            target.ChildrenAttractions = original.ChildrenAttractions;
+            target.Diary = (bool[,])(original.Diary.Clone());
+            target.Garden = original.Garden;
+            target.Host = original.Host.Clone();
+
             return target;
         }
 
+        public static Host Clone(this Host original)
+        {
+            if (original == null)
+                return null;
+            Host target = new Host();
+            target.CollectionClearance = original.CollectionClearance;
+            target.HostKey = original.HostKey;
+            target.LastName = original.LastName;
+            target.Name = original.Name;
+            target.Phone = original.Phone;
+            target.Mail = original.Mail;
+            target.Bank = original.Bank;
+            return target;
+            
+        }
+
+        public static BankAccount Clone(this BankAccount original)
+        {
+            if (original == null)
+                return null;
+            BankAccount target = new BankAccount();
+            target.BankAcountNumber = original.BankAcountNumber;
+            target.BankName = original.BankName;
+            target.BankNumber = original.BankNumber;
+            target.BranchAddress = original.BranchAddress;
+            target.BranchCity = original.BranchCity;
+            target.BranchNumber = original.BranchNumber;
+            return target;
+        }
         public static Order Clone(this Order original)
         {
             if (original == null)

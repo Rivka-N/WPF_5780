@@ -11,10 +11,16 @@ namespace BE
         #region fields
         private Enums.HostingUnitType zimmer;
         private string hostingUnitName;
-        readonly private Int32 hostingUnitKey;
+        private Int32 hostingUnitKey;
         private Enums.HostingUnitType hostingUnitType;
         private Enums.Area area;
         private Host host;
+        Int32 numAdult;
+        Int32 numChildren;
+        Enums.Preference pool;
+        Enums.Preference jacuzzi;
+        Enums.Preference garden;
+        Enums.Preference childrenAttractions;
         #endregion
         #region properties
         public bool[,] Diary { get; set; }
@@ -22,10 +28,23 @@ namespace BE
         public Enums.Area AreaVacation { get => area; set { area = value; } }
         public Host Host { get=>host; set { host = value; } }
         public Enums.HostingUnitType HostingUnitType { get => hostingUnitType; set { hostingUnitType = value; } }
-        public Int32 HostingUnitKey { get => hostingUnitKey; }
+        public Int32 HostingUnitKey { get => hostingUnitKey; set { hostingUnitKey = value; } }
         public Enums.HostingUnitType Zimmer { get=>zimmer; set { zimmer = value; } }
+        public Int32 NumAdult { get => numAdult; set { numAdult = value; } }
+        public Int32 NumChildren { get => numChildren; set { numChildren = value; } }
+        public Enums.Preference Pool { get => pool; set { pool = value; } }
+        public Enums.Preference Jacuzzi { get => jacuzzi; set { jacuzzi = value; } }
+        public Enums.Preference Garden { get => garden; set { garden = value; } }
+        public Enums.Preference ChildrenAttractions { get => childrenAttractions; set { childrenAttractions = value; } }
         #endregion
         #region ctors
+        public HostingUnit()
+        {
+            HostingUnitName = null;
+            HostingUnitKey = 0;
+            Diary = new bool[12, 31];
+
+        }
         public HostingUnit(Host host)
         {
             this.host = host;
@@ -38,7 +57,6 @@ namespace BE
             this.hostingUnitType = hostingUnitType;
             this.hostingUnitKey = Configuration.HostingUnit++;
             this.AreaVacation = area;
-
             Diary = new bool[12,31];
         }
 

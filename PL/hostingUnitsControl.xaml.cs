@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BE;
 
 namespace PL
 {
@@ -19,9 +20,11 @@ namespace PL
     /// </summary>
     public partial class hostingUnitsControl : Window
     {
+        HostingUnit hostingUnit1; 
         public hostingUnitsControl()
         {
             InitializeComponent();
+            hostingUnit1 = new HostingUnit();
         }
     }
 }

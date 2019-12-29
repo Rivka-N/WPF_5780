@@ -48,6 +48,7 @@ namespace BL
 
         public void order(HostingUnit unit, GuestRequest guest)//makes sure that the days in the request available
             //update guest status
+            //take off transaction fee
         {
             DateTime end = guest.ReleaseDate;
             for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//Check availability

@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Text.RegularExpressions
+using System.Text.RegularExpressions;
 using BE;
 using BL;
 
@@ -184,42 +184,42 @@ namespace PL
                     g1.Pool = Enums.Preference.Maybe;//otherwise it's the third state
             }
         }
-        //private void Cb_garden_Checked(object sender, RoutedEventArgs e)
-        //{
-        //    if (cb_garden.IsChecked == true)//changed to true
-        //        g1.Garden = Enums.Preference.Yes;
-        //    else
-        //    {
-        //        if (cb_garden.IsChecked == false)//changed to false
-        //            g1.Garden = Enums.Preference.No;
-        //        else
-        //            g1.Garden = Enums.Preference.Maybe;//otherwise it's the third state
-        //    }
-        //}
-        //private void CheckBox_attractionsChecked(object sender, RoutedEventArgs e)
-        //{
-        //    if (cb_attractions.IsChecked == true)//changed to true
-        //        g1.ChildrenAttractions = Enums.Preference.Yes;
-        //    else
-        //    {
-        //        if (cb_attractions.IsChecked == false)//changed to false
-        //            g1.ChildrenAttractions = Enums.Preference.No;
-        //        else
-        //            g1.ChildrenAttractions = Enums.Preference.Maybe;//otherwise it's the third state
-        //    }
-        //}
-        //private void CheckBox_jaccuziChecked(object sender, RoutedEventArgs e)
-        //{
-        //    if (cb_jaccuzi.IsChecked == true)//changed to true
-        //        g1.Jacuzzi = Enums.Preference.Yes;
-        //    else
-        //    {
-        //        if (cb_jaccuzi.IsChecked == false)//changed to false
-        //            g1.Jacuzzi = Enums.Preference.No;
-        //        else
-        //            g1.Jacuzzi = Enums.Preference.Maybe;//otherwise it's the third state
-        //    }
-        //}
+        private void Cb_garden_Checked(object sender, RoutedEventArgs e)
+        {
+            if (cb_garden.IsChecked == true)//changed to true
+                g1.Garden = Enums.Preference.Yes;
+            else
+            {
+                if (cb_garden.IsChecked == false)//changed to false
+                    g1.Garden = Enums.Preference.No;
+                else
+                    g1.Garden = Enums.Preference.Maybe;//otherwise it's the third state
+            }
+        }
+        private void CheckBox_attractionsChecked(object sender, RoutedEventArgs e)
+        {
+            if (cb_attractions.IsChecked == true)//changed to true
+                g1.ChildrenAttractions = Enums.Preference.Yes;
+            else
+            {
+                if (cb_attractions.IsChecked == false)//changed to false
+                    g1.ChildrenAttractions = Enums.Preference.No;
+                else
+                    g1.ChildrenAttractions = Enums.Preference.Maybe;//otherwise it's the third state
+            }
+        }
+        private void CheckBox_jaccuziChecked(object sender, RoutedEventArgs e)
+        {
+            if (cb_jaccuzi.IsChecked == true)//changed to true
+                g1.Jacuzzi = Enums.Preference.Yes;
+            else
+            {
+                if (cb_jaccuzi.IsChecked == false)//changed to false
+                    g1.Jacuzzi = Enums.Preference.No;
+                else
+                    g1.Jacuzzi = Enums.Preference.Maybe;//otherwise it's the third state
+            }
+        }
         #endregion
 
         #region name and email text changed
