@@ -29,6 +29,8 @@ namespace PL
         {
             InitializeComponent();
             bL = factoryBL.getBL();
+            cb_area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
+            cb_hostingUnitType.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
             //cb_hostingUnitType.DataContext = Enum.GetValues(Enums.Area);
             //cb_hostingUnitType.ItemsSource = Enum.GetValues(Enums.Area);            
             //cb_hostingUnitType.DataContext = bL.getAllHostingUnits();
@@ -231,13 +233,21 @@ namespace PL
         {
             try
             {
-                if (bL.checkGuest(g1))//checks that g1 is valid
+                if (cb_hostingUnitType.SelectedIndex==-1)//check if it wasn't selected
                 {
+                    return;
+                }
+                if (cb_area.SelectedIndex==-1)//check if area wasn't selected
+                    {
+                    return;
+                    }
+                if (bL.checkGuest(g1))//checks that g1 is valid
+                {  
 
                     tb_StartDate.Background = Brushes.White;
                     tb_EndDate.Background = Brushes.White;
 
-                    var foundUnits = bL.findUnit(bL.getAllHostingUnits(), g1);
+                    var foundUnits = bL.findUnit(bL.getAllHostingUnits(), g1);//make sure function works
                     string s = "";
                     foreach (HostingUnit hu in foundUnits)
                         s += hu.ToString();
@@ -253,5 +263,16 @@ namespace PL
 
         }
         #endregion
+        #region comboboxes
+        private void Cb_area_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            g1.AreaVacation = (Enums.Area)(cb_area.SelectedIndex);
+        }
+        #endregion
+
+        private void Cb_hostingUnitType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            g1.TypeOfUnit = (Enums.HostingUnitType)(cb_hostingUnitType.SelectedIndex);
+        }
     }
 }
