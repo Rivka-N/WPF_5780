@@ -22,6 +22,7 @@ namespace BL
         List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest);//find hostingUnit accoerding to the guestRequest
         List<HostingUnit> getAllHostingUnits();
         void deleteUnit(int unit);
+        void changeUnit(HostingUnit hostingUnit1);
         #endregion
         #region orders
         void addOrder(Order ord);
@@ -46,6 +47,8 @@ namespace BL
         void addHostNum(string text, Int32 h1);
         void addHostingUnitNum(string text, int unitKey);
         void addMail(string text, GuestRequest g1);
+        void addMail(string text, Host h1);
+
         bool sameUnit(HostingUnit hu1, int hostsKey);
         bool checkGuest(GuestRequest g1);
 

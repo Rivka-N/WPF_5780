@@ -44,9 +44,9 @@ namespace PL
             try
             {
                 bL.addHostNum(tb_hostNum.Text, hostsKey);
+                h1.HostKey = hostsKey;
                 if (unitKey!=-1)//if also set
                 {
-                    h1.HostKey = hostsKey;
                     if (!bL.sameUnit(hu1, hostsKey))//not same as unit
                     {
                         tb_hostNum_txt.Text = "קוד מארח לא תואם קוד יחידה. הכנס שוב";

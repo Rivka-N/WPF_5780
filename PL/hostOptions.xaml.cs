@@ -32,6 +32,11 @@ namespace PL
 
         private void Pb_addUnit_Click(object sender, RoutedEventArgs e)
         {
+            //add window and unit adding control
+        }
+
+        private void Pb_changeUnit_Click(object sender, RoutedEventArgs e)
+        {
             hostingUnitsControl hostingWindows = new hostingUnitsControl();
             hostingWindows.Show();
         }

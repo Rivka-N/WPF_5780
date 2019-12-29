@@ -16,20 +16,22 @@ namespace DAL
         List <HostingUnit> getHostingUnits(Func<HostingUnit, bool> predicate = null);
         HostingUnit findUnit(int unitKey);
         void deleteUnit(HostingUnit toDelete);
+        void changeUnit(HostingUnit hostingUnit1);
+        void addHostingUnit(HostingUnit unit);
         #endregion
 
         #region GuestRequest
         void addGuest(GuestRequest guest);
-        void addHostingUnit(HostingUnit unit);
-        void addOrder(Order ord);
-        List<GuestRequest> getRequests();
+        
         GuestRequest findGuest(int g1);
         GuestRequest findGuest(GuestRequest g1);//finds by guest key
         List<GuestRequest> getRequests(Func<GuestRequest, bool> predicate);
+        List<GuestRequest> getRequests();
         #endregion
 
         #region order
         List<Order> getAllOrders();
+        void addOrder(Order ord);
         #endregion
         //#region Order
         //void addOrder(Order order);

@@ -45,12 +45,8 @@ namespace BE
             Diary = new bool[12, 31];
 
         }
-        public HostingUnit(Host host)
-        {
-            this.host = host;
-            Diary = new bool[12, 31];
-        }
-        public HostingUnit(Host host, string hostingUnitName, Enums.HostingUnitType hostingUnitType, Enums.Area area)
+
+        public HostingUnit(Host host, string hostingUnitName, Enums.HostingUnitType hostingUnitType, Enums.Area area=Enums.Area.Center)
         {
             this.host = host;
             this.hostingUnitName = hostingUnitName;
@@ -65,19 +61,20 @@ namespace BE
 
         }
 
-        public HostingUnit(Host host, string hostingUnitName, Enums.HostingUnitType zimmer) : this(host)
-        {
-            this.hostingUnitName = hostingUnitName;
-            hostingUnitKey = Configuration.HostingUnit++;
-            this.zimmer = zimmer;
-            Diary = new bool[12, 31];
 
-        }
-
-        public HostingUnit(Host host, int hostingUnitKey) : this(host)
+        public HostingUnit(Host host, int hostingUnitKey)
         {
+            this.Host = host;
             this.hostingUnitKey = hostingUnitKey;
             Diary = new bool[12, 31];
+            this.hostingUnitType = Enums.HostingUnitType.Zimmer;
+            this.hostingUnitKey = Configuration.HostingUnit++;
+            this.AreaVacation = Enums.Area.Center;
+            Diary = new bool[12, 31];
+            childrenAttractions = Enums.Preference.No;
+            garden = Enums.Preference.No;
+            jacuzzi = Enums.Preference.No;
+            pool = Enums.Preference.No;
         }
         #endregion
 

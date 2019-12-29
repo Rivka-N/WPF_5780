@@ -10,9 +10,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Button Name="pb_addUnit" Click="Pb_addUnit_Click" Grid.Row="0" Content="הוסף יחידת אירוח" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <Button Name="pb_order" Click="pb_order_Click" Grid.Row="1" Content="הוסף הזמנה" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button x:Name="pb_changeUnit" Grid.Row="2" Content="שנה יחידת אירוח" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Pb_changeUnit_Click"/>
 
     </Grid>
 </Window>

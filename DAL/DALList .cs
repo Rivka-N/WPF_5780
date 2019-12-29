@@ -39,7 +39,6 @@ namespace DAL
         }
         #endregion
         #region get Lists
-
         public List<HostingUnit> getAllHostingUnits()
         {
             return DS.DataSource.hostingUnits.Select(hus=>(HostingUnit)hus.Clone()).ToList();
@@ -93,8 +92,19 @@ namespace DAL
             if (!DataSource.hostingUnits.Remove(toDelete))//removes unit from list
                 throw new dataException("unable to delete item");
         }
+        #endregion
+        #region change items
+        public void changeUnit(HostingUnit hostingUnit1)
+        { 
+            int index = DataSource.hostingUnits.FindIndex(cur=> { return hostingUnit1.HostingUnitKey == cur.HostingUnitKey; });//finds index of it in list
+            if (index == -1)
+                throw new dataException("unit not found");
+            HostingUnit hu = DataSource.hostingUnits[index].Clone();//clones current unit
+            //checks what changed
+            {
 
-       
+            }
+        }
         #endregion
     }
 }

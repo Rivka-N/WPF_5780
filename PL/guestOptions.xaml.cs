@@ -226,6 +226,20 @@ namespace PL
             }
         }
         #endregion
+        #region comboboxes
+        private void Cb_area_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            tb_area.Background = Brushes.White;
+            g1.AreaVacation = (Enums.Area)(cb_area.SelectedIndex);
+
+        }
+
+        private void Cb_hostingUnitType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            tb_unitType.Background = Brushes.White;
+            g1.TypeOfUnit = (Enums.HostingUnitType)(cb_hostingUnitType.SelectedIndex);
+        }
+        #endregion
         #region continue
         private void Continue_Clicked(object sender, RoutedEventArgs e)
         {
@@ -263,19 +277,6 @@ namespace PL
 
         }
         #endregion
-        #region comboboxes
-        private void Cb_area_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            tb_area.Background = Brushes.White;
-            g1.AreaVacation = (Enums.Area)(cb_area.SelectedIndex);
-
-        }
-
-        private void Cb_hostingUnitType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            tb_unitType.Background = Brushes.White;
-            g1.TypeOfUnit = (Enums.HostingUnitType)(cb_hostingUnitType.SelectedIndex);
-        }
-        #endregion
+        
     }
 }

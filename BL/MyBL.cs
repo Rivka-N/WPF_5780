@@ -172,6 +172,14 @@ namespace BL
 
         }
         #endregion
+        #region change
+        public void changeUnit(HostingUnit hostingUnit1)
+        {
+
+            myDAL.changeUnit(hostingUnit1);
+        }
+
+        #endregion
         #region delete
         public void deleteUnit(int unit)
         {
@@ -282,24 +290,6 @@ namespace BL
         {
             return (hu1.Host.HostKey == hostsKey) ;
         }
-
-        public void addMail(string text, GuestRequest g1)//checks if recieved mail is valid
-        {
-            try
-            {
-                var mail = new System.Net.Mail.MailAddress(text);
-                if (mail.Address != text)
-                    throw new InvalidException("invalid email");
-                g1.Mail = mail;
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidException(ex.Message);
-            }
-
-        }
-
-
         public bool checkGuest(GuestRequest g1)
 
 
@@ -328,9 +318,42 @@ namespace BL
         }
 
         #endregion
+        #region mail
+        public void addMail(string text, GuestRequest g1)//checks if recieved mail is valid
+        {
+            try
+            {   
+               g1.Mail = getMail(text);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidException(ex.Message);
+            }
+
+        }
+        public void addMail(string text, Host h1)
+        {
+            try
+            {
+                h1.Mail = getMail(text);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidException(ex.Message);
+            }
+        }
+        public System.Net.Mail.MailAddress getMail(string text)//cheks if text is email address and returns it if it is
+        {
+            var mail = new System.Net.Mail.MailAddress(text);
+            if (mail.Address != text)
+                throw new InvalidException("invalid email");
+            return mail;
+        }
+       
+        #endregion
         #region LINQ and grouping
 
-        
+
         public IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupByArea()
         {
             var guests=myDAL.getRequests();
@@ -353,9 +376,7 @@ namespace BL
             return thisUnit;
         }
 
-
-
-
+        
         #endregion
     }
 }
