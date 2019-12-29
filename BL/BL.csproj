@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InvalidException.cs" />
     <Compile Include="factoryBL.cs" />
     <Compile Include="IBL.cs" />
     <Compile Include="MyBL.cs" />

@@ -24,7 +24,6 @@ namespace PL
         {
             InitializeComponent();
             bL=factoryBL.getBL();
-            //show all hosting units: binding: bL.getAllHostingUnits()
         }
         #region button clicks
         private void Pb_Orders_Click(object sender, RoutedEventArgs e)

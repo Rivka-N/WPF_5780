@@ -71,7 +71,7 @@ namespace BL
         }
         #endregion
 
-
+        #region find hosting units for order
         public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with the list of units to the guest
         {
             //sends mail to the guest
@@ -98,12 +98,18 @@ namespace BL
             }
             return true;
         }
+        #endregion
 
-        
+
+        #region finding methods
+        public HostingUnit findUnit(int unitKey)
+        {
+            return myDAL.findUnit(unitKey);
+        }
         public List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest)
         {
 
-            List <HostingUnit> listOfUnits = new List<HostingUnit>(); ;
+            List<HostingUnit> listOfUnits = new List<HostingUnit>(); 
             //code
 
             for (int i = 0; i < units.Count(); i++)
@@ -114,28 +120,23 @@ namespace BL
                 }
             }
             if (listOfUnits.Count() == 0)
-                   notFounde();
+                notFounde();
             else
             {
-               if (listOfUnits.Count() <= 5)
-                   mail(listOfUnits, guest);
-               else
+                if (listOfUnits.Count() <= 5)
+                    mail(listOfUnits, guest);
+                else
                 {
                     //code to delete units
                 }
-                
+
 
             }
             return listOfUnits;
 
 
         }
-        #region finding methods
-        public HostingUnit findUnit(int unitKey)
-        {
-            return myDAL.findUnit(unitKey);
-        }
-       
+
         #endregion
 
         #region gets
@@ -159,9 +160,61 @@ namespace BL
             return myDAL.getAllOrders();
         }
 
-  
+        #endregion
+        #region add and check fields from pl
+        public void addEntryDate(DateTime? selectedDate, GuestRequest g1)
+        {
+            g1.EntryDate = (DateTime)selectedDate;
+            if (g1.ReleaseDate!=default(DateTime))
+            {
+                if (g1.ReleaseDate <= g1.EntryDate)
+                    throw new InvalidException("entry date is smaller");
+            }
 
+         }
 
+        public void addReleaseDate(DateTime? selectedDate, GuestRequest g1)
+        {
+            g1.ReleaseDate = (DateTime)selectedDate;
+            if (g1.EntryDate != default(DateTime))
+            {
+                if (g1.ReleaseDate <= g1.EntryDate)
+                    throw new InvalidException("entry date is smaller");
+            }
+            else if (g1.ReleaseDate == DateTime.Today)
+                throw new InvalidException("invalid release date");
+        }
+
+        public void addHostNum(string text, Int32 h1)
+        {
+            if (Int32.TryParse(text, out h1))
+            {
+                if (h1 < 0)
+                    throw new InvalidException("invalid host num");
+            }
+            else
+                throw new InvalidException("invalid host num");
+           
+        }
+
+        public void addHostingUnitNum(string text, int unitKey)
+        {
+            if (Int32.TryParse(text, out unitKey))
+            {
+                if (unitKey<=0)
+                {
+                    throw new InvalidException("invalid unit number");
+                }
+            }
+            else
+                throw new InvalidException("invalid unit number");
+
+        }
+
+        public bool sameUnit(HostingUnit hu1, int hostsKey)
+        {
+            return (hu1.Host.HostKey == hostsKey) ;
+        }
         #endregion
     }
 }

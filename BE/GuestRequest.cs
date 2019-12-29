@@ -48,7 +48,6 @@ namespace BE
 
         #endregion
         #region ctors
-        //tostring
 
         public GuestRequest(string fName, string lName, string em, DateTime enter, DateTime rel, Enums.Area ar, string sArea, Enums.HostingUnitType type, int nAdult, int Nchild, Enums.Preference isPool, Enums.Preference isJacuzzi, Enums.Preference isGarden, Enums.Preference isAttractions)
         {

@@ -33,7 +33,7 @@ namespace DAL
 
         public static HostingUnit Clone(this HostingUnit original)
         {
-            HostingUnit target = new HostingUnit(original.host, original.HostingUnitKey);
+            HostingUnit target = new HostingUnit(original.Host, original.HostingUnitKey);
             target.HostingUnitName = original.HostingUnitName;
             target.HostingUnitType = original.HostingUnitType;
             //target.HostingUnitKey = original.HostingUnitKey;

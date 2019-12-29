@@ -36,45 +36,73 @@ namespace PL
 
         private void Tb_hostNum_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Int32.TryParse(tb_hostingUnit.Text, out hostsKey);//add catch?
-            if (hostsKey>0)
+            try
             {
-                if (unitKey>0)
+                bL.addHostNum(tb_hostNum.Text, hostsKey);
+                if (unitKey!=-1)//if also set
                 {
-                    if (hu1.host.HostKey!=hostsKey)
+                    if (!bL.sameUnit(hu1, hostsKey))
                     {
-                        tb_hostNum.Text = "קוד משתמש וקוד יחידה לא תואמים. הכנס קוד מארח";
+                        tb_hostNum_txt.Text = "קוד מארח לא תואם קוד יחידה. הכנס שוב";
+                    }
+                    else
+                    {
+                        tb_hostNum_txt.Text = "קוד מארח";
                     }
                 }
             }
-
+            catch (InvalidException iEx)
+            {
+                tb_hostNum_txt.Text = "הכנס קוד מארח\n " + iEx.Message;
+            }
+            
         }
 
         private void Tb_hostingUnit_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Int32.TryParse(tb_hostingUnit.Text, out unitKey);//add catch?
-            if (unitKey >= 0)
+            try
             {
-                hu1 = bL.findUnit(unitKey);//check that works
-                if (hu1 == null)//what then?
+                bL.addHostingUnitNum(tb_hostingUnit.Text, unitKey);
+                hu1 = bL.findUnit(unitKey);
+                if (hostsKey!=-1)//already set
                 {
-
-                }
-                else
-                {
-                    if (hostsKey>0)
+                    if (!bL.sameUnit(hu1, hostsKey))
                     {
-                        if (hu1.host.HostKey!=hostsKey)//if this isn't the same numbers
-                        {
-                            tb_hostingUnit_txt.Text = "קוד משתמש וקוד יחידה לא תואמים. הכנס קוד יחידה";
-                        }
+                        tb_hostingUnit_txt.Text = "קוד יחידה לא תואם קוד מארח. הכנס שוב";
+                    }
+                    else
+                    {
+                        tb_hostingUnit_txt.Text = "קוד יחידה";
                     }
                 }
             }
-            else
+            catch(InvalidException iEx)
             {
-                //and in catch-error message
+                tb_hostingUnit_txt.Text = "הכנס קוד יחידת אירוח\n" + iEx.Message;
             }
+            //Int32.TryParse(tb_hostingUnit.Text, out unitKey);//add catch?
+            //if (unitKey >= 0)
+            //{
+            //    hu1 = bL.findUnit(unitKey);//check that works
+            //    if (hu1 == null)//what then?
+            //    {
+
+            //    }
+            //    else
+            //    {
+            //        if (hostsKey>0)
+            //        {
+            //            if (hu1.host.HostKey!=hostsKey)//if this isn't the same numbers
+            //            {
+            //                tb_hostingUnit_txt.Text = "קוד משתמש וקוד יחידה לא תואמים. הכנס קוד יחידה";
+            //            }
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    //and in catch-error message
+            //}
             
            
         }

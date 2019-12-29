@@ -38,6 +38,7 @@ namespace BE
 
         public Host()
         {
+            hostKey = 0;
         }
         #endregion
         public override string ToString()

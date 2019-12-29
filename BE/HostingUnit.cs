@@ -14,14 +14,16 @@ namespace BE
         readonly private Int32 hostingUnitKey;
         private Enums.HostingUnitType hostingUnitType;
         private Enums.Area area;
+        private Host host;
         #endregion
         #region properties
         public bool[,] Diary { get; set; }
         public string HostingUnitName { get => hostingUnitName; set { hostingUnitName = value; } }
         public Enums.Area AreaVacation { get => area; set { area = value; } }
-        public Host host { get; }
+        public Host Host { get=>host; set { host = value; } }
         public Enums.HostingUnitType HostingUnitType { get => hostingUnitType; set { hostingUnitType = value; } }
         public Int32 HostingUnitKey { get => hostingUnitKey; }
+        public Enums.HostingUnitType Zimmer { get=>zimmer; set { zimmer = value; } }
         #endregion
         #region ctors
         public HostingUnit(Host host)
@@ -43,12 +45,16 @@ namespace BE
         public HostingUnit(Host host, string hostingUnitName, Enums.HostingUnitType zimmer) : this(host)
         {
             this.hostingUnitName = hostingUnitName;
+            hostingUnitKey = Configuration.HostingUnit++;
             this.zimmer = zimmer;
+            Diary = new bool[12, 31];
+
         }
 
         public HostingUnit(Host host, int hostingUnitKey) : this(host)
         {
             this.hostingUnitKey = hostingUnitKey;
+            Diary = new bool[12, 31];
         }
         #endregion
 

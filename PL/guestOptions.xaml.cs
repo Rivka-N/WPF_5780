@@ -28,8 +28,8 @@ namespace PL
         {
             InitializeComponent();
             bL = factoryBL.getBL();
-            //cb_hostingUnitType.DataContext=;
-            
+            //cb_hostingUnitType.DataContext = Enum.GetValues(Enums.Area);
+            //cb_hostingUnitType.ItemsSource = Enum.GetValues(Enums.Area);            
             //cb_hostingUnitType.DataContext = bL.getAllHostingUnits();
             //cb_area.DataContext = Enums.Area;
         }
@@ -37,7 +37,18 @@ namespace PL
         #region dates
         private void cl_addEntryDate(object sender, SelectionChangedEventArgs e)
         {
-            g1.EntryDate = (DateTime)cl_EnterDate.SelectedDate;
+            try
+            {
+                bL.addEntryDate(cl_EnterDate.SelectedDate, g1);
+                //tb_EndDate.Text = "בחר תאריך התחלה";
+                tb_StartDate.Text = "תאריך כניסה תקין";
+            }
+            catch
+            {
+                //cl_EnterDate.SelectedDate = DateTime.Now;
+                tb_StartDate.Text = "תאריך כניסה ויציאה לא תואמים. הכנס תאריכים חדשים";
+            }
+            //g1.EntryDate = (DateTime)cl_EnterDate.SelectedDate;
             #region endDate
             //cl_endDate starts from the day after start date
             //updates the statdate in guest
@@ -52,7 +63,19 @@ namespace PL
         }
         private void Cl_addEndDate(object sender, SelectionChangedEventArgs e)
         {
-            g1.ReleaseDate = (DateTime)cl_LeaveDate.SelectedDate;//check not after start date
+            try
+            {
+                bL.addReleaseDate(cl_LeaveDate.SelectedDate, g1);
+                tb_EndDate.Text = "תאריך יציאה תקין";
+
+            }
+            catch
+            {
+                
+                tb_EndDate.Text = "תאריך כניסה ויציאה לא תואמים. הכנס תאריכים חדשים";
+                
+            }
+            //g1.ReleaseDate = (DateTime)cl_LeaveDate.SelectedDate;//check not after start date
         }
         #endregion
 
@@ -64,86 +87,88 @@ namespace PL
         
         private void Continue_Clicked(object sender, RoutedEventArgs e)
         {
-            if (g1.EntryDate<g1.ReleaseDate)//checks that dates are valid. also check that num of people is valid
+            if (g1.EntryDate < g1.ReleaseDate)//checks that dates are valid. also check that num of people is valid
             {
                 bL.addGuest(g1);//adds it as guest
                 tb_StartDate.Background = Brushes.White;
                 tb_EndDate.Background = Brushes.White;
-                pb_continue.Content += "\n" + "בקשתך התקבלה";
-                bL.findUnit(bL.getAllHostingUnits(), g1);
-                /*var unitsList= 
-                 display message of what was found?*/
+                //pb_continue.Content = "\n" + "בקשתך התקבלה";
+                if (g1.NumAdult == 0 && g1.NumChildren == 0)//no guests
+                {
+                    tb_Enter_Adults.Background = Brushes.OrangeRed;
+                    tb_Enter_Child.Background = Brushes.Orange;
+
+
+                }
+                else
+                {
+                    var foundUnits = bL.findUnit(bL.getAllHostingUnits(), g1);
+                    string s = "";
+                    foreach (HostingUnit hu in foundUnits)
+                        s += hu.ToString();
+                    MessageBoxResult mb_completed = MessageBox.Show("units founds\n" + s);
+                    Close();
+                }
             }
+             
             if (!(g1.EntryDate < g1.ReleaseDate))
             {
                 tb_StartDate.Background = Brushes.Red;
                 tb_EndDate.Background = Brushes.Red;
                 tb_StartDate.Text += "\n" + "תאריך כניסה ויציאה לא תקין";//fix after they fix
             }
-        /*    if (tb_Enter_Child==null)
-            {
-
-                tb_Enter_Child.Background = Brushes.OrangeRed;
-                tb_Enter_Child.Text = ""; 
-            }
-            if (tb_Enter_Adults==null)
-            {
-                tb_Enter_Adults.Background = Brushes.OrangeRed;
-                tb_Enter_Adults.Text = "";
-            }*/
+            
 
         }
         #region num people
         private void Tb_Enter_Adults_TextChanged(object sender, TextChangedEventArgs e)
         {
             int text=0;
-            try
-            {
-                Int32.TryParse(tb_Enter_Adults.Text, out text);
-            
-            if (text < 0)
-            {
-                tb_Enter_Adults.Background = Brushes.OrangeRed;
-                tb_Enter_Adults.Text = "";
+            if(Int32.TryParse(tb_Enter_Adults.Text, out text))
+            {              
+                if (text < 0)
+                {
+                    tb_Enter_Adults.Background = Brushes.OrangeRed;
+                    tb_Enter_Adults.Text = "";
+                }
+                else
+                {
+                    g1.NumAdult = text;
+                    tb_Enter_Adults.Background = Brushes.White;
+                }
             }
             else
             {
-                g1.NumAdult = text;
-                tb_Enter_Adults.Background = Brushes.White;
-
-            }
-            }
-            catch (Exception)
-            {
+                
                 tb_Enter_Adults.Background = Brushes.OrangeRed;
                 tb_Enter_Adults.Text = "";
             }
-        }
+            }
+          
 
         private void Tb_Enter_Child_TextChanged(object sender, TextChangedEventArgs e)
         {
             int text = 0;
-            try
-            {
-                Int32.TryParse(tb_Enter_Child.Text, out text);
-            
+            if (Int32.TryParse(tb_Enter_Child.Text, out text))
+            {                             
             if (text < 0)
             {
                 tb_Enter_Child.Background = Brushes.OrangeRed;
                 tb_Enter_Child.Text = "";
             }
+        
             else
             {
                 g1.NumChildren = text;
                 tb_Enter_Child.Background = Brushes.White;
             }
             }
-            catch (Exception)
+            else
             {
                 tb_Enter_Child.Background = Brushes.OrangeRed;
                 tb_Enter_Child.Text = "";
             }
-        }
+            }
         #endregion
         #region checkboxes
         private void Cb_pool_Checked(object sender, RoutedEventArgs e)
@@ -158,42 +183,42 @@ namespace PL
                     g1.Pool = Enums.Preference.Maybe;//otherwise it's the third state
             }
         }
-        private void Cb_garden_Checked(object sender, RoutedEventArgs e)
-        {
-            if (cb_garden.IsChecked == true)//changed to true
-                g1.Garden = Enums.Preference.Yes;
-            else
-            {
-                if (cb_garden.IsChecked == false)//changed to false
-                    g1.Garden = Enums.Preference.No;
-                else
-                    g1.Garden = Enums.Preference.Maybe;//otherwise it's the third state
-            }
-        }
-        private void CheckBox_attractionsChecked(object sender, RoutedEventArgs e)
-        {
-            if (cb_attractions.IsChecked == true)//changed to true
-                g1.ChildrenAttractions = Enums.Preference.Yes;
-            else
-            {
-                if (cb_attractions.IsChecked == false)//changed to false
-                    g1.ChildrenAttractions = Enums.Preference.No;
-                else
-                    g1.ChildrenAttractions = Enums.Preference.Maybe;//otherwise it's the third state
-            }
-        }
-        private void CheckBox_jaccuziChecked(object sender, RoutedEventArgs e)
-        {
-            if (cb_jaccuzi.IsChecked == true)//changed to true
-                g1.Jacuzzi = Enums.Preference.Yes;
-            else
-            {
-                if (cb_jaccuzi.IsChecked == false)//changed to false
-                    g1.Jacuzzi = Enums.Preference.No;
-                else
-                    g1.Jacuzzi = Enums.Preference.Maybe;//otherwise it's the third state
-            }
-        }
+        //private void Cb_garden_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    if (cb_garden.IsChecked == true)//changed to true
+        //        g1.Garden = Enums.Preference.Yes;
+        //    else
+        //    {
+        //        if (cb_garden.IsChecked == false)//changed to false
+        //            g1.Garden = Enums.Preference.No;
+        //        else
+        //            g1.Garden = Enums.Preference.Maybe;//otherwise it's the third state
+        //    }
+        //}
+        //private void CheckBox_attractionsChecked(object sender, RoutedEventArgs e)
+        //{
+        //    if (cb_attractions.IsChecked == true)//changed to true
+        //        g1.ChildrenAttractions = Enums.Preference.Yes;
+        //    else
+        //    {
+        //        if (cb_attractions.IsChecked == false)//changed to false
+        //            g1.ChildrenAttractions = Enums.Preference.No;
+        //        else
+        //            g1.ChildrenAttractions = Enums.Preference.Maybe;//otherwise it's the third state
+        //    }
+        //}
+        //private void CheckBox_jaccuziChecked(object sender, RoutedEventArgs e)
+        //{
+        //    if (cb_jaccuzi.IsChecked == true)//changed to true
+        //        g1.Jacuzzi = Enums.Preference.Yes;
+        //    else
+        //    {
+        //        if (cb_jaccuzi.IsChecked == false)//changed to false
+        //            g1.Jacuzzi = Enums.Preference.No;
+        //        else
+        //            g1.Jacuzzi = Enums.Preference.Maybe;//otherwise it's the third state
+        //    }
+        //}
         #endregion
     }
 
