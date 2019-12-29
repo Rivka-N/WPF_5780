@@ -26,5 +26,10 @@ namespace PL
             InitializeComponent();
             hostingUnit1 = new HostingUnit();
         }
+
+        private void Pb_delete_Click(object sender, RoutedEventArgs e)
+        {
+            //check no open orders connected to it
+        }
     }
 }

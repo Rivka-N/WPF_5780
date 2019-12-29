@@ -81,10 +81,10 @@ namespace BL
             guest.Mailed = new DateTime();
         }
 
-        public void notFounde()//if there are no units that match
-        {
+        //public void notFounde()//if there are no units that match
+        //{
 
-        }
+        //}
 
         public bool available(HostingUnit unit, GuestRequest guest)
         {
@@ -134,7 +134,8 @@ namespace BL
                 }
             }
             if (listOfUnits.Count() == 0)
-                notFounde();
+                throw new InvalidException("no units found");
+            //notFounde();
             else
             {
                 if (listOfUnits.Count() <= 5)
@@ -257,6 +258,44 @@ namespace BL
         }
 
 
+        public bool checkGuest(GuestRequest g1)
+
+
+        {
+            if (g1.EntryDate == default(DateTime) || g1.ReleaseDate < g1.EntryDate)//invalid date
+                throw new InvalidException("invalid date");
+            if (g1.NumAdult == 0 && g1.NumChildren == 0)//no guests
+                throw new InvalidException("invalid number of guests");
+            if (g1.Name == null || g1.Name == "")
+                throw new InvalidException("invalid first name");
+            if (g1.LastName == null || g1.LastName == "")//invalid last name
+                throw new InvalidException("invalid last name" +
+                    "");
+            if (g1.Mail == null)//has mail address
+                throw new InvalidException("invalid email");
+            try
+            {
+                addGuest(g1);//if it's valid adds the guest
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidException(ex.Message);
+            }
+
+        }
+
+        #endregion
+        #region grouping
+
+        IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupByArea()
+        {
+            var guests=myDAL.getRequests();
+            var groupArea = from GuestRequest in guests
+                            group GuestRequest by GuestRequest.AreaVacation into newGroup
+                            select newGroup;
+            return groupArea;
+        }
 
         #endregion
     }

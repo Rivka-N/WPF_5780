@@ -60,7 +60,7 @@ namespace DAL
             target.Name = original.Name;
             target.Phone = original.Phone;
             target.Mail = original.Mail;
-            target.Bank = original.Bank;
+            target.Bank = original.Bank.Clone() ;
             return target;
             
         }
@@ -78,6 +78,7 @@ namespace DAL
             target.BranchNumber = original.BranchNumber;
             return target;
         }
+
         public static Order Clone(this Order original)
         {
             if (original == null)

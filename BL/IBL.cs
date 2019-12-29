@@ -37,7 +37,7 @@ namespace BL
                 //needs to recieve guestRequest or mailing address too
 
             */
-        void notFounde();
+        //void notFounde();
 
         #endregion
 
@@ -49,7 +49,11 @@ namespace BL
         void addHostingUnitNum(string text, int unitKey);
         void addMail(string text, GuestRequest g1);
         bool sameUnit(HostingUnit hu1, int hostsKey);
+        bool checkGuest(GuestRequest g1);
 
+        #endregion
+        #region grouping
+        //groupByArea()
         #endregion
     }
 }

@@ -86,41 +86,7 @@ namespace PL
             //add check that sub area is in area
         }
 
-        private void Continue_Clicked(object sender, RoutedEventArgs e)
-        {
-            if (g1.EntryDate < g1.ReleaseDate)//checks that dates are valid. also check that num of people is valid
-            {
-                bL.addGuest(g1);//adds it as guest
-                tb_StartDate.Background = Brushes.White;
-                tb_EndDate.Background = Brushes.White;
-                //pb_continue.Content = "\n" + "בקשתך התקבלה";
-                if (g1.NumAdult == 0 && g1.NumChildren == 0)//no guests
-                {
-                    tb_Enter_Adults.Background = Brushes.OrangeRed;
-                    tb_Enter_Child.Background = Brushes.Orange;
-
-
-                }
-                else
-                {
-                    var foundUnits = bL.findUnit(bL.getAllHostingUnits(), g1);
-                    string s = "";
-                    foreach (HostingUnit hu in foundUnits)
-                        s += hu.ToString();
-                    MessageBoxResult mb_completed = MessageBox.Show("units founds\n" + s);
-                    Close();
-                }
-            }
-
-            if (!(g1.EntryDate < g1.ReleaseDate))
-            {
-                tb_StartDate.Background = Brushes.Red;
-                tb_EndDate.Background = Brushes.Red;
-                tb_StartDate.Text += "\n" + "תאריך כניסה ויציאה לא תקין";//fix after they fix
-            }
-
-
-        }
+        
         #region num people
         private void Tb_Enter_Adults_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -258,6 +224,33 @@ namespace PL
                 tb_first.Text = "";
                 tb_first.Background = Brushes.Red;
             }
+        }
+        #endregion
+        #region continue
+        private void Continue_Clicked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (bL.checkGuest(g1))//checks that g1 is valid
+                {
+
+                    tb_StartDate.Background = Brushes.White;
+                    tb_EndDate.Background = Brushes.White;
+
+                    var foundUnits = bL.findUnit(bL.getAllHostingUnits(), g1);
+                    string s = "";
+                    foreach (HostingUnit hu in foundUnits)
+                        s += hu.ToString();
+                    //prints mail sent or tostrings
+                }
+
+            }
+            catch(Exception ex)
+            {
+                MessageBoxResult mbr = MessageBox.Show(ex.Message);
+            }
+
+
         }
         #endregion
     }

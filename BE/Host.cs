@@ -16,7 +16,7 @@ namespace BE
         private Int32 phoneNumber;
         private BankAccount bank;
         #endregion
-        #region fields
+        #region properties
         public Int32 HostKey { get=>hostKey; set { hostKey = value; } }
         public string Name { get => name; set { name = value; } }
         public string LastName { get => lastName; set { lastName = value; } }
@@ -40,6 +40,7 @@ namespace BE
         public Host()
         {
             hostKey = 0;
+            CollectionClearance = false;
         }
         #endregion
         public override string ToString()
