@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="hostingUnitsControl" Height="450" Width="800">
     <Grid>
-        
+        <Button Name="pb_delete" Content="מחק יחידה" HorizontalAlignment="Left" Margin="10,372,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Name="pb_update" Content="שנה יחידה" HorizontalAlignment="Left" Margin="10,324,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Name="pb_add" Content="הוסף יחידה" HorizontalAlignment="Left" Margin="10,276,0,0" VerticalAlignment="Top" Width="75"/>
+
     </Grid>
 </Window>
