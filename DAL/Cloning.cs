@@ -11,6 +11,8 @@ namespace DAL
     {
         public static GuestRequest Clone(this GuestRequest original)
         {
+            if (original == null)
+                return null;
             GuestRequest target = new GuestRequest(original.GuestRequestKey, original.Registration);
             target.Name = original.Name;
             target.LastName = original.LastName;
@@ -32,7 +34,8 @@ namespace DAL
         }
 
         public static HostingUnit Clone(this HostingUnit original)
-        {
+        {   if (original == null)
+                return null;
             HostingUnit target = new HostingUnit(original.Host, original.HostingUnitKey);
             target.HostingUnitName = original.HostingUnitName;
             target.HostingUnitType = original.HostingUnitType;
@@ -42,6 +45,8 @@ namespace DAL
 
         public static Order Clone(this Order original)
         {
+            if (original == null)
+                return null;
             Order target = new Order(original.CreateDate, original.OrderDate);
             target.HostingUnitKey = original.HostingUnitKey;
             target.GuestRequestKey = original.GuestRequestKey;

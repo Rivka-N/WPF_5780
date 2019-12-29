@@ -25,6 +25,7 @@ namespace BL
         #region orders
         void addOrder(Order ord);
         List<Order> getAllOrders();
+        void checkOrder(Host h1, HostingUnit hu1, GuestRequest g1, GuestRequest foundGuest);
         void order(HostingUnit unit, GuestRequest guest);//add order
         bool available(HostingUnit unit, GuestRequest guest);
        
@@ -32,12 +33,14 @@ namespace BL
         //not finished functions
         /*        void deleteUnit(HostingUnit unit);
 
-                void mail(List<HostingUnit> Offers);//sends mail to the guest with all the hostingUnits which appropriate
+                void mail(List<HostingUnit> Offers);//sends mail to the guest with all the hostingUnits which appropriate. 
+                //needs to recieve guestRequest or mailing address too
 
             */
         void notFounde();
-        bool sameUnit(HostingUnit hu1, int hostsKey);
+
         #endregion
+
         #region pl set fields check
 
         void addEntryDate(DateTime? selectedDate, GuestRequest g1);
@@ -45,7 +48,7 @@ namespace BL
         void addHostNum(string text, Int32 h1);
         void addHostingUnitNum(string text, int unitKey);
         void addMail(string text, GuestRequest g1);
-        void checkOrder(Host h1, HostingUnit hu1, GuestRequest g1, GuestRequest foundGuest);
+        bool sameUnit(HostingUnit hu1, int hostsKey);
 
         #endregion
     }

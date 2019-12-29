@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions
 using BE;
 using BL;
 
@@ -54,12 +55,12 @@ namespace PL
             //updates the statdate in guest
             //add field to guest to update date only if it's not set yet.
             //cl_EndDate.DisplayDateStart = tomorrow.AddDays(1);//sets the start date to tomorrow so the stay will be at least one day long
-            
+
             //change enddate visibility: works
             //cl_EndDate.Visibility = Visibility.Visible;//makes enddate visible to choose from now
             //tb_EndDate.Visibility = Visibility.Visible;
             #endregion
-            
+
         }
         private void Cl_addEndDate(object sender, SelectionChangedEventArgs e)
         {
@@ -71,9 +72,9 @@ namespace PL
             }
             catch
             {
-                
+
                 tb_EndDate.Text = "תאריך כניסה ויציאה לא תואמים. הכנס תאריכים חדשים";
-                
+
             }
             //g1.ReleaseDate = (DateTime)cl_LeaveDate.SelectedDate;//check not after start date
         }
@@ -83,8 +84,8 @@ namespace PL
         {
             g1.SubArea = tb_subArea.Text;
             //add check that sub area is in area
-        }     
-        
+        }
+
         private void Continue_Clicked(object sender, RoutedEventArgs e)
         {
             if (g1.EntryDate < g1.ReleaseDate)//checks that dates are valid. also check that num of people is valid
@@ -110,22 +111,22 @@ namespace PL
                     Close();
                 }
             }
-             
+
             if (!(g1.EntryDate < g1.ReleaseDate))
             {
                 tb_StartDate.Background = Brushes.Red;
                 tb_EndDate.Background = Brushes.Red;
                 tb_StartDate.Text += "\n" + "תאריך כניסה ויציאה לא תקין";//fix after they fix
             }
-            
+
 
         }
         #region num people
         private void Tb_Enter_Adults_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int text=0;
-            if(Int32.TryParse(tb_Enter_Adults.Text, out text))
-            {              
+            int text = 0;
+            if (Int32.TryParse(tb_Enter_Adults.Text, out text))
+            {
                 if (text < 0)
                 {
                     tb_Enter_Adults.Background = Brushes.OrangeRed;
@@ -139,36 +140,36 @@ namespace PL
             }
             else
             {
-                
+
                 tb_Enter_Adults.Background = Brushes.OrangeRed;
                 tb_Enter_Adults.Text = "";
             }
-            }
-          
+        }
+
 
         private void Tb_Enter_Child_TextChanged(object sender, TextChangedEventArgs e)
         {
             int text = 0;
             if (Int32.TryParse(tb_Enter_Child.Text, out text))
-            {                             
-            if (text < 0)
+            {
+                if (text < 0)
+                {
+                    tb_Enter_Child.Background = Brushes.OrangeRed;
+                    tb_Enter_Child.Text = "";
+                }
+
+                else
+                {
+                    g1.NumChildren = text;
+                    tb_Enter_Child.Background = Brushes.White;
+                }
+            }
+            else
             {
                 tb_Enter_Child.Background = Brushes.OrangeRed;
                 tb_Enter_Child.Text = "";
             }
-        
-            else
-            {
-                g1.NumChildren = text;
-                tb_Enter_Child.Background = Brushes.White;
-            }
-            }
-            else
-            {
-                tb_Enter_Child.Background = Brushes.OrangeRed;
-                tb_Enter_Child.Text = "";
-            }
-            }
+        }
         #endregion
         #region checkboxes
         private void Cb_pool_Checked(object sender, RoutedEventArgs e)
@@ -233,7 +234,31 @@ namespace PL
                 tb_email_txt.Text = "כתובת מייל לא תקין.\n הכנס מייל";
             }
         }
+
+        private void Tb_last_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Regex.IsMatch(tb_last.Text, @"^[a-zA-Z]+$"))
+            {
+                g1.LastName = tb_last.Text;
+            }
+            else
+            { tb_last.Text = "";
+                tb_last.Background = Brushes.Red;
+            }
+        }
+
+        private void Tb_first_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Regex.IsMatch(tb_first.Text, @"^[a-zA-Z]+$"))
+            {
+                g1.Name = tb_first.Text;
+            }
+            else
+            {
+                tb_first.Text = "";
+                tb_first.Background = Brushes.Red;
+            }
+        }
         #endregion
     }
-
 }

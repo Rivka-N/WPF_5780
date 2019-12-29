@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions
 using BE;
 using BL;
 namespace PL
@@ -91,32 +92,49 @@ namespace PL
 
 
         #endregion
-
+        #region guest fields
         private void Tb_guestLast_TextChanged(object sender, TextChangedEventArgs e)
         {
-           g1.LastName=tb_guestLast.Text;
-            if (FoundGuest!=null)
-            { if (FoundGuest.LastName != g1.LastName)
+            if (Regex.IsMatch(tb_guestLast.Text, @"^[a-zA-Z]+$"))
+            {
+                g1.LastName = tb_guestLast.Text;
+                if (FoundGuest != null)
                 {
-                    tb_guestLast.Background = Brushes.OrangeRed;
-                    tb_guestLast.Text = "";
+                    if (FoundGuest.LastName != g1.LastName)
+                    {
+                        tb_guestLast.Background = Brushes.OrangeRed;
+                        tb_guestLast.Text = "";
+                    }
+
                 }
-            
+            }
+            else
+            {
+                tb_guestLast.Background = Brushes.OrangeRed;
+                tb_guestLast.Text = "";
             }
 
         }
 
         private void Tb_guestFirst_TextChanged(object sender, TextChangedEventArgs e)
         {
-            g1.Name = tb_guestFirst.Text;
-            if (FoundGuest != null)
+            if (Regex.IsMatch(tb_guestFirst.Text, @"^[a-zA-Z]+$"))
             {
-                if (FoundGuest.Name != g1.Name)
+                g1.Name = tb_guestFirst.Text;
+                if (FoundGuest != null)
                 {
-                    tb_guestFirst.Background = Brushes.OrangeRed;
-                    tb_guestFirst.Text = "";
-                }
+                    if (FoundGuest.Name != g1.Name)
+                    {
+                        tb_guestFirst.Background = Brushes.OrangeRed;
+                        tb_guestFirst.Text = "";
+                    }
 
+                }
+            }
+            else
+            {
+                tb_guestFirst.Background = Brushes.OrangeRed;
+                tb_guestFirst.Text = "";
             }
 
         }
@@ -140,7 +158,7 @@ namespace PL
                 tb_guestKey_txt.Text = " מספר אורח לא תקין\n";
             }
         }
-
+        #endregion
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             try
