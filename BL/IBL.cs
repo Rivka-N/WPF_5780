@@ -12,8 +12,10 @@ namespace BL
         void addGuest(GuestRequest guest);
         void addHostingUnit(HostingUnit unit);
         List<GuestRequest> getRequests();
+        GuestRequest findGuest(GuestRequest g1, string text);//puts text as g1's number and returns instance of it in ds if found
+
         #endregion
-       
+
         #region hosting Units
         HostingUnit findUnit(int unitKey);
         List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest);//find hostingUnit accoerding to the guestRequest
@@ -42,6 +44,8 @@ namespace BL
         void addReleaseDate(DateTime? selectedDate, GuestRequest g1);
         void addHostNum(string text, Int32 h1);
         void addHostingUnitNum(string text, int unitKey);
+        void addMail(string text, GuestRequest g1);
+        void checkOrder(Host h1, HostingUnit hu1, GuestRequest g1, GuestRequest foundGuest);
 
         #endregion
     }

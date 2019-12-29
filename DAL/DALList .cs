@@ -66,9 +66,13 @@ namespace DAL
         #region search functions
         public HostingUnit findUnit(int unitKey)//returns first instance of unitKey as a hosting unit key inside list of hosting units
         {
-            return DataSource.hostingUnits.Find(hu => hu.HostingUnitKey == unitKey);
+            return DataSource.hostingUnits.Find(hu => hu.HostingUnitKey == unitKey).Clone();
         }
 
+        public GuestRequest findGuest(GuestRequest g1)
+        {
+            return DataSource.guestRequests.Find(guest => guest.GuestRequestKey == g1.GuestRequestKey).Clone();
+        }
 
         #endregion
     }

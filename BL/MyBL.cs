@@ -47,6 +47,7 @@ namespace BL
         }
 
         public void order(HostingUnit unit, GuestRequest guest)//makes sure that the days in the request available
+            //update guest status
         {
             DateTime end = guest.ReleaseDate;
             for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//Check availability
@@ -71,7 +72,7 @@ namespace BL
         }
         #endregion
 
-        #region find hosting units for order
+        #region order
         public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with the list of units to the guest
         {
             //sends mail to the guest
@@ -98,6 +99,18 @@ namespace BL
             }
             return true;
         }
+
+        public void checkOrder(Host h1, HostingUnit hu1, GuestRequest g1, GuestRequest foundGuest)//if it's a valid order, adds it to orders
+        {
+            if (h1.HostKey != hu1.Host.HostKey)
+                throw new InvalidException("host details don't match");
+            if (g1.GuestRequestKey != foundGuest.GuestRequestKey)
+                throw new InvalidException("guest details don't match");
+            if (foundGuest.Status == Enums.OrderStatus.Closed)
+                throw new InvalidException("guest already booked");
+            order(hu1, foundGuest);//adds order
+        }
+
         #endregion
 
 
@@ -137,6 +150,16 @@ namespace BL
 
         }
 
+        public GuestRequest findGuest(GuestRequest g1, string text)
+        {
+            int guestNum;
+            if (!Int32.TryParse(text, out guestNum)||guestNum<=0)
+                throw new InvalidException("invalid guest number");
+            g1.GuestRequestKey = guestNum;
+            return (myDAL.findGuest(g1));
+            
+
+        }
         #endregion
 
         #region gets
@@ -162,7 +185,7 @@ namespace BL
 
         #endregion
         #region add and check fields from pl
-        public void addEntryDate(DateTime? selectedDate, GuestRequest g1)
+        public void addEntryDate(DateTime? selectedDate, GuestRequest g1)//adds selected date to guest
         {
             g1.EntryDate = (DateTime)selectedDate;
             if (g1.ReleaseDate!=default(DateTime))
@@ -185,7 +208,7 @@ namespace BL
                 throw new InvalidException("invalid release date");
         }
 
-        public void addHostNum(string text, Int32 h1)
+        public void addHostNum(string text, Int32 h1)//adds host number to host
         {
             if (Int32.TryParse(text, out h1))
             {
@@ -197,7 +220,7 @@ namespace BL
            
         }
 
-        public void addHostingUnitNum(string text, int unitKey)
+        public void addHostingUnitNum(string text, int unitKey)//adds hosting unit number recieved to hosting unit
         {
             if (Int32.TryParse(text, out unitKey))
             {
@@ -211,10 +234,29 @@ namespace BL
 
         }
 
-        public bool sameUnit(HostingUnit hu1, int hostsKey)
+        public bool sameUnit(HostingUnit hu1, int hostsKey)//checks if hu1 and hostkey point to the same unit
         {
             return (hu1.Host.HostKey == hostsKey) ;
         }
+
+        public void addMail(string text, GuestRequest g1)//checks if recieved mail is valid
+        {
+            try
+            {
+                var mail = new System.Net.Mail.MailAddress(text);
+                if (mail.Address != text)
+                    throw new InvalidException("invalid email");
+                g1.Mail = mail;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidException(ex.Message);
+            }
+
+        }
+
+
+
         #endregion
     }
 }

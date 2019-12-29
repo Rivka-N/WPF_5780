@@ -9,13 +9,13 @@ namespace BE
     public class GuestRequest
     {
         #region fields
-        public int GuestRequestKey { get; }
+        public int GuestRequestKey { get; set; }
         string name;
         public string Name { get => name; set { name = value; } }
         string lastName;
         public string LastName { get => lastName; set { lastName = value; } }
-        string mail;
-        public string Mail { get => mail; set { mail = Mail; } }
+        System.Net.Mail.MailAddress mail;
+        public System.Net.Mail.MailAddress Mail { get => mail; set { mail = value; } }
         DateTime mailed;
         public DateTime Mailed { get => mailed; set { mailed = value; } }
         public Enums.OrderStatus Status { get; set; }
@@ -44,36 +44,36 @@ namespace BE
         Enums.Preference childrenAttractions;
         public Enums.Preference ChildrenAttractions { get => childrenAttractions; set { childrenAttractions = value; } }
         public int NumSuggestions { get; set; }//number of hosting suggestions
-        
+
 
         #endregion
         #region ctors
 
-        public GuestRequest(string fName, string lName, string em, DateTime enter, DateTime rel, Enums.Area ar, string sArea, Enums.HostingUnitType type, int nAdult, int Nchild, Enums.Preference isPool, Enums.Preference isJacuzzi, Enums.Preference isGarden, Enums.Preference isAttractions)
-        {
-            //add default to enum type 
+        //public GuestRequest(string fName, string lName, string em, DateTime enter, DateTime rel, Enums.Area ar, string sArea, Enums.HostingUnitType type, int nAdult, int Nchild, Enums.Preference isPool, Enums.Preference isJacuzzi, Enums.Preference isGarden, Enums.Preference isAttractions)
+        //{
+        //    //add default to enum type 
 
-            GuestRequestKey = Configuration.GuestRequest;
-            name = fName;
-            lastName = lName;
-            mail = em;
-            registration = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
-            entryDate = enter;
-            releaseDate = rel;
-            area = ar;
-            subArea = sArea;
-            typeOfUnit = type;
-            numAdult = nAdult;
-            numChildren = Nchild;
-            pool = isPool;
-            jacuzzi = isJacuzzi;
-            garden = isGarden;
-            childrenAttractions = isAttractions;
-            NumSuggestions = -1;//none yet
-            Status = Enums.OrderStatus.Started;
-            Configuration.GuestRequest++;
+        //    GuestRequestKey = Configuration.GuestRequest;
+        //    name = fName;
+        //    lastName = lName;
+        //    mail = em;
+        //    registration = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
+        //    entryDate = enter;
+        //    releaseDate = rel;
+        //    area = ar;
+        //    subArea = sArea;
+        //    typeOfUnit = type;
+        //    numAdult = nAdult;
+        //    numChildren = Nchild;
+        //    pool = isPool;
+        //    jacuzzi = isJacuzzi;
+        //    garden = isGarden;
+        //    childrenAttractions = isAttractions;
+        //    NumSuggestions = -1;//none yet
+        //    Status = Enums.OrderStatus.Started;
+        //    Configuration.GuestRequest++;
 
-        }
+        //}
         public GuestRequest(int guestKey=0, DateTime registerDate=default(DateTime))
         {
             GuestRequestKey = guestKey == 0 ? Configuration.GuestRequest++ : GuestRequestKey = guestKey;

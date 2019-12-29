@@ -220,6 +220,20 @@ namespace PL
         //    }
         //}
         #endregion
+
+        #region name and email text changed
+        private void Tb_email_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                bL.addMail(tb_email.Text, g1);
+            }
+            catch
+            {
+                tb_email_txt.Text = "כתובת מייל לא תקין.\n הכנס מייל";
+            }
+        }
+        #endregion
     }
 
 }

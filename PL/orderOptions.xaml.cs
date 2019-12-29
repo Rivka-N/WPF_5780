@@ -25,6 +25,8 @@ namespace PL
         int hostsKey;
         HostingUnit hu1;
         private IBL bL;
+        GuestRequest g1;
+        GuestRequest FoundGuest;
         public orderOptions()
         {
             InitializeComponent();
@@ -32,8 +34,10 @@ namespace PL
             unitKey = -1;
             hostsKey = -1;
             bL = factoryBL.getBL();
+            g1 = new GuestRequest();
+            FoundGuest = null;
         }
-
+        #region host and unit checks
         private void Tb_hostNum_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -41,12 +45,14 @@ namespace PL
                 bL.addHostNum(tb_hostNum.Text, hostsKey);
                 if (unitKey!=-1)//if also set
                 {
-                    if (!bL.sameUnit(hu1, hostsKey))
+                    h1.HostKey = hostsKey;
+                    if (!bL.sameUnit(hu1, hostsKey))//not same as unit
                     {
                         tb_hostNum_txt.Text = "קוד מארח לא תואם קוד יחידה. הכנס שוב";
                     }
                     else
                     {
+                      
                         tb_hostNum_txt.Text = "קוד מארח";
                     }
                 }
@@ -80,31 +86,74 @@ namespace PL
             {
                 tb_hostingUnit_txt.Text = "הכנס קוד יחידת אירוח\n" + iEx.Message;
             }
-            //Int32.TryParse(tb_hostingUnit.Text, out unitKey);//add catch?
-            //if (unitKey >= 0)
-            //{
-            //    hu1 = bL.findUnit(unitKey);//check that works
-            //    if (hu1 == null)//what then?
-            //    {
-
-            //    }
-            //    else
-            //    {
-            //        if (hostsKey>0)
-            //        {
-            //            if (hu1.host.HostKey!=hostsKey)//if this isn't the same numbers
-            //            {
-            //                tb_hostingUnit_txt.Text = "קוד משתמש וקוד יחידה לא תואמים. הכנס קוד יחידה";
-            //            }
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    //and in catch-error message
-            //}
-            
            
+        }
+
+
+        #endregion
+
+        private void Tb_guestLast_TextChanged(object sender, TextChangedEventArgs e)
+        {
+           g1.LastName=tb_guestLast.Text;
+            if (FoundGuest!=null)
+            { if (FoundGuest.LastName != g1.LastName)
+                {
+                    tb_guestLast.Background = Brushes.OrangeRed;
+                    tb_guestLast.Text = "";
+                }
+            
+            }
+
+        }
+
+        private void Tb_guestFirst_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            g1.Name = tb_guestFirst.Text;
+            if (FoundGuest != null)
+            {
+                if (FoundGuest.Name != g1.Name)
+                {
+                    tb_guestFirst.Background = Brushes.OrangeRed;
+                    tb_guestFirst.Text = "";
+                }
+
+            }
+
+        }
+
+        private void Tb_guestKey_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                FoundGuest= bL.findGuest(g1, tb_guestKey.Text);
+                if (FoundGuest==null)//wasn't found
+                {
+                    tb_guestKey_txt.Text = " מספר אורח לא תקין\n";
+                }
+                else
+                {
+                    tb_guestKey_txt.Text = "מספר אורח";
+                }
+            }
+            catch
+            {
+                tb_guestKey_txt.Text = " מספר אורח לא תקין\n";
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bL.checkOrder(h1, hu1, g1, FoundGuest);
+                MessageBoxResult mbr = MessageBox.Show("הזמנה הוספה");
+                Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBoxResult mbr =  MessageBox.Show(ex.Message);
+
+            }
         }
     }
 }

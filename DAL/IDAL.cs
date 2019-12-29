@@ -23,6 +23,7 @@ namespace DAL
         void addOrder(Order ord);
         List<GuestRequest> getRequests();
         List<Order> getAllOrders();
+        GuestRequest findGuest(GuestRequest g1);//finds by guest key
         #endregion
 
         //#region Order

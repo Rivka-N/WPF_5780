@@ -17,14 +17,14 @@
         </ObjectDataProvider>
     </Window.Resources>-->
     <Grid>
-        <Viewbox Name="vb_Calendar_EnterDate" HorizontalAlignment="Left" Height="131" Margin="137,24,0,0" VerticalAlignment="Top" Width="147">
+        <Viewbox Name="vb_Calendar_EnterDate" HorizontalAlignment="Left" Height="131" Margin="34,132,0,0" VerticalAlignment="Top" Width="146">
             <Calendar Name="cl_EnterDate" HorizontalAlignment="Center" VerticalAlignment="Center" DisplayDateStart="{x:Static sys:DateTime.Now}" SelectedDatesChanged="cl_addEntryDate"/>
         </Viewbox>
-        <Viewbox Name="vb_Calendar_LeaveDate" HorizontalAlignment="Left" Height="131" VerticalAlignment="Top" Width="147" Margin="137,171,0,0">
+        <Viewbox Name="vb_Calendar_LeaveDate" HorizontalAlignment="Left" Height="131" VerticalAlignment="Top" Width="146" Margin="34,279,0,0">
             <Calendar Name="cl_LeaveDate" HorizontalAlignment="Center" VerticalAlignment="Center" DisplayDateStart="{x:Static sys:DateTime.Now}" SelectedDatesChanged="Cl_addEndDate"/>
         </Viewbox>
-        <TextBlock Name="tb_StartDate" HorizontalAlignment="Left" Margin="289,36,0,0" TextWrapping="Wrap" Text="בחר תאריך התחלה" VerticalAlignment="Top" Padding="10"/>
-        <TextBlock  Name="tb_EndDate" HorizontalAlignment="Left" Margin="284,171,0,0" TextWrapping="Wrap" Text="בחר תאריך סיום" VerticalAlignment="Top" Padding="10"/>
+        <TextBlock Name="tb_StartDate" HorizontalAlignment="Left" Margin="186,144,0,0" TextWrapping="Wrap" Text="בחר תאריך התחלה" VerticalAlignment="Top" Padding="10"/>
+        <TextBlock  Name="tb_EndDate" HorizontalAlignment="Left" Margin="180,279,0,0" TextWrapping="Wrap" Text="בחר תאריך סיום" VerticalAlignment="Top" Padding="10"/>
         <CheckBox Name="cb_pool" Content="בריכה" HorizontalAlignment="Left" Margin="481,36,0,0" VerticalAlignment="Top" IsThreeState="True" IsChecked="{x:Null}" Checked="Cb_pool_Checked"/>
         <!--<CheckBox Name="cb_garden" Content="גינה" HorizontalAlignment="Left" Margin="481,60,0,0" VerticalAlignment="Top" IsThreeState="True" IsChecked="{x:Null}" Checked="Cb_garden_Checked"/>
         <CheckBox Name="cb_attractions" Content="אטרקציות ילדים" HorizontalAlignment="Left" Margin="481,90,0,0" VerticalAlignment="Top" IsThreeState="True" IsChecked="{x:Null}" Checked="CheckBox_attractionsChecked"/>
@@ -34,13 +34,18 @@
         <TextBlock  x:Name="tb_area" HorizontalAlignment="Left" Margin="626,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Run FlowDirection="RightToLeft" Text="בחר איזור"/></TextBlock>
         <TextBlock  x:Name="tb_subArea" HorizontalAlignment="Left" Margin="626,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Span FlowDirection="RightToLeft"><Run Text=" "/><Run Text="תת איזור"/></Span></TextBlock>
         <TextBlock  x:Name="tb_unitType" HorizontalAlignment="Left" Margin="626,248,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Run FlowDirection="RightToLeft" Text="סוג יחידת אירוח"/></TextBlock>
-        <TextBox x:Name="tb_subAreaInput"  HorizontalAlignment="Left" Height="23" Margin="481,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="Tb_subAreaInput_TextChanged"/>
+        <TextBox x:Name="tb_subAreaInput"  HorizontalAlignment="Left" Height="23" Margin="481,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="Tb_subAreaInput_TextChanged" RenderTransformOrigin="0.621,-4.522"/>
 
         <Button Name="pb_continue" Content="המשך" HorizontalAlignment="Left" Margin="677,302,0,0" VerticalAlignment="Top" Width="75" Click="Continue_Clicked" Height="36"/>
-        <TextBox Name="tb_Enter_Child" HorizontalAlignment="Left" Height="26" Margin="150,354,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="28" TextChanged="Tb_Enter_Child_TextChanged"/>
-        <TextBox Name="tb_Enter_Adults" HorizontalAlignment="Left" Height="26" Margin="150,307,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" TextChanged="Tb_Enter_Adults_TextChanged"/>
-        <TextBlock  x:Name="tb_Adults" HorizontalAlignment="Left" Margin="189,307,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Run FlowDirection="RightToLeft" Text="מספר מבוגרים"/></TextBlock>
-        <TextBlock  x:Name="tb_Child" HorizontalAlignment="Left" Margin="189,343,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Span FlowDirection="RightToLeft"><Run Text="מספר "/><Run Text="ילדים"/></Span></TextBlock>
+        <TextBox Name="tb_Enter_Child" HorizontalAlignment="Left" Height="26" Margin="352,343,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="28" TextChanged="Tb_Enter_Child_TextChanged"/>
+        <TextBox Name="tb_Enter_Adults" HorizontalAlignment="Left" Height="26" Margin="352,296,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" TextChanged="Tb_Enter_Adults_TextChanged"/>
+        <TextBlock  x:Name="tb_Adults" HorizontalAlignment="Left" Margin="391,296,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Run FlowDirection="RightToLeft" Text="מספר מבוגרים"/></TextBlock>
+        <TextBlock  x:Name="tb_Child" HorizontalAlignment="Left" Margin="391,332,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Span FlowDirection="RightToLeft"><Run Text="מספר "/><Run Text="ילדים"/></Span></TextBlock>
+        <TextBox x:Name="tb_first"  HorizontalAlignment="Left" Height="23" Margin="126,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="69"/>
+        <TextBlock  x:Name="tb_name_txt" HorizontalAlignment="Left" Margin="224,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Run FlowDirection="RightToLeft" Text="הכנס שם ושם משפחה"/></TextBlock>
+        <TextBox x:Name="tb_last"  HorizontalAlignment="Left" Height="23" Margin="34,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="69"/>
+        <TextBox x:Name="tb_email"  HorizontalAlignment="Left" Height="23" Margin="28,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="98" TextChanged="Tb_email_TextChanged"/>
+        <TextBlock  x:Name="tb_email_txt" HorizontalAlignment="Left" Margin="126,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Run FlowDirection="RightToLeft" Text="הכנס כתובת מייל"/></TextBlock>
 
     </Grid>
 </Window>
