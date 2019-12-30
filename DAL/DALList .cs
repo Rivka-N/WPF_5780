@@ -30,9 +30,16 @@ namespace DAL
         }
 
         public void addHostingUnit(HostingUnit unit)
-        {
-            unit.Host.Bank.BankAcountNumber = Configuration.BankAccountKey++;//sets running bank account number
-            unit.HostingUnitKey = Configuration.HostingUnit;
+        {//check no other host exists with same id?
+            if (unit.Host != null)//if there's a host
+            {
+                unit.HostingUnitKey = Configuration.HostingUnit;
+                if (unit.Host.Bank != null)//if there is a bank
+                {
+                    unit.Host.Bank.BankAcountNumber = Configuration.BankAccountKey++;//sets running bank account number
+                }
+
+             }
             Configuration.HostingUnit++;//sets unit number
             DS.DataSource.hostingUnits.Add(unit.Clone());
 

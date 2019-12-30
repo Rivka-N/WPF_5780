@@ -52,6 +52,7 @@ namespace BE
             jacuzzi = Enums.Preference.No;
             pool = Enums.Preference.No;
             HostingUnitName = "";
+            Host = new Host();
 
         }
 

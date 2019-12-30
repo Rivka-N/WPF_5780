@@ -32,6 +32,7 @@ namespace PL
         {
             InitializeComponent();
             h1 = new Host();
+            hu1 = new HostingUnit();
             unitKey = -1;
             hostsKey = -1;
             bL = factoryBL.getBL();
@@ -43,7 +44,7 @@ namespace PL
         {
             try
             {
-                bL.addHostNum(tb_hostNum.Text, hostsKey);
+                bL.addHostNum(tb_hostNum.Text, out hostsKey);
                 h1.HostKey = hostsKey;
                 if (unitKey!=-1)//if also set
                 {
@@ -69,7 +70,7 @@ namespace PL
         {
             try
             {
-                bL.addHostingUnitNum(tb_hostingUnit.Text, unitKey);
+                bL.addHostingUnitNum(tb_hostingUnit.Text, out unitKey);
                 hu1 = bL.findUnit(unitKey);
                 if (hostsKey!=-1)//already set
                 {

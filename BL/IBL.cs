@@ -44,8 +44,8 @@ namespace BL
 
         void addEntryDate(DateTime? selectedDate, GuestRequest g1);
         void addReleaseDate(DateTime? selectedDate, GuestRequest g1);
-        void addHostNum(string text, Int32 h1);
-        void addHostingUnitNum(string text, int unitKey);
+        void addHostNum(string text, out Int32 h1);
+        void addHostingUnitNum(string text, out int unitKey);
         void addMail(string text, GuestRequest g1);
         void addMail(string text, Host h1);
         void checkPhone(string text, Host host);//checks if it's a number and adds it to the host if so

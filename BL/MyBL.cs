@@ -125,7 +125,7 @@ namespace BL
         #region find methods
         public HostingUnit findUnit(int unitKey)//finds unit based on key
         {
-            if (unitKey <= 0)
+            if (unitKey < 0)
                 throw new InvalidException("invalid unit key");
             var unit = myDAL.findUnit(unitKey);
             return (unit == null) ? throw new InvalidException("unit not found") : unit;
@@ -263,7 +263,7 @@ namespace BL
         #endregion
         #region unit checks pl
         
-        public void addHostingUnitNum(string text, int unitKey)//adds hosting unit number recieved to hosting unit
+        public void addHostingUnitNum(string text, out int unitKey)//adds hosting unit number recieved to hosting unit
         {
             if (Int32.TryParse(text, out unitKey))
             {
@@ -341,7 +341,7 @@ namespace BL
             //    throw new InvalidException("invalid phone number");
 
         }
-        public void addHostNum(string text, Int32 h1)//adds host number to host
+        public void addHostNum(string text, out Int32 h1)//adds host number to host
         {
             if (Int32.TryParse(text, out h1))
             {
@@ -350,7 +350,6 @@ namespace BL
             }
             else
                 throw new InvalidException("invalid host num");
-
         }
 #endregion
         #region mail cheks for pl

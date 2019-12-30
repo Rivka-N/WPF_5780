@@ -199,6 +199,8 @@ namespace PL
             if (Regex.IsMatch(tb_last.Text, @"^[a-zA-Z]+$"))
             {
                 g1.LastName = tb_last.Text;
+                tb_last.Background = Brushes.White;
+
             }
             else
             { tb_last.Text = "";
@@ -211,6 +213,7 @@ namespace PL
             if (Regex.IsMatch(tb_first.Text, @"^[a-zA-Z]+$"))//if contains only letters
             {
                 g1.Name = tb_first.Text;
+                tb_first.Background = Brushes.White;
             }
             else
             {

@@ -150,7 +150,7 @@ namespace PL
         {
             try
             {
-                myBL.addHostNum(tb_id.Text, hostNum);
+                myBL.addHostNum(tb_id.Text, out hostNum);
                 if (unit != -1)//also set
                 {
                     if (!myBL.sameUnit(hostingUnit1, hostNum))

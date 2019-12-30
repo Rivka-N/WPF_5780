@@ -32,6 +32,8 @@ namespace PL
 
         private void Pb_addUnit_Click(object sender, RoutedEventArgs e)
         {
+            addUnitOptions addUnitWindow = new addUnitOptions();
+            addUnitWindow.Show();
             //add window and unit adding control
         }
 

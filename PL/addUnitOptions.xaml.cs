@@ -25,8 +25,7 @@ namespace PL
         HostingUnit hostingUnit1;
         int hostNum;
         public addUnitOptions()
-        {
-
+        { 
             InitializeComponent();
             hostingUnit1 = new HostingUnit();
             myBL = factoryBL.getBL();
@@ -39,8 +38,11 @@ namespace PL
         {
             try
             {
-                myBL.addHostNum(tb_id.Text, hostNum);
+                myBL.addHostNum(tb_id.Text, out hostNum);
                 hostingUnit1.Host.HostKey = hostNum;
+                tb_id_txt.Background = Brushes.White;
+                tb_id_txt.Text = "קוד מארח";
+
             }
             catch (Exception ex)
             {
@@ -51,7 +53,7 @@ namespace PL
         }
 
         private void Tb_phone_TextChanged(object sender, TextChangedEventArgs e)
-        {
+       {
             try
             {
                 myBL.checkPhone(tb_phone.Text, hostingUnit1.Host);
@@ -81,6 +83,8 @@ namespace PL
             if (Regex.IsMatch(tb_last.Text, @"^[a-zA-Z]+$"))
             {
                 hostingUnit1.Host.LastName = tb_last.Text;
+                tb_last.Background = Brushes.White;
+
             }
             else
             {
@@ -94,6 +98,8 @@ namespace PL
             if (Regex.IsMatch(tb_first.Text, @"^[a-zA-Z]+$"))
             {
                 hostingUnit1.Host.Name = tb_first.Text;
+                tb_first.Background = Brushes.White;
+
             }
             else
             {
@@ -211,7 +217,6 @@ namespace PL
         }
         #endregion
        
-        #endregion
         #region continue
         private void Pb_continue_Click(object sender, RoutedEventArgs e)
         {
@@ -227,14 +232,17 @@ namespace PL
                     tb_area.Background = Brushes.Red;
                     return;
                 }
-                if (hostNum!=-1 && myBL.checkUnit(hostingUnit1))//checks that g1 is valid
+                if (hostNum!=-1)//checks that host number is valid
                 {
-                    
+                    myBL.checkUnit(hostingUnit1);//adds unit
+                    MessageBoxResult mb = MessageBox.Show("היחידה הוספה\n");//prints message
+                    Close();//closes window
                 }
 
             }
-            catch
+            catch(Exception ex)
             {
+                MessageBoxResult mb = MessageBox.Show(ex.Message);//prints error message
 
             }
         }
