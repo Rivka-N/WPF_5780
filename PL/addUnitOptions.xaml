@@ -14,9 +14,7 @@
         <ComboBox Name="cb_area" HorizontalAlignment="Left" Margin="481,157,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding}" SelectionChanged="Cb_area_SelectionChanged"/>
         <ComboBox Name="cb_hostingUnitType"  HorizontalAlignment="Left" Margin="481,262,0,0" VerticalAlignment="Top" Width="120"  ItemsSource="{Binding}" SelectionChanged="Cb_hostingUnitType_SelectionChanged"/>
         <TextBlock  x:Name="tb_area" HorizontalAlignment="Left" Margin="626,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Run FlowDirection="RightToLeft" Text="בחר איזור"/></TextBlock>
-        <TextBlock  x:Name="tb_subArea" HorizontalAlignment="Left" Margin="626,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Span FlowDirection="RightToLeft"><Run Text=" "/><Run Text="תת איזור"/></Span></TextBlock>
         <TextBlock  x:Name="tb_unitType" HorizontalAlignment="Left" Margin="626,248,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Run FlowDirection="RightToLeft" Text="סוג יחידת אירוח"/></TextBlock>
-        <TextBox x:Name="tb_subAreaInput"  HorizontalAlignment="Left" Height="23" Margin="481,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="Tb_subAreaInput_TextChanged" RenderTransformOrigin="0.621,-4.522"/>
         <TextBox Name="tb_Enter_Child" HorizontalAlignment="Left" Height="26" Margin="352,343,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="28" TextChanged="Tb_Enter_Child_TextChanged"/>
         <TextBox Name="tb_Enter_Adults" HorizontalAlignment="Left" Height="26" Margin="352,296,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" TextChanged="Tb_Enter_Adults_TextChanged"/>
         <TextBlock  x:Name="tb_Adults" HorizontalAlignment="Left" Margin="391,296,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Run FlowDirection="RightToLeft" Text="מספר מבוגרים"/></TextBlock>
@@ -30,7 +28,7 @@
         <TextBox x:Name="tb_phone"  HorizontalAlignment="Left" Height="23" Margin="28,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="98" TextChanged="Tb_phone_TextChanged"/>
         <TextBlock  x:Name="tb_id_txt" HorizontalAlignment="Left" Margin="166,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Run FlowDirection="RightToLeft" Text="הכנס מספר תעודת זהות"/></TextBlock>
         <TextBox x:Name="tb_id"  HorizontalAlignment="Left" Height="23" Margin="28,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="98" TextChanged="Tb_id_TextChanged"/>
-        <Button Name="pb_continue" Content="הוסף" HorizontalAlignment="Left" Margin="677,302,0,0" VerticalAlignment="Top" Width="75" Height="36"/>
+        <Button Name="pb_continue" Content="הוסף" HorizontalAlignment="Left" Margin="677,302,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="Pb_continue_Click"/>
 
     </Grid>
 </Window>

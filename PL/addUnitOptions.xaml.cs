@@ -154,12 +154,6 @@ namespace PL
             tb_unitType.Background = Brushes.White;
             hostingUnit1.HostingUnitType = (Enums.HostingUnitType)(cb_hostingUnitType.SelectedIndex);
         }
-
-        private void Tb_subAreaInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //add subarea to hosting unit or take awway from guest? need to check it's in the area
-            //hostingUnit1.subArea=tb_subAreaInput.Text;
-        }
         #endregion
         #region people
         private void Tb_Enter_Adults_TextChanged(object sender, TextChangedEventArgs e)
@@ -210,5 +204,37 @@ namespace PL
             }
         }
         #endregion
+
+        private void Pb_continue_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (cb_hostingUnitType.SelectedIndex == -1)//check if unit type wasn't selected
+                {
+                    tb_unitType.Background = Brushes.Red;
+                    return;
+                }
+                if (cb_area.SelectedIndex == -1)//check if area wasn't selected
+                {
+                    tb_area.Background = Brushes.Red;
+                    return;
+                }
+                if (bL.checkGuest(g1))//checks that g1 is valid
+                {
+                    tb_StartDate.Background = Brushes.White;
+                    tb_EndDate.Background = Brushes.White;
+
+                    var foundUnits = bL.findUnit(bL.getAllHostingUnits(), g1);//make sure function works
+                    string s = "";
+                    foreach (HostingUnit hu in foundUnits)
+                        s += hu.ToString();
+                    //prints mail sent or tostrings
+                }
+
+            }
+            catch
+            {
+
+            }
     }
 }

@@ -78,13 +78,6 @@ namespace PL
             //g1.ReleaseDate = (DateTime)cl_LeaveDate.SelectedDate;//check not after start date
         }
         #endregion
-
-        private void Tb_subAreaInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            g1.SubArea = tb_subArea.Text;
-            //add check that sub area is in area
-        }
-
         
         #region num people
         private void Tb_Enter_Adults_TextChanged(object sender, TextChangedEventArgs e)

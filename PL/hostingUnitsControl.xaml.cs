@@ -354,12 +354,6 @@ namespace PL
             cb_pool.Visibility = Visibility.Hidden;
         }
 
-        private void Tb_subAreaInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //add subarea to hosting unit or take awway from guest? need to check it's in the area
-            //hostingUnit1.subArea=tb_subAreaInput.Text;
-        }
-
         public void visible()//only can change fields once entered host number and unit number
         {
             tb_Enter_Adults.Visibility = Visibility.Visible;
