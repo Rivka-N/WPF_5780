@@ -192,7 +192,7 @@ namespace PL
         {
             try
             {
-                bL.addMail(tb_email.Text, g1);
+                bL.addMail(tb_email.Text, g1);//if valid mail address adds to g1
                 tb_email_txt.Text = "כתובת מייל";
             }
             catch
@@ -215,7 +215,7 @@ namespace PL
 
         private void Tb_first_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (Regex.IsMatch(tb_first.Text, @"^[a-zA-Z]+$"))
+            if (Regex.IsMatch(tb_first.Text, @"^[a-zA-Z]+$"))//if contains only letters
             {
                 g1.Name = tb_first.Text;
             }
@@ -245,7 +245,7 @@ namespace PL
         {
             try
             {
-                if (cb_hostingUnitType.SelectedIndex==-1)//check if it wasn't selected
+                if (cb_hostingUnitType.SelectedIndex==-1)//check if unit type wasn't selected
                 {
                     tb_unitType.Background = Brushes.Red;
                     return;
@@ -257,7 +257,6 @@ namespace PL
                     }
                 if (bL.checkGuest(g1))//checks that g1 is valid
                 {  
-
                     tb_StartDate.Background = Brushes.White;
                     tb_EndDate.Background = Brushes.White;
 

@@ -192,7 +192,7 @@ namespace BL
                 else
                 {
                     var requests = from ord in orders
-                                   let request = myDAL.findGuest(ord.GuestRequestKey)
+                                   let request = myDAL.findGuest(ord.GuestRequestKey)//sets request to the guestrequest that goes with it
                                    where (DateTime.Today < request.ReleaseDate)//date of end of vacation is after today
                                    select ord;
                     if (requests == null)
@@ -291,19 +291,17 @@ namespace BL
             return (hu1.Host.HostKey == hostsKey) ;
         }
         public bool checkGuest(GuestRequest g1)
-
-
         {
             if (g1.EntryDate == default(DateTime) || g1.ReleaseDate < g1.EntryDate)//invalid date
                 throw new InvalidException("invalid date");
             if (g1.NumAdult == 0 && g1.NumChildren == 0)//no guests
                 throw new InvalidException("invalid number of guests");
-            if (g1.Name == null || g1.Name == "")
+            if (g1.Name == null || g1.Name == "")//g1.Name.isNullOrEmpty()?
                 throw new InvalidException("invalid first name");
             if (g1.LastName == null || g1.LastName == "")//invalid last name
                 throw new InvalidException("invalid last name" +
                     "");
-            if (g1.Mail == null)//has mail address
+            if (g1.Mail == null)//no mail address
                 throw new InvalidException("invalid email");
             try
             {
@@ -314,6 +312,16 @@ namespace BL
             {
                 throw new InvalidException(ex.Message);
             }
+
+        }
+        public void checkPhone(string text, Host host)
+        {
+            int number;
+            if (!Int32.TryParse(text, out number))
+                throw new InvalidException("invalid phone number");
+            host.Phone = number;//sets phone number to host
+            //if (!text.All(char.IsDigit))
+            //    throw new InvalidException("invalid phone number");
 
         }
 
@@ -377,6 +385,8 @@ namespace BL
         }
 
         
+
+
         #endregion
     }
 }

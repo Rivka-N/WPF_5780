@@ -26,7 +26,6 @@ namespace PL
         HostingUnit hostingUnit1;
         int unit;
         int hostNum;
-        string hostFirst, hostLast;
         public hostingUnitsControl()
         {
             myBL = factoryBL.getBL();
@@ -34,8 +33,6 @@ namespace PL
             hostingUnit1 = new HostingUnit();
             unit = -1;
             hostNum = -1;
-            hostFirst = string.Empty;
-            hostLast = string.Empty;
             invisible();//hides fields so they can't be changed yet
 //bind enums to comboboxes
             cb_area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
@@ -44,7 +41,6 @@ namespace PL
         #region button clicks
         private void Pb_delete_Click(object sender, RoutedEventArgs e)
         {
-            //int unit;
             try
             {
                 if (unit != -1)//unit number was entered
@@ -116,6 +112,7 @@ namespace PL
         }
         #endregion
         #region unit and id number
+
         private void Tb_unitNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -311,6 +308,20 @@ namespace PL
                 tb_first.Background = Brushes.Red;
             }
         }
+
+        private void Tb_phone_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                myBL.checkPhone(tb_phone.Text, hostingUnit1.Host);
+                tb_phonetxt.Background = Brushes.White;
+            }
+            catch
+            {
+                tb_phonetxt.Background = Brushes.Red;
+            }
+        }
+       
         #endregion
         #region comboboxes
         private void Cb_area_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -366,5 +377,7 @@ namespace PL
 
         }
         #endregion
+
+      
     }
 }

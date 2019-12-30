@@ -89,7 +89,7 @@ namespace DAL
         #region delete
         public void deleteUnit(HostingUnit toDelete)
         {
-            if (!DataSource.hostingUnits.Remove(toDelete))//removes unit from list
+            if (!DataSource.hostingUnits.Remove(toDelete))//removes unit from list.  if unsuccesful
                 throw new dataException("unable to delete item");
         }
         #endregion
@@ -99,11 +99,8 @@ namespace DAL
             int index = DataSource.hostingUnits.FindIndex(cur=> { return hostingUnit1.HostingUnitKey == cur.HostingUnitKey; });//finds index of it in list
             if (index == -1)
                 throw new dataException("unit not found");
-            HostingUnit hu = DataSource.hostingUnits[index].Clone();//clones current unit
-            //checks what changed
-            {
-
-            }
+            //puts new hosting unit with changed details instaed of old one
+            DataSource.hostingUnits[index] = hostingUnit1.Clone();//sets it to be a copy of the new updated unit
         }
         #endregion
     }

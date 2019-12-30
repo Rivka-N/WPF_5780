@@ -48,7 +48,7 @@ namespace BL
         void addHostingUnitNum(string text, int unitKey);
         void addMail(string text, GuestRequest g1);
         void addMail(string text, Host h1);
-
+        void checkPhone(string text, Host host);//checks if it's a number and adds it to the host if so
         bool sameUnit(HostingUnit hu1, int hostsKey);
         bool checkGuest(GuestRequest g1);
 
