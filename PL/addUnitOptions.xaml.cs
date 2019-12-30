@@ -102,6 +102,12 @@ namespace PL
             }
         }
         #endregion
+        #region unit name
+        private void Tb_unitName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            hostingUnit1.HostingUnitName = tb_unitName.Text;
+        }
+        #endregion
         #region checkboxes
         private void Cb_pool_Checked(object sender, RoutedEventArgs e)
         {
@@ -141,7 +147,7 @@ namespace PL
             }
         }
         #endregion
-        #region unit type and area
+        #region comboxes
         private void Cb_area_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             tb_area.Background = Brushes.White;
@@ -204,7 +210,9 @@ namespace PL
             }
         }
         #endregion
-
+       
+        #endregion
+        #region continue
         private void Pb_continue_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -219,16 +227,9 @@ namespace PL
                     tb_area.Background = Brushes.Red;
                     return;
                 }
-                if (bL.checkGuest(g1))//checks that g1 is valid
+                if (hostNum!=-1 && myBL.checkUnit(hostingUnit1))//checks that g1 is valid
                 {
-                    tb_StartDate.Background = Brushes.White;
-                    tb_EndDate.Background = Brushes.White;
-
-                    var foundUnits = bL.findUnit(bL.getAllHostingUnits(), g1);//make sure function works
-                    string s = "";
-                    foreach (HostingUnit hu in foundUnits)
-                        s += hu.ToString();
-                    //prints mail sent or tostrings
+                    
                 }
 
             }
@@ -236,5 +237,8 @@ namespace PL
             {
 
             }
+        }
+        #endregion
+
     }
 }

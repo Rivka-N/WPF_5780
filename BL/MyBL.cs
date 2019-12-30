@@ -236,7 +236,7 @@ namespace BL
             return myDAL.getRequests(predicate);
         }
     #endregion
-    #region add and check fields from pl
+    #region add dates for pl
     public void addEntryDate(DateTime? selectedDate, GuestRequest g1)//adds selected date to guest
         {
             g1.EntryDate = (DateTime)selectedDate;
@@ -260,18 +260,9 @@ namespace BL
                 throw new InvalidException("invalid release date");
         }
 
-        public void addHostNum(string text, Int32 h1)//adds host number to host
-        {
-            if (Int32.TryParse(text, out h1))
-            {
-                if (h1 < 0)
-                    throw new InvalidException("invalid host num");
-            }
-            else
-                throw new InvalidException("invalid host num");
-           
-        }
-
+        #endregion
+        #region unit checks pl
+        
         public void addHostingUnitNum(string text, int unitKey)//adds hosting unit number recieved to hosting unit
         {
             if (Int32.TryParse(text, out unitKey))
@@ -290,6 +281,32 @@ namespace BL
         {
             return (hu1.Host.HostKey == hostsKey) ;
         }
+
+        public bool checkUnit(HostingUnit hostingUnit1)
+        {
+            if (hostingUnit1.NumAdult==0 && hostingUnit1.NumChildren==0)//no guests
+                throw new InvalidException("invalid number of guests");
+            if (hostingUnit1.Host.Name==null || hostingUnit1.Host.Name=="")//invalid name
+                throw new InvalidException("invalid first name");
+            if (hostingUnit1.Host.LastName == null || hostingUnit1.Host.LastName == "")//invalid name
+                throw new InvalidException("invalid last name");
+            if (hostingUnit1.HostingUnitName == null || hostingUnit1.HostingUnitName == "")
+                throw new InvalidException("invalid unit name");
+            if (hostingUnit1.Host.Phone == 0)//not set
+                throw new InvalidException("invalid phone number");
+            try
+            {
+                myDAL.addHostingUnit(hostingUnit1);//adds unit
+                return true;
+            }
+            catch(Exception ex)
+            {
+                throw new InvalidException(ex.Message + ": unable to add unit");
+            }
+        }
+
+        #endregion
+        #region guest and host checks for pl
         public bool checkGuest(GuestRequest g1)
         {
             if (g1.EntryDate == default(DateTime) || g1.ReleaseDate < g1.EntryDate)//invalid date
@@ -324,9 +341,19 @@ namespace BL
             //    throw new InvalidException("invalid phone number");
 
         }
+        public void addHostNum(string text, Int32 h1)//adds host number to host
+        {
+            if (Int32.TryParse(text, out h1))
+            {
+                if (h1 < 0)
+                    throw new InvalidException("invalid host num");
+            }
+            else
+                throw new InvalidException("invalid host num");
 
-        #endregion
-        #region mail
+        }
+#endregion
+        #region mail cheks for pl
         public void addMail(string text, GuestRequest g1)//checks if recieved mail is valid
         {
             try
@@ -384,7 +411,8 @@ namespace BL
             return thisUnit;
         }
 
-        
+      
+
 
 
         #endregion

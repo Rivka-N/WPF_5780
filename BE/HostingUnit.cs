@@ -43,6 +43,15 @@ namespace BE
             HostingUnitName = null;
             HostingUnitKey = 0;
             Diary = new bool[12, 31];
+            Diary = new bool[12, 31];
+            this.hostingUnitType = Enums.HostingUnitType.Zimmer;
+            this.AreaVacation = Enums.Area.Center;
+            Diary = new bool[12, 31];
+            childrenAttractions = Enums.Preference.No;
+            garden = Enums.Preference.No;
+            jacuzzi = Enums.Preference.No;
+            pool = Enums.Preference.No;
+            HostingUnitName = "";
 
         }
 
@@ -68,13 +77,14 @@ namespace BE
             this.hostingUnitKey = hostingUnitKey;
             Diary = new bool[12, 31];
             this.hostingUnitType = Enums.HostingUnitType.Zimmer;
-            this.hostingUnitKey = Configuration.HostingUnit++;
+            this.hostingUnitKey = 0;
             this.AreaVacation = Enums.Area.Center;
             Diary = new bool[12, 31];
             childrenAttractions = Enums.Preference.No;
             garden = Enums.Preference.No;
             jacuzzi = Enums.Preference.No;
             pool = Enums.Preference.No;
+            HostingUnitName = "";
         }
         #endregion
 

@@ -25,16 +25,23 @@ namespace DAL
         #region add Items
         public void addGuest(GuestRequest guest)
         {
+            guest.GuestRequestKey = Configuration.GuestRequest++;//sets request key
             DS.DataSource.guestRequests.Add(guest.Clone());
         }
 
         public void addHostingUnit(HostingUnit unit)
         {
+            unit.Host.Bank.BankAcountNumber = Configuration.BankAccountKey++;//sets running bank account number
+            unit.HostingUnitKey = Configuration.HostingUnit;
+            Configuration.HostingUnit++;//sets unit number
             DS.DataSource.hostingUnits.Add(unit.Clone());
+
         }
 
         public void addOrder(Order ord)
         {
+            ord.OrderKey = Configuration.Order;//sets order number
+            Configuration.Order++;
             DS.DataSource.orders.Add(ord.Clone());
         }
         #endregion

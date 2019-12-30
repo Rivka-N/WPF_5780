@@ -41,6 +41,11 @@ namespace BE
         {
             hostKey = 0;
             CollectionClearance = false;
+            mail = null;
+            Phone = 0;
+            bank = null;
+            name = "";
+            lastName = "";
         }
         #endregion
         public override string ToString()

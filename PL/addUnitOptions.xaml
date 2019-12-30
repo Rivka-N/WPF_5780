@@ -29,6 +29,8 @@
         <TextBlock  x:Name="tb_id_txt" HorizontalAlignment="Left" Margin="166,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Run FlowDirection="RightToLeft" Text="הכנס מספר תעודת זהות"/></TextBlock>
         <TextBox x:Name="tb_id"  HorizontalAlignment="Left" Height="23" Margin="28,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="98" TextChanged="Tb_id_TextChanged"/>
         <Button Name="pb_continue" Content="הוסף" HorizontalAlignment="Left" Margin="677,302,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="Pb_continue_Click"/>
+        <TextBox x:Name="tb_unitName"  HorizontalAlignment="Left" Height="23" Margin="38,180,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="98" TextChanged="Tb_unitName_TextChanged" />
+        <TextBlock  x:Name="tb_unitNameTxt" HorizontalAlignment="Left" Margin="166,169,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10"><Run FlowDirection="RightToLeft" Text="הכנס שם יחידת אירוח"/></TextBlock>
 
     </Grid>
 </Window>

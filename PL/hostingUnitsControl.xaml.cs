@@ -370,8 +370,14 @@ namespace PL
             cb_pool.Visibility = Visibility.Visible;
 
         }
+
         #endregion
 
-      
+        #region unit name
+        private void Tb_unitName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            hostingUnit1.HostingUnitName=tb_unitName.Text;
+        }
+        #endregion
     }
 }

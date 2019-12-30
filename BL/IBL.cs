@@ -59,6 +59,7 @@ namespace BL
         IEnumerable<Order> ordersByUnit(int unitNum);
         IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupByArea();
         string printOrdersByUnit(int unitNum);
+        bool checkUnit(HostingUnit hostingUnit1);
         #endregion
     }
 }
