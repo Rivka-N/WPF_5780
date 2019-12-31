@@ -11,6 +11,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Button Name="pb_Orders" Grid.Row="0" Content="רשימת הזמנות" Padding="10" HorizontalAlignment="Left" VerticalAlignment="Stretch" Click="Pb_Orders_Click" />
         <Button Name="pb_Requests" Grid.Row="1" Content="בקשות אירוח" Padding="10" HorizontalAlignment="Left" VerticalAlignment="Stretch" Click="Pb_Requests_Click"/>
