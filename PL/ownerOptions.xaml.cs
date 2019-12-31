@@ -39,7 +39,7 @@ namespace PL
             List<BE.Order> orders = bL.getAllOrders();
             foreach(var ord in orders)
             {
-                tb_printInfo.Text += ord;
+                tb_printInfo.Text += ord+"\n";
             }
             
         }
@@ -55,7 +55,7 @@ namespace PL
             tb_printInfo.Text = "בקשות אירוח" + "\n";
             var gRequests = bL.getRequests();
             foreach (var g in gRequests)
-                tb_printInfo.Text += g;
+                tb_printInfo.Text += g+"\n";
         }
 
         private void Pb_Units_Click(object sender, RoutedEventArgs e)
@@ -69,7 +69,7 @@ namespace PL
             string s = "";
             var hostings = bL.getAllHostingUnits();
             foreach (var h in hostings)
-                s += h.ToString();
+                s += h.ToString()+"\n";
             tb_printInfo.Text = "יחידות אירוח" + "\n"+s;
         }
         #endregion

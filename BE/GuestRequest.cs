@@ -73,8 +73,8 @@ namespace BE
         #endregion
         public override string ToString()
         {
-            return "First Name: " + name + "Last Name: " + lastName + "Mail: " + mail + "Order status: " + Status + "Date of registration: " + registration + "Entry day: " + entryDate + "Release date: " + releaseDate + "Area: " + area + "Sub area: " + subArea + "Type of unit: " + typeOfUnit +
-                "Number of adults: " + numAdult + "Number of children: " + numChildren + "Want pool: " + pool + "Want jacuzzi: " + jacuzzi + "Want garden: " + garden + "want children attractions" + childrenAttractions;
+            return "Name: " + name + " " + lastName + " \nMail: " + mail + "Days: " + entryDate.ToString("d") + " to " + releaseDate + "\nArea: " + area + " Type of unit: " + typeOfUnit +
+                "\nNumber of adults: " + numAdult + " Number of children: " + numChildren + "\n";
         }
         
     }

@@ -51,7 +51,7 @@ namespace BE
         public override string ToString()
         {
             return "Owner id: " + hostKey + "Name: " + name + " " + lastName + "Phone number: " + phoneNumber +
-                "Mail address: " + mail + "Bank Account: " + bank + "Collection permission: " + CollectionClearance;
+                "Mail address: " + mail + "Bank Account: " + bank + "Collection permission: " + CollectionClearance+"\n";
         }
 
     }
