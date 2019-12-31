@@ -11,11 +11,12 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Button Name="pb_Orders" Grid.Row="0" Content="רשימת הזמנות" Padding="10" HorizontalAlignment="Left" VerticalAlignment="Stretch" Click="Pb_Orders_Click" />
         <Button Name="pb_Requests" Grid.Row="1" Content="בקשות אירוח" Padding="10" HorizontalAlignment="Left" VerticalAlignment="Stretch" Click="Pb_Requests_Click"/>
         <Button Name="pb_Units" Grid.Row="2" Content="יחידות אירוח" Padding="10" HorizontalAlignment="Left" VerticalAlignment="Stretch" Click="Pb_Units_Click"/>
         <TextBlock Name="tb_printInfo" HorizontalAlignment="Left" Margin="252,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="304" Grid.RowSpan="3" Width="375"/>
-
+        <Button Name="tb_noOrderReq" Content="בקשות שאין עבורם הזמנות" HorizontalAlignment="Left" Width="148" Height="104" Grid.Row="3" Click="tb_noOrderReq_Click"/>
     </Grid>
 </Window>

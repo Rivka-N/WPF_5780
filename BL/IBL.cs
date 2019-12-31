@@ -30,6 +30,7 @@ namespace BL
         void checkOrder(Host h1, HostingUnit hu1, GuestRequest g1, GuestRequest foundGuest);
         void order(HostingUnit unit, GuestRequest guest);//add order
         bool available(HostingUnit unit, GuestRequest guest);
+        List<Order> getOrders(Func<Order, bool> predicate);
 
         //not finished functions
         /*   void mail(List<HostingUnit> Offers);//sends mail to the guest with all the hostingUnits which appropriate. 

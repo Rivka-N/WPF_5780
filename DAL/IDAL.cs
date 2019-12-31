@@ -32,6 +32,8 @@ namespace DAL
         #region order
         List<Order> getAllOrders();
         void addOrder(Order ord);
+        List<Order> getOrders(Func<Order, bool> predicate);
+
         #endregion
         //#region Order
         //void addOrder(Order order);
