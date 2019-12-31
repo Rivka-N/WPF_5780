@@ -137,6 +137,17 @@ namespace DAL
             }
         }
 
+        public void deleteSameDate(HostingUnit unit, GuestRequest guest)
+        {
+            int index = DataSource.hostingUnits.FindIndex(cur => { return unit.HostingUnitKey == cur.HostingUnitKey; });//finds index of it in list
+            var curUnit = DataSource.hostingUnits[index];
+            var temp= from u in curUnit.guestForUnit
+                                   where u.EntryDate > guest.ReleaseDate || u.ReleaseDate < guest.EntryDate
+                                   select u;
+            curUnit.guestForUnit = temp.ToList();
+
+        }
+
         #endregion
         #region change items
         public void changeUnit(HostingUnit hostingUnit1)
@@ -148,7 +159,8 @@ namespace DAL
             DataSource.hostingUnits[index] = hostingUnit1.Clone();//sets it to be a copy of the new updated unit
         }
 
-       
+
+
 
         #endregion
     }

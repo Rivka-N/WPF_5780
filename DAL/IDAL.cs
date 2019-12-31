@@ -35,7 +35,11 @@ namespace DAL
         List<Order> getAllOrders();
         void addOrder(Order ord);
         List<Order> getOrders(Func<Order, bool> predicate);
+
+        #region delete
         void deleteGuest(GuestRequest guest);
+        void deleteSameDate(HostingUnit unit, GuestRequest guest);
+        #endregion
 
         #endregion
         //#region Order

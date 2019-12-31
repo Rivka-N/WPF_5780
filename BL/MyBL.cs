@@ -96,7 +96,7 @@ namespace BL
                                                                //take off transaction fee
         {
             DateTime end = guest.ReleaseDate;
-            for (DateTime start = guest.EntryDate; start < end; start.AddDays(1))//Check availability
+            for (DateTime start = guest.EntryDate; start < end; start = start.AddDays(1))//Check availability
             {
                 if (unit.Diary[start.Month, start.Day] == true)
                 {
@@ -104,7 +104,7 @@ namespace BL
                     return;//if its already occupied
                 }
             }
-            for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//set the days
+            for (DateTime start = guest.EntryDate; start <= end; start = start.AddDays(1))//set the days
             {
                 unit.Diary[start.Month, start.Day] = true;
             }
@@ -115,6 +115,7 @@ namespace BL
             ord.OrderDate = guest.Mailed;
             addOrder(ord);//send to the function which adds the order to the order list
             myDAL.deleteGuest(guest);
+            myDAL.deleteSameDate(unit, guest);
 
         }
 
