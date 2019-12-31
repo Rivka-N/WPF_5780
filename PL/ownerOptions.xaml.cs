@@ -73,5 +73,16 @@ namespace PL
             tb_printInfo.Text = "יחידות אירוח" + "\n"+s;
         }
         #endregion
+
+        private void tb_noOrderReq_Click(object sender, RoutedEventArgs e)
+        {
+            pb_Orders.BorderBrush = Brushes.Black;
+            pb_Orders.FontSize = 12;
+            pb_Requests.BorderBrush = Brushes.Black;
+            pb_Requests.FontSize = 12;
+            pb_Units.FontSize = 12;
+            pb_Units.BorderBrush = Brushes.DarkMagenta;
+            
+        }
     }
 }
