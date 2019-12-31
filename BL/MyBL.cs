@@ -61,7 +61,7 @@ namespace BL
         public bool available(HostingUnit unit, GuestRequest guest)
         {
             DateTime end = guest.ReleaseDate;
-            for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//Check availability
+            for (DateTime start = guest.EntryDate; start < end; start=start.AddDays(1))//Check availability
             {
 
                 if (unit.Diary[start.Month, start.Day] == true)
@@ -96,7 +96,7 @@ namespace BL
                                                                //take off transaction fee
         {
             DateTime end = guest.ReleaseDate;
-            for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//Check availability
+            for (DateTime start = guest.EntryDate; start < end; start.AddDays(1))//Check availability
             {
                 if (unit.Diary[start.Month, start.Day] == true)
                 {
@@ -128,7 +128,7 @@ namespace BL
                     //listOfUnits.Where(hu => (hu.Host.CollectionClearance && hu.HostingUnitType == guest.TypeOfUnit && guest.AreaVacation == hu.AreaVacation && available(hu, guest))).Select(hu => hu.Clone()).ToList();
                     if (guest.TypeOfUnit == units[i].HostingUnitType && guest.AreaVacation == units[i].AreaVacation && available(units[i], guest))
                     {
-                        if ((guest.NumAdult <= listOfUnits[i].NumAdult && guest.NumAdult + 5 > listOfUnits[i].NumAdult) && (guest.NumChildren <= listOfUnits[i].NumChildren && guest.NumChildren + 5 > listOfUnits[i].NumChildren))
+                        if ((guest.NumAdult <= units[i].NumAdult && guest.NumAdult + 5 > units[i].NumAdult) && (guest.NumChildren <= units[i].NumChildren && guest.NumChildren + 5 > units[i].NumChildren))
                         {
                             listOfUnits.Add(units[i]);//adds to the guest list
                         }

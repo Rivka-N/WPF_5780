@@ -9,7 +9,6 @@ namespace BE
     public class HostingUnit
     {//makes sure running number is set correctly for all of them(Hosting Unit Key)
         #region fields
-        private Enums.HostingUnitType zimmer;
         private string hostingUnitName;
         private Int32 hostingUnitKey;
         private Enums.HostingUnitType hostingUnitType;
@@ -29,7 +28,6 @@ namespace BE
         public Host Host { get=>host; set { host = value; } }
         public Enums.HostingUnitType HostingUnitType { get => hostingUnitType; set { hostingUnitType = value; } }
         public Int32 HostingUnitKey { get => hostingUnitKey; set { hostingUnitKey = value; } }
-        public Enums.HostingUnitType Zimmer { get=>zimmer; set { zimmer = value; } }
         public Int32 NumAdult { get => numAdult; set { numAdult = value; } }
         public Int32 NumChildren { get => numChildren; set { numChildren = value; } }
         public Enums.Preference Pool { get => pool; set { pool = value; } }
@@ -51,21 +49,8 @@ namespace BE
             pool = Enums.Preference.No;
             HostingUnitName = "";
             Host = new Host();
-
-        }
-
-        public HostingUnit(Host host, string hostingUnitName, Enums.HostingUnitType hostingUnitType, Enums.Area area=Enums.Area.Center)
-        {
-            this.host = host;
-            this.hostingUnitName = hostingUnitName;
-            this.hostingUnitType = hostingUnitType;
-            this.hostingUnitKey = Configuration.HostingUnit++;
-            this.AreaVacation = area;
-            Diary = new bool[13,32];
-            childrenAttractions = Enums.Preference.No;
-            garden = Enums.Preference.No;
-            jacuzzi = Enums.Preference.No;
-            pool= Enums.Preference.No;
+            numAdult = 0;
+            numChildren = 0;
 
         }
 

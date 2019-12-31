@@ -28,12 +28,7 @@ namespace PL
         {
             InitializeComponent();
             bL = factoryBL.getBL();
-           string hostingUnitName = "Nave Mahmad";
-           bL.addHostingUnit(new HostingUnit(new Host(), hostingUnitName, Enums.HostingUnitType.Zimmer));
-           bL.addOrder(new BE.Order(DateTime.Now));
-            
-            //bL.addHostingUnit (new HostingUnit(new Host(12, "shomo", "tenen", "shlomo@sh.com", 123, new BankAccount(), true), "neve shlomo", Enums.HostingUnitType.Camping, Enums.Area.Center));
-            //hostingUnits = bL.getAllHostingUnits();
+         
         }
 
         private void pb_owner_Click(object sender, RoutedEventArgs e)

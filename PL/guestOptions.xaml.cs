@@ -261,6 +261,8 @@ namespace PL
                     foreach (HostingUnit hu in foundUnits)
                         s += hu.ToString();
                     //prints mail sent or tostrings
+                    MessageBox.Show("יחידות שנמצאו\n" + s);
+                    Close();
                 }
 
             }
