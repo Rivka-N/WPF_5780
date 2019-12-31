@@ -114,6 +114,7 @@ namespace BL
             ord.GuestRequestKey = guest.GuestRequestKey;
             ord.OrderDate = guest.Mailed;
             addOrder(ord);//send to the function which adds the order to the order list
+            myDAL.deleteGuest(guest);
 
         }
 
@@ -128,40 +129,17 @@ namespace BL
                     //listOfUnits.Where(hu => (hu.Host.CollectionClearance && hu.HostingUnitType == guest.TypeOfUnit && guest.AreaVacation == hu.AreaVacation && available(hu, guest))).Select(hu => hu.Clone()).ToList();
                     if (guest.TypeOfUnit == units[i].HostingUnitType && guest.AreaVacation == units[i].AreaVacation && available(units[i], guest))
                     {
-                        if ((guest.NumAdult <= units[i].NumAdult && guest.NumAdult + 5 > units[i].NumAdult) && (guest.NumChildren <= units[i].NumChildren && guest.NumChildren + 5 > units[i].NumChildren))
+                        if (guest.NumAdult <= units[i].NumAdult   && guest.NumChildren <= units[i].NumChildren )
                         {
                             listOfUnits.Add(units[i]);//adds to the guest list
-                        }
+                            myDAL.addGuestToUnit(units[i], guest);                        }
                     }
                 }
             }
             if (listOfUnits.Count() == 0)
                 throw new InvalidException("no units found");
-            else
-            {
-                if (listOfUnits.Count() <= 5)
-                    mail(listOfUnits, guest);
-                else
-                {
-                    int i = 0;
-                    while (listOfUnits.Count() > 5 && i < listOfUnits.Count())
-                    {
-                        if (guest.Pool != listOfUnits[i].Pool && guest.Pool != listOfUnits[i].Pool)
-                        {
-                            listOfUnits.RemoveAt(i);
-                        }
-                        else if (guest.Garden != listOfUnits[i].Garden && guest.ChildrenAttractions != listOfUnits[i].ChildrenAttractions)
-                        {
-                            listOfUnits.RemoveAt(i);
-                        }
-                        else
-                            i++;
-                    }
-                    mail(listOfUnits, guest);
-                }
-
-
-            }
+            mail(listOfUnits, guest);  //sends mail to all of the hosts 
+            
             return listOfUnits;
 
         }

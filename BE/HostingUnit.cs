@@ -34,6 +34,8 @@ namespace BE
         public Enums.Preference Jacuzzi { get => jacuzzi; set { jacuzzi = value; } }
         public Enums.Preference Garden { get => garden; set { garden = value; } }
         public Enums.Preference ChildrenAttractions { get => childrenAttractions; set { childrenAttractions = value; } }
+        public List<GuestRequest> guestForUnit { get; set; }
+
         #endregion
         #region ctors
         public HostingUnit()
@@ -49,6 +51,7 @@ namespace BE
             pool = Enums.Preference.No;
             HostingUnitName = "";
             Host = new Host();
+            guestForUnit = new List<GuestRequest>();
             
 
         }

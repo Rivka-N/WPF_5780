@@ -59,6 +59,12 @@ namespace DAL
             Configuration.Order++;
             DS.DataSource.orders.Add(ord.Clone());
         }
+
+        public void addGuestToUnit(HostingUnit hostingUnit, GuestRequest guest)
+        {
+           int index = DataSource.hostingUnits.FindIndex(a => a.HostingUnitKey == hostingUnit.HostingUnitKey);
+            DataSource.hostingUnits[index].guestForUnit.Add(guest.Clone());
+        }
         #endregion
         #region get Lists
         public List<HostingUnit> getAllHostingUnits()
@@ -122,6 +128,15 @@ namespace DAL
             if (!DataSource.hostingUnits.Remove(toDelete))//removes unit from list.  if unsuccesful
                 throw new dataException("unable to delete item");
         }
+
+        public void deleteGuest(GuestRequest guest)
+        {
+          foreach(HostingUnit unit in DataSource.hostingUnits)
+            {
+                unit.guestForUnit.Remove(guest);
+            }
+        }
+
         #endregion
         #region change items
         public void changeUnit(HostingUnit hostingUnit1)
@@ -132,6 +147,9 @@ namespace DAL
             //puts new hosting unit with changed details instaed of old one
             DataSource.hostingUnits[index] = hostingUnit1.Clone();//sets it to be a copy of the new updated unit
         }
+
+       
+
         #endregion
     }
 }

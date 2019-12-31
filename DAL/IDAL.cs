@@ -18,6 +18,8 @@ namespace DAL
         void deleteUnit(HostingUnit toDelete);
         void changeUnit(HostingUnit hostingUnit1);
         void addHostingUnit(HostingUnit unit);
+        void addGuestToUnit(HostingUnit hostingUnit, GuestRequest guest);
+
         #endregion
 
         #region GuestRequest
@@ -33,6 +35,7 @@ namespace DAL
         List<Order> getAllOrders();
         void addOrder(Order ord);
         List<Order> getOrders(Func<Order, bool> predicate);
+        void deleteGuest(GuestRequest guest);
 
         #endregion
         //#region Order

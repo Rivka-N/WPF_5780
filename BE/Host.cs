@@ -24,6 +24,7 @@ namespace BE
         public System.Net.Mail.MailAddress Mail { get => mail; set { mail = value; } }
         public BankAccount Bank { get => bank; set { bank = value; } }
         public bool CollectionClearance { get; set; }
+        
         #endregion
         #region ctors
         public Host(int id, string first, string last, System.Net.Mail.MailAddress mail, Int32 phone, BankAccount bank, bool CollectionClearance=false)

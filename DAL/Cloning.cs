@@ -50,6 +50,8 @@ namespace DAL
             target.NumChildren = original.NumChildren;
             target.Jacuzzi = original.Jacuzzi;
             target.Pool = original.Pool;
+            if (original.guestForUnit != null)
+                target.guestForUnit = original.guestForUnit.Select(curGuest => curGuest.Clone()).ToList();
 
 
             return target;
@@ -66,7 +68,10 @@ namespace DAL
             target.Name = original.Name;
             target.Phone = original.Phone;
             target.Mail = original.Mail;
-            target.Bank = original.Bank.Clone() ;
+            target.Bank = original.Bank.Clone();
+            
+
+
             return target;
             
         }
