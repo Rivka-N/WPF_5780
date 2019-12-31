@@ -128,6 +128,18 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\BE.BankAccount.datasource" />
+    <None Include="Properties\DataSources\BE.Configuration.datasource" />
+    <None Include="Properties\DataSources\BE.Enums+Area.datasource" />
+    <None Include="Properties\DataSources\BE.Enums+DataSourseType.datasource" />
+    <None Include="Properties\DataSources\BE.Enums+HostingUnitType.datasource" />
+    <None Include="Properties\DataSources\BE.Enums+OrderStatus.datasource" />
+    <None Include="Properties\DataSources\BE.Enums+Preference.datasource" />
+    <None Include="Properties\DataSources\BE.Enums.datasource" />
+    <None Include="Properties\DataSources\BE.GuestRequest.datasource" />
+    <None Include="Properties\DataSources\BE.Host.datasource" />
+    <None Include="Properties\DataSources\BE.HostingUnit.datasource" />
+    <None Include="Properties\DataSources\BE.Order.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

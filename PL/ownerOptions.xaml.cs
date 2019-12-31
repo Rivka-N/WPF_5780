@@ -68,9 +68,10 @@ namespace PL
             pb_Units.BorderBrush = Brushes.DarkMagenta;
             string s = "";
             var hostings = bL.getAllHostingUnits();
-            foreach (var h in hostings)
-                s += h.ToString()+"\n";
-            tb_printInfo.Text = "יחידות אירוח" + "\n"+s;
+            //foreach (var h in hostings)
+            //    s += h.ToString()+"\n";
+            //tb_printInfo.Text = "יחידות אירוח" + "\n"+s;
+            guestRequestListView.DataContext = hostings;
         }
         #endregion
 
@@ -83,6 +84,19 @@ namespace PL
             pb_Units.FontSize = 12;
             pb_Units.BorderBrush = Brushes.DarkMagenta;
             
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            System.Windows.Data.CollectionViewSource guestRequestViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("guestRequestViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // guestRequestViewSource.Source = [generic data source]
+        }
+
+        private void guestRequestListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
