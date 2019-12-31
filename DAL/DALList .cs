@@ -30,17 +30,25 @@ namespace DAL
         }
 
         public void addHostingUnit(HostingUnit unit)
-        {//check no other host exists with same id?
+        {
+            if (unit == null)
+                throw new dataException("no unit");
+            
+            //check no other host exists with same id?
             if (unit.Host != null)//if there's a host
             {
-                unit.HostingUnitKey = Configuration.HostingUnit;
+                var allUnits = getAllHostingUnits();
+                if (allUnits.Find(u => u.Host.HostKey == unit.Host.HostKey) != null)//if another host with same id exists
+                    throw new dataException("host already exists");
                 if (unit.Host.Bank != null)//if there is a bank
                 {
                     unit.Host.Bank.BankAcountNumber = Configuration.BankAccountKey++;//sets running bank account number
                 }
 
-             }
-            Configuration.HostingUnit++;//sets unit number
+            }
+            else
+                throw new dataException("no host");
+            unit.HostingUnitKey = Configuration.HostingUnit++;//sets unit number
             DS.DataSource.hostingUnits.Add(unit.Clone());
 
         }

@@ -36,7 +36,7 @@ namespace DAL
         public static HostingUnit Clone(this HostingUnit original)
         {   if (original == null)
                 return null;
-            HostingUnit target = new HostingUnit(original.Host, original.HostingUnitKey);
+            HostingUnit target = new HostingUnit();
             target.HostingUnitName = original.HostingUnitName;
             target.HostingUnitType = original.HostingUnitType;
             target.HostingUnitKey = original.HostingUnitKey;
@@ -45,6 +45,7 @@ namespace DAL
             target.Diary = (bool[,])(original.Diary.Clone());
             target.Garden = original.Garden;
             target.Host = original.Host.Clone();
+            target.HostingUnitKey = original.HostingUnitKey;
 
             return target;
         }

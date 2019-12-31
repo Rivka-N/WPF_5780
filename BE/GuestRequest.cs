@@ -20,7 +20,7 @@ namespace BE
         public DateTime Mailed { get => mailed; set { mailed = value; } }
         public Enums.OrderStatus Status { get; set; }
         DateTime registration;
-        public DateTime Registration { get => registration; set { Registration = value; } }
+        public DateTime Registration { get => registration; set { registration = value; } }
         DateTime entryDate;
         public DateTime EntryDate { get => entryDate; set { entryDate = value; } }
         DateTime releaseDate;
@@ -49,31 +49,6 @@ namespace BE
         #endregion
         #region ctors
 
-        //public GuestRequest(string fName, string lName, string em, DateTime enter, DateTime rel, Enums.Area ar, string sArea, Enums.HostingUnitType type, int nAdult, int Nchild, Enums.Preference isPool, Enums.Preference isJacuzzi, Enums.Preference isGarden, Enums.Preference isAttractions)
-        //{
-        //    //add default to enum type 
-
-        //    GuestRequestKey = Configuration.GuestRequest;
-        //    name = fName;
-        //    lastName = lName;
-        //    mail = em;
-        //    registration = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
-        //    entryDate = enter;
-        //    releaseDate = rel;
-        //    area = ar;
-        //    subArea = sArea;
-        //    typeOfUnit = type;
-        //    numAdult = nAdult;
-        //    numChildren = Nchild;
-        //    pool = isPool;
-        //    jacuzzi = isJacuzzi;
-        //    garden = isGarden;
-        //    childrenAttractions = isAttractions;
-        //    NumSuggestions = -1;//none yet
-        //    Status = Enums.OrderStatus.Started;
-        //    Configuration.GuestRequest++;
-
-        //}
         public GuestRequest(int guestKey=0, DateTime registerDate=default(DateTime))
         {
             GuestRequestKey = guestKey == 0 ? Configuration.GuestRequest++ : GuestRequestKey = guestKey;
