@@ -42,11 +42,9 @@ namespace BE
         {
             HostingUnitName = null;
             HostingUnitKey = 0;
-            Diary = new bool[12, 31];
-            Diary = new bool[12, 31];
+            Diary = new bool[13, 32];
             this.hostingUnitType = Enums.HostingUnitType.Zimmer;
             this.AreaVacation = Enums.Area.Center;
-            Diary = new bool[12, 31];
             childrenAttractions = Enums.Preference.No;
             garden = Enums.Preference.No;
             jacuzzi = Enums.Preference.No;
@@ -63,7 +61,7 @@ namespace BE
             this.hostingUnitType = hostingUnitType;
             this.hostingUnitKey = Configuration.HostingUnit++;
             this.AreaVacation = area;
-            Diary = new bool[12,31];
+            Diary = new bool[13,32];
             childrenAttractions = Enums.Preference.No;
             garden = Enums.Preference.No;
             jacuzzi = Enums.Preference.No;
@@ -76,11 +74,10 @@ namespace BE
         {
             this.Host = host;
             this.hostingUnitKey = hostingUnitKey;
-            Diary = new bool[12, 31];
+            Diary = new bool[13, 32];
             this.hostingUnitType = Enums.HostingUnitType.Zimmer;
             this.hostingUnitKey = 0;
             this.AreaVacation = Enums.Area.Center;
-            Diary = new bool[12, 31];
             childrenAttractions = Enums.Preference.No;
             garden = Enums.Preference.No;
             jacuzzi = Enums.Preference.No;
