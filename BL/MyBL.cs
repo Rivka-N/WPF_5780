@@ -78,6 +78,7 @@ namespace BL
         {
             //sends mail to the guest
 
+
             guest.Mailed = new DateTime();
         }
 
@@ -130,17 +131,21 @@ namespace BL
             var unit = myDAL.findUnit(unitKey);
             return (unit == null) ? throw new InvalidException("unit not found") : unit;
         }
+
+
+
         public List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest)
         {
 
             List<HostingUnit> listOfUnits = new List<HostingUnit>();
-            //code
-
             for (int i = 0; i < units.Count(); i++)
             {
-                if (guest.TypeOfUnit == units[i].HostingUnitType && guest.AreaVacation == units[i].AreaVacation && available(units[i], guest))
+                if (guest.TypeOfUnit == units[i].HostingUnitType && guest.AreaVacation == units[i].AreaVacation  &&available(units[i], guest))
                 {
-                    listOfUnits.Add(units[i]);//adds to the guest list
+                    if ((guest.NumAdult <= listOfUnits[i].NumAdult && guest.NumAdult + 5 > listOfUnits[i].NumAdult) && (guest.NumChildren <= listOfUnits[i].NumChildren && guest.NumChildren+5>listOfUnits[i].NumChildren))
+                    {
+                        listOfUnits.Add(units[i]);//adds to the guest list
+                    }
                 }
             }
             if (listOfUnits.Count() == 0)
@@ -152,12 +157,26 @@ namespace BL
                     mail(listOfUnits, guest);
                 else
                 {
-                    //code to delete units
+                    int i = 0;
+                    while (listOfUnits.Count() > 5 && i < listOfUnits.Count())
+                    {
+                        if (guest.Pool != listOfUnits[i].Pool && guest.Pool != listOfUnits[i].Pool)
+                        {
+                            listOfUnits.RemoveAt(i);
+                        }
+                        else if (guest.Garden != listOfUnits[i].Garden && guest.ChildrenAttractions != listOfUnits[i].ChildrenAttractions)
+                        {
+                            listOfUnits.RemoveAt(i);
+                        }
+                        else
+                            i++;
+                    }
+                    mail(listOfUnits, guest);
                 }
 
-
+                
             }
-            return listOfUnits;
+            return listOfUnits; 
 
         }
 

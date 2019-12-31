@@ -20,7 +20,7 @@ namespace BE
         public DateTime Mailed { get => mailed; set { mailed = value; } }
         public Enums.OrderStatus Status { get; set; }
         DateTime registration;
-        public DateTime Registration { get => registration; }
+        public DateTime Registration { get => registration; set { Registration = value; } }
         DateTime entryDate;
         public DateTime EntryDate { get => entryDate; set { entryDate = value; } }
         DateTime releaseDate;
