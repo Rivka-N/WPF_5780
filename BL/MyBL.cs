@@ -251,9 +251,15 @@ namespace BL
         {
             return myDAL.getRequests(predicate);
         }
-    #endregion
-    #region add dates for pl
-    public void addEntryDate(DateTime? selectedDate, GuestRequest g1)//adds selected date to guest
+
+        public List<Order> getOrders(Func<Order, bool> predicate)
+        {
+            return myDAL.getOrders(predicate);
+        }
+
+        #endregion
+        #region add dates for pl
+        public void addEntryDate(DateTime? selectedDate, GuestRequest g1)//adds selected date to guest
         {
             g1.EntryDate = (DateTime)selectedDate;
             if (g1.ReleaseDate!=default(DateTime))
@@ -425,7 +431,8 @@ namespace BL
                            select order;
             return thisUnit;
         }
-       
+
+      
         #endregion
     }
 }

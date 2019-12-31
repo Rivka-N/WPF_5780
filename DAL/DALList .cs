@@ -66,7 +66,15 @@ namespace DAL
             return DS.DataSource.hostingUnits.Select(hus=>(HostingUnit)hus.Clone()).ToList();
             //return hosting units
         }
+        public List<Order> getOrders(Func<Order, bool> predicate = null)
+        {
+            var ords = from ord in DataSource.orders
+                       let p=predicate(ord)
+                       where p
+                       select ord.Clone();
+            return ords.ToList();
 
+        }
         public List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> predicate = null)
         {
             return DataSource.hostingUnits.Where(predicate).Select(hu => (HostingUnit)hu.Clone()).ToList();

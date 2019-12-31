@@ -352,6 +352,7 @@ namespace PL
             cb_hostingUnitType.Visibility = Visibility.Hidden;
             cb_jaccuzi.Visibility = Visibility.Hidden;
             cb_pool.Visibility = Visibility.Hidden;
+            tb_unitName.Visibility = Visibility.Hidden;
         }
 
         public void visible()//only can change fields once entered host number and unit number
@@ -368,7 +369,7 @@ namespace PL
             cb_hostingUnitType.Visibility = Visibility.Visible;
             cb_jaccuzi.Visibility = Visibility.Visible;
             cb_pool.Visibility = Visibility.Visible;
-
+            tb_unitName.Visibility = Visibility.Visible;
         }
 
         #endregion
