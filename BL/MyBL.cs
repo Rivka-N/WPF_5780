@@ -61,7 +61,7 @@ namespace BL
         public bool available(HostingUnit unit, GuestRequest guest)
         {
             DateTime end = guest.ReleaseDate;
-            for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//Check availability
+            for (DateTime start = guest.EntryDate; start <= end; start=start.AddDays(1))//Check availability
             {
 
                 if (unit.Diary[start.Month, start.Day] == true)
@@ -96,7 +96,7 @@ namespace BL
                                                                //take off transaction fee
         {
             DateTime end = guest.ReleaseDate;
-            for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//Check availability
+            for (DateTime start = guest.EntryDate; start < end; start.AddDays(1))//Check availability
             {
                 if (unit.Diary[start.Month, start.Day] == true)
                 {
