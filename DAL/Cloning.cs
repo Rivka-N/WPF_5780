@@ -46,7 +46,7 @@ namespace DAL
             target.Garden = original.Garden;
             target.Host = original.Host.Clone();
             target.HostingUnitKey = original.HostingUnitKey;
-
+       
             return target;
         }
 
