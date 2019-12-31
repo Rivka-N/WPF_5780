@@ -51,8 +51,8 @@ namespace BE
 
         public override string ToString()
         {
-            return "Hosting Unit Key: " + hostingUnitKey + " Guest Request Key: " + guestRequestKey + " Order Key: " + orderKey
-                + " Date Created: " + createDate.ToString("d") + " Order Date:" + orderDate.ToString("d")+"\n";
+            return "Hosting Unit Key: " + hostingUnitKey + " \nGuest Request Key: " + guestRequestKey + " \nOrder Key: " + orderKey
+                + " \nDate Request Created: " + createDate.ToString("d") + " Order Date:" + orderDate.ToString("d")+"\n";
 
      
         }

@@ -49,8 +49,7 @@ namespace BE
             pool = Enums.Preference.No;
             HostingUnitName = "";
             Host = new Host();
-            numAdult = 0;
-            numChildren = 0;
+            
 
         }
 
@@ -73,7 +72,7 @@ namespace BE
 
         public override string ToString()
         {
-            return "Name: " + this.hostingUnitName+ "\n" + " Type of Unit: " + HostingUnitType + " Unit Name: " + hostingUnitName+"\n" + " pool: " + pool + "\n" + " jacuzzi: " + jacuzzi + "\n" + " garden: "+ garden + "\n" + " childrenAttractions: " + childrenAttractions + "\n";
+            return "Host Name: " + host.Name + " " + host.LastName + "\n" + " Type of Unit: " + HostingUnitType + " Unit Name: " + hostingUnitName+"\n" + " pool: " + pool + "\n" + " jacuzzi: " + jacuzzi + "\n" + " garden: "+ garden + "\n" + " childrenAttractions: " + childrenAttractions + "\n";
         }
     }
 }

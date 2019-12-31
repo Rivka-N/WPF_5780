@@ -46,10 +46,7 @@ namespace DAL
             target.Garden = original.Garden;
             target.Host = original.Host.Clone();
             target.HostingUnitKey = original.HostingUnitKey;
-            target.NumAdult = original.NumAdult;
-            target.NumChildren = original.NumChildren;
-            target.Jacuzzi = original.Jacuzzi;
-            target.Pool = original.Pool;
+
             return target;
         }
 
