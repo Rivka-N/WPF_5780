@@ -23,9 +23,12 @@ namespace BE
         public DateTime OrderDate { get => orderDate; set { orderDate = OrderDate; } }//sent mail
         #endregion
         #region ctor
-        public Order (DateTime create)
+
+
+        public Order (DateTime create = default(DateTime))
         {
-            createDate = create;
+            createDate = create == default(DateTime) ? new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day) : createDate;
+
         }
         public Order(DateTime create, DateTime order, GuestRequest guest, HostingUnit hosting)
         {
@@ -41,6 +44,8 @@ namespace BE
         {
             this.orderDate = orderDate;
         }
+
+
         #endregion
         #region toString
 
