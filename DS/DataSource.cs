@@ -13,7 +13,7 @@ namespace DS
         public static List<Order> orders = new List<Order>();
         public static List<GuestRequest> guestRequests = new List<GuestRequest>();
         public static List<Host> hosts = new List<Host>();
-       
+        public static List<BankAccount> banks = new List<BankAccount>();
 
        
 
@@ -30,6 +30,18 @@ namespace DS
             guestRequests.Add(new GuestRequest() { GuestRequestKey = 10000013, Name = "ben", LastName = "lev", Mail = new System.Net.Mail.MailAddress("lev@gmail.com"), Status = Enums.OrderStatus.Started, Registration = new DateTime(2020, 01, 14), EntryDate = new DateTime(2020, 01, 20), ReleaseDate = new DateTime(2020, 01, 28), AreaVacation = Enums.Area.Golan, SubArea = "Tel Aviv", TypeOfUnit = Enums.HostingUnitType.Hotel, NumAdult = 2, NumChildren = 5, Pool = Enums.Preference.No, Jacuzzi = Enums.Preference.Yes, Garden = Enums.Preference.Yes, ChildrenAttractions = Enums.Preference.Maybe});
             #endregion
 
+            #region addBanks
+            banks.Add(new BankAccount() { BankNumber = 1, BankName = "leumi", BranchNumber = 10, BranchAddress = "sfat emet", BranchCity = "beit shemesh", BankAcountNumber = 11115 });
+            banks.Add(new BankAccount() { BankNumber = 2, BankName = "hapoalim", BranchNumber = 11, BranchAddress = "jafo", BranchCity = "jerusalem", BankAcountNumber = 11116 });
+            banks.Add(new BankAccount() { BankNumber = 3, BankName = "leumi", BranchNumber = 10, BranchAddress = "herav mebrisk", BranchCity = "beit shemesh", BankAcountNumber = 11117 });
+            #endregion
+
+            #region addHosts
+            hosts.Add(new Host() { HostKey = 11111111, Name = "yoni", LastName = "cohen", Phone = 0548430134, Mail = new System.Net.Mail.MailAddress("yoni@gmail.com"), Bank = banks[0], CollectionClearance = true });
+            hosts.Add(new Host() { HostKey = 11111111, Name = "liel", LastName = "levi", Phone = 0527611484, Mail = new System.Net.Mail.MailAddress("liel@gmail.com"), Bank = banks[1], CollectionClearance = true });
+            hosts.Add(new Host() { HostKey = 11111111, Name = "tehila", LastName = "yosef", Phone = 0506958443, Mail = new System.Net.Mail.MailAddress("tehila@gmail.com"), Bank = banks[2], CollectionClearance = true });
+            #endregion
+
             #region  addHostingUnit
             hostingUnits.Add(new HostingUnit() { HostingUnitKey = 10000001, HostingUnitName = "a", Host = hosts[2], AreaVacation = Enums.Area.Center, HostingUnitType = Enums.HostingUnitType.Hotel, Pool = Enums.Preference.Yes, NumAdult = 12, NumChildren = 2, Jacuzzi = Enums.Preference.No, Garden = Enums.Preference.Yes, ChildrenAttractions = Enums.Preference.Yes });
             hostingUnits.Add(new HostingUnit() { HostingUnitKey = 10000002, HostingUnitName = "b", Host = hosts[1], AreaVacation = Enums.Area.Galil, HostingUnitType = Enums.HostingUnitType.Zimmer, Pool = Enums.Preference.Yes, NumAdult = 2, NumChildren = 0, Jacuzzi = Enums.Preference.Yes, Garden = Enums.Preference.No, ChildrenAttractions = Enums.Preference.No });
@@ -41,6 +53,10 @@ namespace DS
             orders.Add(new Order() { HostingUnitKey = 10000002, GuestRequestKey = 10000012, OrderKey = 10000112, OrderDate = new DateTime(2020, 01, 10) });
             orders.Add(new Order() { HostingUnitKey = 10000003, GuestRequestKey = 10000013, OrderKey = 10000113, OrderDate = new DateTime(2020, 01, 15) });
             #endregion
+
+           
+
+            
         }
 
     }
