@@ -46,31 +46,7 @@ namespace BL
             myDAL.addOrder(ord.Clone());
         }
 
-        public void order(HostingUnit unit, GuestRequest guest)//makes sure that the days in the request available
-                                                               //update guest status
-                                                               //take off transaction fee
-        {
-            DateTime end = guest.ReleaseDate;
-            for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//Check availability
-            {
-                if (unit.Diary[start.Month, start.Day] == true)
-                {
-                    //code to send message to the host
-                    return;//if its already occupied
-                }
-            }
-            for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//set the days
-            {
-                unit.Diary[start.Month, start.Day] = true;
-            }
-            guest.Status = Enums.OrderStatus.Closed;//closed status
-            Order ord = new Order(guest.Registration);//makes new order
-            ord.HostingUnitKey = unit.HostingUnitKey;
-            ord.GuestRequestKey = guest.GuestRequestKey;
-            ord.OrderDate = guest.Mailed;
-            addOrder(ord);//send to the function which adds the order to the order list
-
-        }
+      
         #endregion
 
         #region order
@@ -81,11 +57,6 @@ namespace BL
 
             guest.Mailed = new DateTime();
         }
-
-        //public void notFounde()//if there are no units that match
-        //{
-        //throws exception instead
-        //}
 
         public bool available(HostingUnit unit, GuestRequest guest)
         {
@@ -120,37 +91,52 @@ namespace BL
                 ans += ord;
             return ans;
         }
-
-        #endregion
-
-        #region find methods
-        public HostingUnit findUnit(int unitKey)//finds unit based on key
+        public void order(HostingUnit unit, GuestRequest guest)//makes sure that the days in the request available
+                                                               //update guest status
+                                                               //take off transaction fee
         {
-            if (unitKey < 0)
-                throw new InvalidException("invalid unit key");
-            var unit = myDAL.findUnit(unitKey);
-            return (unit == null) ? throw new InvalidException("unit not found") : unit;
-        }
+            DateTime end = guest.ReleaseDate;
+            for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//Check availability
+            {
+                if (unit.Diary[start.Month, start.Day] == true)
+                {
+                    //code to send message to the host
+                    return;//if its already occupied
+                }
+            }
+            for (DateTime start = guest.EntryDate; start <= end; start.AddDays(1))//set the days
+            {
+                unit.Diary[start.Month, start.Day] = true;
+            }
+            guest.Status = Enums.OrderStatus.Closed;//closed status
+            Order ord = new Order(guest.Registration);//makes new order
+            ord.HostingUnitKey = unit.HostingUnitKey;
+            ord.GuestRequestKey = guest.GuestRequestKey;
+            ord.OrderDate = guest.Mailed;
+            addOrder(ord);//send to the function which adds the order to the order list
 
+        }
 
 
         public List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest)
         {
-
             List<HostingUnit> listOfUnits = new List<HostingUnit>();
             for (int i = 0; i < units.Count(); i++)
             {
-                if (guest.TypeOfUnit == units[i].HostingUnitType && guest.AreaVacation == units[i].AreaVacation  &&available(units[i], guest))
+                if (units[i].Host.CollectionClearance)
                 {
-                    if ((guest.NumAdult <= listOfUnits[i].NumAdult && guest.NumAdult + 5 > listOfUnits[i].NumAdult) && (guest.NumChildren <= listOfUnits[i].NumChildren && guest.NumChildren+5>listOfUnits[i].NumChildren))
+                    //listOfUnits.Where(hu => (hu.Host.CollectionClearance && hu.HostingUnitType == guest.TypeOfUnit && guest.AreaVacation == hu.AreaVacation && available(hu, guest))).Select(hu => hu.Clone()).ToList();
+                    if (guest.TypeOfUnit == units[i].HostingUnitType && guest.AreaVacation == units[i].AreaVacation && available(units[i], guest))
                     {
-                        listOfUnits.Add(units[i]);//adds to the guest list
+                        if ((guest.NumAdult <= listOfUnits[i].NumAdult && guest.NumAdult + 5 > listOfUnits[i].NumAdult) && (guest.NumChildren <= listOfUnits[i].NumChildren && guest.NumChildren + 5 > listOfUnits[i].NumChildren))
+                        {
+                            listOfUnits.Add(units[i]);//adds to the guest list
+                        }
                     }
                 }
             }
             if (listOfUnits.Count() == 0)
                 throw new InvalidException("no units found");
-            //notFounde();
             else
             {
                 if (listOfUnits.Count() <= 5)
@@ -174,12 +160,24 @@ namespace BL
                     mail(listOfUnits, guest);
                 }
 
-                
+
             }
-            return listOfUnits; 
+            return listOfUnits;
 
         }
 
+        #endregion
+
+        #region find methods
+        public HostingUnit findUnit(int unitKey)//finds unit based on key
+        {
+            if (unitKey < 0)
+                throw new InvalidException("invalid unit key");
+            var unit = myDAL.findUnit(unitKey);
+            return (unit == null) ? throw new InvalidException("unit not found") : unit;
+        }
+
+      
         public GuestRequest findGuest(GuestRequest g1, string text)
         {
             int guestNum;
@@ -194,7 +192,6 @@ namespace BL
         #region change
         public void changeUnit(HostingUnit hostingUnit1)
         {
-
             myDAL.changeUnit(hostingUnit1);
         }
 
@@ -428,11 +425,7 @@ namespace BL
                            select order;
             return thisUnit;
         }
-
-      
-
-
-
+       
         #endregion
     }
 }
