@@ -21,7 +21,7 @@
         <Button x:Name="pb_Requests" Grid.Row="1" Content="בקשות אירוח" Padding="10" HorizontalAlignment="Left" VerticalAlignment="Stretch" Click="Pb_Requests_Click"/>
         <Button x:Name="pb_Units" Grid.Row="2" Content="יחידות אירוח" Padding="10" HorizontalAlignment="Left" VerticalAlignment="Stretch" Click="Pb_Units_Click"/>
         <TextBlock x:Name="tb_printInfo" HorizontalAlignment="Left" Margin="252,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="354" Grid.RowSpan="5" Width="289"/>
-        <ListView x:Name="guestRequestListView" ItemsSource="{Binding}" Margin="488,89,0,16.496" Grid.RowSpan="4" SelectionMode="Single" SelectionChanged="guestRequestListView_SelectionChanged">
+        <ListView x:Name="guestRequestListView" ItemsSource="{Binding}" Margin="478,94,9.6,11" Grid.RowSpan="3" SelectionMode="Single" SelectionChanged="guestRequestListView_SelectionChanged">
             <ListView.ItemContainerStyle>
                 <Style>
                     <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
