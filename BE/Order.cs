@@ -14,6 +14,7 @@ namespace BE
         private Int32 orderKey;
         DateTime orderDate;
         DateTime createDate;
+        Enums.OrderStatus status;
         #endregion
         #region properties
         public Int32 HostingUnitKey { get => hostingUnitKey; set { hostingUnitKey = value; } }//from static number in configuration
@@ -21,6 +22,7 @@ namespace BE
         public Int32 OrderKey { get => orderKey; set { orderKey = value; } }
         public DateTime CreateDate { get => createDate; set { createDate = value; } }
         public DateTime OrderDate { get => orderDate; set { orderDate = OrderDate; } }//sent mail
+        public Enums.OrderStatus Status { get => status; set { status = value; } }
         #endregion
         #region ctor
 

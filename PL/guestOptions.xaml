@@ -7,7 +7,10 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         xmlns:sys1="clr-namespace:BE;assembly=BE"
-        Title="guestOptions" Height="450" Width="800">
+        Title="guestOptions" Height="450" Width="800" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type sys1:GuestRequest}, CreateList=True}"/>
+    </Window.Resources>
     <Grid>
         <Viewbox Name="vb_Calendar_EnterDate" HorizontalAlignment="Left" Height="131" Margin="34,132,0,0" VerticalAlignment="Top" Width="146">
             <Calendar Name="cl_EnterDate" HorizontalAlignment="Center" VerticalAlignment="Center" DisplayDateStart="{x:Static sys:DateTime.Now}" SelectedDatesChanged="cl_addEntryDate"/>

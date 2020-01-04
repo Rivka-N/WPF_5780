@@ -274,6 +274,13 @@ namespace PL
 
         }
         #endregion
-        
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            System.Windows.Data.CollectionViewSource guestRequestViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("guestRequestViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // guestRequestViewSource.Source = [generic data source]
+        }
     }
 }

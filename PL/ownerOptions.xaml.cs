@@ -66,7 +66,7 @@ namespace PL
             pb_Requests.FontSize = 12;
             pb_Units.FontSize = 20;
             pb_Units.BorderBrush = Brushes.DarkMagenta;
-            string s = "";
+            //string s = "";
             var hostings = bL.getAllHostingUnits();
             //foreach (var h in hostings)
             //    s += h.ToString()+"\n";

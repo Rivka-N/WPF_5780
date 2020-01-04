@@ -129,7 +129,7 @@ namespace DAL
                 throw new dataException("unable to delete item");
         }
 
-        public void deleteGuest(GuestRequest guest)
+        public void deleteGuest(GuestRequest guest)//deletes guest from other hosts' guest list
         {
           foreach(HostingUnit unit in DataSource.hostingUnits)
             {
@@ -137,7 +137,7 @@ namespace DAL
             }
         }
 
-        public void deleteSameDate(HostingUnit unit, GuestRequest guest)
+        public void deleteSameDate(HostingUnit unit, GuestRequest guest)//deletes units with same dates as added order
         {
             int index = DataSource.hostingUnits.FindIndex(cur => { return unit.HostingUnitKey == cur.HostingUnitKey; });//finds index of it in list
             var curUnit = DataSource.hostingUnits[index];
