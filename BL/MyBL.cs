@@ -70,6 +70,7 @@ namespace BL
         {
             //sends mail to the guest
             guest.Mailed = new DateTime();
+
         }
 
         public bool available(HostingUnit unit, GuestRequest guest)//checks if guest request's dates are available in this unit
