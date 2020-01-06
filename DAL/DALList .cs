@@ -72,10 +72,24 @@ namespace DAL
             return DS.DataSource.hostingUnits.Select(hus=>(HostingUnit)hus.Clone()).ToList();
             //return hosting units
         }
+     
+        public List<GuestRequest> getRequests()
+        {
+            return DS.DataSource.guestRequests.Select(guestReq => (GuestRequest)guestReq.Clone()).ToList();
+        }
+
+        public List<Order> getAllOrders()
+        {
+            return DataSource.orders.Select(order => (Order)order.Clone()).ToList();
+        }
+
+
+        #endregion
+        #region get by predicates
         public List<Order> getOrders(Func<Order, bool> predicate = null)
         {
             var ords = from ord in DataSource.orders
-                       let p=predicate(ord)
+                       let p = predicate(ord)
                        where p
                        select ord.Clone();
             return ords.ToList();
@@ -86,15 +100,6 @@ namespace DAL
             return DataSource.hostingUnits.Where(predicate).Select(hu => (HostingUnit)hu.Clone()).ToList();
 
         }
-        public List<GuestRequest> getRequests()
-        {
-            return DS.DataSource.guestRequests.Select(guestReq => (GuestRequest)guestReq.Clone()).ToList();
-        }
-
-        public List<Order> getAllOrders()
-        {
-            return DataSource.orders.Select(order=>(Order)order.Clone()).ToList();
-        }
         public List<GuestRequest> getRequests(Func<GuestRequest, bool> predicate)
         {
             var requests = from guest in DataSource.guestRequests
@@ -102,9 +107,7 @@ namespace DAL
                            where p
                            select guest.Clone();
             return requests.ToList();
-            //alternative: return DataSource.guestRequests.Where(predicate).Select(gr => (GuestRequest)gr.Clone()).ToList();
         }
-
         #endregion
         #region search functions
         public HostingUnit findUnit(int unitKey)//returns first instance of unitKey as a hosting unit key inside list of hosting units
@@ -148,8 +151,24 @@ namespace DAL
 
         }
 
+        public void deleteOrders(Func<Order, bool> p)//deletes orders that have condition
+        {
+            try
+            { DataSource.orders.RemoveAll(or => p(or));//deletes all orders that return true for p
+            }
+            catch
+            {
+                throw new dataException("no items to delete");
+            }
+            }
         #endregion
         #region change items
+        public void changeOrder(Func<Order, bool> p1, Func<Order, Order> p2)
+        {
+            Order ord = DataSource.orders.Find(o=>p1(o));//finds order
+            p2(ord);//changes ord
+        }
+
         public void changeUnit(HostingUnit hostingUnit1)
         { 
             int index = DataSource.hostingUnits.FindIndex(cur=> { return hostingUnit1.HostingUnitKey == cur.HostingUnitKey; });//finds index of it in list
@@ -159,8 +178,25 @@ namespace DAL
             DataSource.hostingUnits[index] = hostingUnit1.Clone();//sets it to be a copy of the new updated unit
         }
 
+        public void changeStatus(GuestRequest guest, Enums.OrderStatus status)
+        {
+            try
+            {
+                DataSource.guestRequests.Find(gr => guest.Status == gr.Status).Status = status;
+            }
+            catch
+            {
+                throw new dataException("object not found");
+                    
+                    }
 
+        }
 
+        public void addCharge(HostingUnit unit, int numDays)
+        {
+            var found = DataSource.hostingUnits.Find(u => u == unit);
+            found.MoneyPaid += Configuration.TransactionFee * numDays;//adds this transaction fee to total transaction fees
+        }
 
         #endregion
     }

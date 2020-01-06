@@ -29,22 +29,22 @@ namespace DAL
         GuestRequest findGuest(GuestRequest g1);//finds by guest key
         List<GuestRequest> getRequests(Func<GuestRequest, bool> predicate);
         List<GuestRequest> getRequests();
+        void changeStatus(GuestRequest guest, Enums.OrderStatus status);
         #endregion
 
         #region order
         List<Order> getAllOrders();
         void addOrder(Order ord);
         List<Order> getOrders(Func<Order, bool> predicate);
+        void changeOrder(Func<Order, bool> p1, Func<Order, Order> p2);
+        void addCharge(HostingUnit unit, int numDays);
 
         #region delete
         void deleteGuest(GuestRequest guest);
         void deleteSameDate(HostingUnit unit, GuestRequest guest);
+        void deleteOrders(Func<Order, bool> p);
         #endregion
 
         #endregion
-        //#region Order
-        //void addOrder(Order order);
-        //List<Order> getOrders(Func<Order, bool> predicate);
-        //#endregion
     }
 }

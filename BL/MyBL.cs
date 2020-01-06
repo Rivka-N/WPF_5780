@@ -52,14 +52,19 @@ namespace BL
         #region order
         public void sendGuestMail(HostingUnit unit, GuestRequest guest)//guest and hosting unit, sends mail to guest and creates order from details
         {
-            guest.Status = Enums.OrderStatus.Mailed;//closed status
-            Order ord = new Order(guest.Registration);//makes new order
-            ord.HostingUnitKey = unit.HostingUnitKey;
-            ord.GuestRequestKey = guest.GuestRequestKey;
-            ord.OrderDate = guest.Mailed;
-            addOrder(ord);//send to the function which adds the order to the order list
-            myDAL.deleteGuest(guest);
-            myDAL.deleteSameDate(unit, guest);
+            try
+            {
+                guest.Status = Enums.OrderStatus.Mailed;//closed status
+                Order ord = new Order(guest.Registration);//makes new order
+                ord.HostingUnitKey = unit.HostingUnitKey;
+                ord.GuestRequestKey = guest.GuestRequestKey;
+                ord.OrderDate = guest.Mailed;
+                addOrder(ord);//send to the function which adds the order to the order list
+            }
+            catch(Exception ex)
+            {
+                throw new InvalidException("unable to send mail: "+ex.Message);
+            }
         }
         public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with the list of units to the guest
         {
@@ -68,22 +73,31 @@ namespace BL
 
         }
 
-        public bool available(HostingUnit unit, GuestRequest guest)
+        public bool available(HostingUnit unit, GuestRequest guest)//checks if guest request's dates are available in this unit
         {
-            DateTime end = guest.ReleaseDate;
-            for (DateTime start = guest.EntryDate; start < end; start=start.AddDays(1))//Check availability
+            try
             {
-
-                if (unit.Diary[start.Month, start.Day] == true)
+                DateTime end = guest.ReleaseDate;
+                for (DateTime start = guest.EntryDate; start < end; start = start.AddDays(1))//Check availability
                 {
-                    return false;
-                }
 
+                    if (unit.Diary[start.Month, start.Day] == true)
+                    {
+                        return false;
+                    }
+
+                }
+                return true;
             }
-            return true;
+            catch
+            {
+                throw new InvalidException("index out of bounds");
+            }
+            
         }
 
-        public void checkOrder(Host h1, HostingUnit hu1, GuestRequest g1, GuestRequest foundGuest)//if it's a valid order, adds it to orders
+        public void checkOrder(Host h1, HostingUnit hu1, GuestRequest g1, GuestRequest foundGuest)
+            //checks if it's a valid order and adds it to orders
         {
             if (h1.HostKey != hu1.Host.HostKey)
                 throw new InvalidException("host details don't match");
@@ -91,7 +105,7 @@ namespace BL
                 throw new InvalidException("guest details don't match");
             if (foundGuest.Status == Enums.OrderStatus.Closed)
                 throw new InvalidException("guest already booked");
-            order(hu1, foundGuest);//adds order
+            order(hu1, foundGuest);//if everything is valid adds order
         }
         public string printOrdersByUnit(int unitNum)//return string of all orders from that unit
         {
@@ -101,23 +115,51 @@ namespace BL
                 ans += ord;
             return ans;
         }
-        public void order(HostingUnit unit, GuestRequest guest)//makes sure that the days in the request available
+        public void order(HostingUnit unit, GuestRequest guest)//final order
+                                                                //makes sure that the days in the request available
                                                                //update guest status
                                                                //take off transaction fee
         {
-            DateTime end = guest.ReleaseDate;
-            for (DateTime start = guest.EntryDate; start < end; start = start.AddDays(1))//Check availability
+            try
             {
-                if (unit.Diary[start.Month, start.Day] == true)
+                DateTime end = guest.ReleaseDate;
+                for (DateTime start = guest.EntryDate; start < end; start = start.AddDays(1))//Check availability
                 {
-                    //code to send message to the host
-                    throw new InvalidException("dates already full");//if its already occupied
+                    if (unit.Diary[start.Month, start.Day] == true)
+                    {
+                        throw new InvalidException("dates already full");//if its already occupied
+                    }
                 }
+                for (DateTime start = guest.EntryDate; start <= end; start = start.AddDays(1))//set the days
+                {
+                    unit.Diary[start.Month, start.Day] = true;
+                }
+                myDAL.deleteGuest(guest);
+                myDAL.deleteSameDate(unit, guest);
+                Order thisOrder = findOrder(guest, unit);
+                myDAL.deleteOrders(order => { return order.GuestRequestKey == thisOrder.GuestRequestKey && order.HostingUnitKey != thisOrder.HostingUnitKey; });
+                //deletes orders with the same guestrequestKey as this one
+                myDAL.changeOrder(order => order == thisOrder, order => { order.Status = Enums.OrderStatus.Closed; return order; });
+                //changes current order status
+                myDAL.changeStatus(guest, Enums.OrderStatus.Closed);//changes guest status
+                int numDays = numOfDays(guest.EntryDate, guest.ReleaseDate);
+                myDAL.addCharge(unit, numDays);//adds charge for number of days guest is staying
             }
-            for (DateTime start = guest.EntryDate; start <= end; start = start.AddDays(1))//set the days
+            catch(Exception ex)
             {
-                unit.Diary[start.Month, start.Day] = true;
+                throw new InvalidException(ex.Message);
             }
+        }
+
+        private int numOfDays(DateTime start, DateTime end)//number of days between start and end
+        {
+            return (end - start).Days;
+        }
+
+        private Order findOrder(GuestRequest guest, HostingUnit unit)//returns the order with this hosting unit and this guest
+        {  Func<Order, bool> func= order => order.GuestRequestKey == guest.GuestRequestKey && order.HostingUnitKey == unit.HostingUnitKey;
+            var ords= myDAL.getOrders(func);
+            return ords.First();//returns first item found
         }
 
         public List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest)//finds applicable units and sends mail to hosts
