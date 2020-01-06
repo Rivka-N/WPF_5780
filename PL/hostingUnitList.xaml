@@ -1,12 +1,25 @@
-﻿<Window x:Class="PL.hostingUnitList"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PL.hostingUnitList"
         mc:Ignorable="d"
-        Title="hostingUnitList" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="hostingUnitList" Height="450" Width="800" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="hostingUnitViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:HostingUnit}, CreateList=True}"/>
+    </Window.Resources>
+    <DataGrid x:Name="hostingUnitDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource hostingUnitViewSource}}" Margin="10,0,3.6,0" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="hostingUnitDataGrid_SelectionChanged_1">
+        <DataGrid.Columns>
+            <DataGridTextColumn x:Name="areaVacationColumn" Binding="{Binding AreaVacation}" Header="Area Vacation" Width="SizeToHeader"/>
+            <DataGridTextColumn x:Name="hostingUnitKeyColumn" Binding="{Binding HostingUnitKey}" Header="Hosting Unit Key" Width="SizeToHeader"/>
+            <DataGridTextColumn x:Name="hostingUnitNameColumn" Binding="{Binding HostingUnitName}" Header="Hosting Unit Name" Width="SizeToHeader"/>
+            <DataGridTextColumn x:Name="hostingUnitTypeColumn" Binding="{Binding HostingUnitType}" Header="Hosting Unit Type" Width="SizeToHeader"/>
+        </DataGrid.Columns>
+    </DataGrid>
+
+
+
+
 </Window>
