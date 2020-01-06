@@ -56,6 +56,7 @@ namespace BL
 
 
             guest.Mailed = new DateTime();
+
         }
 
         public bool available(HostingUnit unit, GuestRequest guest)
