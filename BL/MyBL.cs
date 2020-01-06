@@ -123,14 +123,20 @@ namespace BL
             myDAL.changeOrder(order=>order==thisOrder, order=> { order.Status = Enums.OrderStatus.Closed; return order; });
             //changes current order status
             myDAL.changeStatus(guest, Enums.OrderStatus.Closed);//changes guest status
-                 
+            int numDays = numOfDays(guest.EntryDate, guest.ReleaseDate);
+            myDAL.addCharge(unit, numDays);//adds charge for number of days guest is staying
+
+        }
+
+        private int numOfDays(DateTime entryDate, DateTime releaseDate)
+        {
+            throw new NotImplementedException();
         }
 
         private Order findOrder(GuestRequest guest, HostingUnit unit)//returns the order with this hosting unit and this guest
         {  Func<Order, bool> func= order => order.GuestRequestKey == guest.GuestRequestKey && order.HostingUnitKey == unit.HostingUnitKey;
             var ords= myDAL.getOrders(func);
             return ords.First();//returns first item found
-
         }
 
         public List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest)//finds applicable units and sends mail to hosts
