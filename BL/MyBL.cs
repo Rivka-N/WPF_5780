@@ -58,8 +58,6 @@ namespace BL
             ord.GuestRequestKey = guest.GuestRequestKey;
             ord.OrderDate = guest.Mailed;
             addOrder(ord);//send to the function which adds the order to the order list
-            myDAL.deleteGuest(guest);
-            myDAL.deleteSameDate(unit, guest);
         }
         public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with the list of units to the guest
         {
@@ -100,7 +98,8 @@ namespace BL
                 ans += ord;
             return ans;
         }
-        public void order(HostingUnit unit, GuestRequest guest)//makes sure that the days in the request available
+        public void order(HostingUnit unit, GuestRequest guest)//final order
+                                                                //makes sure that the days in the request available
                                                                //update guest status
                                                                //take off transaction fee
         {
@@ -109,7 +108,6 @@ namespace BL
             {
                 if (unit.Diary[start.Month, start.Day] == true)
                 {
-                    //code to send message to the host
                     throw new InvalidException("dates already full");//if its already occupied
                 }
             }
@@ -117,6 +115,22 @@ namespace BL
             {
                 unit.Diary[start.Month, start.Day] = true;
             }
+            myDAL.deleteGuest(guest);
+            myDAL.deleteSameDate(unit, guest);
+            Order thisOrder = findOrder(guest, unit);
+            myDAL.deleteOrders(order => { return order.GuestRequestKey == thisOrder.GuestRequestKey && order.HostingUnitKey != thisOrder.HostingUnitKey; });
+            //deletes orders with the same guestrequestKey as this one
+            myDAL.changeOrder(order=>order==thisOrder, order=> { order.Status = Enums.OrderStatus.Closed; return order; });
+            //changes current order status
+            myDAL.changeStatus(guest, Enums.OrderStatus.Closed);//changes guest status
+                 
+        }
+
+        private Order findOrder(GuestRequest guest, HostingUnit unit)//returns the order with this hosting unit and this guest
+        {  Func<Order, bool> func= order => order.GuestRequestKey == guest.GuestRequestKey && order.HostingUnitKey == unit.HostingUnitKey;
+            var ords= myDAL.getOrders(func);
+            return ords.First();//returns first item found
+
         }
 
         public List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest)//finds applicable units and sends mail to hosts
