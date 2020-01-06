@@ -27,7 +27,7 @@ namespace DAL
             target.Pool = original.Pool;
             target.Jacuzzi = original.Jacuzzi;
             target.Garden = original.Garden;
-            target.ChildrenAttractions = original.ChildrenAttractions;
+            target.Meal = original.Meal;
             target.NumSuggestions = original.NumSuggestions;
             target.Status = original.Status;
             return target;
@@ -41,7 +41,7 @@ namespace DAL
             target.HostingUnitType = original.HostingUnitType;
             target.HostingUnitKey = original.HostingUnitKey;
             target.AreaVacation = original.AreaVacation;
-            target.ChildrenAttractions = original.ChildrenAttractions;
+            target.Meal = original.Meal;
             target.Diary = (bool[,])(original.Diary.Clone());
             target.Garden = original.Garden;
             target.Host = original.Host.Clone();

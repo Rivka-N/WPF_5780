@@ -50,11 +50,20 @@ namespace BL
         #endregion
 
         #region order
+        public void sendGuestMail(HostingUnit unit, GuestRequest guest)//guest and hosting unit, sends mail to guest and creates order from details
+        {
+            guest.Status = Enums.OrderStatus.Mailed;//closed status
+            Order ord = new Order(guest.Registration);//makes new order
+            ord.HostingUnitKey = unit.HostingUnitKey;
+            ord.GuestRequestKey = guest.GuestRequestKey;
+            ord.OrderDate = guest.Mailed;
+            addOrder(ord);//send to the function which adds the order to the order list
+            myDAL.deleteGuest(guest);
+            myDAL.deleteSameDate(unit, guest);
+        }
         public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with the list of units to the guest
         {
             //sends mail to the guest
-
-
             guest.Mailed = new DateTime();
 
         }
@@ -102,33 +111,22 @@ namespace BL
                 if (unit.Diary[start.Month, start.Day] == true)
                 {
                     //code to send message to the host
-                    return;//if its already occupied
+                    throw new InvalidException("dates already full");//if its already occupied
                 }
             }
             for (DateTime start = guest.EntryDate; start <= end; start = start.AddDays(1))//set the days
             {
                 unit.Diary[start.Month, start.Day] = true;
             }
-            guest.Status = Enums.OrderStatus.Closed;//closed status
-            Order ord = new Order(guest.Registration);//makes new order
-            ord.HostingUnitKey = unit.HostingUnitKey;
-            ord.GuestRequestKey = guest.GuestRequestKey;
-            ord.OrderDate = guest.Mailed;
-            addOrder(ord);//send to the function which adds the order to the order list
-            myDAL.deleteGuest(guest);
-            myDAL.deleteSameDate(unit, guest);
-
         }
 
-
-        public List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest)
+        public List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest)//finds applicable units and sends mail to hosts
         {
             List<HostingUnit> listOfUnits = new List<HostingUnit>();
             for (int i = 0; i < units.Count(); i++)
             {
                 if (units[i].Host.CollectionClearance)
                 {
-                    //listOfUnits.Where(hu => (hu.Host.CollectionClearance && hu.HostingUnitType == guest.TypeOfUnit && guest.AreaVacation == hu.AreaVacation && available(hu, guest))).Select(hu => hu.Clone()).ToList();
                     if (guest.TypeOfUnit == units[i].HostingUnitType && guest.AreaVacation == units[i].AreaVacation && available(units[i], guest))
                     {
                         if (guest.NumAdult <= units[i].NumAdult   && guest.NumChildren <= units[i].NumChildren )
@@ -141,9 +139,7 @@ namespace BL
             if (listOfUnits.Count() == 0)
                 throw new InvalidException("no units found");
             mail(listOfUnits, guest);  //sends mail to all of the hosts 
-            
             return listOfUnits;
-
         }
 
         #endregion

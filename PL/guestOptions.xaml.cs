@@ -154,18 +154,7 @@ namespace PL
                     g1.Garden = Enums.Preference.Maybe;//otherwise it's the third state
             }
         }
-        private void CheckBox_attractionsChecked(object sender, RoutedEventArgs e)
-        {
-            if (cb_attractions.IsChecked == true)//changed to true
-                g1.ChildrenAttractions = Enums.Preference.Yes;
-            else
-            {
-                if (cb_attractions.IsChecked == false)//changed to false
-                    g1.ChildrenAttractions = Enums.Preference.No;
-                else
-                    g1.ChildrenAttractions = Enums.Preference.Maybe;//otherwise it's the third state
-            }
-        }
+        
         private void CheckBox_jaccuziChecked(object sender, RoutedEventArgs e)
         {
             if (cb_jaccuzi.IsChecked == true)//changed to true

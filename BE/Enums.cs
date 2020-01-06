@@ -20,6 +20,12 @@
             Mailed,
             Started          
         }
+        public enum MealType
+        {
+            Full,
+            Half,
+            None
+        }
         public enum Preference
         {
             Yes,

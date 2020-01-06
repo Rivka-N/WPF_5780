@@ -41,10 +41,8 @@ namespace BE
         public Enums.Preference Jacuzzi { get => jacuzzi; set { jacuzzi = value; } }
         Enums.Preference garden;
         public Enums.Preference Garden { get => garden; set { garden = value; } }
-        Enums.Preference childrenAttractions;
-        public Enums.Preference ChildrenAttractions { get => childrenAttractions; set { childrenAttractions = value; } }
         public int NumSuggestions { get; set; }//number of hosting suggestions
-
+        public Enums.MealType Meal { get; set; }
 
         #endregion
         #region ctors
@@ -66,7 +64,6 @@ namespace BE
             pool = Enums.Preference.Maybe;
             jacuzzi = Enums.Preference.Maybe;
             garden = Enums.Preference.Maybe;
-            childrenAttractions = Enums.Preference.Maybe;
             NumSuggestions = -1;//none yet
             Status = Enums.OrderStatus.Started;
         }

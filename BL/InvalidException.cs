@@ -6,10 +6,9 @@ namespace BL
     [Serializable]
     public class InvalidException : Exception
     {
-        string from;
         public InvalidException()
         {
-            from = "BL";
+            
         }
 
         public InvalidException(string message) : base(message)

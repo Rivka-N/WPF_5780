@@ -30,17 +30,9 @@ namespace BE
         public Order (DateTime create = default(DateTime))
         {
             createDate = create == default(DateTime) ? new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day) : createDate;
-
+           
         }
-        public Order(DateTime create, DateTime order, GuestRequest guest, HostingUnit hosting)
-        {
-            createDate = create;
-            orderDate = order;
-            this.guestRequestKey = guest.GuestRequestKey;
-            this.hostingUnitKey = hosting.HostingUnitKey;
-            this.orderKey = Configuration.Order++;
-
-        }
+    
 
         public Order(DateTime create, DateTime orderDate) : this(create)
         {
