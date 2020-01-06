@@ -191,7 +191,13 @@ namespace DAL
                     }
 
         }
-        
+
+        public void addCharge(HostingUnit unit, int numDays)
+        {
+            var found = DataSource.hostingUnits.Find(u => u == unit);
+            found.MoneyPaid += Configuration.TransactionFee * numDays;//adds this transaction fee to total transaction fees
+        }
+
         #endregion
     }
 }

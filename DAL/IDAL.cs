@@ -37,6 +37,7 @@ namespace DAL
         void addOrder(Order ord);
         List<Order> getOrders(Func<Order, bool> predicate);
         void changeOrder(Func<Order, bool> p1, Func<Order, Order> p2);
+        void addCharge(HostingUnit unit, int numDays);
 
         #region delete
         void deleteGuest(GuestRequest guest);
