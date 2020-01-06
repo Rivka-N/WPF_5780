@@ -23,5 +23,26 @@ namespace PL
         {
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            System.Windows.Data.CollectionViewSource hostingUnitViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("hostingUnitViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // hostingUnitViewSource.Source = [generic data source]
+            System.Windows.Data.CollectionViewSource hostingUnitViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("hostingUnitViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // hostingUnitViewSource.Source = [generic data source]
+        }
+
+        private void hostingUnitDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void hostingUnitDataGrid_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

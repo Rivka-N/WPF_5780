@@ -1,0 +1,46 @@
+﻿<Window x:Class="PL.hostingUnitTab"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+
+        mc:Ignorable="d"
+        Title="hostingUnitTab" Height="450" Width="800">
+    <Grid>
+        <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FlowDirection="RightToLeft"  >
+            <TabItem Header="הוספת הזמנה"  >
+
+                <Grid Background="#FFE5E5E5">
+                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="322*"/>
+                    </Grid.RowDefinitions>
+                    <ListView x:Name="TestersList" ContextMenu="{StaticResource MyMenu}" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" MouseDoubleClick="TestersList_MouseDoubleClick" Grid.Row="2" Grid.ColumnSpan="3" SelectionChanged="TestersList_SelectionChanged">
+                        <ListView.View>
+                            <GridView>
+                            
+                                <GridViewColumn Header="שם פרטי" Width="117" DisplayMemberBinding="{Binding FirstName}" />
+                                <GridViewColumn Header="שם משפחה" Width="117" DisplayMemberBinding="{Binding LastName}" />
+                                <GridViewColumn Header="שם יחידת אירוח" />
+                                
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ComboBox x:Name="OptionToGroup" Text="קבץ לפי..." IsEditable="True" IsReadOnly="True" SelectionChanged="OptionToGroup_SelectionChanged"  VerticalAlignment="Top" Height="25" Grid.Row="1" Grid.Column="0"/>
+                    <ComboBox x:Name="ExpertiseGroup" IsEditable="True" IsReadOnly="True" SelectionChanged="ExpertiseGroup_SelectionChanged" VerticalAlignment="Top"  Height="25" Grid.Row="1" Grid.Column="1"/>
+                    <TextBox x:Name="SearchLine" FontSize="23" Height="35" TextWrapping="Wrap" TextChanged="TextBox_TextChanged" VerticalAlignment="Top" Grid.Row="0" Grid.ColumnSpan="2" Margin="35,0,0,0"/>
+                    <Image x:Name="image2" VerticalAlignment="Top" HorizontalAlignment="Left" Source="Images/search.jpg" Grid.Row="0" Height="35"/>
+                </Grid>
+            </TabItem>
+
+
+
+            <TabItem Header="עדכון יחידה / מחיקה" />
+                <TabItem Header="רשימת הזמנות סגורות" />
+            </TabControl>
+      </Grid>
+</Window>

@@ -63,11 +63,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="host.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="hostingUnitList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="hostingUnitsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="hostingUnitTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -89,11 +97,17 @@
     <Compile Include="guestOptions.xaml.cs">
       <DependentUpon>guestOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="host.xaml.cs">
+      <DependentUpon>host.xaml</DependentUpon>
+    </Compile>
     <Compile Include="hostingUnitList.xaml.cs">
       <DependentUpon>hostingUnitList.xaml</DependentUpon>
     </Compile>
     <Compile Include="hostingUnitsControl.xaml.cs">
       <DependentUpon>hostingUnitsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="hostingUnitTab.xaml.cs">
+      <DependentUpon>hostingUnitTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="hostOptions.xaml.cs">
       <DependentUpon>hostOptions.xaml</DependentUpon>
