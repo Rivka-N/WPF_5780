@@ -25,8 +25,8 @@ namespace BL
         void changeUnit(HostingUnit hostingUnit1);
 
     #endregion
-    #region orders
-    void addOrder(Order ord);
+        #region orders
+        void addOrder(Order ord);
         List<Order> getAllOrders();
         void checkOrder(Host h1, HostingUnit hu1, GuestRequest g1, GuestRequest foundGuest);
         void order(HostingUnit unit, GuestRequest guest);//add order

@@ -133,15 +133,6 @@ namespace PL
                 hostingUnit1.Garden = Enums.Preference.No;
             }
         }
-        private void CheckBox_attractionsChecked(object sender, RoutedEventArgs e)
-        {
-            if (cb_attractions.IsChecked == true)//changed to true
-                hostingUnit1.ChildrenAttractions = Enums.Preference.Yes;
-            else
-            {
-                hostingUnit1.ChildrenAttractions = Enums.Preference.No;
-            }
-        }
 
         private void CheckBox_jaccuziChecked(object sender, RoutedEventArgs e)
         {

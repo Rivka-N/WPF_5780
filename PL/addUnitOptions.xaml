@@ -9,7 +9,6 @@
     <Grid>
         <CheckBox Name="cb_pool" Content="בריכה" HorizontalAlignment="Left" Margin="481,36,0,0" VerticalAlignment="Top" IsChecked="False" Checked="Cb_pool_Checked"/>
         <CheckBox Name="cb_garden" Content="גינה" HorizontalAlignment="Left" Margin="481,60,0,0" VerticalAlignment="Top" IsChecked="False" Checked="Cb_garden_Checked"/>
-        <CheckBox Name="cb_attractions" Content="אטרקציות ילדים" HorizontalAlignment="Left" Margin="481,90,0,0" VerticalAlignment="Top" IsChecked="False" Checked="CheckBox_attractionsChecked"/>
         <CheckBox Name="cb_jaccuzi" Content="גקוזי" HorizontalAlignment="Left" Margin="481,117,0,0" VerticalAlignment="Top" IsChecked="False" Checked="CheckBox_jaccuziChecked"/>
         <ComboBox Name="cb_area" HorizontalAlignment="Left" Margin="481,157,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding}" SelectionChanged="Cb_area_SelectionChanged"/>
         <ComboBox Name="cb_hostingUnitType"  HorizontalAlignment="Left" Margin="481,262,0,0" VerticalAlignment="Top" Width="120"  ItemsSource="{Binding}" SelectionChanged="Cb_hostingUnitType_SelectionChanged"/>

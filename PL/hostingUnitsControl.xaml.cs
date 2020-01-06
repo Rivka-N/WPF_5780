@@ -242,21 +242,12 @@ namespace PL
         private void Cb_garden_Checked(object sender, RoutedEventArgs e)
         {
             if (cb_garden.IsChecked == true)//changed to true
-               hostingUnit1.Garden= Enums.Preference.Yes;
+                hostingUnit1.Garden = Enums.Preference.Yes;
             else
             {
                 hostingUnit1.Garden = Enums.Preference.No;
             }
         }
-        private void CheckBox_attractionsChecked(object sender, RoutedEventArgs e)
-        {
-            if (cb_attractions.IsChecked == true)//changed to true
-                hostingUnit1.ChildrenAttractions = Enums.Preference.Yes;
-            else
-            {
-                hostingUnit1.ChildrenAttractions = Enums.Preference.No;
-            }
-            }
        
         private void CheckBox_jaccuziChecked(object sender, RoutedEventArgs e)
         {
@@ -347,7 +338,6 @@ namespace PL
             tb_last.Visibility = Visibility.Hidden;
             tb_phone.Visibility = Visibility.Hidden;
             cb_area.Visibility = Visibility.Hidden;
-            cb_attractions.Visibility = Visibility.Hidden;
             cb_garden.Visibility = Visibility.Hidden;
             cb_hostingUnitType.Visibility = Visibility.Hidden;
             cb_jaccuzi.Visibility = Visibility.Hidden;
@@ -364,7 +354,6 @@ namespace PL
             tb_last.Visibility = Visibility.Visible;
             tb_phone.Visibility = Visibility.Visible;
             cb_area.Visibility = Visibility.Visible;
-            cb_attractions.Visibility = Visibility.Visible;
             cb_garden.Visibility = Visibility.Visible;
             cb_hostingUnitType.Visibility = Visibility.Visible;
             cb_jaccuzi.Visibility = Visibility.Visible;

@@ -19,7 +19,6 @@ namespace BE
         Enums.Preference pool;
         Enums.Preference jacuzzi;
         Enums.Preference garden;
-        Enums.Preference childrenAttractions;
         #endregion
         #region properties
         public bool[,] Diary { get; set; }
@@ -33,9 +32,9 @@ namespace BE
         public Enums.Preference Pool { get => pool; set { pool = value; } }
         public Enums.Preference Jacuzzi { get => jacuzzi; set { jacuzzi = value; } }
         public Enums.Preference Garden { get => garden; set { garden = value; } }
-        public Enums.Preference ChildrenAttractions { get => childrenAttractions; set { childrenAttractions = value; } }
+        public Enums.MealType Meal{ get; set; }
+        public int MoneyPaid { get; set; }//paid to owner
         public List<GuestRequest> guestForUnit { get; set; }
-
         #endregion
         #region ctors
         public HostingUnit()
@@ -45,37 +44,29 @@ namespace BE
             Diary = new bool[13, 32];
             this.hostingUnitType = Enums.HostingUnitType.Zimmer;
             this.AreaVacation = Enums.Area.Center;
-            childrenAttractions = Enums.Preference.No;
+            Meal =Enums.MealType.None;
             garden = Enums.Preference.No;
             jacuzzi = Enums.Preference.No;
             pool = Enums.Preference.No;
             HostingUnitName = "";
             Host = new Host();
             guestForUnit = new List<GuestRequest>();
-            
+            MoneyPaid = 0;
 
         }
 
 
-        public HostingUnit(Host host, int hostingUnitKey)
+        public HostingUnit(Host host, int hostingUnitKey):this()
         {
             this.Host = host;
             this.hostingUnitKey = hostingUnitKey;
-            Diary = new bool[13, 32];
-            this.hostingUnitType = Enums.HostingUnitType.Zimmer;
-            this.hostingUnitKey = 0;
-            this.AreaVacation = Enums.Area.Center;
-            childrenAttractions = Enums.Preference.No;
-            garden = Enums.Preference.No;
-            jacuzzi = Enums.Preference.No;
-            pool = Enums.Preference.No;
-            HostingUnitName = "";
+            MoneyPaid = 0;
         }
         #endregion
 
         public override string ToString()
         {
-            return "Host Name: " + host.Name + " " + host.LastName + "\n" + " Type of Unit: " + HostingUnitType + " Unit Name: " + hostingUnitName+"\n" + " pool: " + pool + "\n" + " jacuzzi: " + jacuzzi + "\n" + " garden: "+ garden + "\n" + " childrenAttractions: " + childrenAttractions + "\n";
+            return "Host Name: " + host.Name + " " + host.LastName + "\n" + " Type of Unit: " + HostingUnitType + " Unit Name: " + hostingUnitName+ "\n";
         }
     }
 }
