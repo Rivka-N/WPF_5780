@@ -10,37 +10,44 @@
         Title="hostingUnitTab" Height="450" Width="800">
     <Grid>
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FlowDirection="RightToLeft"  >
-            <TabItem Header="הוספת הזמנה"  >
+            <TabItem Header="הוספת הזמנה"  Height="50" Width="150" >
+                <DataTemplate DataType="local:MyData">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-                <Grid Background="#FFE5E5E5">
-                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="322*"/>
-                    </Grid.RowDefinitions>
-                    <ListView x:Name="TestersList" ContextMenu="{StaticResource MyMenu}" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" MouseDoubleClick="TestersList_MouseDoubleClick" Grid.Row="2" Grid.ColumnSpan="3" SelectionChanged="TestersList_SelectionChanged">
-                        <ListView.View>
-                            <GridView>
-                            
-                                <GridViewColumn Header="שם פרטי" Width="117" DisplayMemberBinding="{Binding FirstName}" />
-                                <GridViewColumn Header="שם משפחה" Width="117" DisplayMemberBinding="{Binding LastName}" />
-                                <GridViewColumn Header="שם יחידת אירוח" />
-                                
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                    <ComboBox x:Name="OptionToGroup" Text="קבץ לפי..." IsEditable="True" IsReadOnly="True" SelectionChanged="OptionToGroup_SelectionChanged"  VerticalAlignment="Top" Height="25" Grid.Row="1" Grid.Column="0"/>
-                    <ComboBox x:Name="ExpertiseGroup" IsEditable="True" IsReadOnly="True" SelectionChanged="ExpertiseGroup_SelectionChanged" VerticalAlignment="Top"  Height="25" Grid.Row="1" Grid.Column="1"/>
-                    <TextBox x:Name="SearchLine" FontSize="23" Height="35" TextWrapping="Wrap" TextChanged="TextBox_TextChanged" VerticalAlignment="Top" Grid.Row="0" Grid.ColumnSpan="2" Margin="35,0,0,0"/>
-                    <Image x:Name="image2" VerticalAlignment="Top" HorizontalAlignment="Left" Source="Images/search.jpg" Grid.Row="0" Height="35"/>
-                </Grid>
+                        <TextBlock Grid.Column="0"
+                   Text="First Name: " />
+                        <TextBlock Grid.Column="1"
+                   Text="{Binding Path=FirstName}" />
+                        <TextBlock Grid.Column="2"
+                   Text="Last Name: " />
+                        <TextBlock Grid.Column="3"
+                   Text="{Binding Path=LastName}" />
+                        <CheckBox Grid.Column="4"
+                  Content="Is Lecturer?"
+                  IsEnabled="False"
+                  IsChecked="{Binding Path=IsLecturer}" />
+                    </Grid>
+                </DataTemplate>
+               
+
+
+
             </TabItem>
 
 
 
-            <TabItem Header="עדכון יחידה / מחיקה" />
-                <TabItem Header="רשימת הזמנות סגורות" />
-            </TabControl>
-      </Grid>
+            <TabItem Header="עדכון יחידה / מחיקה" Height="50" Width="150"/>
+            <TabItem Header="רשימת הזמנות סגורות" Height="50" Width="150"/>
+        </TabControl>
+    </Grid>
 </Window>

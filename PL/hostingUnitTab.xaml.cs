@@ -11,6 +11,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
+using System.Windows;
+
+namespace CollectionDemo
+{
+
+}
+
 
 namespace PL
 {
@@ -25,6 +33,11 @@ namespace PL
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TestersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
