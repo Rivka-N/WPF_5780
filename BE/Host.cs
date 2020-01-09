@@ -51,7 +51,7 @@ namespace BE
         #endregion
         public override string ToString()
         {
-            return "Owner id: " + hostKey + "Name: " + name + " " + lastName + "Phone number: " + phoneNumber +
+            return "Owner id: " + hostKey.ToString("000000000") + "Name: " + name + " " + lastName + "Phone number: " + phoneNumber +
                 "Mail address: " + mail + "Bank Account: " + bank + "Collection permission: " + CollectionClearance+"\n";
         }
 

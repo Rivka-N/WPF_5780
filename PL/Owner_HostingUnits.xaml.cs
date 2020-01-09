@@ -10,28 +10,22 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using BL;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for OwnerTabs.xaml
+    /// Interaction logic for Owner_HostingUnits.xaml
     /// </summary>
-    public partial class OwnerTabs : Window
+    public partial class Owner_HostingUnits : Page
     {
-        public OwnerTabs()
+        IBL myBL;
+        public Owner_HostingUnits()
         {
+            myBL = factoryBL.getBL();
             InitializeComponent();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-            private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            new MainWindow().Show();//opens main window again
+            dg_hostingUnitDataGrid.ItemsSource = myBL.getAllHostingUnits();//binds to hosting units
         }
     }
 }

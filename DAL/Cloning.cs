@@ -98,7 +98,11 @@ namespace DAL
             target.HostingUnitKey = original.HostingUnitKey;
             target.GuestRequestKey = original.GuestRequestKey;
             target.OrderKey = original.OrderKey;
-
+            target.CreateDate = original.CreateDate;
+            if(original.HostName!=null)
+                target.HostName = original.HostName;
+            if (original.GuestName!=null)
+            target.GuestName = original.GuestName;
             return target;
         }
     }
