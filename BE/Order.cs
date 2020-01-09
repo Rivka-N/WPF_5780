@@ -23,6 +23,11 @@ namespace BE
         public DateTime CreateDate { get => createDate; set { createDate = value; } }
         public DateTime OrderDate { get => orderDate; set { orderDate = OrderDate; } }//sent mail
         public Enums.OrderStatus Status { get => status; set { status = value; } }
+
+        //added
+        public string HostName { get; set; }
+        public string GuestName { get; set; }//add application of these to functions and creating hosts and guests
+
         #endregion
         #region ctor
 
@@ -37,7 +42,9 @@ namespace BE
         public Order(DateTime create, DateTime orderDate) : this(create)
         {
             this.orderDate = orderDate;
+
         }
+        public Order() { }//default c-tor
 
 
         #endregion

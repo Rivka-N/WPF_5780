@@ -26,7 +26,8 @@ namespace PL
 
         private void pb_order_Click(object sender, RoutedEventArgs e)
         {
-          
+        //    orderOptions orderOps = new orderOptions();
+        //    orderOps.Show();
         }
 
         private void Pb_addUnit_Click(object sender, RoutedEventArgs e)

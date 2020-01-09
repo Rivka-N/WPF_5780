@@ -21,6 +21,7 @@ namespace BL
         HostingUnit findUnit(int unitKey);
         List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest);//find hostingUnit accoerding to the guestRequest
         List<HostingUnit> getAllHostingUnits();
+        List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> p);
         void deleteUnit(int unit);
         void changeUnit(HostingUnit hostingUnit1);
 

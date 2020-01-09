@@ -5,15 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        Closing="Window_Closing"
         Title="OwnerTabs" Height="450" Width="800">
     <Grid>
-        
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TabItem Name="ti_guestRequests" Header="Guests">
                 <Frame Source="Owner_GuestRequests.xaml" />
             </TabItem>
-            <TabItem Name="ti_hostingUnits" Header="Hosting Units"/>
-            <TabItem Name="ti_closedOrders" Header="Closed Orders"/>
+            <TabItem Name="ti_hostingUnits" Header="Hosting Units">
+                <Frame Source="Owner_HostingUnits.xaml"/>
+            </TabItem>
+            <TabItem Name="ti_closedOrders" Header="Closed Orders">
+                <!--change to all orders with an option to sort by mailed or closed ones?-->
+                <Frame Source="Owner_ClosedOrders.xaml"/>
+            </TabItem>
             <TabItem Name="ti_information" Header="Details"/>
         </TabControl>
     </Grid>

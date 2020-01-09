@@ -39,8 +39,8 @@ namespace DS
 
             #region addHosts
             hosts.Add(new Host() { HostKey = 11111111, Name = "yoni", LastName = "cohen", Phone = 0548430134, Mail = new System.Net.Mail.MailAddress("yoni@gmail.com"), Bank = banks[0], CollectionClearance = true });
-            hosts.Add(new Host() { HostKey = 11111111, Name = "liel", LastName = "levi", Phone = 0527611484, Mail = new System.Net.Mail.MailAddress("liel@gmail.com"), Bank = banks[1], CollectionClearance = true });
-            hosts.Add(new Host() { HostKey = 11111111, Name = "tehila", LastName = "yosef", Phone = 0506958443, Mail = new System.Net.Mail.MailAddress("tehila@gmail.com"), Bank = banks[2], CollectionClearance = true });
+            hosts.Add(new Host() { HostKey = 11111112, Name = "liel", LastName = "levi", Phone = 0527611484, Mail = new System.Net.Mail.MailAddress("liel@gmail.com"), Bank = banks[1], CollectionClearance = true });
+            hosts.Add(new Host() { HostKey = 11111231, Name = "tehila", LastName = "yosef", Phone = 0506958443, Mail = new System.Net.Mail.MailAddress("tehila@gmail.com"), Bank = banks[2], CollectionClearance = true });
             #endregion
 
             #region  addHostingUnit
@@ -51,9 +51,9 @@ namespace DS
             #endregion
 
             #region addOrders
-            orders.Add(new Order() { HostingUnitKey = 10000001, GuestRequestKey = 10000011, OrderKey = 10000111, OrderDate = new DateTime(2020, 01, 01) });
-            orders.Add(new Order() { HostingUnitKey = 10000002, GuestRequestKey = 10000012, OrderKey = 10000112, OrderDate = new DateTime(2020, 01, 10) });
-            orders.Add(new Order() { HostingUnitKey = 10000003, GuestRequestKey = 10000013, OrderKey = 10000113, OrderDate = new DateTime(2020, 01, 15) });
+            orders.Add(new Order() { HostingUnitKey = 10000001, GuestRequestKey = 10000011, OrderKey = 10000111, OrderDate = new DateTime(2020, 01, 01), CreateDate= new DateTime(2020, 01, 01), Status=Enums.OrderStatus.Mailed });
+            orders.Add(new Order() { HostingUnitKey = 10000002, GuestRequestKey = 10000012, OrderKey = 10000112, OrderDate = new DateTime(2020, 01, 10), CreateDate=new DateTime(2020,01,01), Status=Enums.OrderStatus.Closed });
+            orders.Add(new Order() { HostingUnitKey = 10000003, GuestRequestKey = 10000013, OrderKey = 10000113, OrderDate = new DateTime(2020, 01, 15), CreateDate = new DateTime(2019, 08, 03), Status=Enums.OrderStatus.Closed });
             #endregion
 
            
