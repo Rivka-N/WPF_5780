@@ -10,16 +10,46 @@
     <Window.Resources>
         <CollectionViewSource x:Key="hostingUnitViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:HostingUnit}, CreateList=True}"/>
     </Window.Resources>
-    <DataGrid x:Name="hostingUnitDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource hostingUnitViewSource}}" Margin="10,0,3.6,0" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="hostingUnitDataGrid_SelectionChanged_1">
-        <DataGrid.Columns>
-            <DataGridTextColumn x:Name="areaVacationColumn" Binding="{Binding AreaVacation}" Header="Area Vacation" Width="SizeToHeader"/>
-            <DataGridTextColumn x:Name="hostingUnitKeyColumn" Binding="{Binding HostingUnitKey}" Header="Hosting Unit Key" Width="SizeToHeader"/>
-            <DataGridTextColumn x:Name="hostingUnitNameColumn" Binding="{Binding HostingUnitName}" Header="Hosting Unit Name" Width="SizeToHeader"/>
-            <DataGridTextColumn x:Name="hostingUnitTypeColumn" Binding="{Binding HostingUnitType}" Header="Hosting Unit Type" Width="SizeToHeader"/>
-        </DataGrid.Columns>
-    </DataGrid>
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" DataContext="{StaticResource hostingUnitViewSource}" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="309.6"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
 
 
 
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="160"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="חיפוש" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="58.6,0,58.6,1.4" />
+            <TextBox x:Name="SearchTextBox" Grid.Column="3" Grid.Row="1" Height="15" Width="80" TextWrapping="Wrap" Text="" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="3"    />
+
+            <Label x:Name="type" Content="סוג יחידה" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" />
+            <ComboBox x:Name="genderComboBox" Grid.Column="2" Width="70" Height="15" HorizontalAlignment="Center"  Margin="3" Grid.Row="1" VerticalAlignment="Center" />
+
+            <Label x:Name ="code" Content="מספר יחידה" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" />
+            <TextBox x:Name="SearchCodeBox" Grid.Column="1" Width="70" Height="15" HorizontalAlignment="Center"  Margin="3" Grid.Row="1" VerticalAlignment="Center"   />
+        </Grid>
+
+        <Grid Grid.Row="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="addUnit" Content="הוספת יחידת אירוח" Grid.Column="1" />
+        </Grid>
+
+    </Grid>
 
 </Window>
