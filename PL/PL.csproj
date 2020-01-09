@@ -122,28 +122,28 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="orderOptions.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ownerOptions.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="OwnerTabs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Owner_ClosedOrders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Owner_GuestRequests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="orderOptions.xaml.cs">
-      <DependentUpon>orderOptions.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ownerOptions.xaml.cs">
-      <DependentUpon>ownerOptions.xaml</DependentUpon>
-    </Compile>
     <Compile Include="OwnerTabs.xaml.cs">
       <DependentUpon>OwnerTabs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Owner_ClosedOrders.xaml.cs">
+      <DependentUpon>Owner_ClosedOrders.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Owner_GuestRequests.xaml.cs">
+      <DependentUpon>Owner_GuestRequests.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

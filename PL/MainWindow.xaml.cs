@@ -33,8 +33,8 @@ namespace PL
 
         private void pb_owner_Click(object sender, RoutedEventArgs e)
         {
-            ownerOptions ownerWindow = new ownerOptions();
-            ownerWindow.Show();
+            new OwnerTabs().Show();
+            this.Close();//closes current window. opens owner window.
         }
 
         private void pb_guest_Click(object sender, RoutedEventArgs e)

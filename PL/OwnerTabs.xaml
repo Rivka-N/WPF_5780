@@ -7,11 +7,13 @@
         mc:Ignorable="d"
         Title="OwnerTabs" Height="450" Width="800">
     <Grid>
-        <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FlowDirection="RightToLeft">
-            <TabItem Name="ti_guestRequests" Header="לקוחות"/>
-            <TabItem Name="ti_hostingUnits" Header="יחידות אירוח"/>
-            <TabItem Name="ti_closedOrders" Header="הזמנות סגורות"/>
-            <TabItem Name="ti_information" Header="פרטים נוספים"/>
+        <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TabItem Name="ti_guestRequests" Header="Guests">
+                <Frame Source="Owner_GuestRequests.xaml" />
+            </TabItem>
+            <TabItem Name="ti_hostingUnits" Header="Hosting Units"/>
+            <TabItem Name="ti_closedOrders" Header="Closed Orders"/>
+            <TabItem Name="ti_information" Header="Details"/>
         </TabControl>
     </Grid>
 </Window>

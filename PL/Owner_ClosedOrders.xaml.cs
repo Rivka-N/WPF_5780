@@ -10,29 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for OwnerTabs.xaml
+    /// Interaction logic for Owner_ClosedOrders.xaml
     /// </summary>
-    public partial class OwnerTabs : Window
+    public partial class Owner_ClosedOrders : Page
     {
-        public OwnerTabs()
+        public Owner_ClosedOrders()
         {
             InitializeComponent();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-            private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            this.Close();
-            new MainWindow().Show();//opens main window again
         }
     }
 }
