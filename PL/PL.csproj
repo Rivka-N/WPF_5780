@@ -95,10 +95,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="hostingUnitTab.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="hostOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -125,9 +121,6 @@
     </Compile>
     <Compile Include="hostingUnitsControl.xaml.cs">
       <DependentUpon>hostingUnitsControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="hostingUnitTab.xaml.cs">
-      <DependentUpon>hostingUnitTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="hostOptions.xaml.cs">
       <DependentUpon>hostOptions.xaml</DependentUpon>
