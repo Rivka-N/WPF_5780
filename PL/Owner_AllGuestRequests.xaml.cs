@@ -10,36 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Collections.ObjectModel;
-using System.Windows;
-
-namespace CollectionDemo
-{
-
-}
-
-
+using BL;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for hostingUnitTab.xaml
+    /// Interaction logic for Owner_AllGuestRequests1.xaml
     /// </summary>
-    public partial class hostingUnitTab : Window
+    public partial class Owner_AllGuestRequests1 : Page
     {
-        public hostingUnitTab()
+        IBL myBL;
+        public Owner_AllGuestRequests1()
         {
+            myBL = factoryBL.getBL();
             InitializeComponent();
+            ds_guestRequestDataGrid.ItemsSource = myBL.getRequests();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void TestersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }
