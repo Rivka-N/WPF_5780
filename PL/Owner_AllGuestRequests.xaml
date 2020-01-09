@@ -1,0 +1,53 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PL"
+      xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PL.Owner_AllGuestRequests1"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Owner_AllGuestRequests1">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:GuestRequest}, CreateList=True}"/>
+    </Page.Resources>
+
+    <Grid DataContext="{StaticResource guestRequestViewSource}">
+
+        <DataGrid x:Name="ds_guestRequestDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="10,72,10,75" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="areaVacationColumn" Width="SizeToHeader" Header="Area Vacation" Binding="{Binding AreaVacation}"/>
+                <DataGridTemplateColumn x:Name="entryDateColumn" Width="SizeToHeader" Header="Entry Date">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding EntryDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn x:Name="guestRequestKeyColumn" Width="SizeToHeader" Header="Guest Request Key" Binding="{Binding GuestRequestKey}"/>
+                <DataGridTextColumn x:Name="lastNameColumn" Width="SizeToHeader" Header="Last Name" Binding="{Binding LastName}"/>
+                <DataGridTextColumn x:Name="nameColumn" Width="SizeToHeader" Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn x:Name="numAdultColumn" Width="SizeToHeader" Header="Num Adult" Binding="{Binding NumAdult}"/>
+                <DataGridTextColumn x:Name="numChildrenColumn" Width="SizeToHeader" Header="Num Children" Binding="{Binding NumChildren}"/>
+                <DataGridTemplateColumn x:Name="registrationColumn" Width="SizeToHeader" Header="Registration">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding Registration, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn x:Name="releaseDateColumn" Width="SizeToHeader" Header="Release Date">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding ReleaseDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn x:Name="statusColumn" Width="SizeToHeader" Header="Status" Binding="{Binding Status}"/>
+                <DataGridTextColumn x:Name="typeOfUnitColumn" Width="SizeToHeader" Header="Type Of Unit" Binding="{Binding TypeOfUnit}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Page>

@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for host.xaml
+    /// Interaction logic for Owner_ClosedOrders.xaml
     /// </summary>
-    public partial class host : Window
+    public partial class Owner_ClosedOrders : Page
     {
-        public host()
+        public Owner_ClosedOrders()
         {
             InitializeComponent();
         }
