@@ -41,5 +41,16 @@ namespace PL
         {
 
         }
+
+        private void hostingUnitDataGrid_SelectionChanged_2(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void addUnit_Click(object sender, RoutedEventArgs e)
+        {
+            hostingUnitsControl secondWindow = new hostingUnitsControl();
+            secondWindow.Show();
+        }
     }
 }

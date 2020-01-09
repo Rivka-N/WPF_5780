@@ -50,13 +50,16 @@
             </Grid.ColumnDefinitions>
             <Button x:Name="addUnit" Content="add hosting unit" Grid.Column="1" Grid.ColumnSpan="2" Margin="0.2,0,296.6,0" Click="addUnit_Click" />
         </Grid>
-        <DataGrid x:Name="hostingUnitDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="234,85.6,43.6,24" Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="hostingUnitDataGrid_SelectionChanged_2">
+        <DataGrid x:Name="hostingUnitDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="hostingUnitDataGrid_SelectionChanged_2">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="areaVacationColumn" Binding="{Binding AreaVacation}" Header="Area Vacation" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="hostingUnitKeyColumn" Binding="{Binding HostingUnitKey}" Header="Hosting Unit Key" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="hostingUnitNameColumn" Binding="{Binding HostingUnitName}" Header="Hosting Unit Name" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="hostingUnitTypeColumn" Binding="{Binding HostingUnitType}" Header="Hosting Unit Type" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="hostNameColumn" Binding="{Binding}" Header="Host name" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="areaVacationColumn" Binding="{Binding AreaVacation}" Header="Area Vacation" Width="100"/>
+                <DataGridTextColumn x:Name="hostingUnitKeyColumn" Binding="{Binding HostingUnitKey}" Header="Hosting Unit Key" Width="100"/>
+                <DataGridTextColumn x:Name="hostingUnitNameColumn" Binding="{Binding HostingUnitName}" Header="Hosting Unit Name" Width="150"/>
+                <DataGridTextColumn x:Name="hostingUnitTypeColumn" Binding="{Binding HostingUnitType}" Header="Hosting Unit Type" Width="150"/>
+
+                <DataGridTextColumn x:Name="hostNameColumn" Binding="{Binding}" Header="Host name" Width="150"/>
+                <DataGridTextColumn x:Name="hostLastNameColumn" Binding="{Binding}" Header="Host last name" Width="150"/>
+
 
             </DataGrid.Columns>
         </DataGrid>
