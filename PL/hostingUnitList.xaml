@@ -31,14 +31,15 @@
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="160"/>
             </Grid.ColumnDefinitions>
-            <Label Content="חיפוש" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="58.6,0,58.6,1.4" />
-            <TextBox x:Name="SearchTextBox" Grid.Column="3" Grid.Row="1" Height="15" Width="80" TextWrapping="Wrap" Text="" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="3"    />
+            <Label Content="search" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" Width="50" VerticalAlignment="Top" Margin="59.4,3,59.6,0" />
+            <TextBox x:Name="SearchTextBox" Text="Binding SearchTextBox, UpdateSourceTrigger=PropertyChanged"  Grid.Column="3" Grid.Row="1" Height="20" Width="80" TextWrapping="Wrap"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="3" TextChanged="SearchTextBox_TextChanged"   />
+            
 
-            <Label x:Name="type" Content="סוג יחידה" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" />
-            <ComboBox x:Name="genderComboBox" Grid.Column="2" Width="70" Height="15" HorizontalAlignment="Center"  Margin="3" Grid.Row="1" VerticalAlignment="Center" />
+            <Label x:Name="type" Content="type of unit" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" />
+            <ComboBox x:Name="typeComboBox" Grid.Column="2" Width="70" Height="15" HorizontalAlignment="Center"  Margin="3" Grid.Row="1" VerticalAlignment="Center" SelectionChanged="typeComboBox_SelectionChanged" />
 
-            <Label x:Name ="code" Content="מספר יחידה" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" />
-            <TextBox x:Name="SearchCodeBox" Grid.Column="1" Width="70" Height="15" HorizontalAlignment="Center"  Margin="3" Grid.Row="1" VerticalAlignment="Center"   />
+            <Label x:Name ="searchCode" Content="number of unit" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" />
+            <TextBox x:Name="codeTextBox" Grid.Column="1" Width="70" Height="15" HorizontalAlignment="Center"  Margin="3" Grid.Row="1" VerticalAlignment="Center"   />
         </Grid>
 
         <Grid Grid.Row="2" >
@@ -47,8 +48,19 @@
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="addUnit" Content="הוספת יחידת אירוח" Grid.Column="1" />
+            <Button x:Name="addUnit" Content="add hosting unit" Grid.Column="1" Grid.ColumnSpan="2" Margin="0.2,0,296.6,0" Click="addUnit_Click" />
         </Grid>
+        <DataGrid x:Name="hostingUnitDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="234,85.6,43.6,24" Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="hostingUnitDataGrid_SelectionChanged_2">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="areaVacationColumn" Binding="{Binding AreaVacation}" Header="Area Vacation" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="hostingUnitKeyColumn" Binding="{Binding HostingUnitKey}" Header="Hosting Unit Key" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="hostingUnitNameColumn" Binding="{Binding HostingUnitName}" Header="Hosting Unit Name" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="hostingUnitTypeColumn" Binding="{Binding HostingUnitType}" Header="Hosting Unit Type" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="hostNameColumn" Binding="{Binding}" Header="Host name" Width="SizeToHeader"/>
+
+            </DataGrid.Columns>
+        </DataGrid>
+
 
     </Grid>
 
