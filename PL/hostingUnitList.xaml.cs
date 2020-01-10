@@ -19,6 +19,9 @@ namespace PL
     /// </summary>
     public partial class hostingUnitList : Window
     {
+        
+
+
         public hostingUnitList()
         {
             InitializeComponent();
@@ -30,7 +33,10 @@ namespace PL
             System.Windows.Data.CollectionViewSource hostingUnitViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("hostingUnitViewSource")));
             // Load data by setting the CollectionViewSource.Source property:
             // hostingUnitViewSource.Source = [generic data source]
-          }
+            System.Windows.Data.CollectionViewSource hostingUnitViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("hostingUnitViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // hostingUnitViewSource.Source = [generic data source]
+        }
 
         private void hostingUnitDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -42,15 +48,26 @@ namespace PL
 
         }
 
-        private void hostingUnitDataGrid_SelectionChanged_2(object sender, SelectionChangedEventArgs e)
+        private void addUnit_Click(object sender, RoutedEventArgs e)
+        {
+            hostingUnitsControl hostingUnitWindow = new hostingUnitsControl();
+            hostingUnitWindow.Show();
+
+        }
+
+        private void typeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
-        private void addUnit_Click(object sender, RoutedEventArgs e)
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            hostingUnitsControl secondWindow = new hostingUnitsControl();
-            secondWindow.Show();
+
+        }
+
+        private void hostingUnitDataGrid_SelectionChanged_2(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
