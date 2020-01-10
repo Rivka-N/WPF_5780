@@ -24,8 +24,10 @@ namespace BL
         List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> p);
         void deleteUnit(int unit);
         void changeUnit(HostingUnit hostingUnit1);
+        List<HostingUnit> searchUnits(string text, Enums.FunctionSender fs=0);
 
-    #endregion
+
+        #endregion
         #region orders
         void addOrder(Order ord);
         List<Order> getAllOrders();
@@ -39,7 +41,6 @@ namespace BL
                 //needs to recieve guestRequest or mailing address too
 
             */
-        //void notFounde();
 
         #endregion
 

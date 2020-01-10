@@ -203,9 +203,50 @@ namespace BL
                 throw new InvalidException("invalid guest number");
             g1.GuestRequestKey = guestNum;
             return (myDAL.findGuest(g1));
-
-
         }
+        public List<HostingUnit> searchUnits(string text, Enums.FunctionSender fs=0)//returns all units that this text was found in
+        {
+            switch (fs)
+            {
+                default://returns search through all units details
+            return myDAL.getHostingUnits
+                (u => u.HostingUnitKey.ToString().Contains(text) || u.MoneyPaid.ToString().Contains(text)
+                || u.HostingUnitType.ToString().Contains(text) || u.HostingUnitName.Contains(text)
+                || u.Host.HostKey.ToString().Contains(text) || u.Host.Name.Contains(text) || u.Host.LastName.Contains(text)
+                || u.Host.Phone.ToString().Contains(text)||u.Host.Mail.Address.ToString().Contains(text));//returns all units that contain the text in their details
+        }
+        }
+        #endregion
+        #region gets
+        public List<HostingUnit> getAllHostingUnits()
+        {
+            return myDAL.getAllHostingUnits();
+        }
+
+        public List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> p)
+        {
+            return myDAL.getHostingUnits(p);
+        }
+
+        public List<GuestRequest> getRequests()
+        {
+            return myDAL.getRequests();
+        }
+
+        public List<Order> getAllOrders()
+        {
+            return myDAL.getAllOrders();
+        }
+        public List<GuestRequest> GetRequests(Func<GuestRequest, bool> predicate)
+        {
+            return myDAL.getRequests(predicate);
+        }
+
+        public List<Order> getOrders(Func<Order, bool> predicate)
+        {
+            return myDAL.getOrders(predicate);
+        }
+
         #endregion
         #region change
         public void changeUnit(HostingUnit hostingUnit1)
@@ -245,37 +286,7 @@ namespace BL
             //if there are orders in unit throw
         }
         #endregion
-        #region gets
-        public List<HostingUnit> getAllHostingUnits()
-        {
-            return myDAL.getAllHostingUnits();
-        }
-
-        public List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> p)
-        {
-            return myDAL.getHostingUnits(p);
-        }
-
-        public List<GuestRequest> getRequests()
-        {
-            return myDAL.getRequests();
-        }
-   
-        public List<Order> getAllOrders()
-        {
-            return myDAL.getAllOrders();
-        }
-        public List<GuestRequest>GetRequests(Func<GuestRequest, bool> predicate)
-        {
-            return myDAL.getRequests(predicate);
-        }
-
-        public List<Order> getOrders(Func<Order, bool> predicate)
-        {
-            return myDAL.getOrders(predicate);
-        }
-
-        #endregion
+        
         #region add dates for pl
         public void addEntryDate(DateTime? selectedDate, GuestRequest g1)//adds selected date to guest
         {
@@ -450,7 +461,9 @@ namespace BL
             return thisUnit;
         }
 
-      
+    
+
+
         #endregion
     }
 }

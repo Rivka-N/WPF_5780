@@ -14,7 +14,7 @@
     </Page.Resources>
 
     <Grid>
-        <DataGrid x:Name="ds_guestRequestDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False" IsReadOnly="True" Height="auto" Padding="10">
+        <DataGrid x:Name="ds_guestRequestDataGrid" AlternatingRowBackground="AliceBlue" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False" IsReadOnly="True" Height="auto" Padding="10">
                 <DataGrid.Columns>
                 <DataGridTextColumn x:Name="nameColumn" Width="*" Header="Name" Binding="{Binding Name}"  IsReadOnly="True" />
                 <DataGridTextColumn x:Name="lastNameColumn" Width="*" Header="Last Name" Binding="{Binding LastName}" IsReadOnly="True"/>

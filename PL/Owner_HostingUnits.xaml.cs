@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BL;
+using BE;
 namespace PL
 {
     /// <summary>
@@ -21,11 +22,19 @@ namespace PL
     public partial class Owner_HostingUnits : Page
     {
         IBL myBL;
+        List<HostingUnit> unitsList;
         public Owner_HostingUnits()
         {
             myBL = factoryBL.getBL();
             InitializeComponent();
-            dg_hostingUnitDataGrid.ItemsSource = myBL.getAllHostingUnits();//binds to hosting units
+            unitsList = myBL.getAllHostingUnits();
+            dg_hostingUnitDataGrid.ItemsSource = unitsList;//binds to hosting units
+        }
+
+        private void tb_SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            unitsList = myBL.searchUnits(tb_SearchTextBox.Text);
+            dg_hostingUnitDataGrid.ItemsSource = unitsList;
         }
     }
 }
