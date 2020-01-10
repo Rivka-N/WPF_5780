@@ -21,7 +21,7 @@ namespace PL
     {
         public hostingUnit()
         {
-            InitializeComponent();
+            //InitializeComponent();
         }
     }
 }
