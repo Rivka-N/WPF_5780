@@ -17,7 +17,14 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="dg_hostingUnitDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" IsReadOnly="True" AutoGenerateColumns="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid x:Name="dg_hostingUnitDataGrid" Grid.Row="2"
+                  RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="hostingUnitKeyColumn" Width="*" IsReadOnly="True" Header="Unit Key" Binding="{Binding HostingUnitKey}"/>
                 <DataGridTextColumn x:Name="hostingUnitNameColumn" Width="*" IsReadOnly="True" Header="Unit Name" Binding="{Binding HostingUnitName}"/>
