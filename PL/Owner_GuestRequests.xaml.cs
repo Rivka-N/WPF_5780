@@ -22,14 +22,19 @@ namespace PL
     public partial class Owner_GuestRequests : Page
     {
         IBL myBL;
+        List<GuestRequest> myRequests;
         public Owner_GuestRequests()
         {
             myBL = factoryBL.getBL();
             InitializeComponent();
-            ds_guestRequestDataGrid.ItemsSource = myBL.getRequests();//binds data
-            
-        }
-
+            myRequests = new List<GuestRequest>();
+            myRequests = myBL.getRequests();//sets binding data to requests
+            ds_guestRequestDataGrid.ItemsSource = myRequests;//binds data
+            var add = Enum.GetValues(typeof(Enums.OrderStatus));
+            cb_status.Items.Add("All");
+            foreach (Enums.OrderStatus item in add)
+                cb_status.Items.Add(item);//adds all statuses to combobox options
+            }
       
         private void Dp_Registration_SelectedDateChanged(object sender, SelectionChangedEventArgs e)//changes date back to original date selected
         {
@@ -38,6 +43,34 @@ namespace PL
                 (sender as DatePicker).SelectedDate = (ds_guestRequestDataGrid.SelectedItem as GuestRequest).Registration;
 
             }
+        }
+
+        private void Tb_SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Closed + 1)//filter from closed orders
+                myRequests = myBL.searchRequests(Enums.OrderStatus.Closed, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
+            else
+            {
+                if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Mailed + 1)
+                    myRequests = myBL.searchRequests(Enums.OrderStatus.Mailed, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
+                else
+                    myRequests = myBL.searchRequests(tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
+            }
+            ds_guestRequestDataGrid.ItemsSource = myRequests;//why doesn't reload content after erasing searchbox?
+        }
+
+        private void Cb_status_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //select based on current combobox selection and current textbox text
+        //    if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Closed + 1)
+        //        else
+        //    { if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Mailed + 1)
+        //            else { if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Started + 1)
+        //                myRequests = myBL.getRequests(Req => Req.Status == Enums.OrderStatus.Started);//selects all that are started
+        //            else                    
+                    
+        //                } }
+
         }
     }
 }

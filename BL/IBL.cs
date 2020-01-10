@@ -13,6 +13,7 @@ namespace BL
         void addGuest(GuestRequest guest);
         void addHostingUnit(HostingUnit unit);
         List<GuestRequest> getRequests();
+        List<GuestRequest> getRequests(Func<GuestRequest, bool> p);
         GuestRequest findGuest(GuestRequest g1, string text);//puts text as g1's number and returns instance of it in ds if found
 
         #endregion
@@ -35,7 +36,8 @@ namespace BL
         void order(HostingUnit unit, GuestRequest guest);//add order
         bool available(HostingUnit unit, GuestRequest guest);
         List<Order> getOrders(Func<Order, bool> predicate);
-
+        List<GuestRequest> searchRequests(Enums.OrderStatus status, string query, Enums.FunctionSender owner);
+        List<GuestRequest> searchRequests(string query, Enums.FunctionSender owner);//all statuses selected
         //not finished functions
         /*   void mail(List<HostingUnit> Offers);//sends mail to the guest with all the hostingUnits which appropriate. 
                 //needs to recieve guestRequest or mailing address too

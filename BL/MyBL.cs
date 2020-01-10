@@ -216,6 +216,34 @@ namespace BL
                 || u.Host.Phone.ToString().Contains(text)||u.Host.Mail.Address.ToString().Contains(text));//returns all units that contain the text in their details
         }
         }
+        public List<GuestRequest> searchRequests(Enums.OrderStatus status, string query, Enums.FunctionSender owner=Enums.FunctionSender.Default)
+        {
+            switch(owner)
+            {
+                case Enums.FunctionSender.Owner:
+                   return myDAL.getRequests(guest => guest.Status == status && (guest.Name.Contains(query) || guest.LastName.Contains(query)
+                        || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query)));
+                    
+                default:
+                    return myDAL.getRequests(guest => guest.Status == status
+                      && (guest.TypeOfUnit.ToString().Contains(query) || guest.Name.Contains(query) || guest.LastName.Contains(query)
+                      || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query)));
+            }
+        }
+        public List<GuestRequest> searchRequests(string query, Enums.FunctionSender owner)//all statuses selected
+        {
+            switch (owner)
+            {
+                case Enums.FunctionSender.Owner:
+                    return myDAL.getRequests(guest => guest.Name.Contains(query) || guest.LastName.Contains(query)
+                         || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query));
+                default:
+                    return myDAL.getRequests(guest => guest.TypeOfUnit.ToString().Contains(query) || guest.Name.Contains(query) || guest.LastName.Contains(query)
+                      || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query));
+            }
+        }
+
+
         #endregion
         #region gets
         public List<HostingUnit> getAllHostingUnits()
@@ -232,7 +260,10 @@ namespace BL
         {
             return myDAL.getRequests();
         }
-
+        public List<GuestRequest> getRequests(Func<GuestRequest, bool> p)
+        {
+            return myDAL.getRequests(p);
+        }
         public List<Order> getAllOrders()
         {
             return myDAL.getAllOrders();
@@ -461,7 +492,6 @@ namespace BL
             return thisUnit;
         }
 
-    
 
 
         #endregion
