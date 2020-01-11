@@ -204,6 +204,9 @@ namespace BL
             g1.GuestRequestKey = guestNum;
             return (myDAL.findGuest(g1));
         }
+
+        #endregion
+        #region search filtering methods
         public List<HostingUnit> searchUnits(string text, Enums.FunctionSender fs=0)//returns all units that this text was found in
         {
             switch (fs)
@@ -218,21 +221,36 @@ namespace BL
         }
         public List<GuestRequest> searchRequests(Enums.OrderStatus status, string query, Enums.FunctionSender owner=Enums.FunctionSender.Default)
         {
-            switch(owner)
+            try
             {
-                case Enums.FunctionSender.Owner:
-                   return myDAL.getRequests(guest => guest.Status == status && (guest.Name.Contains(query) || guest.LastName.Contains(query)
-                        || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query)));
-                    
-                default:
-                    return myDAL.getRequests(guest => guest.Status == status
-                      && (guest.TypeOfUnit.ToString().Contains(query) || guest.Name.Contains(query) || guest.LastName.Contains(query)
-                      || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query)));
+                if (query == null)
+                    throw new InvalidException("error in search query");
+                switch (owner)
+                {
+                    case Enums.FunctionSender.Owner:
+                        return myDAL.getRequests(guest => guest.Status == status && (guest.Name.Contains(query) || guest.LastName.Contains(query)
+                             || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query)));
+
+                    default:
+                        return myDAL.getRequests(guest => guest.Status == status
+                          && (guest.TypeOfUnit.ToString().Contains(query) || guest.Name.Contains(query) || guest.LastName.Contains(query)
+                          || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query)));
+                }
+            }
+            catch(Exception ex)
+            {
+                if (ex is InvalidException)
+                    throw ex;
+                throw new InvalidException("Unable to find item");
             }
         }
         public List<GuestRequest> searchRequests(string query, Enums.FunctionSender owner)//all statuses selected
         {
-            switch (owner)
+            try
+            {
+                if (query == null)
+                    throw new InvalidException("error in search query");
+                switch (owner)
             {
                 case Enums.FunctionSender.Owner:
                     return myDAL.getRequests(guest => guest.Name.Contains(query) || guest.LastName.Contains(query)
@@ -241,8 +259,57 @@ namespace BL
                     return myDAL.getRequests(guest => guest.TypeOfUnit.ToString().Contains(query) || guest.Name.Contains(query) || guest.LastName.Contains(query)
                       || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query));
             }
+            }
+            catch(Exception ex)
+            {
+
+                if (ex is InvalidException)
+                    throw ex;
+                throw new InvalidException("Unable to find items");
+            }
         }
 
+        public List<Order> searchOrders(DateTime? selectedDate, string text, Enums.FunctionSender owner, Enums.OrderStatus status=Enums.OrderStatus.Closed)//filters from all orders based on parameters recieved
+        {
+            Func<Order, bool> condition = null;//conditions to filter with
+            Func<Order, bool> dateCondition=null;//conditions to filter with including date
+            var orders = myDAL.getAllOrders();//all orders to filter from
+            IEnumerable<Order> ordersToReturn=null;//list of filtered orders
+            switch (owner)//sets conditions based on who sent to function and what conditions it wants to be checked
+            {
+                case Enums.FunctionSender.Owner:
+
+                  condition = ord => ord.Status == status
+                  && (/*(ord.HostName != null && ord.GuestName != null && ord.HostName.Contains(text) || ord.GuestName.Contains(text))//checks first that guest and host name exist
+                  || */ ord.GuestRequestKey.ToString().Contains(text) || ord.HostingUnitKey.ToString().Contains(text)
+                  || ord.OrderKey.ToString().Contains(text));//sets function with conditions to check
+                    // sees if date selected and sets function accordingly
+                    
+                    break;
+
+                default:
+
+                    condition  = ord => ord.Status == status
+                    && ((ord.HostName != null && ord.GuestName != null && ord.HostName.Contains(text) || ord.GuestName.Contains(text))//checks first that guest and host name exist
+                    || ord.GuestRequestKey.ToString().Contains(text) || ord.HostingUnitKey.ToString().Contains(text)
+                    || ord.OrderKey.ToString().Contains(text));//sets function with conditions to check
+                    break;
+                  
+                    
+            }
+            if (selectedDate != null)//checks if there's a date selected and updates function accordingly
+            {
+                dateCondition = ord => condition(ord) && ord.CreateDate == selectedDate;
+            }
+            else//no date selected
+                dateCondition = ord => condition(ord);
+            ordersToReturn =
+                     from ord in orders
+                     let p = dateCondition(ord) //checks that all conditions apply
+                       where p
+                     select ord;
+            return ordersToReturn.ToList();//converts to list and returns
+        }
 
         #endregion
         #region gets
@@ -492,6 +559,7 @@ namespace BL
             return thisUnit;
         }
 
+     
 
 
         #endregion

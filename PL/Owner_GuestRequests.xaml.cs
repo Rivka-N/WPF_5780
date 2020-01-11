@@ -48,26 +48,37 @@ namespace PL
         #region searches
         private void Cb_status_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Tb_SearchTextBox_TextChanged(sender, null);
+                Tb_SearchTextBox_TextChanged(sender, null);
         }
 
         private void Tb_SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Closed + 1)//filter from closed orders
-                myRequests = myBL.searchRequests(Enums.OrderStatus.Closed, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
-            else
+            try
             {
-                if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Mailed + 1)
-                    myRequests = myBL.searchRequests(Enums.OrderStatus.Mailed, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
+
+                if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Closed + 1)//filter from closed orders
+                    myRequests = myBL.searchRequests(Enums.OrderStatus.Closed, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
                 else
                 {
-                    if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Started + 1)
-                        myRequests = myBL.searchRequests(Enums.OrderStatus.Started, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
+                    if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Mailed + 1)
+                        myRequests = myBL.searchRequests(Enums.OrderStatus.Mailed, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
                     else
-                        myRequests = myBL.searchRequests(tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
+                    {
+                        if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Started + 1)
+                            myRequests = myBL.searchRequests(Enums.OrderStatus.Started, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
+                        else
+                            myRequests = myBL.searchRequests(tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
+                    }
                 }
+                ds_guestRequestDataGrid.ItemsSource = myRequests;
+                tb_SearchTextBox.BorderBrush = Brushes.White;
             }
-            ds_guestRequestDataGrid.ItemsSource = myRequests;//why doesn't reload content after erasing searchbox?
+            catch
+            {
+                MessageBox.Show("invalid query");
+                tb_SearchTextBox.BorderBrush = Brushes.Red;
+               
+            }
         }
         #endregion
     }

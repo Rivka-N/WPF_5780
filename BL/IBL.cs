@@ -38,6 +38,8 @@ namespace BL
         List<Order> getOrders(Func<Order, bool> predicate);
         List<GuestRequest> searchRequests(Enums.OrderStatus status, string query, Enums.FunctionSender owner);
         List<GuestRequest> searchRequests(string query, Enums.FunctionSender owner);//all statuses selected
+        List<Order> searchOrders(DateTime? selectedDate, string text, Enums.FunctionSender owner, Enums.OrderStatus status = Enums.OrderStatus.Closed);
+
         //not finished functions
         /*   void mail(List<HostingUnit> Offers);//sends mail to the guest with all the hostingUnits which appropriate. 
                 //needs to recieve guestRequest or mailing address too
