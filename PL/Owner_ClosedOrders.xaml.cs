@@ -42,6 +42,7 @@ namespace PL
             }
         }
 
+        #region searching
         private void Tb_SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -60,11 +61,19 @@ namespace PL
             Tb_SearchTextBox_TextChanged(sender, null);//calls searchtextbox function
 
         }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            dp_requestDate.SelectedDate = null;
+            Tb_SearchTextBox_TextChanged(sender, null);//refilters selection using texbox textchanged method
+        }
+#endregion
 
         //when press clear button: dp_requestDate.SelectedDate = null;
         private void Dg_orderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
+
+       
     }
 }

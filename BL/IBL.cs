@@ -36,8 +36,8 @@ namespace BL
         void order(HostingUnit unit, GuestRequest guest);//add order
         bool available(HostingUnit unit, GuestRequest guest);
         List<Order> getOrders(Func<Order, bool> predicate);
-        List<GuestRequest> searchRequests(Enums.OrderStatus status, string query, Enums.FunctionSender owner);
-        List<GuestRequest> searchRequests(string query, Enums.FunctionSender owner);//all statuses selected
+        List<GuestRequest> searchRequests(Enums.OrderStatus status, DateTime? selectedDate, string query, Enums.FunctionSender owner);
+        List<GuestRequest> searchRequests(DateTime? selectedDate, string query, Enums.FunctionSender owner);//all statuses selected
         List<Order> searchOrders(DateTime? selectedDate, string text, Enums.FunctionSender owner, Enums.OrderStatus status = Enums.OrderStatus.Closed);
 
         //not finished functions

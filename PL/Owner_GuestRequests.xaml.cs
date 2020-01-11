@@ -57,21 +57,21 @@ namespace PL
             {
 
                 if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Closed + 1)//filter from closed orders
-                    myRequests = myBL.searchRequests(Enums.OrderStatus.Closed, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
+                    myRequests = myBL.searchRequests(Enums.OrderStatus.Closed, dp_requestDate.SelectedDate, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
                 else
                 {
                     if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Mailed + 1)
-                        myRequests = myBL.searchRequests(Enums.OrderStatus.Mailed, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
+                        myRequests = myBL.searchRequests(Enums.OrderStatus.Mailed, dp_requestDate.SelectedDate, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
                     else
                     {
                         if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Started + 1)
-                            myRequests = myBL.searchRequests(Enums.OrderStatus.Started, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
+                            myRequests = myBL.searchRequests(Enums.OrderStatus.Started, dp_requestDate.SelectedDate, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
                         else
-                            myRequests = myBL.searchRequests(tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
+                            myRequests = myBL.searchRequests(dp_requestDate.SelectedDate, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
                     }
                 }
                 ds_guestRequestDataGrid.ItemsSource = myRequests;
-                tb_SearchTextBox.BorderBrush = Brushes.White;
+                tb_SearchTextBox.BorderBrush = Brushes.Black;
             }
             catch
             {
@@ -80,6 +80,19 @@ namespace PL
                
             }
         }
+        private void Dp_requestDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Tb_SearchTextBox_TextChanged(sender, null);//sends to textbox text changed
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            dp_requestDate.SelectedDate = null;
+            Tb_SearchTextBox_TextChanged(sender, null);
+
+        }
         #endregion
+
+
     }
 }

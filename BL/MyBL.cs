@@ -219,8 +219,9 @@ namespace BL
                 || u.Host.Phone.ToString().Contains(text)||u.Host.Mail.Address.ToString().Contains(text));//returns all units that contain the text in their details
         }
         }
-        public List<GuestRequest> searchRequests(Enums.OrderStatus status, string query, Enums.FunctionSender owner=Enums.FunctionSender.Default)
+        public List<GuestRequest> searchRequests(Enums.OrderStatus status, DateTime? selectedDate, string query, Enums.FunctionSender owner=Enums.FunctionSender.Default)
         {
+            Func<GuestRequest, bool> p = null;
             try
             {
                 if (query == null)
@@ -228,37 +229,54 @@ namespace BL
                 switch (owner)
                 {
                     case Enums.FunctionSender.Owner:
-                        return myDAL.getRequests(guest => guest.Status == status && (guest.Name.Contains(query) || guest.LastName.Contains(query)
-                             || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query)));
-
+                        p= guest => guest.Status == status && (guest.Name.Contains(query) || guest.LastName.Contains(query)
+                             || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query));//sets condition
+                        break;
                     default:
-                        return myDAL.getRequests(guest => guest.Status == status
+                        p= guest => guest.Status == status
                           && (guest.TypeOfUnit.ToString().Contains(query) || guest.Name.Contains(query) || guest.LastName.Contains(query)
-                          || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query)));
+                          || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query));
+                        break;
+                }
+                var reqs = myDAL.getRequests(p);//gets request that match all conditions
+                if (selectedDate == null)//no date selected
+                    return reqs;//returns requests found
+                else//also date to filter by
+                {
+                    return reqs.Where(gr => gr.Registration == selectedDate).Select(guest=>guest).ToList();//returns list filtered by date
                 }
             }
             catch(Exception ex)
             {
                 if (ex is InvalidException)
                     throw ex;
-                throw new InvalidException("Unable to find item");
+                throw new InvalidException("Unable to find items");
             }
         }
-        public List<GuestRequest> searchRequests(string query, Enums.FunctionSender owner)//all statuses selected
+        public List<GuestRequest> searchRequests(DateTime? selectedDate, string query, Enums.FunctionSender owner)//all statuses selected
         {
             try
             {
-                if (query == null)
+                Func<GuestRequest, bool> p = null;           if (query == null)
                     throw new InvalidException("error in search query");
                 switch (owner)
             {
                 case Enums.FunctionSender.Owner:
-                    return myDAL.getRequests(guest => guest.Name.Contains(query) || guest.LastName.Contains(query)
-                         || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query));
-                default:
-                    return myDAL.getRequests(guest => guest.TypeOfUnit.ToString().Contains(query) || guest.Name.Contains(query) || guest.LastName.Contains(query)
-                      || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query));
+                        p = guest => guest.Name.Contains(query) || guest.LastName.Contains(query)
+                                || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query);//initial conditions
+                        break;
+                    default:
+                        p = guest => guest.TypeOfUnit.ToString().Contains(query) || guest.Name.Contains(query) || guest.LastName.Contains(query)
+                           || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query);
+                        break;
             }
+                var reqs = myDAL.getRequests(p);//gets request that match all conditions based on individual functions
+                if (selectedDate == null)//no date selected
+                    return reqs;//returns requests found
+                else//also date to filter by
+                {
+                    return reqs.Where(gr => gr.Registration == selectedDate).Select(guest => guest).ToList();//returns list filtered by date
+                }
             }
             catch(Exception ex)
             {
