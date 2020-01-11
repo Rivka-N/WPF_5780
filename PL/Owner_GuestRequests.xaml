@@ -28,10 +28,11 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="5"/>
             </Grid.RowDefinitions>
             <Label Name="lb_search" Content="Search" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" Width="50" VerticalAlignment="Center" />
-            <TextBox x:Name="tb_SearchTextBox" Grid.Row="1" Grid.Column="3" Width="80" TextWrapping="Wrap" HorizontalAlignment="Center" TextChanged="Tb_SearchTextBox_TextChanged"/>
-            <Label x:Name="lb_status" Content="order status" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <TextBox x:Name="tb_SearchTextBox" Grid.Row="1" Grid.Column="3" Width="auto" MinWidth="100" TextWrapping="Wrap" HorizontalAlignment="Center" TextChanged="Tb_SearchTextBox_TextChanged"/>
+            <Label x:Name="lb_status" Content="Order status" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
             <ComboBox x:Name="cb_status" Grid.Column="2" MinWidth="100" Width="auto" SelectedIndex="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" SelectionChanged="Cb_status_SelectionChanged" />
         </Grid>
         <DataGrid x:Name="ds_guestRequestDataGrid" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible"

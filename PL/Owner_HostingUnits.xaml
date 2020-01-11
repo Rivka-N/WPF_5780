@@ -40,11 +40,11 @@
         <DataGrid x:Name="dg_hostingUnitDataGrid" Grid.Row="2" AlternatingRowBackground="AliceBlue"
                   RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="hostKeyColumn" Binding="{Binding Host.HostKey}" Header="Host Id" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="hostKeyColumn" Binding="{Binding Host.HostKey}" Header="Host Id" Width="*" MinWidth="100" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="dg_tb_hostName" Width="*" MinWidth="100" Header="First Name" Binding="{Binding Host.Name}"/>
                     <DataGridTextColumn x:Name="lastNameColumn" Binding="{Binding Host.LastName}" Header="Last Name" Width="*" MinWidth="100"  IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="phoneColumn" Binding="{Binding Host.Phone}" Header="Phone" Width="*" MinWidth="100"  IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="dg_tb_mail" Binding="{Binding Host.Mail.Address}" Header="Email" Width="auto" MinWidth="100" IsReadOnly="true"/>
+                    <DataGridTextColumn x:Name="dg_tb_mail" Binding="{Binding Host.Mail.Address}" Header="Email" Width="auto" MinWidth="120" IsReadOnly="true"/>
                     <DataGridTextColumn x:Name="hostingUnitKeyColumn" Width="*" MinWidth="100" IsReadOnly="True" Header="Unit Key" Binding="{Binding HostingUnitKey}"/>
                     <DataGridTextColumn x:Name="hostingUnitNameColumn" Width="*" MinWidth="100" IsReadOnly="True" Header="Unit Name" Binding="{Binding HostingUnitName}"/>
                     <DataGridTextColumn x:Name="dg_tb_moneyPaid" Width="*" MinWidth="100"  Header="Paid" Binding="{Binding MoneyPaid}"/>

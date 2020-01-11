@@ -45,6 +45,12 @@ namespace PL
             }
         }
 
+        #region searches
+        private void Cb_status_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Tb_SearchTextBox_TextChanged(sender, null);
+        }
+
         private void Tb_SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Closed + 1)//filter from closed orders
@@ -54,23 +60,15 @@ namespace PL
                 if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Mailed + 1)
                     myRequests = myBL.searchRequests(Enums.OrderStatus.Mailed, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
                 else
-                    myRequests = myBL.searchRequests(tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
+                {
+                    if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Started + 1)
+                        myRequests = myBL.searchRequests(Enums.OrderStatus.Started, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
+                    else
+                        myRequests = myBL.searchRequests(tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
+                }
             }
             ds_guestRequestDataGrid.ItemsSource = myRequests;//why doesn't reload content after erasing searchbox?
         }
-
-        private void Cb_status_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //select based on current combobox selection and current textbox text
-        //    if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Closed + 1)
-        //        else
-        //    { if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Mailed + 1)
-        //            else { if (cb_status.SelectedIndex == (int)Enums.OrderStatus.Started + 1)
-        //                myRequests = myBL.getRequests(Req => Req.Status == Enums.OrderStatus.Started);//selects all that are started
-        //            else                    
-                    
-        //                } }
-
-        }
+        #endregion
     }
 }
