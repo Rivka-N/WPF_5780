@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BL;
+using BE;
 
 namespace PL
 {
@@ -19,12 +21,16 @@ namespace PL
     /// </summary>
     public partial class hostingUnitList : Window
     {
-        
 
+
+        IBL myBL;
 
         public hostingUnitList()
         {
+            myBL = factoryBL.getBL();
             InitializeComponent();
+            dataGrid.ItemsSource = myBL.getRequests();//binds data
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

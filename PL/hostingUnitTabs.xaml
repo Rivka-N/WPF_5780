@@ -1,0 +1,24 @@
+﻿<Window x:Class="PL.hostingUnitTabs"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="hostingUnitTabs" Height="450" Width="800">
+    <Grid>
+        <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TabItem Name="tab_addOrder" Header="add order">
+                <Frame Source="hostingUnit_addOrder.xaml" />
+            </TabItem>
+            <TabItem Name="tab_updateDelteUnit" Header="update / delete unit">
+                <Frame Source="hostingUnit_update.xaml"/>
+            </TabItem>
+            <TabItem Name="tab_closedOrders" Header="Closed Orders">
+                <!--change to all orders with an option to sort by mailed or closed ones?-->
+                <Frame Source="hostingUnit_closedOrder.xaml"/>
+            </TabItem>
+            
+        </TabControl>
+    </Grid>
+</Window>

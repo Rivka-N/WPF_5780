@@ -95,6 +95,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="hostingUnitTabs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="hostingUnit_addOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="hostingUnit_closedOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="hostingUnit_updateUnit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="hostOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -121,6 +137,18 @@
     </Compile>
     <Compile Include="hostingUnitsControl.xaml.cs">
       <DependentUpon>hostingUnitsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="hostingUnitTabs.xaml.cs">
+      <DependentUpon>hostingUnitTabs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="hostingUnit_addOrder.xaml.cs">
+      <DependentUpon>hostingUnit_addOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="hostingUnit_closedOrder.xaml.cs">
+      <DependentUpon>hostingUnit_closedOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="hostingUnit_updateUnit.xaml.cs">
+      <DependentUpon>hostingUnit_updateUnit.xaml</DependentUpon>
     </Compile>
     <Compile Include="hostOptions.xaml.cs">
       <DependentUpon>hostOptions.xaml</DependentUpon>
