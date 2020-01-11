@@ -16,9 +16,6 @@
             <RowDefinition Height="309.6"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-
-
-
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
@@ -56,11 +53,8 @@
                 <DataGridTextColumn x:Name="hostingUnitKeyColumn" Binding="{Binding HostingUnitKey}" Header="Hosting Unit Key" Width="100"/>
                 <DataGridTextColumn x:Name="hostingUnitNameColumn" Binding="{Binding HostingUnitName}" Header="Hosting Unit Name" Width="150"/>
                 <DataGridTextColumn x:Name="hostingUnitTypeColumn" Binding="{Binding HostingUnitType}" Header="Hosting Unit Type" Width="150"/>
-
-                <DataGridTextColumn x:Name="hostNameColumn" Binding="{Binding}" Header="Host name" Width="150"/>
-                <DataGridTextColumn x:Name="hostLastNameColumn" Binding="{Binding}" Header="Host last name" Width="150"/>
-
-
+                <DataGridTextColumn x:Name="hostNameColumn" Binding="{Binding Host.Name}" Header="Host name" Width="150"/>
+                <DataGridTextColumn x:Name="hostLastNameColumn" Binding="{Binding Host.LastName}" Header="Host last name" Width="150"/>
             </DataGrid.Columns>
         </DataGrid>
 

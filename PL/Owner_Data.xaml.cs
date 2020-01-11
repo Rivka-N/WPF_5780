@@ -10,18 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for hostingUnit.xaml
+    /// Interaction logic for Owner_Data.xaml
     /// </summary>
-    public partial class hostingUnit : Window
+    public partial class Owner_Data : Page
     {
-        public hostingUnit()
+        public Owner_Data()
         {
-            //InitializeComponent();
+            InitializeComponent();
         }
     }
 }

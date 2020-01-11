@@ -11,24 +11,47 @@
 
     <Page.Resources>
         <CollectionViewSource x:Key="hostingUnitViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:HostingUnit}, CreateList=True}"/>
-        <CollectionViewSource x:Key="hostViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Host}, CreateList=True}"/>
-    </Page.Resources>
+        <DataTemplate x:Key="TheHeaderTemplate">
+               <Grid>
+                   <TextBlock                      
+                       Text="{Binding}" 
+                       TextWrapping="Wrap" />
+               </Grid>
+         </DataTemplate>
+   </Page.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <DataGrid x:Name="dg_hostingUnitDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" IsReadOnly="True" AutoGenerateColumns="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="AliceBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+        <Label Name="lb_search" Content="Search" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" Width="50" VerticalAlignment="Center" />
+        <TextBox x:Name="tb_SearchTextBox" Grid.Column="3" Grid.Row="1" Height="20" Width="80" TextWrapping="Wrap"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="3" TextChanged="tb_SearchTextBox_TextChanged"/>
+         </Grid>
+        <Grid Grid.Row="1">
+        <DataGrid x:Name="dg_hostingUnitDataGrid" Grid.Row="2" AlternatingRowBackground="AliceBlue"
+                  RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="hostingUnitKeyColumn" Width="*" IsReadOnly="True" Header="Unit Key" Binding="{Binding HostingUnitKey}"/>
-                <DataGridTextColumn x:Name="hostingUnitNameColumn" Width="*" IsReadOnly="True" Header="Unit Name" Binding="{Binding HostingUnitName}"/>
-                <DataGridTextColumn x:Name="hostKeyColumn" Binding="{Binding Host.HostKey}" Header="Host Id" Width="*" IsReadOnly="True"/>
-                <DataGridTextColumn x:Name="dg_tb_hostName" Width="*" Header="First Name" Binding="{Binding Host.Name}"/>
-                <DataGridTextColumn x:Name="lastNameColumn" Binding="{Binding Host.LastName}" Header="Last Name" Width="*" IsReadOnly="True"/>
-                <DataGridTextColumn x:Name="phoneColumn" Binding="{Binding Host.Phone}" Header="Phone" Width="*" IsReadOnly="True"/>
-                <DataGridTextColumn x:Name="dg_tb_mail" Binding="{Binding Host.Mail.Address}" Header="Email" Width="*" IsReadOnly="true"/>
-                <DataGridTextColumn x:Name="dg_tb_moneyPaid" Width="*" Header="Paid" Binding="{Binding MoneyPaid}"/>
-                <DataGridCheckBoxColumn x:Name="collectionClearanceColumn" Binding="{Binding Host.CollectionClearance}" Header="Payment" Width="*" IsReadOnly="True"/>
-            </DataGrid.Columns>
+                    <DataGridTextColumn x:Name="hostKeyColumn" Binding="{Binding Host.HostKey}" Header="Host Id" Width="*" MinWidth="100" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="dg_tb_hostName" Width="*" MinWidth="100" Header="First Name" Binding="{Binding Host.Name}"/>
+                    <DataGridTextColumn x:Name="lastNameColumn" Binding="{Binding Host.LastName}" Header="Last Name" Width="*" MinWidth="100"  IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="phoneColumn" Binding="{Binding Host.Phone}" Header="Phone" Width="*" MinWidth="100"  IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="dg_tb_mail" Binding="{Binding Host.Mail.Address}" Header="Email" Width="auto" MinWidth="120" IsReadOnly="true"/>
+                    <DataGridTextColumn x:Name="hostingUnitKeyColumn" Width="*" MinWidth="100" IsReadOnly="True" Header="Unit Key" Binding="{Binding HostingUnitKey}"/>
+                    <DataGridTextColumn x:Name="hostingUnitNameColumn" Width="*" MinWidth="100" IsReadOnly="True" Header="Unit Name" Binding="{Binding HostingUnitName}"/>
+                    <DataGridTextColumn x:Name="dg_tb_moneyPaid" Width="*" MinWidth="100"  Header="Paid" Binding="{Binding MoneyPaid}"/>
+                    <DataGridCheckBoxColumn x:Name="collectionClearanceColumn" Binding="{Binding Host.CollectionClearance}" Header="Payment" MinWidth="100" Width="*" IsReadOnly="True" HeaderTemplate="{StaticResource TheHeaderTemplate}"/>
+
+                </DataGrid.Columns>
         </DataGrid>
+        </Grid>
     </Grid>
 </Page>

@@ -203,9 +203,166 @@ namespace BL
                 throw new InvalidException("invalid guest number");
             g1.GuestRequestKey = guestNum;
             return (myDAL.findGuest(g1));
-
-
         }
+
+        #endregion
+        #region search filtering methods
+        public List<HostingUnit> searchUnits(string text, Enums.FunctionSender fs=0)//returns all units that this text was found in
+        {
+            switch (fs)
+            {
+                default://returns search through all units details
+            return myDAL.getHostingUnits
+                (u => u.HostingUnitKey.ToString().Contains(text) || u.MoneyPaid.ToString().Contains(text)
+                || u.HostingUnitType.ToString().Contains(text) || u.HostingUnitName.Contains(text)
+                || u.Host.HostKey.ToString().Contains(text) || u.Host.Name.Contains(text) || u.Host.LastName.Contains(text)
+                || u.Host.Phone.ToString().Contains(text)||u.Host.Mail.Address.ToString().Contains(text));//returns all units that contain the text in their details
+        }
+        }
+        public List<GuestRequest> searchRequests(Enums.OrderStatus status, DateTime? selectedDate, string query, Enums.FunctionSender owner=Enums.FunctionSender.Default)
+        {
+            Func<GuestRequest, bool> p = null;
+            try
+            {
+                if (query == null)
+                    throw new InvalidException("error in search query");
+                switch (owner)
+                {
+                    case Enums.FunctionSender.Owner:
+                        p= guest => guest.Status == status && (guest.Name.Contains(query) || guest.LastName.Contains(query)
+                             || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query));//sets condition
+                        break;
+                    default:
+                        p= guest => guest.Status == status
+                          && (guest.TypeOfUnit.ToString().Contains(query) || guest.Name.Contains(query) || guest.LastName.Contains(query)
+                          || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query));
+                        break;
+                }
+                var reqs = myDAL.getRequests(p);//gets request that match all conditions
+                if (selectedDate == null)//no date selected
+                    return reqs;//returns requests found
+                else//also date to filter by
+                {
+                    return reqs.Where(gr => gr.Registration == selectedDate).Select(guest=>guest).ToList();//returns list filtered by date
+                }
+            }
+            catch(Exception ex)
+            {
+                if (ex is InvalidException)
+                    throw ex;
+                throw new InvalidException("Unable to find items");
+            }
+        }
+        public List<GuestRequest> searchRequests(DateTime? selectedDate, string query, Enums.FunctionSender owner)//all statuses selected
+        {
+            try
+            {
+                Func<GuestRequest, bool> p = null;           if (query == null)
+                    throw new InvalidException("error in search query");
+                switch (owner)
+            {
+                case Enums.FunctionSender.Owner:
+                        p = guest => guest.Name.Contains(query) || guest.LastName.Contains(query)
+                                || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query);//initial conditions
+                        break;
+                    default:
+                        p = guest => guest.TypeOfUnit.ToString().Contains(query) || guest.Name.Contains(query) || guest.LastName.Contains(query)
+                           || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query);
+                        break;
+            }
+                var reqs = myDAL.getRequests(p);//gets request that match all conditions based on individual functions
+                if (selectedDate == null)//no date selected
+                    return reqs;//returns requests found
+                else//also date to filter by
+                {
+                    return reqs.Where(gr => gr.Registration == selectedDate).Select(guest => guest).ToList();//returns list filtered by date
+                }
+            }
+            catch(Exception ex)
+            {
+
+                if (ex is InvalidException)
+                    throw ex;
+                throw new InvalidException("Unable to find items");
+            }
+        }
+
+        public List<Order> searchOrders(DateTime? selectedDate, string text, Enums.FunctionSender owner, Enums.OrderStatus status=Enums.OrderStatus.Closed)//filters from all orders based on parameters recieved
+        {
+            Func<Order, bool> condition = null;//conditions to filter with
+            Func<Order, bool> dateCondition=null;//conditions to filter with including date
+            var orders = myDAL.getAllOrders();//all orders to filter from
+            IEnumerable<Order> ordersToReturn=null;//list of filtered orders
+            switch (owner)//sets conditions based on who sent to function and what conditions it wants to be checked
+            {
+                case Enums.FunctionSender.Owner:
+
+                  condition = ord => ord.Status == status
+                  && (/*(ord.HostName != null && ord.GuestName != null && ord.HostName.Contains(text) || ord.GuestName.Contains(text))//checks first that guest and host name exist
+                  || */ ord.GuestRequestKey.ToString().Contains(text) || ord.HostingUnitKey.ToString().Contains(text)
+                  || ord.OrderKey.ToString().Contains(text));//sets function with conditions to check
+                    // sees if date selected and sets function accordingly
+                    
+                    break;
+
+                default:
+
+                    condition  = ord => ord.Status == status
+                    && ((ord.HostName != null && ord.GuestName != null && ord.HostName.Contains(text) || ord.GuestName.Contains(text))//checks first that guest and host name exist
+                    || ord.GuestRequestKey.ToString().Contains(text) || ord.HostingUnitKey.ToString().Contains(text)
+                    || ord.OrderKey.ToString().Contains(text));//sets function with conditions to check
+                    break;
+                  
+                    
+            }
+            if (selectedDate != null)//checks if there's a date selected and updates function accordingly
+            {
+                dateCondition = ord => condition(ord) && ord.CreateDate == selectedDate;
+            }
+            else//no date selected
+                dateCondition = ord => condition(ord);
+            ordersToReturn =
+                     from ord in orders
+                     let p = dateCondition(ord) //checks that all conditions apply
+                       where p
+                     select ord;
+            return ordersToReturn.ToList();//converts to list and returns
+        }
+
+        #endregion
+        #region gets
+        public List<HostingUnit> getAllHostingUnits()
+        {
+            return myDAL.getAllHostingUnits();
+        }
+
+        public List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> p)
+        {
+            return myDAL.getHostingUnits(p);
+        }
+
+        public List<GuestRequest> getRequests()
+        {
+            return myDAL.getRequests();
+        }
+        public List<GuestRequest> getRequests(Func<GuestRequest, bool> p)
+        {
+            return myDAL.getRequests(p);
+        }
+        public List<Order> getAllOrders()
+        {
+            return myDAL.getAllOrders();
+        }
+        public List<GuestRequest> GetRequests(Func<GuestRequest, bool> predicate)
+        {
+            return myDAL.getRequests(predicate);
+        }
+
+        public List<Order> getOrders(Func<Order, bool> predicate)
+        {
+            return myDAL.getOrders(predicate);
+        }
+
         #endregion
         #region change
         public void changeUnit(HostingUnit hostingUnit1)
@@ -245,37 +402,7 @@ namespace BL
             //if there are orders in unit throw
         }
         #endregion
-        #region gets
-        public List<HostingUnit> getAllHostingUnits()
-        {
-            return myDAL.getAllHostingUnits();
-        }
-
-        public List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> p)
-        {
-            return myDAL.getHostingUnits(p);
-        }
-
-        public List<GuestRequest> getRequests()
-        {
-            return myDAL.getRequests();
-        }
-   
-        public List<Order> getAllOrders()
-        {
-            return myDAL.getAllOrders();
-        }
-        public List<GuestRequest>GetRequests(Func<GuestRequest, bool> predicate)
-        {
-            return myDAL.getRequests(predicate);
-        }
-
-        public List<Order> getOrders(Func<Order, bool> predicate)
-        {
-            return myDAL.getOrders(predicate);
-        }
-
-        #endregion
+        
         #region add dates for pl
         public void addEntryDate(DateTime? selectedDate, GuestRequest g1)//adds selected date to guest
         {
@@ -450,7 +577,9 @@ namespace BL
             return thisUnit;
         }
 
-      
+     
+
+
         #endregion
     }
 }

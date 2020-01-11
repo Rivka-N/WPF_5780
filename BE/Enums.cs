@@ -40,6 +40,13 @@
             South,
             Eilat
         }
+        public enum FunctionSender//to help the search functions
+        {
+            Default,
+            Owner,
+            AddGuest,
+            HostOrders,
+        }
     }
 
 

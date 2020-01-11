@@ -13,6 +13,7 @@ namespace BL
         void addGuest(GuestRequest guest);
         void addHostingUnit(HostingUnit unit);
         List<GuestRequest> getRequests();
+        List<GuestRequest> getRequests(Func<GuestRequest, bool> p);
         GuestRequest findGuest(GuestRequest g1, string text);//puts text as g1's number and returns instance of it in ds if found
 
         #endregion
@@ -24,8 +25,10 @@ namespace BL
         List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> p);
         void deleteUnit(int unit);
         void changeUnit(HostingUnit hostingUnit1);
+        List<HostingUnit> searchUnits(string text, Enums.FunctionSender fs=0);
 
-    #endregion
+
+        #endregion
         #region orders
         void addOrder(Order ord);
         List<Order> getAllOrders();
@@ -33,13 +36,15 @@ namespace BL
         void order(HostingUnit unit, GuestRequest guest);//add order
         bool available(HostingUnit unit, GuestRequest guest);
         List<Order> getOrders(Func<Order, bool> predicate);
+        List<GuestRequest> searchRequests(Enums.OrderStatus status, DateTime? selectedDate, string query, Enums.FunctionSender owner);
+        List<GuestRequest> searchRequests(DateTime? selectedDate, string query, Enums.FunctionSender owner);//all statuses selected
+        List<Order> searchOrders(DateTime? selectedDate, string text, Enums.FunctionSender owner, Enums.OrderStatus status = Enums.OrderStatus.Closed);
 
         //not finished functions
         /*   void mail(List<HostingUnit> Offers);//sends mail to the guest with all the hostingUnits which appropriate. 
                 //needs to recieve guestRequest or mailing address too
 
             */
-        //void notFounde();
 
         #endregion
 

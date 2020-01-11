@@ -14,22 +14,50 @@
     </Page.Resources>
 
     <Grid>
-        <DataGrid x:Name="ds_guestRequestDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False" IsReadOnly="True" Height="auto" Padding="10">
-                <DataGrid.Columns>
-                <DataGridTextColumn x:Name="nameColumn" Width="*" Header="Name" Binding="{Binding Name}"  IsReadOnly="True" />
-                <DataGridTextColumn x:Name="lastNameColumn" Width="*" Header="Last Name" Binding="{Binding LastName}" IsReadOnly="True"/>
-                <DataGridTextColumn x:Name="dg_Email" Width="*" Header="Email" Binding="{Binding Mail.Address}" IsReadOnly="True" />
-                <DataGridTextColumn x:Name="guestRequestKeyColumn" Width="*" Header="Request Key" Binding="{Binding GuestRequestKey}" IsReadOnly="True"/>
-                <DataGridTemplateColumn x:Name="dg_registrationColumn" Width="*" Header="Registration Date">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="AliceBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5"/>
+            </Grid.RowDefinitions>
+            <Label Name="lb_search" Content="Search" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Width="50" VerticalAlignment="Center" />
+            <TextBox x:Name="tb_SearchTextBox" Grid.Row="1" Grid.Column="0" Width="auto" MinWidth="100" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextChanged="Tb_SearchTextBox_TextChanged"/>
+            <Label x:Name="lb_status" Content="Order status" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <ComboBox x:Name="cb_status" Grid.Column="1" MinWidth="100" Width="auto" SelectedIndex="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" SelectionChanged="Cb_status_SelectionChanged" />
+            <Label x:Name="lb_date" Content="Registration Date" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <DatePicker x:Name="dp_requestDate" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" SelectedDateChanged="Dp_requestDate_SelectedDateChanged"/>
+            <Button Name="pb_resetDate" Content="Reset" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="10" Grid.Row="1" Margin="2" Click="Button_Click"/>
+
+        </Grid>
+        <DataGrid x:Name="ds_guestRequestDataGrid" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible"
+                  AlternatingRowBackground="AliceBlue" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False" IsReadOnly="True" Height="auto" Padding="10" Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="nameColumn" MinWidth="100" Width="*" Header="Name" Binding="{Binding Name}"  IsReadOnly="True" />
+                <DataGridTextColumn x:Name="lastNameColumn" MinWidth="100" Width="*" Header="Last Name" Binding="{Binding LastName}" IsReadOnly="True"/>
+                <DataGridTextColumn x:Name="dg_Email" Width="*" MinWidth="100" Header="Email" Binding="{Binding Mail.Address}" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="guestRequestKeyColumn" MinWidth="100" Width="*" Header="Request Key" Binding="{Binding GuestRequestKey}" IsReadOnly="True"/>
+                <DataGridTemplateColumn x:Name="dg_registrationColumn" Width="*" Header="Registration Date" MinWidth="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate x:Name="dt_registrationDate">
-                            <DatePicker x:Name="dp_registrationDate" SelectedDate="{Binding Registration}" SelectedDateFormat="Short" SelectedDateChanged="Dp_Registration_SelectedDateChanged"/>
+                            <DatePicker x:Name="dp_registrationDate" SelectedDate="{Binding Registration}" SelectedDateFormat="Short" Focusable="false" SelectedDateChanged="Dp_Registration_SelectedDateChanged"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn x:Name="statusColumn" Width="*" Header="Order Status" Binding="{Binding Status}" IsReadOnly="True"/>
-                 
-                </DataGrid.Columns>
-            </DataGrid>
+                <DataGridTextColumn x:Name="statusColumn" Width="*" MinWidth="100" Header="Order Status" Binding="{Binding Status}" IsReadOnly="True"/>
+
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

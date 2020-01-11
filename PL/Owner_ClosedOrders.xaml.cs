@@ -22,13 +22,14 @@ namespace PL
     public partial class Owner_ClosedOrders : Page
     {
         IBL myBL;
+        List<Order> myOrders;
             
         public Owner_ClosedOrders()
         {
             InitializeComponent();
             myBL = factoryBL.getBL();
-            var sourceOrder = myBL.getOrders(ord => ord.Status == Enums.OrderStatus.Closed);
-            dg_orderDataGrid.ItemsSource= sourceOrder;//all closed orders
+            myOrders= myBL.getOrders(ord => ord.Status == Enums.OrderStatus.Closed);
+            dg_orderDataGrid.ItemsSource= myOrders;//all closed orders
         }
 
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)//resets date if changed
@@ -40,5 +41,39 @@ namespace PL
 
             }
         }
+
+        #region searching
+        private void Tb_SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                myOrders=myBL.searchOrders(dp_requestDate.SelectedDate, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
+                dg_orderDataGrid.ItemsSource = myOrders;//updates data source
+            }
+            catch
+            {
+                MessageBox.Show("invalid query");
+            }
+        }
+
+        private void searchDatePicker_SelectedDateChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            Tb_SearchTextBox_TextChanged(sender, null);//calls searchtextbox function
+
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            dp_requestDate.SelectedDate = null;
+            Tb_SearchTextBox_TextChanged(sender, null);//refilters selection using texbox textchanged method
+        }
+#endregion
+
+        //when press clear button: dp_requestDate.SelectedDate = null;
+        private void Dg_orderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+       
     }
 }

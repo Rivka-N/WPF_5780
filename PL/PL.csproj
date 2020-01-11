@@ -165,6 +165,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Owner_Data.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Owner_GuestRequests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -180,6 +184,9 @@
     </Compile>
     <Compile Include="Owner_ClosedOrders.xaml.cs">
       <DependentUpon>Owner_ClosedOrders.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Owner_Data.xaml.cs">
+      <DependentUpon>Owner_Data.xaml</DependentUpon>
     </Compile>
     <Compile Include="Owner_GuestRequests.xaml.cs">
       <DependentUpon>Owner_GuestRequests.xaml</DependentUpon>
