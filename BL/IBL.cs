@@ -29,6 +29,10 @@ namespace BL
 
 
         #endregion
+        #region calculations
+        int TotalSumCollectedFromUnits();
+
+        #endregion
         #region orders
         void addOrder(Order ord);
         List<Order> getAllOrders();

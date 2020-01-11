@@ -19,7 +19,10 @@
                 <!--change to all orders with an option to sort by mailed or closed ones?-->
                 <Frame Source="Owner_ClosedOrders.xaml"/>
             </TabItem>
-            <TabItem Name="ti_information" Header="Details"/>
+            <TabItem Name="ti_information" Header="Details">
+                <Frame Source="Owner_Data.xaml"/>
+            </TabItem>
+            
         </TabControl>
     </Grid>
 </Window>

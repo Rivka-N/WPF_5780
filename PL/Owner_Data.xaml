@@ -8,5 +8,23 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Owner_Data">
 
-    <Grid/>
+    <Grid Background="AliceBlue">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+        <Label Name="lb_moneyCollectedTag" Content="Money Collected" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Name="tb_moneyCollected" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+
+        <!--<Expander Header="Details"/>
+        <ProgressBar Name="Guest Requests to Orders Ratio" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="auto"/>-->
+
+    </Grid>
 </Page>
