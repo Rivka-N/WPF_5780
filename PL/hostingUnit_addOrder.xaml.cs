@@ -46,5 +46,22 @@ namespace PL
         {
 
         }
+
+        private void orderDataGrid_SelectionChanged_3(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void pb_addOrder_click(object sender, RoutedEventArgs e)
+        {
+            hostOptions hostWinows = new hostOptions();
+            hostWinows.Show();
+        }
+
+        private void pb_sendMail_click(object sender, RoutedEventArgs e)
+        {
+            //send mail
+        }
+
     }
 }

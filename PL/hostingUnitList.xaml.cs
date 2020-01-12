@@ -29,7 +29,7 @@ namespace PL
         {
             myBL = factoryBL.getBL();
             InitializeComponent();
-            dataGrid.ItemsSource = myBL.getRequests();//binds data
+            //dataGrid.ItemsSource = myBL.getRequests();//binds data
 
         }
 

@@ -10,16 +10,22 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BL;
+using BE;
+
 
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for hostingUnit_closedOrder.xaml
+    /// Interaction logic for hostingUnit_closedOrders.xaml
     /// </summary>
-    public partial class hostingUnit_closedOrder : Window
+    /// 
+   
+    public partial class hostingUnit_closedOrders : Page
     {
-        public hostingUnit_closedOrder()
+        public hostingUnit_closedOrders()
         {
             InitializeComponent();
         }

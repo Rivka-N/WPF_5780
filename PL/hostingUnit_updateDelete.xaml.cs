@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for hostingUnit_updateUnit.xaml
+    /// Interaction logic for hostingUnit_updateDelete.xaml
     /// </summary>
-    public partial class hostingUnit_updateUnit : Window
+    public partial class hostingUnit_updateDelete : Page
     {
-        public hostingUnit_updateUnit()
+        public hostingUnit_updateDelete()
         {
             InitializeComponent();
         }

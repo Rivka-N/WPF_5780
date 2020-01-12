@@ -32,7 +32,7 @@
                 <RowDefinition Height="5"/>
             </Grid.RowDefinitions>
             <Label Name="lb_search" Content="Search" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Width="50" VerticalAlignment="Center" />
-            <TextBox x:Name="tb_SearchTextBox" Grid.Row="1" Grid.Column="0" Width="auto" MinWidth="100" TextWrapping="Wrap" HorizontalAlignment="Center" TextChanged="Tb_SearchTextBox_TextChanged" VerticalAlignment="Center"/>
+            <TextBox x:Name="tb_SearchTextBox" Grid.Row="1" Grid.Column="0" Width="auto" MinWidth="100" TextWrapping="Wrap" HorizontalAlignment="Center" TextChanged="Tb_SearchTextBox_TextChanged" VerticalAlignment="Bottom" Margin="33,0,32.6,3.6"/>
             <Label x:Name="lb_date" Content="Request Created" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
             <DatePicker x:Name="dp_requestDate" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" SelectedDateChanged="searchDatePicker_SelectedDateChanged_1"/>
             <Button Name="pb_resetDate" Content="Reset" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="10" Grid.Row="1" Margin="2" Click="Button_Click"/>

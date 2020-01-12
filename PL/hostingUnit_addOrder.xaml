@@ -11,22 +11,39 @@
         <CollectionViewSource x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
     </Window.Resources>
     <Grid DataContext="{StaticResource orderViewSource}" Width="Auto">
-        <DataGrid x:Name="orderDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected">
+        <DataGrid x:Name="orderDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="orderDataGrid_SelectionChanged_3">
             <DataGrid.Columns>
                 <DataGridTemplateColumn x:Name="createDateColumn" Header="Create Date" Width="SizeToHeader">
-                    <DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate>
                             <DatePicker SelectedDate="{Binding CreateDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn >
+                <DataGridTextColumn x:Name="guestNameColumn" Binding="{Binding GuestName}" Header="Guest Name"  Width="*"/>
+                <DataGridTextColumn x:Name="guestRequestKeyColumn" Binding="{Binding GuestRequestKey}" Header="Guest Request Key" Width="1.1*"/>
+                <DataGridTextColumn x:Name="hostNameColumn" Binding="{Binding HostName}" Header="Host Name" Width="*"/>
+                <DataGridTextColumn x:Name="orderKeyColumn" Binding="{Binding OrderKey}" Header="Order Key" Width="*"/>
+                <DataGridTextColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Status" Width="*"/>
+                <DataGridTemplateColumn x:Name="sendMail" Header="send mail" Width="*">
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate>
+                            <Button  Content="send mail" IsEnabled="{Binding statuss}" Click="pb_sendMail_click" Background="White" Command="{Binding ButtonClickCommand}"/>
+                              
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn x:Name="guestNameColumn" Binding="{Binding GuestName}" Header="Guest Name" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="guestRequestKeyColumn" Binding="{Binding GuestRequestKey}" Header="Guest Request Key" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="hostNameColumn" Binding="{Binding HostName}" Header="Host Name" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="orderKeyColumn" Binding="{Binding OrderKey}" Header="Order Key" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Status" Width="SizeToHeader"/>
+
+                <DataGridTemplateColumn x:Name="addOrder" Header="add order" Width="*">
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate>
+                            <Button  Content="add order" Click="pb_addOrder_click" Background="White" IsEnabled="{Binding Status}"/>
+
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
+            
         </DataGrid>
     </Grid>
 </Window>

@@ -15,7 +15,6 @@
                 <Frame Source="hostingUnit_update.xaml"/>
             </TabItem>
             <TabItem Name="tab_closedOrders" Header="Closed Orders">
-                <!--change to all orders with an option to sort by mailed or closed ones?-->
                 <Frame Source="hostingUnit_closedOrder.xaml"/>
             </TabItem>
             
