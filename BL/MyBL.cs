@@ -46,9 +46,19 @@ namespace BL
             myDAL.addOrder(ord.Clone());
         }
 
-      
+
         #endregion
 
+        #region calculate data
+        public int TotalSumCollectedFromUnits()//calculates amoutn of money collected from all hosting units together
+        {
+            var sum = 0;
+            var units = myDAL.getAllHostingUnits();//saves units
+            foreach (HostingUnit hu in units)//goes over units
+                sum += hu.MoneyPaid;//adds money paid from this unit to toal
+            return sum;
+        }
+        #endregion
         #region order
         public void sendGuestMail(HostingUnit unit, GuestRequest guest)//guest and hosting unit, sends mail to guest and creates order from details
         {
@@ -257,7 +267,8 @@ namespace BL
         {
             try
             {
-                Func<GuestRequest, bool> p = null;           if (query == null)
+                Func<GuestRequest, bool> p = null;
+                if (query == null)
                     throw new InvalidException("error in search query");
                 switch (owner)
             {
@@ -577,7 +588,9 @@ namespace BL
             return thisUnit;
         }
 
-     
+      
+
+
 
 
         #endregion

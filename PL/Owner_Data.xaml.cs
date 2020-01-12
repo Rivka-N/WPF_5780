@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using BL;
 namespace PL
 {
     /// <summary>
@@ -20,9 +20,13 @@ namespace PL
     /// </summary>
     public partial class Owner_Data : Page
     {
+        IBL myBL;
         public Owner_Data()
         {
+            myBL = factoryBL.getBL();
             InitializeComponent();
+            int sum = myBL.TotalSumCollectedFromUnits();
+            tb_moneyCollected.Text = sum.ToString();//text is sum collected
         }
     }
 }
