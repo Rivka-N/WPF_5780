@@ -41,16 +41,14 @@ namespace PL
 
         }
 
-        private void dalete_click(object sender, SelectionChangedEventArgs e)
-        {
-            
-        }
+        
 
         private void hostingUnitDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
+        #region delete button
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string message = "Are you sure you want to delete this unit?";
@@ -69,6 +67,8 @@ namespace PL
             }
 
         }
+        #endregion
+
         #region textBox
         private void nameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
