@@ -24,21 +24,26 @@ namespace PL
         {
             myBL = factoryBL.getBL();
             InitializeComponent();
-            lv_hostingUnitListView.ItemsSource = myBL.getAllHostingUnits();
+            dg_hostingUnitDataGrid.ItemsSource = myBL.getAllHostingUnits();
         }
-        #region window loading and closing
+        #region window
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+      
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             new MainWindow().Show();//opens main window again
         }
-        #endregion
 
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+        }
+        #endregion
+        #region buttons
+        private void AddUnit_Click(object sender, RoutedEventArgs e)
+        {
+            new hostingUnit().ShowDialog();
+        }
+        #endregion
     }
 }

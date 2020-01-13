@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PL.AllUnitsList"
         mc:Ignorable="d"
-        Title="AllUnitsList" Height="450" Width="800" 
-            Closing="Window_Closing"  Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
+        Title="AllUnitsList" Height="450" Width="800"
+        Closing="Window_Closing"  WindowStartupLocation="CenterScreen" SizeChanged="Window_SizeChanged">
     <Window.Resources>
         <CollectionViewSource x:Key="hostingUnitViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:HostingUnit}, CreateList=True}"/>
         <Style TargetType="TextBox">
@@ -25,87 +25,28 @@
             <Setter Property="MinHeight" Value="100"/>
         </Style>
     </Window.Resources>
-    
+
     <Grid DataContext="{StaticResource hostingUnitViewSource}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-            <ListView x:Name="lv_hostingUnitListView"  ItemsSource="{Binding}" SelectionMode="Single" Width="auto" Grid.Row="1">
-                <ListView.ItemContainerStyle>
-                    <Style>
-                        <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
-                        <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
-                    </Style>
-                
-                </ListView.ItemContainerStyle>
-                <ListView.View>
-                    <GridView>
-                    <GridViewColumn x:Name="gvc_nameColumn" Header="Name">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding Host.Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="gvc_lastNameColumn" Header="Last Name">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding Host.LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="gvc_hostKeyColumn" Header="Host id">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="6,-1,-6,-1" IsReadOnly="True" Text="{Binding Host.HostKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
 
-                    <GridViewColumn x:Name="phoneColumn" Header="Phone" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding Host.Phone, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
-                    <GridViewColumn x:Name="hostingUnitKeyColumn1" Header="Unit Key">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding HostingUnitKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="hostingUnitNameColumn1" Header="Unit Name">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="hostingUnitTypeColumn1" Header="Unit Type" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding HostingUnitType}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="areaVacationColumn1" Header="Unit Location" Width="80">
-                            <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="6,-1,-6,-1" Text="{Binding AreaVacation}"/>
-                            </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        
-                    </GridView>
-                </ListView.View>
-            </ListView>
         <Grid Grid.Row="2" Background="AliceBlue">
-            <Button x:Name="addUnit" Content="Add Unit" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="2" Margin="10,5" Padding="10"/>
+            <Button x:Name="addUnit" Content="Add Unit" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,5" Padding="10" Click="AddUnit_Click"/>
         </Grid>
+        <DataGrid x:Name="dg_hostingUnitDataGrid" AutoGenerateColumns="False" AlternatingRowBackground="AliceBlue" IsReadOnly="True" EnableRowVirtualization="True" ItemsSource="{Binding}" Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="dgtc_name" Binding="{Binding Host.Name}" Header="Name" Width="*" MinWidth="100" IsReadOnly="True"/>
+                <DataGridTextColumn x:Name="dgtc_lastName" Binding="{Binding Host.LastName}" Header="Last Name" Width="*" MinWidth="100" IsReadOnly="True"/>
+                <DataGridTextColumn x:Name="dgtc_hostKey" Binding="{Binding Host.HostKey}" Header="Host ID" Width="*" MinWidth="100" IsReadOnly="True"/>
+                <DataGridTextColumn x:Name="dgtc_phone" Binding="{Binding Host.Phone}" Header="Phone" Width="*" MinWidth="100" IsReadOnly="True"/>
+                <DataGridTextColumn x:Name="dgtc_unitKey" Binding="{Binding HostingUnitKey}" Header="Unit Key" Width="*" MinWidth="100" IsReadOnly="True"/>
+                <DataGridTextColumn x:Name="dgtc_unitName" Binding="{Binding HostingUnitName}" Header="Unit" Width="auto" MinWidth="100" IsReadOnly="True"/>
+                <DataGridTextColumn x:Name="dgtc_unitType" Binding="{Binding HostingUnitType}" Header="Unit Type" Width="*" MinWidth="100" IsReadOnly="True"/>
+                <DataGridTextColumn x:Name="dgtc_area" Binding="{Binding AreaVacation}" Header="Unit Location" Width="*" MinWidth="100" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
