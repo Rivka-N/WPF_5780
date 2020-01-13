@@ -45,7 +45,7 @@ namespace PL
 
         private void pb_host_Click(object sender, RoutedEventArgs e)
         {
-            hostOptions hostWinows = new hostOptions();
+            hostingUnitTabs hostWinows = new hostingUnitTabs();
             hostWinows.Show();
         }
     }
