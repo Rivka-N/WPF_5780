@@ -40,12 +40,16 @@
                 <DataGridTextColumn x:Name="orderKeyColumn" Width="SizeToHeader" Header="Order Key" Binding="{Binding OrderKey}"/>
                 <DataGridTextColumn x:Name="statusColumn" Width="SizeToHeader" Header="Status" Binding="{Binding Status}"/>
                 <DataGridTemplateColumn x:Name="sendMail" Header="send mail" Width="*">
-                    <Da
-                        
-                    
-                    <Button  Name="pb_sendMail"  Content="send mail"  Click="pb_sendMail_click" Background="White" IsEnabled="{Binding is}" Command="{Binding ButtonClickCommand}" />
 
+                    <DataGridTemplateColumn.CellTemplate >
+                            <DataTemplate>
+                            <Button  Name="pb_sendMail"  Content="send mail"  Click="pb_sendMail_click" Background="White" IsEnabled="{Binding is}" Command="{Binding ButtonClickCommand}" />
+
+                            </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+
+
                 
                 
 
