@@ -34,5 +34,10 @@ namespace PL
             new MainWindow().Show();//opens main window again
         }
         #endregion
+
+        private void Pb_back_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

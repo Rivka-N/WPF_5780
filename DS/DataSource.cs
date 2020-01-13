@@ -46,7 +46,7 @@ namespace DS
             #region  addHostingUnit
             hostingUnits.Add(item: new HostingUnit() { HostingUnitKey = 10000001, HostingUnitName = "a", Host = hosts[2], AreaVacation = Enums.Area.Center, HostingUnitType = Enums.HostingUnitType.Hotel, Pool = Enums.Preference.Yes, NumAdult = 12, NumChildren = 2, Jacuzzi = Enums.Preference.No, Garden = Enums.Preference.Yes, Meal=Enums.MealType.Full, MoneyPaid=23});
             hostingUnits[0].guestForUnit.Add(guestRequests[0]);
-            hostingUnits.Add(new HostingUnit() { HostingUnitKey = 10000002, HostingUnitName = "b", Host = hosts[1], AreaVacation = Enums.Area.Galil, HostingUnitType = Enums.HostingUnitType.Zimmer, Pool = Enums.Preference.Yes, NumAdult = 2, NumChildren = 0, Jacuzzi = Enums.Preference.Yes, Garden = Enums.Preference.No, Meal = Enums.MealType.Half, MoneyPaid=100});
+            hostingUnits.Add(new HostingUnit() { HostingUnitKey = 10000002, HostingUnitName = "b", Host = hosts[1], AreaVacation = Enums.Area.Center, HostingUnitType = Enums.HostingUnitType.Zimmer, Pool = Enums.Preference.Yes, NumAdult = 2, NumChildren = 0, Jacuzzi = Enums.Preference.Yes, Garden = Enums.Preference.No, Meal = Enums.MealType.Half, MoneyPaid=100});
             hostingUnits.Add(new HostingUnit() { HostingUnitKey = 10000003, HostingUnitName = "c", Host = hosts[0], AreaVacation = Enums.Area.Golan, HostingUnitType = Enums.HostingUnitType.Camping, Pool = Enums.Preference.No, NumAdult = 10, NumChildren = 2, Jacuzzi = Enums.Preference.No, Garden = Enums.Preference.Yes, Meal=Enums.MealType.Half });
             #endregion
 

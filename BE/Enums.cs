@@ -45,7 +45,7 @@
             Default,
             Owner,
             AddGuest,
-            HostOrders,
+            HostList
         }
     }
 
