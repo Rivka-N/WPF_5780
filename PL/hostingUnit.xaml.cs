@@ -35,6 +35,7 @@ namespace PL
             hostNum = -1;
             cb_area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
             cb_hostingUnitType.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
+            hostingUnit1 = new HostingUnit();
         }
 
 
