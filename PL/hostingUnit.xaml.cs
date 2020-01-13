@@ -112,5 +112,10 @@ namespace PL
         {
 
         }
+
+        private void Tb_Enter_Child_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
