@@ -79,6 +79,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="AllUnitsList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="guestOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -121,6 +125,9 @@
     </Page>
     <Compile Include="addUnitOptions.xaml.cs">
       <DependentUpon>addUnitOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AllUnitsList.xaml.cs">
+      <DependentUpon>AllUnitsList.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

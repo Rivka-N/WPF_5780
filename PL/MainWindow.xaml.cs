@@ -39,14 +39,14 @@ namespace PL
 
         private void pb_guest_Click(object sender, RoutedEventArgs e)
         {
-            guestOptions guestWindow = new guestOptions();
-            guestWindow.Show();
+            //open guest window
+            this.Close();
         }
 
         private void pb_host_Click(object sender, RoutedEventArgs e)
         {
-            hostOptions hostWinows = new hostOptions();
-            hostWinows.Show();
+            new AllUnitsList().Show();
+            Close();//closes current and opens other window
         }
     }
 }
