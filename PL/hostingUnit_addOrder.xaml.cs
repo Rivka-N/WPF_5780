@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BL;
+using BE;
 
 namespace PL
 {
@@ -19,9 +21,15 @@ namespace PL
     /// </summary>
     public partial class hostingUnit_addOrder : Window
     {
+        IBL myBL;
+        List<Order> myOrders;
         public hostingUnit_addOrder()
         {
+            myBL = factoryBL.getBL();
             InitializeComponent();
+            myOrders = new List<Order>();
+            myOrders = myBL.ordersByUnit
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

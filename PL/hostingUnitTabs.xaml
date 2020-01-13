@@ -5,19 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        Closing="Window_Closing"
         Title="hostingUnitTabs" Height="450" Width="800">
+
+
     <Grid>
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TabItem Name="tab_addOrder" Header="add order">
                 <Frame Source="hostingUnit_addOrder.xaml" />
             </TabItem>
             <TabItem Name="tab_updateDelteUnit" Header="update / delete unit">
-                <Frame Source="hostingUnit_update.xaml"/>
+                <Frame Source="hostingUnit_updateDelete.xaml"/>
             </TabItem>
             <TabItem Name="tab_closedOrders" Header="Closed Orders">
-                <Frame Source="hostingUnit_closedOrder.xaml"/>
+                <Frame Source="hostingUnit_closedOrders.xaml"/>
             </TabItem>
             
         </TabControl>
     </Grid>
 </Window>
+
+
