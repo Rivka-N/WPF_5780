@@ -1,6 +1,7 @@
 ﻿using BE;
 using DAL;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -217,6 +218,25 @@ namespace BL
 
         #endregion
         #region search filtering methods
+        public List<HostingUnit> searchUnits(string text, int unitType, int area, Enums.FunctionSender sender)
+        {
+            Func<HostingUnit, bool> conditions = null;
+            if (text == null)
+                throw new InvalidException("invalid text");
+            switch (sender)
+            {
+                default:
+                    conditions = (unit =>
+                    (Enum.IsDefined(typeof(Enums.HostingUnitType), unitType) ? unit.HostingUnitType == (Enums.HostingUnitType)unitType : true)
+                    && ((Enum.IsDefined(typeof(Enums.Area), area)) ? unit.AreaVacation == (Enums.Area)area : true)//adds unittype to condition
+                && (unit.HostingUnitKey.ToString().Contains(text) || unit.Host.HostKey.ToString().Contains(text)
+                || unit.HostingUnitName.Contains(text) || unit.Host.Phone.ToString().Contains(text)
+                || unit.Host.Name.Contains(text) || unit.Host.LastName.Contains(text)));
+                    break;
+            }
+            return myDAL.getHostingUnits(conditions);//returns all units that match conditions
+        }
+
         public List<HostingUnit> searchUnits(string text, Enums.FunctionSender fs=0)//returns all units that this text was found in
         {
             switch (fs)
@@ -561,12 +581,19 @@ namespace BL
                 throw new InvalidException("invalid email");
             return mail;
         }
-       
+
         #endregion
         #region LINQ and grouping
 
-
-        public IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupByArea()
+        public IEnumerable<IGrouping<Enums.Area, HostingUnit>> groupUnitsByArea()
+        {
+            var units = myDAL.getAllHostingUnits();
+            var groupArea = from unit in units
+                            group unit by unit.AreaVacation into newGroup
+                            select newGroup;
+            return groupArea;
+        }
+        public IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupRequestsByArea()
         {
             var guests=myDAL.getRequests();
             var groupArea = from GuestRequest in guests
@@ -588,7 +615,7 @@ namespace BL
             return thisUnit;
         }
 
-      
+        
 
 
 

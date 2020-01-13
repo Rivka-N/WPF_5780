@@ -6,12 +6,11 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PL.AllUnitsList"
         mc:Ignorable="d"
-        Title="AllUnitsList" Height="450" Width="800"
+        Title="Units" Height="450" Width="800" MinWidth="600" MinHeight="300"
         Closing="Window_Closing"  WindowStartupLocation="CenterScreen" SizeChanged="Window_SizeChanged">
     <Window.Resources>
         <CollectionViewSource x:Key="hostingUnitViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:HostingUnit}, CreateList=True}"/>
         <Style TargetType="TextBox">
-            <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="MinWidth" Value="100"/>
             <Setter Property="Width" Value="auto"/>
         </Style>
@@ -32,11 +31,48 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="DarkSeaGreen">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5"/>
+            </Grid.RowDefinitions>
+            <Label Name="lb_search" Content="Search" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+            <TextBox Name="tb_search" Grid.Row="1" Grid.Column="0" Width="auto" MinWidth="100" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="center" TextChanged="Tb_SearchTextBox_TextChanged"/>
+            <Label Name="lb_type" Content="Unit Type" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <ComboBox Name="cb_unitType" Grid.Column="1" MinWidth="100" Width="auto" SelectedIndex="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" SelectionChanged="Cb_unitType_SelectionChanged" />
+            <Label Name="lb_area" Content="Unit Location" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <ComboBox Name="cb_area" Grid.Column="2" MinWidth="100" Width="auto" SelectedIndex="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" SelectionChanged="Cb_area_SelectionChanged" />
+            <Button Name="pb_reset" Content="Reset All" Grid.Column="3" Margin="10" Padding="10,5" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Click="Pb_reset_Click" />
 
-        <Grid Grid.Row="2" Background="AliceBlue">
-            <Button x:Name="addUnit" Content="Add Unit" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,5" Padding="10" Click="AddUnit_Click"/>
         </Grid>
-        <DataGrid x:Name="dg_hostingUnitDataGrid" AutoGenerateColumns="False" AlternatingRowBackground="AliceBlue" IsReadOnly="True" EnableRowVirtualization="True" ItemsSource="{Binding}" Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
+        <Grid Grid.Row="2" Background="DarkSeaGreen">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="pb_addUnit" Content="Add Unit" Padding="10" Margin="5" Click="AddUnit_Click" Grid.Column="5"/>
+            <Button x:Name="pb_changeUnit" Content="Update Unit" Padding="10" Margin="5" Grid.Column="4" IsEnabled="False" Click="Pb_changeUnit_Click"/>
+            <Button x:Name="pb_bankInfo" Content="Update Bank" Padding="10" Margin="5" Grid.Column="3" IsEnabled="False" Click="Pb_bankInfo_Click"/>
+            <Button x:Name="pb_back" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10" Grid.Column="0" Click="Pb_back_Click"/>
+        </Grid>
+        <DataGrid x:Name="dg_hostingUnitDataGrid" AutoGenerateColumns="False" AlternatingRowBackground="AliceBlue" IsReadOnly="True" EnableRowVirtualization="True" ItemsSource="{Binding}" Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="Dg_hostingUnitDataGrid_SelectionChanged">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="dgtc_name" Binding="{Binding Host.Name}" Header="Name" Width="*" MinWidth="100" IsReadOnly="True"/>
                 <DataGridTextColumn x:Name="dgtc_lastName" Binding="{Binding Host.LastName}" Header="Last Name" Width="*" MinWidth="100" IsReadOnly="True"/>

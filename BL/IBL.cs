@@ -2,6 +2,7 @@
 
 using BE;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,6 +27,9 @@ namespace BL
         void deleteUnit(int unit);
         void changeUnit(HostingUnit hostingUnit1);
         List<HostingUnit> searchUnits(string text, Enums.FunctionSender fs=0);
+        List<HostingUnit> searchUnits(string text, int unitType, int area, Enums.FunctionSender sender);
+
+        bool checkUnit(HostingUnit hostingUnit1);
 
 
         #endregion
@@ -43,6 +47,7 @@ namespace BL
         List<GuestRequest> searchRequests(Enums.OrderStatus status, DateTime? selectedDate, string query, Enums.FunctionSender owner);
         List<GuestRequest> searchRequests(DateTime? selectedDate, string query, Enums.FunctionSender owner);//all statuses selected
         List<Order> searchOrders(DateTime? selectedDate, string text, Enums.FunctionSender owner, Enums.OrderStatus status = Enums.OrderStatus.Closed);
+        string printOrdersByUnit(int unitNum);
 
         //not finished functions
         /*   void mail(List<HostingUnit> Offers);//sends mail to the guest with all the hostingUnits which appropriate. 
@@ -69,9 +74,8 @@ namespace BL
         //IEnumerable<IGrouping<int, Order>>groupOrdersbyUnit()
         IEnumerable<Order> ordersByUnit(HostingUnit hu);
         IEnumerable<Order> ordersByUnit(int unitNum);
-        IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupByArea();
-        string printOrdersByUnit(int unitNum);
-        bool checkUnit(HostingUnit hostingUnit1);
+        IEnumerable<IGrouping<Enums.Area, HostingUnit>> groupUnitsByArea();
+        IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupRequestsByArea();
         #endregion
     }
 }
