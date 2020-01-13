@@ -92,9 +92,28 @@ namespace PL
             hostingUnit1.HostingUnitName = tb_unitName.Text;
         }
 
+        private void water_got(object sender, TextChangedEventArgs e)
+        {
+            waterMarkedName.Visibility = System.Windows.Visibility.Collapsed;
+            tb_name_txt.Visibility = System.Windows.Visibility.Visible;
+            tb_name_txt.Focus();
+        }
+
+
+        private void userInput_lost(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(tb_name_txt.Text))
+            {
+                tb_name_txt.Visibility = System.Windows.Visibility.Collapsed;
+                waterMarkedName.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+
+
+
         private void tb_name_txt_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            
             hostingUnit1.Host.Name = tb_name_txt.Text;
         }
 

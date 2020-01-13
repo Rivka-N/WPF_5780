@@ -19,7 +19,8 @@
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
 
-        <TextBox  Name="tb_name_txt" Text="first name" Foreground="{StaticResource brushWatermarkForeground}" Width="50" Height="12" FontSize="8" Margin="19,7,0,101.267"  VerticalAlignment="Stretch"    HorizontalAlignment="Left" TextAlignment="Center" TextChanged="tb_name_txt_TextChanged" />
+        <TextBox  Name="tb_name_txt"  LostFocus="userInput_lost" Text="first name" Foreground="{StaticResource brushWatermarkForeground}" Width="50" Height="12" FontSize="8" Margin="19,7,0,101.267"  VerticalAlignment="Stretch"    HorizontalAlignment="Left" TextAlignment="Center" TextChanged="tb_name_txt_TextChanged" />
+        <TextBox  Name="waterMarkedName" GotFocus="water_got" Text="first name" Foreground="{StaticResource brushWatermarkForeground}" Width="50" Height="12" FontSize="8" Margin="19,7,0,101.267"  VerticalAlignment="Stretch"    HorizontalAlignment="Left" TextAlignment="Center" TextChanged="tb_name_txt_TextChanged" />
         <TextBox  Name="tb_last" Text="last name" Foreground="{StaticResource brushWatermarkForeground}" Width="50" Height="12" FontSize="8" Margin="18,24,25.6,84.267"  VerticalAlignment="Stretch" HorizontalAlignment="Center" TextAlignment="Center" TextChanged="TextBox_TextChanged" />
         <TextBox  Name="tb_email" Text="mail" Foreground="{StaticResource brushWatermarkForeground}" Width="50" Height="12" FontSize="8" Margin="19,41,24.6,67"  VerticalAlignment="Stretch" HorizontalAlignment="Center" TextAlignment="Center" TextChanged="tb_email_txt" />
         <TextBox  Name="tb_unitName" Text="hostingUnit name" Foreground="{StaticResource brushWatermarkForeground}" Width="Auto" Height="12" FontSize="7" Margin="14,58,17.6,50.267"  VerticalAlignment="Stretch" HorizontalAlignment="Center" TextAlignment="Center" TextChanged="Tb_unitName_TextChanged" />

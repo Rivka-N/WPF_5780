@@ -29,7 +29,18 @@ namespace PL
         {
             myBL = factoryBL.getBL();
             InitializeComponent();
-            myOrders = myBL.getOrders(ord => ord.HostName == this.Name);
+            string Name = "esti";
+            myOrders = myBL.getOrders(ord => ord.HostName == Name);
+            orderDataGrid.ItemsSource = myOrders;
+            foreach(Order ord in myOrders)
+            {
+                if(ord.Status == Enums.OrderStatus.Started)
+                {
+                    
+                }
+            }
+
+           // myOrders = myBL.getOrders(ord => ord.HostName == this.Name);
 
 
 
@@ -37,9 +48,11 @@ namespace PL
         private void pb_addOrder_click(object sender, RoutedEventArgs e)
         {
             
-        }
+        }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
 
-
+        }
     }
 }

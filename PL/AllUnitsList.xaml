@@ -53,7 +53,7 @@
             <Button Name="pb_reset" Content="Reset All" Grid.Column="3" Margin="10" Padding="10,5" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Click="Pb_reset_Click" />
 
         </Grid>
-        <Grid Grid.Row="2" Background="DarkSeaGreen">
+        <Grid Grid.Row="2"  Background="DarkSeaGreen">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -67,14 +67,17 @@
             <Button x:Name="pb_bankInfo" Content="Update Bank" Padding="10" Margin="5" Grid.Column="3" IsEnabled="False" Click="Pb_bankInfo_Click"/>
             <Button x:Name="pb_back" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10" Grid.Column="0" Click="Pb_back_Click"/>
         </Grid>
-        <DataGrid x:Name="dg_hostingUnitDataGrid" AutoGenerateColumns="False" AlternatingRowBackground="AliceBlue" IsReadOnly="True" EnableRowVirtualization="True" ItemsSource="{Binding}" Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="Dg_hostingUnitDataGrid_SelectionChanged">
-            <DataGrid.Resources>
+        <DataGrid x:Name="dg_hostingUnitDataGrid"  AutoGenerateColumns="False" AlternatingRowBackground="AliceBlue" IsReadOnly="True" EnableRowVirtualization="True" ItemsSource="{Binding}" Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected"/>
+
+        <!--<DataGrid.Resources>
+            
                 <Style TargetType="DataGridRow">
                     <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
-                </Style>
-            </DataGrid.Resources>
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="dgtc_name" Binding="{Binding Host.Name}" Header="Name" Width="*" MinWidth="100" IsReadOnly="True"/>
+                </Style>-->
+
+           <!--<DataGrid.Columns>
+               
+                <DataGridTextColumn x:Name="dgtc_name" Binding="{Binding Host.Name}" Header="Name" Width="*" MinWidth="100" IsReadOnly="True"  />
                 <DataGridTextColumn x:Name="dgtc_lastName" Binding="{Binding Host.LastName}" Header="Last Name" Width="*" MinWidth="100" IsReadOnly="True"/>
                 <DataGridTextColumn x:Name="dgtc_hostKey" Binding="{Binding Host.HostKey}" Header="Host ID" Width="*" MinWidth="100" IsReadOnly="True"/>
                 <DataGridTextColumn x:Name="dgtc_phone" Binding="{Binding Host.Phone}" Header="Phone" Width="*" MinWidth="100" IsReadOnly="True"/>
@@ -82,7 +85,7 @@
                 <DataGridTextColumn x:Name="dgtc_unitName" Binding="{Binding HostingUnitName}" Header="Unit" Width="auto" MinWidth="100" IsReadOnly="True"/>
                 <DataGridTextColumn x:Name="dgtc_unitType" Binding="{Binding HostingUnitType}" Header="Unit Type" Width="*" MinWidth="100" IsReadOnly="True"/>
                 <DataGridTextColumn x:Name="dgtc_area" Binding="{Binding AreaVacation}" Header="Unit Location" Width="*" MinWidth="100" IsReadOnly="True"/>
-            </DataGrid.Columns>
-        </DataGrid>
+            </DataGrid.Columns>-->
+
     </Grid>
 </Window>

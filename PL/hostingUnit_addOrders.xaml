@@ -15,7 +15,9 @@
 
     <Grid DataContext="{StaticResource orderViewSource}">
 
+
         <DataGrid x:Name="orderDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False">
+           
             <DataGrid.Columns>
                 <DataGridTemplateColumn x:Name="createDateColumn" Width="SizeToHeader" Header="Create Date">
                     <DataGridTemplateColumn.CellTemplate>
@@ -38,22 +40,25 @@
                 <DataGridTextColumn x:Name="orderKeyColumn" Width="SizeToHeader" Header="Order Key" Binding="{Binding OrderKey}"/>
                 <DataGridTextColumn x:Name="statusColumn" Width="SizeToHeader" Header="Status" Binding="{Binding Status}"/>
                 <DataGridTemplateColumn x:Name="sendMail" Header="send mail" Width="*">
-                    <DataGridTemplateColumn.CellTemplate >
-                        <DataTemplate>
-                            <Button  Name="pb_sendMail"  Content="send mail"  Click="pb_sendMail_click" Background="White" Command="{Binding ButtonClickCommand}" IsEnabled="True"/>
+                    <Da
+                        
+                    
+                    <Button  Name="pb_sendMail"  Content="send mail"  Click="pb_sendMail_click" Background="White" IsEnabled="{Binding is}" Command="{Binding ButtonClickCommand}" />
 
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                
+                
 
                 <DataGridTemplateColumn x:Name="addOrder" Header="add order" Width="*">
+
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate>
-                            <Button  Content="add order" Click="pb_addOrder_click" Background="White" IsEnabled="{Binding Status}"/>
+                            <Button  Content="add order" Click="pb_addOrder_click" Background="White" />
 
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                
             </DataGrid.Columns>
 
 

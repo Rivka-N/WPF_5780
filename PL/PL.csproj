@@ -56,7 +56,9 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -100,10 +102,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="hostingUnitTabs.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="hostingUnit_addOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,9 +149,6 @@
     </Compile>
     <Compile Include="hostingUnitTabs.xaml.cs">
       <DependentUpon>hostingUnitTabs.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="hostingUnit_addOrder.xaml.cs">
-      <DependentUpon>hostingUnit_addOrder.xaml</DependentUpon>
     </Compile>
     <Compile Include="hostingUnit_addOrders.xaml.cs">
       <DependentUpon>hostingUnit_addOrders.xaml</DependentUpon>
