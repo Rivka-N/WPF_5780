@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Closing="Window_Closing"
-        Title="OwnerTabs" Height="450" Width="800">
+        Title="OwnerTabs" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TabItem Name="ti_guestRequests" Header="Guests">

@@ -15,24 +15,21 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for OwnerTabs.xaml
+    /// Interaction logic for AllHostingUnits.xaml
     /// </summary>
-    public partial class OwnerTabs : Window
+    public partial class AllHostingUnits : Window
     {
-        public OwnerTabs()
+        public AllHostingUnits()
         {
             InitializeComponent();
         }
-        #region window loading and closing
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
+            System.Windows.Data.CollectionViewSource hostingUnitViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("hostingUnitViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // hostingUnitViewSource.Source = [generic data source]
         }
-
-            private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            new MainWindow().Show();//opens main window again
-        }
-        #endregion
     }
 }
