@@ -23,13 +23,13 @@ namespace PL
     {
         IBL myBL;
         List<Order> myOrders;
-        public hostingUnit_addOrder()
-        {
-            myBL = factoryBL.getBL();
-            InitializeComponent();
-            myOrders = new List<Order>();
-            myOrders = myBL.ordersByUnit
 
+        public ()
+        {
+            InitializeComponent();
+            myBL = factoryBL.getBL();
+            myOrders = myBL.getOrders(ord => ord.Status == Enums.OrderStatus.Closed);
+            dg_orderDataGrid.ItemsSource = myOrders;//all closed orders
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

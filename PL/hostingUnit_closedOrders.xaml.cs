@@ -22,12 +22,18 @@ namespace PL
     /// Interaction logic for hostingUnit_closedOrders.xaml
     /// </summary>
     /// 
-   
+  
     public partial class hostingUnit_closedOrders : Page
     {
+        IBL myBL;
+        List<Order> myOrders;
+
         public hostingUnit_closedOrders()
         {
             InitializeComponent();
+            myBL = factoryBL.getBL();
+            myOrders = myBL.getOrders(ord => ord.Status == Enums.OrderStatus.Closed);
+            orderDataGrid.ItemsSource = myOrders;//all closed orders
         }
     }
 }
