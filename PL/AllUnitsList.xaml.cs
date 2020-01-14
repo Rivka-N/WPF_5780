@@ -41,7 +41,10 @@ namespace PL
         #region buttons
         private void Pb_changeUnit_Click(object sender, RoutedEventArgs e)//needs to show change unit tab with data of current unit
         {
-            //new window(send current unit)?
+            if (dg_hostingUnitDataGrid.SelectedItem != null && dg_hostingUnitDataGrid.SelectedItem is HostingUnit)
+                new hostingUnitTabs((HostingUnit)dg_hostingUnitDataGrid.SelectedItem).Show();
+            else MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //new window(send current unit)
             
         }
 

@@ -37,7 +37,7 @@ namespace PL
 
 
 
-       
+
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -45,6 +45,9 @@ namespace PL
             System.Windows.Data.CollectionViewSource hostingUnitViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("hostingUnitViewSource")));
             // Load data by setting the CollectionViewSource.Source property:
             // hostingUnitViewSource.Source = [generic data source]
+            System.Windows.Data.CollectionViewSource bankAccountViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("bankAccountViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // bankAccountViewSource.Source = [generic data source]
         }
 
 

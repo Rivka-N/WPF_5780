@@ -29,7 +29,7 @@ namespace PL
         IBL myBl;
 
 
-       
+
         public hostingUnit_updateDelete(HostingUnit hosting)
         {
             InitializeComponent();
@@ -69,33 +69,33 @@ namespace PL
         }
         #endregion
 
-        //#region textBox
-        //private void nameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        //{
+        #region textBox
+        private void nameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
 
 
-        //}
+        }
 
-        //private void hostingUnitKeyTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        //{
+        private void hostingUnitKeyTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
 
-        //}
+        }
 
-        //private void hostingUnitNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    if (Regex.IsMatch(hostingUnitNameTextBox.Text, @"^[a-zA-Z]+$"))
-        //    {
-        //        g1.LastName = hostingUnitNameTextBox.Text;//needs to know how i get the hostingunit
-        //        hostingUnitNameTextBox.Background = Brushes.White;
+        private void hostingUnitNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //    if (Regex.IsMatch(hostingUnitNameTextBox.Text, @"^[a-zA-Z]+$"))
+            //    {
+            //        g1.LastName = hostingUnitNameTextBox.Text;//needs to know how i get the hostingunit
+            //        hostingUnitNameTextBox.Background = Brushes.White;
 
-        //    }
-        //    else
-        //    {
-        //        hostingUnitNameTextBox.Text = "";
-        //        hostingUnitNameTextBox.Background = Brushes.Red;
-        //    }
-        //}
-        //#endregion
+            //    }
+            //    else
+            //    {
+            //        hostingUnitNameTextBox.Text = "";
+            //        hostingUnitNameTextBox.Background = Brushes.Red;
+            //    }
+        }
+        #endregion
 
         #region comboBox
         private void hostingUnitTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -109,103 +109,103 @@ namespace PL
             //(Enums.MealType)(mealComboBox.SelectedIndex)
         }
 
-        private void nameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        #endregion
+        #region numbers
+        private void numChildrenTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            //    int text = 0;
+            //    if (Int32.TryParse(numChildrenTextBox.Text, out text))
+            //    {
+            //        if (text < 0)
+            //        {
+            //            numChildrenTextBox.Background = Brushes.OrangeRed;
+            //            numChildrenTextBox.Text = "";
+            //        }
+            //        else
+            //        {
+            //            g1.NumAdult = text;
+            //            numChildrenTextBox.Background = Brushes.White;
+            //        }
+            //    }
+            //    else
+            //    {
 
+            //        numChildrenTextBox.Background = Brushes.OrangeRed;
+            //        numChildrenTextBox.Text = "";
+            //    }
+        }
+
+        private void numAdultTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //    int text = 0;
+            //    if (Int32.TryParse(numAdultTextBox.Text, out text))
+            //    {
+            //        if (text < 0)
+            //        {
+            //            numAdultTextBox.Background = Brushes.OrangeRed;
+            //            numAdultTextBox.Text = "";
+            //        }
+            //        else
+            //        {
+            //            g1.NumAdult = text;
+            //            numAdultTextBox.Background = Brushes.White;
+            //        }
+            //    }
+            //    else
+            //    {
+
+            //        numAdultTextBox.Background = Brushes.OrangeRed;
+            //        numAdultTextBox.Text = "";
+            //    }
         }
         #endregion
 
-        //#region numbers
-        //private void numChildrenTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    int text = 0;
-        //    if (Int32.TryParse(numChildrenTextBox.Text, out text))
-        //    {
-        //        if (text < 0)
-        //        {
-        //            numChildrenTextBox.Background = Brushes.OrangeRed;
-        //            numChildrenTextBox.Text = "";
-        //        }
-        //        else
-        //        {
-        //            g1.NumAdult = text;
-        //            numChildrenTextBox.Background = Brushes.White;
-        //        }
-        //    }
-        //    else
-        //    {
+        #region checkBox
+        private void jacuzziCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            //        if (jacuzziCheckBox.IsChecked == true)//changed to true
+            //            g1.Jacuzzi = Enums.Preference.Yes;
+            //        else
+            //        {
+            //            if (jacuzziCheckBox.IsChecked == false)//changed to false
+            //                g1.Jacuzzi = Enums.Preference.No;
+            //            else
+            //                g1.Jacuzzi = Enums.Preference.Maybe;//otherwise it's the third state
+            //        }
+        }
 
-        //        numChildrenTextBox.Background = Brushes.OrangeRed;
-        //        numChildrenTextBox.Text = "";
-        //    }
-        //}
+        private void poolCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            //        if (poolCheckBox.IsChecked == true)//changed to true
+            //            g1.Pool = Enums.Preference.Yes;
+            //        else
+            //        {
+            //            if (poolCheckBox.IsChecked == false)//changed to false
+            //                g1.Pool = Enums.Preference.No;
+            //            else
+            //                g1.Pool = Enums.Preference.Maybe;//otherwise it's the third state
+            //        }
+            //    }
 
-        //private void numAdultTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    int text = 0;
-        //    if (Int32.TryParse(numAdultTextBox.Text, out text))
-        //    {
-        //        if (text < 0)
-        //        {
-        //            numAdultTextBox.Background = Brushes.OrangeRed;
-        //            numAdultTextBox.Text = "";
-        //        }
-        //        else
-        //        {
-        //            g1.NumAdult = text;
-        //            numAdultTextBox.Background = Brushes.White;
-        //        }
-        //    }
-        //    else
-        //    {
+            //    private void gardenCheckBox_Checked(object sender, RoutedEventArgs e)
+            //    {
+            //        if (gardenCheckBox.IsChecked == true)//changed to true
+            //            g1.Garden = Enums.Preference.Yes;
+            //        else
+            //        {
+            //            if (gardenCheckBox.IsChecked == false)//changed to false
+            //                g1.Garden = Enums.Preference.No;
+            //            else
+            //                g1.Garden = Enums.Preference.Maybe;//otherwise it's the third state
+            //        }
+        }
 
-        //        numAdultTextBox.Background = Brushes.OrangeRed;
-        //        numAdultTextBox.Text = "";
-        //    }
-        //}
-        //#endregion
+        #endregion //not finish
 
-        //    #region checkBox
-        //    private void jacuzziCheckBox_Checked(object sender, RoutedEventArgs e)
-        //    {
-        //        if (jacuzziCheckBox.IsChecked == true)//changed to true
-        //            g1.Jacuzzi = Enums.Preference.Yes;
-        //        else
-        //        {
-        //            if (jacuzziCheckBox.IsChecked == false)//changed to false
-        //                g1.Jacuzzi = Enums.Preference.No;
-        //            else
-        //                g1.Jacuzzi = Enums.Preference.Maybe;//otherwise it's the third state
-        //        }
-        //    }
+        private void gardenCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
 
-        //    private void poolCheckBox_Checked(object sender, RoutedEventArgs e)
-        //    {
-        //        if (poolCheckBox.IsChecked == true)//changed to true
-        //            g1.Pool = Enums.Preference.Yes;
-        //        else
-        //        {
-        //            if (poolCheckBox.IsChecked == false)//changed to false
-        //                g1.Pool = Enums.Preference.No;
-        //            else
-        //                g1.Pool = Enums.Preference.Maybe;//otherwise it's the third state
-        //        }
-        //    }
-
-        //    private void gardenCheckBox_Checked(object sender, RoutedEventArgs e)
-        //    {
-        //        if (gardenCheckBox.IsChecked == true)//changed to true
-        //            g1.Garden = Enums.Preference.Yes;
-        //        else
-        //        {
-        //            if (gardenCheckBox.IsChecked == false)//changed to false
-        //                g1.Garden = Enums.Preference.No;
-        //            else
-        //                g1.Garden = Enums.Preference.Maybe;//otherwise it's the third state
-        //        }
-        //    }
-
-        //    #endregion //not finish
-        //}
+        }
     }
 }
+   

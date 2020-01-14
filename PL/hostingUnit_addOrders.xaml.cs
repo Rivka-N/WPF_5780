@@ -54,5 +54,10 @@ namespace PL
         {
 
         }
+
+        private void pb_sendMail_click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
