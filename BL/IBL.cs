@@ -24,7 +24,7 @@ namespace BL
         List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest);//find hostingUnit accoerding to the guestRequest
         List<HostingUnit> getAllHostingUnits();
         List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> p);
-        List<Order> ordersByUnit();
+        //List<Order> ordersByUnit();
         void deleteUnit(int unit);
         void changeUnit(HostingUnit hostingUnit1);
         List<HostingUnit> searchUnits(string text, Enums.FunctionSender fs=0);

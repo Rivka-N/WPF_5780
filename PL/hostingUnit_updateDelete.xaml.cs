@@ -29,13 +29,13 @@ namespace PL
         IBL myBl;
 
 
-        public hostingUnit_updateDelete()
+       
+        public hostingUnit_updateDelete(HostingUnit hosting)
         {
             InitializeComponent();
 
 
         }
-
         private void hostingUnitListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -107,6 +107,11 @@ namespace PL
         private void mealComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //(Enums.MealType)(mealComboBox.SelectedIndex)
+        }
+
+        private void nameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
         #endregion
 

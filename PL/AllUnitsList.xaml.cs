@@ -53,7 +53,7 @@ namespace PL
 
         private void AddUnit_Click(object sender, RoutedEventArgs e)//make sure unit gets added to list
         {
-            new hostingUnit().ShowDialog();
+            new newHostingUnit().ShowDialog();
         }
 
         private void Pb_back_Click(object sender, RoutedEventArgs e)
