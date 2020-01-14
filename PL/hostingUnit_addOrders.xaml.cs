@@ -30,7 +30,7 @@ namespace PL
             myBL = factoryBL.getBL();
             InitializeComponent();
             string Name = "esti";
-            myOrders = myBL.getOrders(ord => ord.HostName == Name);
+            myOrders = myBL.getOrders(ord => ord.HostName == Name);//bring only this hosting unit's closed orders
             orderDataGrid.ItemsSource = myOrders;
             foreach(Order ord in myOrders)
             {
