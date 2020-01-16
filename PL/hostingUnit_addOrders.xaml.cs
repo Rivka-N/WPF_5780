@@ -45,17 +45,41 @@ namespace PL
 
 
         }
-        private void pb_addOrder_click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+     
+        private void Pb_back_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void pb_sendMail_click(object sender, RoutedEventArgs e)
+        
+        private void pb_addOrder_Click(object sender, RoutedEventArgs e)
+        {
+            if (orderDataGrid.SelectedItem != null && orderDataGrid.SelectedItem is Order)
+                new hostingUnitTabs((HostingUnit)orderDataGrid.SelectedItem).Show();
+            else MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //new window(send current unit)
+        }
+
+        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }//sends to unit information with data of current row to bind to
+
+
+
+        private void orderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (orderDataGrid.CurrentItem != null)//something was selected
+            {
+                Order row = (Order)orderDataGrid.SelectedItem;
+                if (row.Status == Enums.OrderStatus.Started)
+                    pb_sendMail.IsEnabled = true;
+                if (row.Status == Enums.OrderStatus.Mailed)
+                    pb_addOrder.IsEnabled = true;
+            }
+        }
+
+        private void pb_sendMail_Click(object sender, RoutedEventArgs e)
         {
 
         }
