@@ -35,10 +35,6 @@ namespace PL
             hostingUnitTypeComboBox.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
         }
 
-
-
-
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -49,7 +45,6 @@ namespace PL
             // Load data by setting the CollectionViewSource.Source property:
             // bankAccountViewSource.Source = [generic data source]
         }
-
 
         #region buttonAdd
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -66,17 +61,14 @@ namespace PL
                     areaVacationComboBox.Background = Brushes.Red;
                     return;
                 }
-               
-
-                    Close();
-                
-
+                bL.addHostingUnit(hosting);
+                Close();
             }
             catch (Exception ex)
             {
                 MessageBoxResult mbr = MessageBox.Show(ex.Message);
             }
-
+            
         }
         #endregion
 

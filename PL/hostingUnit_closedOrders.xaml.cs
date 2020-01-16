@@ -28,11 +28,18 @@ namespace PL
         IBL myBL;
         List<Order> myOrders;
 
-        public hostingUnit_closedOrders()
+        public hostingUnit_closedOrders(HostingUnit unit)
         {
             InitializeComponent();
             myBL = factoryBL.getBL();
             myOrders = myBL.getOrders(ord => ord.Status == Enums.OrderStatus.Closed);
+            foreach (Order ord in myOrders)
+            {
+                if (unit.Host.Name != ord.HostName)
+                    myOrders.Remove(ord);
+            }
+
+            
             orderDataGrid.ItemsSource = myOrders;//all closed orders
         }
     }

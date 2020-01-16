@@ -88,6 +88,7 @@
                 <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Phone:"/>
                 <TextBox x:Name="phoneTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Host.Phone, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" TextChanged="phoneTextBox_TextChanged"/>
             </Grid>
+            <DataGrid Grid.Column="1" HorizontalAlignment="Left" Height="100" Margin="190.2,398,0,-36.4" VerticalAlignment="Top" Width="100"/>
         </Grid>
         <Button Content="Add Unit" HorizontalAlignment="Center" Margin="20" VerticalAlignment="Center" Width="75" Grid.Row="1" Click="Button_Click"/>
 
