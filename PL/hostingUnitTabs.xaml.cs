@@ -19,6 +19,11 @@ namespace PL
     /// </summary>
     public partial class hostingUnitTabs : Window
     {
+        public hostingUnitTabs()
+        {
+            InitializeComponent();
+        }
+
         public hostingUnitTabs(HostingUnit hosting)
         {
             InitializeComponent();

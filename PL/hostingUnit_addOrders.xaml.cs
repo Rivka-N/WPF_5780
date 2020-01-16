@@ -25,20 +25,14 @@ namespace PL
         IBL myBL;
         List<Order> myOrders;
 
-        public hostingUnit_addOrders()
+        public hostingUnit_addOrders(HostingUnit unit)
         {
             myBL = factoryBL.getBL();
             InitializeComponent();
-            string Name = "esti";
-            myOrders = myBL.getOrders(ord => ord.HostName == Name);//bring only this hosting unit's closed orders
+            
+            myOrders = myBL.getOrders(ord => ord.HostName == unit.Host.Name);//bring only this hosting unit's closed orders
             orderDataGrid.ItemsSource = myOrders;
-            foreach(Order ord in myOrders)
-            {
-                if(ord.Status == Enums.OrderStatus.Started)
-                {
-                    
-                }
-            }
+            
 
            // myOrders = myBL.getOrders(ord => ord.HostName == this.Name);
 
@@ -48,10 +42,12 @@ namespace PL
      
         private void Pb_back_Click(object sender, RoutedEventArgs e)
         {
+            hostingUnitTabs p2 = new hostingUnitTabs();
+            NavigationService.Navigate(p2);
 
         }
 
-        
+
         private void pb_addOrder_Click(object sender, RoutedEventArgs e)
         {
             if (orderDataGrid.SelectedItem != null && orderDataGrid.SelectedItem is Order)

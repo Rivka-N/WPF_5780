@@ -53,6 +53,8 @@
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="hostingUnitKeyColumn" Width="*" Header="Hosting Unit Key" IsReadOnly="True" Binding="{Binding HostingUnitKey}"/>
+                    <DataGridTextColumn x:Name="orderKeyColumn" Width="*" Header="Order Key" IsReadOnly="True" Binding="{Binding OrderKey}"/>
                     <DataGridTemplateColumn x:Name="createDateColumn" Width="100" Header="Create Date" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -60,9 +62,9 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn x:Name="guestNameColumn" Width="*" Header="Guest Name" IsReadOnly="True" Binding="{Binding GuestName}"/>
+
                     <DataGridTextColumn x:Name="guestRequestKeyColumn" Width="*" Header="Guest Request Key" IsReadOnly="True" Binding="{Binding GuestRequestKey}"/>
-                    <DataGridTextColumn x:Name="hostingUnitKeyColumn" Width="*" Header="Hosting Unit Key" IsReadOnly="True" Binding="{Binding HostingUnitKey}"/>
+                    <DataGridTextColumn x:Name="guestNameColumn" Width="*" Header="Guest Name" IsReadOnly="True" Binding="{Binding GuestName}"/>
                     <DataGridTemplateColumn x:Name="orderDateColumn" Width="*" Header="Order Date" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -70,8 +72,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn x:Name="orderKeyColumn" Width="*" Header="Order Key" IsReadOnly="True" Binding="{Binding OrderKey}"/>
-                    <DataGridTextColumn x:Name="statusColumn" Width="SizeToHeader" Header="Status" IsReadOnly="True" Binding="{Binding Status}"/>
+                    <DataGridTextColumn x:Name="statusColumn" Width="*" Header="Status" IsReadOnly="True" Binding="{Binding Status}"/>
                   
 
                 </DataGrid.Columns>

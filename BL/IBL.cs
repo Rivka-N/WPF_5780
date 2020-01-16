@@ -16,7 +16,6 @@ namespace BL
         List<GuestRequest> getRequests();
         List<GuestRequest> getRequests(Func<GuestRequest, bool> p);
         GuestRequest findGuest(GuestRequest g1, string text);//puts text as g1's number and returns instance of it in ds if found
-
         #endregion
 
         #region hosting Units
