@@ -51,7 +51,6 @@
             <Label Name="lb_area" Content="Unit Location" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
             <ComboBox Name="cb_area" Grid.Column="2" MinWidth="100" Width="auto" SelectedIndex="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" SelectionChanged="Cb_area_SelectionChanged" />
             <Button Name="pb_reset" Content="Reset All" Grid.Column="3" Margin="10" Padding="10,5" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Click="Pb_reset_Click" />
-
         </Grid>
         <Grid Grid.Row="2" Background="DarkSeaGreen">
             <Grid.ColumnDefinitions>

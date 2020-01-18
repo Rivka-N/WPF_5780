@@ -48,7 +48,7 @@ namespace PL
 
         }
 
-        #region delete button
+        #region delete Unit button 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string message = "Are you sure you want to delete this unit?";
@@ -60,16 +60,17 @@ namespace PL
                 // OK code here
                 int code = 0;
                 myBl.deleteUnit(code);
+
             }
             else
             {
-                // Cancel code here  
+                // Cancel code here. nothing needs to happen then
             }
 
         }
         #endregion
 
-        #region textBox
+        #region textBox updateUnit
         private void nameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
@@ -97,7 +98,7 @@ namespace PL
         }
         #endregion
 
-        #region comboBox
+        #region comboBox UpdateUnit
         private void hostingUnitTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -110,7 +111,7 @@ namespace PL
         }
 
         #endregion
-        #region numbers
+        #region numbers UpdateUnit
         private void numChildrenTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             //    int text = 0;
@@ -160,7 +161,7 @@ namespace PL
         }
         #endregion
 
-        #region checkBox
+        #region checkBox update unit
         private void jacuzziCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             //        if (jacuzziCheckBox.IsChecked == true)//changed to true
@@ -199,13 +200,14 @@ namespace PL
             //                g1.Garden = Enums.Preference.Maybe;//otherwise it's the third state
             //        }
         }
-
-        #endregion //not finish
-
         private void gardenCheckBox_Checked(object sender, RoutedEventArgs e)
         {
 
         }
+        #endregion //not finish
+
+
+
     }
 }
    

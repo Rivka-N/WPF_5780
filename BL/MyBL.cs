@@ -120,7 +120,7 @@ namespace BL
         }
         public string printOrdersByUnit(int unitNum)//return string of all orders from that unit
         {
-            var orderUnit = ordersByUnit(unitNum);
+            var orderUnit = ordersOfUnit(unitNum);
             string ans = "";
             foreach (Order ord in orderUnit)
                 ans += ord;
@@ -169,7 +169,7 @@ namespace BL
 
         private Order findOrder(GuestRequest guest, HostingUnit unit)//returns the order with this hosting unit and this guest
         {  Func<Order, bool> func= order => order.GuestRequestKey == guest.GuestRequestKey && order.HostingUnitKey == unit.HostingUnitKey;
-            var ords= myDAL.getOrders(func);
+            var ords= getOrders(func);
             return ords.First();//returns first item found
         }
 
@@ -234,7 +234,7 @@ namespace BL
                 || unit.Host.Name.Contains(text) || unit.Host.LastName.Contains(text)));
                     break;
             }
-            return myDAL.getHostingUnits(conditions);//returns all units that match conditions
+            return getHostingUnits(conditions);//returns all units that match conditions
         }
 
         public List<HostingUnit> searchUnits(string text, Enums.FunctionSender fs=0)//returns all units that this text was found in
@@ -242,7 +242,7 @@ namespace BL
             switch (fs)
             {
                 default://returns search through all units details
-            return myDAL.getHostingUnits
+            return getHostingUnits
                 (u => u.HostingUnitKey.ToString().Contains(text) || u.MoneyPaid.ToString().Contains(text)
                 || u.HostingUnitType.ToString().Contains(text) || u.HostingUnitName.Contains(text)
                 || u.Host.HostKey.ToString().Contains(text) || u.Host.Name.Contains(text) || u.Host.LastName.Contains(text)
@@ -268,7 +268,7 @@ namespace BL
                           || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query));
                         break;
                 }
-                var reqs = myDAL.getRequests(p);//gets request that match all conditions
+                var reqs = getRequests(p);//gets request that match all conditions
                 if (selectedDate == null)//no date selected
                     return reqs;//returns requests found
                 else//also date to filter by
@@ -301,7 +301,7 @@ namespace BL
                            || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query);
                         break;
             }
-                var reqs = myDAL.getRequests(p);//gets request that match all conditions based on individual functions
+                var reqs = getRequests(p);//gets request that match all conditions based on individual functions
                 if (selectedDate == null)//no date selected
                     return reqs;//returns requests found
                 else//also date to filter by
@@ -414,7 +414,7 @@ namespace BL
             try
             {
                 HostingUnit toDelete = findUnit(unit);
-                var orders = ordersByUnit(unit).ToList();//all orders with unit as their unit key into list
+                var orders = ordersOfUnit(unit).ToList();//all orders with unit as their unit key into list
                 if (orders == null)//no orders for that unit
                     myDAL.deleteUnit(toDelete);
                 else

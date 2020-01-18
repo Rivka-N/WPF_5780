@@ -21,10 +21,12 @@ namespace PL
     public partial class AllUnitsList : Window
     {
         private IBL myBL;
+        bool closeOpenMain;//sets behavior when window is closed
         public AllUnitsList()
         {
             myBL = factoryBL.getBL();
             InitializeComponent();
+            closeOpenMain = true;
             dg_hostingUnitDataGrid.ItemsSource = myBL.getAllHostingUnits();
             #region sets combobox
             var addArea = Enum.GetValues(typeof(Enums.Area));
@@ -42,7 +44,11 @@ namespace PL
         private void Pb_changeUnit_Click(object sender, RoutedEventArgs e)//needs to show change unit tab with data of current unit
         {
             if (dg_hostingUnitDataGrid.SelectedItem != null && dg_hostingUnitDataGrid.SelectedItem is HostingUnit)
+            {
                 new hostingUnitTabs((HostingUnit)dg_hostingUnitDataGrid.SelectedItem).Show();
+                closeOpenMain = false;//don't open main after closing
+                this.Close();
+            }
             else MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
             //new window(send current unit)
             
@@ -118,17 +124,25 @@ namespace PL
         {
             search();
         }
+        private void Cb_host_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
         #endregion
         #region window
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            new MainWindow().Show();//opens main window again
+            if (closeOpenMain == true)
+                new MainWindow().Show();//opens main window again
+            else
+                closeOpenMain = true;//otherwise resets flag
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
         }
+
         #endregion
 
        

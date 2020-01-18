@@ -8,13 +8,13 @@
       mc:Ignorable="d" 
       d:DesignHeight="437.2" d:DesignWidth="400"
       Title="hostingUnit_updateDelete">
-
     <Page.Resources>
         <CollectionViewSource x:Key="hostingUnitViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:HostingUnit}, CreateList=True}"/>
     </Page.Resources>
 
-    <Grid DataContext="{StaticResource hostingUnitViewSource}" Margin="0,0,0,65.6">
+    <Grid DataContext="{Binding}" Margin="0,0,0,65.6">
         <Button Content="delete unit" HorizontalAlignment="Right" Margin="0,390,149,-43.8" Width="100"  Height="25" VerticalAlignment="Top" Click="Button_Click" />
+
         <Grid x:Name="grid1" HorizontalAlignment="Center" Margin="10,10,0,0" VerticalAlignment="Top" Width="300">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
