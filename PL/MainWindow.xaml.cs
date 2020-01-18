@@ -48,5 +48,6 @@ namespace PL
             new AllUnitsList().Show();
             Close();//closes current and opens other window
         }
+
     }
 }

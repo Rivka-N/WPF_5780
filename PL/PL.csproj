@@ -121,14 +121,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="hostingUnit_addOrders.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="hostingUnit_closedOrders.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="hostingUnit_updateDelete.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -162,12 +154,6 @@
     </Compile>
     <Compile Include="hostingUnitTabs.xaml.cs">
       <DependentUpon>hostingUnitTabs.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="hostingUnit_addOrders.xaml.cs">
-      <DependentUpon>hostingUnit_addOrders.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="hostingUnit_closedOrders.xaml.cs">
-      <DependentUpon>hostingUnit_closedOrders.xaml</DependentUpon>
     </Compile>
     <Compile Include="hostingUnit_updateDelete.xaml.cs">
       <DependentUpon>hostingUnit_updateDelete.xaml</DependentUpon>
