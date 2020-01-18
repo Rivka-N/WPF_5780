@@ -30,6 +30,7 @@ namespace PL
             myBL = BL.factoryBL.getBL();
             InitializeComponent();
             unit = hosting;
+
             //sets closed orders data grid source
             myOrders = myBL.getOrders(ord => ord.Status == Enums.OrderStatus.Closed && unit.HostingUnitKey==ord.HostingUnitKey);//sets source for orders
             dg_orderDataGrid.ItemsSource = myOrders;//all closed orders from this host
@@ -37,7 +38,11 @@ namespace PL
             //sets addOrders data grid source
             addOrders = myBL.getOrders(ord => ord.HostingUnitKey == unit.HostingUnitKey && (ord.Status == Enums.OrderStatus.Mailed || ord.Status == Enums.OrderStatus.Started));
             dg_addOrder.ItemsSource = addOrders;
-            //dg_unit
+
+            //set enums also
+            dg_updateUnitGrid.DataContext = unit;
+            
+           
         }
         #region windows events
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -51,7 +56,12 @@ namespace PL
             new AllUnitsList().Show();//opens previous window again
         }
         #endregion
-
+        #region doubleclick
+        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //same as adding order/mailing with button depending on which is available
+        }
+        #endregion
         #region back button
         private void Pb_back_Click(object sender, RoutedEventArgs e)
         {
@@ -59,10 +69,24 @@ namespace PL
         }
         #endregion
         #region tabs
-        private void Tab_addOrders_Selected(object sender, RoutedEventArgs e)
+       
+        private void Tab_updateDeleteUnit_Unselected(object sender, RoutedEventArgs e)
         {
-            //change closed orders
+            //resets available orders from non- mailed orders based on what's relevent now
         }
+        private void Tab_addOrders_Unselected(object sender, RoutedEventArgs e)
+        {
+            //resets orders shown after added order
+
+            //resets closed orders
+            myOrders = myBL.getOrders(ord => ord.Status == Enums.OrderStatus.Closed && unit.HostingUnitKey == ord.HostingUnitKey);//sets source for orders
+            dg_orderDataGrid.ItemsSource = myOrders;//all closed orders from this host
+
+            //resets addOrders data grid source
+            addOrders = myBL.getOrders(ord => ord.HostingUnitKey == unit.HostingUnitKey && (ord.Status == Enums.OrderStatus.Mailed || ord.Status == Enums.OrderStatus.Started));
+            dg_addOrder.ItemsSource = addOrders;
+        }
+
         #endregion
         #region add order tab
         private void pb_addOrder_Click(object sender, RoutedEventArgs e)//what does this do?
@@ -80,16 +104,10 @@ namespace PL
             }
         }
 
-        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }//sends to unit information with data of current row to bind to
-
-
 
         private void orderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (dg_addOrder.CurrentItem != null)//something was selected
+            if (dg_addOrder.SelectedItem != null)//something was selected
             {
                 Order row = (Order)dg_addOrder.SelectedItem;
                 if (row.Status == Enums.OrderStatus.Started)
@@ -261,9 +279,11 @@ namespace PL
         {
 
         }
+
+
         #endregion //not finish
 
-       
+      
     }
 }
 

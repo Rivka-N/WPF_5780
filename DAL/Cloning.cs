@@ -97,6 +97,7 @@ namespace DAL
             target.GuestRequestKey = original.GuestRequestKey;
             target.OrderKey = original.OrderKey;
             target.CreateDate = original.CreateDate;
+            target.OrderDate = original.OrderDate;
             target.Status = original.Status;
             if(original.HostName!=null)
                 target.HostName = original.HostName;

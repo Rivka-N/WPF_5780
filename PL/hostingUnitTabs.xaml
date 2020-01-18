@@ -27,13 +27,13 @@
     </Window.Resources>
     <Grid>
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <TabItem Name="tab_updateDeleteUnit" Header="delete /update unit">
+            <TabItem Name="tab_updateDeleteUnit" Header="delete /update unit" Selector.Unselected="Tab_updateDeleteUnit_Unselected">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="2" Background="DarkSeaGreen">
+                    <Grid Grid.Row="1" Background="DarkSeaGreen">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -46,8 +46,8 @@
                         <Button x:Name="pb_delete" Content="Delete Unite" Padding="10" Margin="5" Grid.Column="4" IsEnabled="False" Click="pb_sendMail_Click"/>
                         <Button x:Name="pb_UnitBack" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10"  Grid.Column="0" Click="Pb_back_Click"/>
                     </Grid>
-                    <Grid Grid.Row="0" x:Name="dg_unit" DataContext="{Binding}">
-                        <Grid x:Name="grid1" HorizontalAlignment="Center" Margin="10,10,0,0" VerticalAlignment="Top" Width="300">
+                    <Grid Grid.Row="0" x:Name="dg_unit">
+                        <Grid x:Name="dg_updateUnitGrid" HorizontalAlignment="Center" Margin="10,10,0,0" VerticalAlignment="Center" Width="300" DataContext="{Binding}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
@@ -100,8 +100,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-
-            <TabItem Name="tab_addOrders" Header="add order" Selector.Selected="Tab_addOrders_Selected">
+            <TabItem Name="tab_addOrders" Header="add order" Selector.Unselected="Tab_addOrders_Unselected">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>

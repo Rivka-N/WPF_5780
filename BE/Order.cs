@@ -21,7 +21,7 @@ namespace BE
         public Int32 GuestRequestKey { get => guestRequestKey; set { guestRequestKey = value; } }
         public Int32 OrderKey { get => orderKey; set { orderKey = value; } }
         public DateTime CreateDate { get => createDate; set { createDate = value; } }
-        public DateTime OrderDate { get => orderDate; set { orderDate = OrderDate; } }//sent mail
+        public DateTime OrderDate { get => orderDate; set { orderDate = value; } }//sent mail
         public Enums.OrderStatus Status { get => status; set { status = value; } }
 
         //added

@@ -50,7 +50,6 @@ namespace PL
                 this.Close();
             }
             else MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //new window(send current unit)
             
         }
 
@@ -73,7 +72,12 @@ namespace PL
         #region click events
         private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            if (dg_hostingUnitDataGrid.SelectedItem != null && dg_hostingUnitDataGrid.SelectedItem is HostingUnit)
+            {
+                new hostingUnitTabs((HostingUnit)dg_hostingUnitDataGrid.SelectedItem).Show();
+                closeOpenMain = false;//don't open main after closing
+                this.Close();
+            }
         }//sends to unit information with data of current row to bind to
 
         private void Dg_hostingUnitDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
