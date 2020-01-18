@@ -28,7 +28,7 @@ namespace PL
             myBL = factoryBL.getBL();
             InitializeComponent();
             myOrders = new List<Order>();
-            myOrders = myBL.ordersByUnit
+            myOrders = myBL.ordersByUnit();
 
         }
 
