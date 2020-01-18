@@ -97,6 +97,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="addGuest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="addUnitOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -113,10 +117,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="hostingUnit_updateDelete.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="hostOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -125,6 +125,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="addGuest.xaml.cs">
+      <DependentUpon>addGuest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="addUnitOptions.xaml.cs">
       <DependentUpon>addUnitOptions.xaml</DependentUpon>
     </Compile>
@@ -140,9 +143,6 @@
     </Compile>
     <Compile Include="hostingUnitTabs.xaml.cs">
       <DependentUpon>hostingUnitTabs.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="hostingUnit_updateDelete.xaml.cs">
-      <DependentUpon>hostingUnit_updateDelete.xaml</DependentUpon>
     </Compile>
     <Compile Include="hostOptions.xaml.cs">
       <DependentUpon>hostOptions.xaml</DependentUpon>

@@ -53,11 +53,6 @@ namespace PL
             
         }
 
-        private void Pb_bankInfo_Click(object sender, RoutedEventArgs e)
-            //bank page tab with option to change information or update collection clearance. send data of current unit to bind to
-        {
-
-        }
 
         private void AddUnit_Click(object sender, RoutedEventArgs e)//make sure unit gets added to list
         {
@@ -84,12 +79,10 @@ namespace PL
         {
             if (dg_hostingUnitDataGrid.CurrentItem != null)//something was selected
             {
-                pb_changeUnit.IsEnabled = true;
-                pb_bankInfo.IsEnabled = true;//allows button clicks
+                pb_changeUnit.IsEnabled = true;//allows button clicks
             }
             else
             {
-                pb_bankInfo.IsEnabled = false;
                 pb_changeUnit.IsEnabled = false;//otherwise disables them
             }
         }
