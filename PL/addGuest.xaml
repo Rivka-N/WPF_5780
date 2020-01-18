@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PL.addGuest"
         mc:Ignorable="d"
-        Title="addGuest" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="New Guest" Height="450" Width="600" Loaded="Window_Loaded" Closing="Window_Closing">
     <Window.Resources>
         <CollectionViewSource x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:GuestRequest}, CreateList=True}"/>
     </Window.Resources>
     <Grid>
 
-        <Grid x:Name="grid1" VerticalAlignment="Top" Margin="107,30,0,0" HorizontalAlignment="Left" DataContext="{StaticResource guestRequestViewSource}">
+        <Grid x:Name="dg_guest" VerticalAlignment="Center" HorizontalAlignment="Center" DataContext="{StaticResource guestRequestViewSource}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -31,10 +31,14 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Area Vacation:"/>
-            <TextBox x:Name="areaVacationTextBox" Width="120" VerticalAlignment="Center" Text="{Binding AreaVacation, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+            <Label x:Name="lb_areaVacation" VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Area Vacation:"/>
+            <TextBox x:Name="tb_areaVacationTextBox" Width="120" VerticalAlignment="Center" Text="{Binding AreaVacation, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
             <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Entry Date:"/>
+            <Label VerticalAlignment="Center" Grid.Row="10" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Release Date:"/>
+            <DatePicker x:Name="releaseDateDatePicker" VerticalAlignment="Center" SelectedDate="{Binding ReleaseDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="10" Margin="3" HorizontalAlignment="Left" Grid.Column="1"/>
             <DatePicker x:Name="entryDateDatePicker" VerticalAlignment="Center" SelectedDate="{Binding EntryDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="1"/>
             <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Garden:"/>
             <CheckBox x:Name="gardenCheckBox" VerticalAlignment="Center" Grid.Row="2" Margin="3" IsChecked="{Binding Garden, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content=""/>
@@ -58,11 +62,9 @@
             <TextBox x:Name="numChildrenTextBox" Width="120" VerticalAlignment="Center" Text="{Binding NumChildren, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="8" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
             <Label VerticalAlignment="Center" Grid.Row="9" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Pool:"/>
             <CheckBox x:Name="poolCheckBox" VerticalAlignment="Center" Grid.Row="9" Margin="3" IsChecked="{Binding Pool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content=""/>
-            <Label VerticalAlignment="Center" Grid.Row="10" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Release Date:"/>
-            <DatePicker x:Name="releaseDateDatePicker" VerticalAlignment="Center" SelectedDate="{Binding ReleaseDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="10" Margin="3" HorizontalAlignment="Left" Grid.Column="1"/>
             <Label VerticalAlignment="Center" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Type Of Unit:"/>
             <TextBox x:Name="typeOfUnitTextBox" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="11" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-            <Label VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Address:"/>
+            <Label VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Email:"/>
             <TextBox x:Name="addressTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Mail.Address, Mode=OneWay}" Grid.Row="12" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
         </Grid>
 

@@ -24,6 +24,7 @@ namespace PL
             InitializeComponent();
         }
 
+        #region window
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -31,5 +32,11 @@ namespace PL
             // Load data by setting the CollectionViewSource.Source property:
             // guestRequestViewSource.Source = [generic data source]
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            new MainWindow().Show();
+        }
+        #endregion
     }
 }

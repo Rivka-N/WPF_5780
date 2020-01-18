@@ -39,7 +39,7 @@ namespace PL
 
         private void pb_guest_Click(object sender, RoutedEventArgs e)
         {
-            //open guest window
+            new addGuest().Show();//open guest window
             this.Close();
         }
 
