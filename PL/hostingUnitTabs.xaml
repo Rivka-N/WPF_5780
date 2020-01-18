@@ -11,8 +11,8 @@
 
     <Grid>
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <TabItem Name="tab_addOrder" Header="add order">
-                <Frame Source="hostingUnit_addOrder.xaml" />
+            <TabItem Name="tab_addOrders" Header="add order">
+                <Frame Source="hostingUnit_addOrders.xaml" />
             </TabItem>
             <TabItem Name="tab_updateDelteUnit" Header="update / delete unit">
                 <Frame Source="hostingUnit_updateDelete.xaml"/>

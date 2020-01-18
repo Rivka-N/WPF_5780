@@ -8,6 +8,9 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Title="MainWindow" Height="450" Width="800"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Color x:Key="Color1">#FFB4B4B4</Color>
+    </Window.Resources>
     <!--<Window.Background>
         <ImageBrush ImageSource="images\khaos_Installer_UI.png"/>
     </Window.Background>-->
@@ -17,9 +20,13 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Name="pb_guest" Click="pb_guest_Click" Grid.Row="0" Content="אורח במלון" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <Button Name="pb_host" Click="pb_host_Click" Grid.Row="1" Content="בעל יחידות אירוח" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Button Name="pb_owner" Click="pb_owner_Click" Grid.Row="2" Content="בעל האתר" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Name="pb_guest" Click="pb_guest_Click" Grid.Row="1" Content="Book a vacation" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" Background="{x:Null}" FontStyle="Italic" >
+            <Button.BorderBrush>
+                <SolidColorBrush Color="#FFB4B4B4"/>
+            </Button.BorderBrush>
+        </Button>
+        <Button Name="pb_host" Click="pb_host_Click" Grid.Row="2" Content="Host"  Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="673,50,9.6,53" BorderBrush="#FF15806F" Background="#3302707B" Width="111" Height="35"/>
+        <Button Name="pb_owner" Click="pb_owner_Click" Grid.Row="2" Content="Administration" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="673,92,9.6,10" Width="111" Height="35" Background="#3302707B"/>
     </Grid>
 </Window>
 

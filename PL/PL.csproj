@@ -52,11 +52,33 @@
   <PropertyGroup>
     <ApplicationIcon>travel-icon-225-Windows.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -87,10 +109,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="hostingUnit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="hostingUnitList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -103,7 +121,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="hostingUnit_addOrder.xaml">
+    <Page Include="hostingUnit_addOrders.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -136,9 +154,6 @@
     <Compile Include="guestOptions.xaml.cs">
       <DependentUpon>guestOptions.xaml</DependentUpon>
     </Compile>
-    <Compile Include="hostingUnit.xaml.cs">
-      <DependentUpon>hostingUnit.xaml</DependentUpon>
-    </Compile>
     <Compile Include="hostingUnitList.xaml.cs">
       <DependentUpon>hostingUnitList.xaml</DependentUpon>
     </Compile>
@@ -148,8 +163,8 @@
     <Compile Include="hostingUnitTabs.xaml.cs">
       <DependentUpon>hostingUnitTabs.xaml</DependentUpon>
     </Compile>
-    <Compile Include="hostingUnit_addOrder.xaml.cs">
-      <DependentUpon>hostingUnit_addOrder.xaml</DependentUpon>
+    <Compile Include="hostingUnit_addOrders.xaml.cs">
+      <DependentUpon>hostingUnit_addOrders.xaml</DependentUpon>
     </Compile>
     <Compile Include="hostingUnit_closedOrders.xaml.cs">
       <DependentUpon>hostingUnit_closedOrders.xaml</DependentUpon>
@@ -164,6 +179,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="newHostingUnit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="OwnerTabs.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -186,6 +205,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="newHostingUnit.xaml.cs">
+      <DependentUpon>newHostingUnit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="OwnerTabs.xaml.cs">
       <DependentUpon>OwnerTabs.xaml</DependentUpon>
     </Compile>
@@ -263,5 +285,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

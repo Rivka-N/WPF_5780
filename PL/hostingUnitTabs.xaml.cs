@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BE;
 namespace PL
 {
     /// <summary>
@@ -20,6 +20,11 @@ namespace PL
     public partial class hostingUnitTabs : Window
     {
         public hostingUnitTabs()
+        {
+            InitializeComponent();
+        }
+
+        public hostingUnitTabs(HostingUnit hosting)
         {
             InitializeComponent();
         }
@@ -33,7 +38,7 @@ namespace PL
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            new MainWindow().Show();//opens main window again
+            new AllUnitsList().Show();//opens main window again
         }
     }
 }

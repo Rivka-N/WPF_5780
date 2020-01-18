@@ -30,6 +30,7 @@ namespace PL
             myBL = factoryBL.getBL();
             myOrders= myBL.getOrders(ord => ord.Status == Enums.OrderStatus.Closed);
             dg_orderDataGrid.ItemsSource= myOrders;//all closed orders
+           
         }
 
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)//resets date if changed

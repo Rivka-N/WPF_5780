@@ -1,0 +1,89 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PL"
+      xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PL.hostingUnit_addOrders"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="hostingUnit_addOrders">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
+        <Style TargetType="TextBox">
+            <Setter Property="MinWidth" Value="100"/>
+            <Setter Property="Width" Value="auto"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="MinWidth" Value="100"/>
+            <Setter Property="Width" Value="auto"/>
+        </Style>
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="MinHeight" Value="100"/>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="2" Background="DarkSeaGreen">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="pb_addOrder" Content="Add Order" Padding="10" Margin="5" Click="pb_addOrder_Click" IsEnabled="False" Grid.Column="5"/>
+            <Button x:Name="pb_sendMail" Content="Send Mail" Padding="10" Margin="5" Grid.Column="4" IsEnabled="False" Click="pb_sendMail_Click"/>
+            <Button x:Name="pb_back" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10"  Grid.Column="0" Click="Pb_back_Click"/>
+        </Grid>
+        <Grid DataContext="{StaticResource orderViewSource}">
+
+
+            <DataGrid x:Name="orderDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False" AlternatingRowBackground="AliceBlue" IsReadOnly="True" Grid.Row="1" SelectionChanged="orderDataGrid_SelectionChanged">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="hostingUnitKeyColumn" Width="*" Header="Hosting Unit Key" IsReadOnly="True" Binding="{Binding HostingUnitKey}"/>
+                    <DataGridTextColumn x:Name="orderKeyColumn" Width="*" Header="Order Key" IsReadOnly="True" Binding="{Binding OrderKey}"/>
+                    <DataGridTemplateColumn x:Name="createDateColumn" Width="100" Header="Create Date" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding CreateDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn x:Name="guestRequestKeyColumn" Width="*" Header="Guest Request Key" IsReadOnly="True" Binding="{Binding GuestRequestKey}"/>
+                    <DataGridTextColumn x:Name="guestNameColumn" Width="*" Header="Guest Name" IsReadOnly="True" Binding="{Binding GuestName}"/>
+                    <DataGridTemplateColumn x:Name="orderDateColumn" Width="*" Header="Order Date" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding OrderDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn x:Name="statusColumn" Width="*" Header="Status" IsReadOnly="True" Binding="{Binding Status}"/>
+                  
+
+                </DataGrid.Columns>
+
+
+
+
+            </DataGrid>
+
+
+        </Grid>
+    </Grid>
+
+</Page>
