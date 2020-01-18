@@ -367,33 +367,37 @@ namespace BL
             return myDAL.getAllHostingUnits();
         }
 
-       
-
         public List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> p)
         {
-            return myDAL.getHostingUnits(p);
+            return myDAL.getAllHostingUnits().Where(p).Select(hu => (HostingUnit)hu.Clone()).ToList();
         }
 
         public List<GuestRequest> getRequests()
         {
             return myDAL.getRequests();
         }
-        public List<GuestRequest> getRequests(Func<GuestRequest, bool> p)
-        {
-            return myDAL.getRequests(p);
-        }
+        
         public List<Order> getAllOrders()
         {
             return myDAL.getAllOrders();
         }
-        public List<GuestRequest> GetRequests(Func<GuestRequest, bool> predicate)
+        public List<GuestRequest> getRequests(Func<GuestRequest, bool> predicate)
         {
-            return myDAL.getRequests(predicate);
+            var requests = from guest in myDAL.getRequests()
+                           let p = predicate(guest)
+                           where p
+                           select guest.Clone();
+            return requests.ToList();
         }
+
 
         public List<Order> getOrders(Func<Order, bool> predicate)
         {
-            return myDAL.getOrders(predicate);
+            var ords = from ord in myDAL.getAllOrders()
+                       let p = predicate(ord)
+                       where p
+                       select ord.Clone();
+            return ords.ToList();
         }
 
         #endregion
@@ -603,11 +607,11 @@ namespace BL
                             select newGroup;
             return groupArea;
         }
-        public IEnumerable<Order> ordersByUnit(HostingUnit hu)
+        public IEnumerable<Order> ordersOfUnit(HostingUnit hu)
         {
-            return ordersByUnit(hu.HostingUnitKey);
+            return ordersOfUnit(hu.HostingUnitKey);
         }
-        public IEnumerable<Order>ordersByUnit(int unitNum)
+        public IEnumerable<Order>ordersOfUnit(int unitNum)
         {
             var allOrders = myDAL.getAllOrders();
             var thisUnit = from order in allOrders
@@ -617,7 +621,17 @@ namespace BL
             return thisUnit;
         }
 
-        
+
+   
+        public IEnumerable<IGrouping<Host, HostingUnit>> groupHostsByUnits()
+        {
+            var units = myDAL.getAllHostingUnits();
+            return from HostingUnit in units
+                   group HostingUnit by HostingUnit.Host into newGroup
+                   select newGroup;
+        }
+
+
 
 
 

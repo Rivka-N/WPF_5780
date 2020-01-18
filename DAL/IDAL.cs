@@ -13,7 +13,6 @@ namespace DAL
         #region HostingUnit        
         //void addHostingUnit(HostingUnit hostingUnit);//duplicate function
         List<HostingUnit> getAllHostingUnits();
-        List <HostingUnit> getHostingUnits(Func<HostingUnit, bool> predicate = null);
         HostingUnit findUnit(int unitKey);
         void deleteUnit(HostingUnit toDelete);
         void changeUnit(HostingUnit hostingUnit1);
@@ -27,7 +26,6 @@ namespace DAL
         
         GuestRequest findGuest(int g1);
         GuestRequest findGuest(GuestRequest g1);//finds by guest key
-        List<GuestRequest> getRequests(Func<GuestRequest, bool> predicate);
         List<GuestRequest> getRequests();
         void changeStatus(GuestRequest guest, Enums.OrderStatus status);
         #endregion
@@ -35,7 +33,6 @@ namespace DAL
         #region order
         List<Order> getAllOrders();
         void addOrder(Order ord);
-        List<Order> getOrders(Func<Order, bool> predicate);
         void changeOrder(Func<Order, bool> p1, Func<Order, Order> p2);
         void addCharge(HostingUnit unit, int numDays);
 

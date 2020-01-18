@@ -85,30 +85,7 @@ namespace DAL
 
 
         #endregion
-        #region get by predicates
-        public List<Order> getOrders(Func<Order, bool> predicate = null)
-        {
-            var ords = from ord in DataSource.orders
-                       let p = predicate(ord)
-                       where p
-                       select ord.Clone();
-            return ords.ToList();
-
-        }
-        public List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> predicate = null)
-        {
-            return DataSource.hostingUnits.Where(predicate).Select(hu => (HostingUnit)hu.Clone()).ToList();
-
-        }
-        public List<GuestRequest> getRequests(Func<GuestRequest, bool> predicate)
-        {
-            var requests = from guest in DataSource.guestRequests
-                           let p = predicate(guest)
-                           where p
-                           select guest.Clone();
-            return requests.ToList();
-        }
-        #endregion
+        
         #region search functions
         public HostingUnit findUnit(int unitKey)//returns first instance of unitKey as a hosting unit key inside list of hosting units
         {

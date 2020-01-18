@@ -71,9 +71,9 @@ namespace BL
 
         #endregion
         #region grouping and queries
-        //IEnumerable<IGrouping<int, Order>>groupOrdersbyUnit()
-        IEnumerable<Order> ordersByUnit(HostingUnit hu);
-        IEnumerable<Order> ordersByUnit(int unitNum);
+        IEnumerable<Order> ordersOfUnit(HostingUnit hu);
+        IEnumerable<Order> ordersOfUnit(int unitNum);
+        IEnumerable<IGrouping<Host, HostingUnit>> groupHostsByUnits();
         IEnumerable<IGrouping<Enums.Area, HostingUnit>> groupUnitsByArea();
         IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupRequestsByArea();
         #endregion
