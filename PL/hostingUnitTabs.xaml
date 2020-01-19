@@ -120,7 +120,7 @@
                         <Button x:Name="pb_sendMail" Content="Send Mail" Padding="10" Margin="5" Grid.Column="4" IsEnabled="False" Click="pb_sendMail_Click"/>
                         <Button x:Name="pb_back" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10"  Grid.Column="0" Click="Pb_back_Click"/>
                     </Grid>
-                    <DataGrid x:Name="dg_guestRequestDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" IsReadOnly="True" RowDetailsVisibilityMode="VisibleWhenSelected">
+                    <DataGrid x:Name="dg_guestRequestDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" IsReadOnly="True" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="dg_guestRequestDataGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="*" MinWidth="100" IsReadOnly="True"/>
                             <DataGridTextColumn x:Name="lastNameColumn" Binding="{Binding LastName}" Header="Last Name" Width="*" MinWidth="100" IsReadOnly="True"/>

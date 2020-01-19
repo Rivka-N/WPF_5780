@@ -96,9 +96,9 @@ namespace PL
         {
             if (sender is DatePicker)
                 if (tc_mainControl.SelectedItem == tab_addOrders)
-                    if (dg_addOrder.SelectedItem != null)//there's an item selected
-                    { if (dg_addOrder.SelectedCells != null)
-                            (sender as DatePicker).SelectedDate = (dg_addOrder.SelectedItem as GuestRequest).Registration;
+                    if (dg_guestRequestDataGrid.SelectedItem != null)//there's an item selected
+                    { if (dg_guestRequestDataGrid.SelectedCells != null)
+                            (sender as DatePicker).SelectedDate = (dg_guestRequestDataGrid.SelectedItem as GuestRequest).Registration;
                     }
                     //change each date based on what's relevent
                     else
@@ -114,10 +114,15 @@ private void pb_addOrder_Click(object sender, RoutedEventArgs e)//what does this
         {
             try
             {
-                if (dg_addOrder.SelectedItem != null && dg_addOrder.SelectedItem is Order)
-                    new hostingUnitTabs((HostingUnit)dg_addOrder.SelectedItem).Show();
+                if (dg_guestRequestDataGrid.SelectedItem != null && dg_guestRequestDataGrid.SelectedItem is GuestRequest)
+                {
+                    //Order newOrder= new Order();//creates new order
+                    //newOrder.CreateDate = DateTime.Now;
+                    //newOrder.GuestName=dg_guestRequestDataGrid.SelectedItem
+                    //myBL.addOrder(newOrder);//adds order
+                    //add request to orders and update status or update order to closed and status everywhere
+                }
                 else MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
-                //new window(send current unit)
             }
             catch
             {
@@ -125,16 +130,32 @@ private void pb_addOrder_Click(object sender, RoutedEventArgs e)//what does this
             }
         }
 
-
-        private void orderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void dg_guestRequestDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (dg_addOrder.SelectedItem != null)//something was selected
+            if (dg_guestRequestDataGrid.SelectedItem != null)//something was selected
             {
-                Order row = (Order)dg_addOrder.SelectedItem;
-                if (row.Status == Enums.OrderStatus.Started)
-                    pb_sendMail.IsEnabled = true;
-                if (row.Status == Enums.OrderStatus.Mailed)
-                    pb_addOrder.IsEnabled = true;
+                GuestRequest row = (GuestRequest)dg_guestRequestDataGrid.SelectedItem;
+                var curOrder=myBL.getOrders(ord => ord.GuestRequestKey == row.GuestRequestKey && ord.HostingUnitKey == unit.HostingUnitKey);//finds the applicable order
+                { if (curOrder==null)//there is no order existing yet
+                    pb_sendMail.IsEnabled = true;//has to send mail first
+                 else 
+                    { if (curOrder[0].Status == Enums.OrderStatus.Mailed)//already sent mail
+                            pb_addOrder.IsEnabled = true;
+                        else
+                        {
+                            pb_sendMail.IsEnabled = false;
+                            pb_addOrder.IsEnabled = false;//disables buttons
+                            MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+
+                    }
+                        }
+            }
+            else//selected item is null
+            {
+                pb_sendMail.IsEnabled = false;
+                pb_addOrder.IsEnabled = false;
+
             }
         }
 
@@ -257,6 +278,7 @@ private void pb_addOrder_Click(object sender, RoutedEventArgs e)//what does this
         }
         #endregion
 
+
         #region checkBox update unit
         private void jacuzziCheckBox_Checked(object sender, RoutedEventArgs e)
         {
@@ -312,6 +334,7 @@ private void pb_addOrder_Click(object sender, RoutedEventArgs e)//what does this
             // Load data by setting the CollectionViewSource.Source property:
             // guestRequestViewSource.Source = [generic data source]
         }
+
     }
 }
 
