@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
+
 using BE;
 using BL;
 namespace PL
@@ -188,21 +190,7 @@ namespace PL
         #region delete Unit button 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string message = "Are you sure you want to delete this unit?";
-            string caption = "Confirmation";
-            MessageBoxButton buttons = MessageBoxButton.YesNo;
-            MessageBoxImage icon = MessageBoxImage.Question;
-            if (MessageBox.Show(message, caption, buttons, icon) == MessageBoxResult.OK)
-            {
-                // OK code here
-                int code = 0;
-                myBL.deleteUnit(code);
-
-            }
-            else
-            {
-                // Cancel code here. nothing needs to happen then
-            }
+            
 
         }
         #endregion
@@ -210,7 +198,6 @@ namespace PL
         #region textBox updateUnit
         private void nameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
 
         }
 
@@ -221,29 +208,38 @@ namespace PL
 
         private void hostingUnitNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //    if (Regex.IsMatch(hostingUnitNameTextBox.Text, @"^[a-zA-Z]+$"))
-            //    {
-            //        g1.LastName = hostingUnitNameTextBox.Text;//needs to know how i get the hostingunit
-            //        hostingUnitNameTextBox.Background = Brushes.White;
 
-            //    }
-            //    else
-            //    {
-            //        hostingUnitNameTextBox.Text = "";
-            //        hostingUnitNameTextBox.Background = Brushes.Red;
-            //    }
+            if (Regex.IsMatch(hostingUnitNameTextBox.Text, @"^[a-zA-Z]+$"))
+            {
+                unit.HostingUnitName = hostingUnitNameTextBox.Text;//set the new name
+                hostingUnitNameTextBox.Background = Brushes.White;
+                pb_update.IsEnabled = true;
+
+            }
+            else
+            {
+                hostingUnitNameTextBox.Text = "";
+                hostingUnitNameTextBox.Background = Brushes.Red;
+            }
         }
         #endregion
 
         #region comboBox UpdateUnit
         private void hostingUnitTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            hostingUnitTypeComboBox.Background = Brushes.White;
+            unit.HostingUnitType = (Enums.HostingUnitType)(hostingUnitTypeComboBox.SelectedIndex);
+            pb_update.IsEnabled = true;
 
             //(Enums.HostingUnitType)(hostingUnitTypeComboBox.SelectedIndex);
         }
 
         private void mealComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            mealComboBox.Background = Brushes.White;
+            unit.Meal = (Enums.MealType)(mealComboBox.SelectedIndex);
+            pb_update.IsEnabled = true;
+
             //(Enums.MealType)(mealComboBox.SelectedIndex)
         }
 
@@ -251,50 +247,54 @@ namespace PL
         #region numbers UpdateUnit
         private void numChildrenTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //    int text = 0;
-            //    if (Int32.TryParse(numChildrenTextBox.Text, out text))
-            //    {
-            //        if (text < 0)
-            //        {
-            //            numChildrenTextBox.Background = Brushes.OrangeRed;
-            //            numChildrenTextBox.Text = "";
-            //        }
-            //        else
-            //        {
-            //            g1.NumAdult = text;
-            //            numChildrenTextBox.Background = Brushes.White;
-            //        }
-            //    }
-            //    else
-            //    {
+            int text = 0;
+            if (Int32.TryParse(numChildrenTextBox.Text, out text))
+            {
+                if (text < 0)
+                {
+                    numChildrenTextBox.Background = Brushes.OrangeRed;
+                    numChildrenTextBox.Text = "";
+                }
+                else
+                {
+                    unit.NumChildren = text;
+                    numChildrenTextBox.Background = Brushes.White;
+                    pb_update.IsEnabled = true;
 
-            //        numChildrenTextBox.Background = Brushes.OrangeRed;
-            //        numChildrenTextBox.Text = "";
-            //    }
+                }
+            }
+            else
+            {
+
+                numChildrenTextBox.Background = Brushes.OrangeRed;
+                numChildrenTextBox.Text = "";
+            }
         }
 
         private void numAdultTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //    int text = 0;
-            //    if (Int32.TryParse(numAdultTextBox.Text, out text))
-            //    {
-            //        if (text < 0)
-            //        {
-            //            numAdultTextBox.Background = Brushes.OrangeRed;
-            //            numAdultTextBox.Text = "";
-            //        }
-            //        else
-            //        {
-            //            g1.NumAdult = text;
-            //            numAdultTextBox.Background = Brushes.White;
-            //        }
-            //    }
-            //    else
-            //    {
+            int text = 0;
+            if (Int32.TryParse(numAdultTextBox.Text, out text))
+            {
+                if (text < 0)
+                {
+                    numAdultTextBox.Background = Brushes.OrangeRed;
+                    numAdultTextBox.Text = "";
+                }
+                else
+                {
+                    unit.NumAdult = text;
+                    numAdultTextBox.Background = Brushes.White;
+                    pb_update.IsEnabled = true;
 
-            //        numAdultTextBox.Background = Brushes.OrangeRed;
-            //        numAdultTextBox.Text = "";
-            //    }
+                }
+            }
+            else
+            {
+
+                numAdultTextBox.Background = Brushes.OrangeRed;
+                numAdultTextBox.Text = "";
+            }
         }
         #endregion
 
@@ -302,44 +302,46 @@ namespace PL
         #region checkBox update unit
         private void jacuzziCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            //        if (jacuzziCheckBox.IsChecked == true)//changed to true
-            //            g1.Jacuzzi = Enums.Preference.Yes;
-            //        else
-            //        {
-            //            if (jacuzziCheckBox.IsChecked == false)//changed to false
-            //                g1.Jacuzzi = Enums.Preference.No;
-            //            else
-            //                g1.Jacuzzi = Enums.Preference.Maybe;//otherwise it's the third state
-            //        }
+            if (jacuzziCheckBox.IsChecked == true)//changed to true
+                unit.Jacuzzi = Enums.Preference.Yes;
+            else
+            {
+                if (jacuzziCheckBox.IsChecked == false)//changed to false
+                    unit.Jacuzzi = Enums.Preference.No;
+                else
+                    unit.Jacuzzi = Enums.Preference.Maybe;//otherwise it's the third state
+            }
+            pb_update.IsEnabled = true;
+
         }
 
         private void poolCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            //        if (poolCheckBox.IsChecked == true)//changed to true
-            //            g1.Pool = Enums.Preference.Yes;
-            //        else
-            //        {
-            //            if (poolCheckBox.IsChecked == false)//changed to false
-            //                g1.Pool = Enums.Preference.No;
-            //            else
-            //                g1.Pool = Enums.Preference.Maybe;//otherwise it's the third state
-            //        }
-            //    }
+            if (poolCheckBox.IsChecked == true)//changed to true
+                unit.Pool = Enums.Preference.Yes;
+            else
+            {
+                if (poolCheckBox.IsChecked == false)//changed to false
+                    unit.Pool = Enums.Preference.No;
+                else
+                    unit.Pool = Enums.Preference.Maybe;//otherwise it's the third state
+            }
+            pb_update.IsEnabled = true;
 
-            //    private void gardenCheckBox_Checked(object sender, RoutedEventArgs e)
-            //    {
-            //        if (gardenCheckBox.IsChecked == true)//changed to true
-            //            g1.Garden = Enums.Preference.Yes;
-            //        else
-            //        {
-            //            if (gardenCheckBox.IsChecked == false)//changed to false
-            //                g1.Garden = Enums.Preference.No;
-            //            else
-            //                g1.Garden = Enums.Preference.Maybe;//otherwise it's the third state
-            //        }
         }
+
         private void gardenCheckBox_Checked(object sender, RoutedEventArgs e)
         {
+            if (gardenCheckBox.IsChecked == true)//changed to true
+                unit.Garden = Enums.Preference.Yes;
+            else
+            {
+                if (gardenCheckBox.IsChecked == false)//changed to false
+                    unit.Garden = Enums.Preference.No;
+                else
+                    unit.Garden = Enums.Preference.Maybe;//otherwise it's the third state
+            }
+            pb_update.IsEnabled = true;
 
         }
 
@@ -355,6 +357,35 @@ namespace PL
             // guestRequestViewSource.Source = [generic data source]
         }
 
+        private void pb_update_Click(object sender, RoutedEventArgs e)
+        {
+            if (myBL.checkUnit(unit))
+            {
+                myBL.changeUnit(unit);
+                MessageBoxResult mb = MessageBox.Show("The unit updated\n");//prints message
+            }
+            
+            Close();//closes window
+
+        }
+
+        private void pb_delete_Click(object sender, RoutedEventArgs e)
+        {
+            string message = "Are you sure you want to delete this unit?";
+            string caption = "Confirmation";
+            MessageBoxButton buttons = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Question;
+            if (MessageBox.Show(message, caption, buttons, icon) == MessageBoxResult.Yes)
+            {
+                // OK code here
+                myBL.deleteUnit(unit.HostingUnitKey);//send to the delete function in bl, there is problem in the remove functios ds
+                MessageBox.Show("the unit" + unit.HostingUnitKey + "removed");
+            }
+            else
+            {
+                // Cancel code here. nothing needs to happen then
+            }
+        }
     }
 }
 

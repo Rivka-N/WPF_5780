@@ -43,8 +43,8 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="pb_update" Content="Update Unit" Padding="10" Margin="5" Click="pb_addOrder_Click" IsEnabled="False" Grid.Column="5"/>
-                        <Button x:Name="pb_delete" Content="Delete Unite" Padding="10" Margin="5" Grid.Column="4" IsEnabled="False" Click="pb_sendMail_Click"/>
+                        <Button x:Name="pb_update" Content="Update Unit" Padding="10" Margin="5" IsEnabled="False" Grid.Column="5" Click="pb_update_Click"/>
+                        <Button x:Name="pb_delete" Content="Delete Unite" Padding="10" Margin="5" Grid.Column="4" IsEnabled="True" Click="pb_delete_Click"/>
                         <Button x:Name="pb_UnitBack" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10"  Grid.Column="0" Click="Pb_back_Click"/>
                     </Grid>
                     <Grid Grid.Row="0" x:Name="dg_unit">
@@ -70,7 +70,7 @@
                             <Label Content="Hosting Unit Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
                             <TextBox x:Name="hostingUnitKeyTextBox" Grid.Column="1" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding HostingUnitKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" TextChanged="hostingUnitKeyTextBox_TextChanged"/>
                             <Label Content="Hosting Unit Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-                            <TextBox x:Name="hostingUnitNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" TextChanged="hostingUnitNameTextBox_TextChanged"/>
+                            <TextBox x:Name="hostingUnitNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="3.2,0,0,4" Grid.Row="2" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Bottom" Width="120" TextChanged="hostingUnitNameTextBox_TextChanged"/>
                             <Label Content="Hosting Unit Type:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
                             <ComboBox x:Name="hostingUnitTypeComboBox" Grid.Column="1" DisplayMemberPath="HostingUnitType" HorizontalAlignment="Left" Height="Auto" ItemsSource="{Binding}" Margin="3" Grid.Row="3" VerticalAlignment="Center" Width="120" SelectionChanged="hostingUnitTypeComboBox_SelectionChanged">
                                 <ComboBox.ItemsPanel>
@@ -117,7 +117,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Button x:Name="pb_addOrder" Content="Add Order" Padding="10" Margin="5" Click="pb_addOrder_Click" IsEnabled="False" Grid.Column="5"/>
-                        <Button x:Name="pb_sendMail" Content="Send Mail" Padding="10" Margin="5" Grid.Column="4" IsEnabled="False" Click="pb_sendMail_Click"/>
+                        <Button x:Name="pb_sendMail" Content="Send Mail" Padding="10" Margin="5" Grid.Column="4" IsEnabled="False" Click="pb_sendMail_Click" Background="{x:Null}"/>
                         <Button x:Name="pb_back" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10"  Grid.Column="0" Click="Pb_back_Click"/>
                     </Grid>
                     <DataGrid x:Name="dg_guestRequestDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" IsReadOnly="True" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="dg_guestRequestDataGrid_SelectionChanged">

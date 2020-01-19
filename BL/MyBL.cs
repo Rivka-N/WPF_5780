@@ -74,6 +74,7 @@ namespace BL
                 addOrder(ord);//send to the function which adds the order to the order list
 
                 #region send mail
+                
                 MailMessage mail = new MailMessage();
                 mail.To.Add(guest.Mail);
                 mail.From = new MailAddress("amazingvacations169@gmail.com", "Amazing Vacations");
@@ -440,7 +441,7 @@ namespace BL
             {
                 HostingUnit toDelete = findUnit(unit);
                 var orders = ordersOfUnit(unit).ToList();//all orders with unit as their unit key into list
-                if (orders == null)//no orders for that unit
+                if (orders.Count == 0)//no orders for that unit
                     myDAL.deleteUnit(toDelete);
                 else
                 {
@@ -523,16 +524,19 @@ namespace BL
                 throw new InvalidException("invalid unit name");
             if (hostingUnit1.Host.Phone == 0)//not set
                 throw new InvalidException("invalid phone number");
-            try
-            {
-                myDAL.addHostingUnit(hostingUnit1);//adds unit
-                return true;
-            }
-            catch(Exception ex)
-            {
-                throw new InvalidException(ex.Message + ": unable to add unit");
-            }
+            return true;
+            //try
+            //{
+            //    myDAL.addHostingUnit(hostingUnit1);//adds unit
+            //    return true;
+            //}
+            //catch(Exception ex)
+            //{
+            //    throw new InvalidException(ex.Message + ": unable to add unit");
+            //}
         }
+
+
 
         #endregion
         #region guest and host checks for pl
