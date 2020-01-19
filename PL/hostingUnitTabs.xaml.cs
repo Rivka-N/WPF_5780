@@ -24,7 +24,7 @@ namespace PL
         HostingUnit unit;
         List<Order> myOrders;
         List<GuestRequest> addOrders;
-        
+        #region c-tors
         public hostingUnitTabs(HostingUnit hosting)
         {
             myBL = BL.factoryBL.getBL();
@@ -48,7 +48,7 @@ namespace PL
         {
             tc_mainControl.SelectedIndex = tab;//selects required tab
         }
-
+        #endregion
         #region windows events
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -95,13 +95,13 @@ namespace PL
 
         #endregion
         #region reset date
-        //not done
         private void Dp_SelectedDateChanged(object sender, SelectionChangedEventArgs e)//changes date back to original date selected
+        //not done
         {
             if (sender is DatePicker)
                 if (tc_mainControl.SelectedItem == tab_addOrders)
                     if (dg_guestRequestDataGrid.SelectedItem != null)//there's an item selected
-                    { if (dg_guestRequestDataGrid.SelectedCells != null)
+                    { if (dg_guestRequestDataGrid.SelectedCells != null)//check which one is selected
                             (sender as DatePicker).SelectedDate = (dg_guestRequestDataGrid.SelectedItem as GuestRequest).Registration;
                     }
                     //change each date based on what's relevent
@@ -113,7 +113,7 @@ namespace PL
 
 #endregion
 
-#region add order datagrid
+    #region addOrder datagrid
 
         private void dg_guestRequestDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -144,30 +144,43 @@ namespace PL
             }
         }
         #endregion
-        #region button clicks add order
+        #region button addOrder
         private void pb_addOrder_Click(object sender, RoutedEventArgs e)//adds final order. deletes from the rest
         {
             try
             {
                 if (dg_guestRequestDataGrid.SelectedItem != null && dg_guestRequestDataGrid.SelectedItem is GuestRequest)
                 {
+                    myBL.order(unit, (GuestRequest)dg_guestRequestDataGrid.SelectedItem);
                     //update order to closed, change status everywhere and delete other orders with guest...
                 }
                 else MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("error! " + ex.Message, "error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void pb_sendMail_Click(object sender, RoutedEventArgs e)
-        {//Order newOrder= new Order();//creates new order
-         //newOrder.CreateDate = DateTime.Now;
-         //newOrder.GuestName=dg_guestRequestDataGrid.SelectedItem
-         //myBL.addOrder(newOrder);//adds order
-         //add request to orders and update status or update order to closed and status everywhere
-         //sends mail and adds order
+        {
+            try
+            {
+                if (dg_guestRequestDataGrid.SelectedItem != null && dg_guestRequestDataGrid.SelectedItem is GuestRequest)
+                {
+                   //needs to send mail, add order, update guest status and add to num suggestions?
+                }
+                else
+                    MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+
+            }
+            catch
+            {
+                MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+
         }
         #endregion
 

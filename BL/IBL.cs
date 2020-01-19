@@ -12,18 +12,18 @@ namespace BL
     {
         #region guest functions
         void addGuest(GuestRequest guest);
-        void addHostingUnit(HostingUnit unit);
         List<GuestRequest> getRequests();
         List<GuestRequest> getRequests(Func<GuestRequest, bool> p);
         GuestRequest findGuest(GuestRequest g1, string text);//puts text as g1's number and returns instance of it in ds if found
         #endregion
 
         #region hosting Units
+        void addHostingUnit(HostingUnit unit);
         HostingUnit findUnit(int unitKey);
+
         List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest);//find hostingUnit accoerding to the guestRequest
         List<HostingUnit> getAllHostingUnits();
         List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> p);
-        //List<Order> ordersByUnit();
         void deleteUnit(int unit);
         void changeUnit(HostingUnit hostingUnit1);
         List<HostingUnit> searchUnits(string text, Enums.FunctionSender fs=0);
