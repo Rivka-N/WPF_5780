@@ -8,7 +8,7 @@
        xmlns:BE="clr-namespace:BE;assembly=BE" 
       d:DesignHeight="450" d:DesignWidth="800"
         Closing="Window_Closing"
-        Title="Personal Area" Height="450" Width="800">
+        Title="Personal Area" Height="450" Width="800" Loaded="Window_Loaded_1">
     <Window.Resources>
         <CollectionViewSource x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
         <Style TargetType="TextBox">
@@ -24,9 +24,10 @@
             <Setter Property="Width" Value="auto"/>
             <Setter Property="MinHeight" Value="100"/>
         </Style>
+        <CollectionViewSource x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:GuestRequest}, CreateList=True}"/>
     </Window.Resources>
     <Grid>
-        <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <TabControl x:Name="tc_mainControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TabItem Name="tab_updateDeleteUnit" Header="delete /update unit" Selector.Unselected="Tab_updateDeleteUnit_Unselected">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -101,7 +102,7 @@
                 </Grid>
             </TabItem>
             <TabItem Name="tab_addOrders" Header="add order" Selector.Unselected="Tab_addOrders_Unselected">
-                <Grid>
+                <Grid DataContext="{StaticResource guestRequestViewSource}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
@@ -119,44 +120,33 @@
                         <Button x:Name="pb_sendMail" Content="Send Mail" Padding="10" Margin="5" Grid.Column="4" IsEnabled="False" Click="pb_sendMail_Click"/>
                         <Button x:Name="pb_back" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10"  Grid.Column="0" Click="Pb_back_Click"/>
                     </Grid>
-                    <Grid DataContext="{Binding}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="127*"/>
-                            <ColumnDefinition Width="659*"/>
-                        </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="dg_addOrder" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False" AlternatingRowBackground="AliceBlue" IsReadOnly="True" SelectionChanged="orderDataGrid_SelectionChanged" Grid.ColumnSpan="2">
-                            <DataGrid.Resources>
-                                <Style TargetType="DataGridRow">
-                                    <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
-                                </Style>
-                            </DataGrid.Resources>
-                            <DataGrid.Columns>
-                                <DataGridTextColumn x:Name="hostingUnitKeyColumn" Width="*" Header="Hosting Unit Key" IsReadOnly="True" Binding="{Binding HostingUnitKey}"/>
-                                <DataGridTextColumn x:Name="orderKeyColumn" Width="*" Header="Order Key" IsReadOnly="True" Binding="{Binding OrderKey}"/>
-                                <DataGridTemplateColumn x:Name="createDateColumn" Width="100" Header="Create Date" IsReadOnly="True">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <DatePicker SelectedDate="{Binding CreateDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectedDateChanged="Dp_requestDate_SelectedDateChanged"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
+                    <DataGrid x:Name="dg_guestRequestDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" IsReadOnly="True" RowDetailsVisibilityMode="VisibleWhenSelected">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="*" MinWidth="100" IsReadOnly="True"/>
+                            <DataGridTextColumn x:Name="lastNameColumn" Binding="{Binding LastName}" Header="Last Name" Width="*" MinWidth="100" IsReadOnly="True"/>
+                            <DataGridTemplateColumn x:Name="entryDateColumn" Header="Entry Date" Width="*" MinWidth="100" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding EntryDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectedDateFormat="Short" Focusable="false" SelectedDateChanged="Dp_SelectedDateChanged"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn x:Name="releaseDateColumn" Header="Release Date" Width="*" MinWidth="100" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding ReleaseDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectedDateFormat="Short" Focusable="false" SelectedDateChanged="Dp_SelectedDateChanged"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridCheckBoxColumn x:Name="gardenColumn" Binding="{Binding Garden}" Header="Garden" Width="SizeToHeader" IsReadOnly="True"/>
+                            <DataGridCheckBoxColumn x:Name="jacuzziColumn" Binding="{Binding Jacuzzi}" Header="Jacuzzi" Width="SizeToHeader" IsReadOnly="True"/>
+                            <DataGridCheckBoxColumn x:Name="poolColumn" Binding="{Binding Pool}" Header="Pool" Width="SizeToHeader" IsReadOnly="True"/>
+                            <DataGridTextColumn x:Name="mealColumn" Binding="{Binding Meal}" Header="Meal" Width="*" MinWidth="50" IsReadOnly="True"/>
 
-                                <DataGridTextColumn x:Name="guestRequestKeyColumn" Width="*" Header="Guest Request Key" IsReadOnly="True" Binding="{Binding GuestRequestKey}"/>
-                                <DataGridTextColumn x:Name="guestNameColumn" Width="*" Header="Guest Name" IsReadOnly="True" Binding="{Binding GuestName}"/>
-                                <DataGridTemplateColumn x:Name="orderDateColumn" Width="*" Header="Order Date" IsReadOnly="True">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <DatePicker SelectedDate="{Binding OrderDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectedDateChanged="Dp_requestDate_SelectedDateChanged"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTextColumn x:Name="statusColumn" Width="*" Header="Status" IsReadOnly="True" Binding="{Binding Status}"/>
-
-
-                            </DataGrid.Columns>
-
-                        </DataGrid>
-                    </Grid>
+                            <DataGridTextColumn x:Name="numAdultColumn" Binding="{Binding NumAdult}" Header="Adults" Width="*" MinWidth="50" IsReadOnly="True"/>
+                            <DataGridTextColumn x:Name="numChildrenColumn" Binding="{Binding NumChildren}" Header="Children" Width="*" MinWidth="50" IsReadOnly="true"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem Name="tab_closedOrders" Header="Closed Orders">
@@ -165,34 +155,34 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <Grid DataContext="{Binding}">
+                    <Grid DataContext="{Binding}" >
                         <DataGrid x:Name="dg_orderDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected">
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn x:Name="dg_addOrdercreateDateColumn" Header="Create Date" Width="SizeToHeader">
+                                <DataGridTemplateColumn x:Name="dg_addOrdercreateDateColumn" Header="Create Date" Width="SizeToHeader" MinWidth="100" IsReadOnly="True">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <DatePicker SelectedDate="{Binding CreateDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                            <DatePicker SelectedDate="{Binding CreateDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectedDateFormat="Short" Focusable="false" SelectedDateChanged="Dp_SelectedDateChanged" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn x:Name="dg_addOrderguestNameColumn" Binding="{Binding GuestName}" Header="Guest Name" Width="*"/>
-                                <DataGridTextColumn x:Name="dg_addOrderRequestKeyColumn" Binding="{Binding GuestRequestKey}" Header="Guest Request Key" Width="*"/>
-                                <DataGridTextColumn x:Name="dg_addOrderhostingUnitKeyColumn" Binding="{Binding HostingUnitKey}" Header="Hosting Unit Key" Width="*"/>
-                                <DataGridTextColumn x:Name="dg_addOrderhostNameColumn" Binding="{Binding HostName}" Header="Host Name" Width="*"/>
-                                <DataGridTemplateColumn x:Name="dg_addorderDateColumn" Header="Order Date" Width="*">
+                                <DataGridTextColumn x:Name="dg_addOrderguestNameColumn" Binding="{Binding GuestName}" Header="Guest Name" Width="*" MinWidth="100" IsReadOnly="True"/>
+                                <DataGridTextColumn x:Name="dg_addOrderRequestKeyColumn" Binding="{Binding GuestRequestKey}" Header="Guest Request Key" Width="*" MinWidth="100" IsReadOnly="True"/>
+                                <DataGridTextColumn x:Name="dg_addOrderhostingUnitKeyColumn" Binding="{Binding HostingUnitKey}" Header="Hosting Unit Key" Width="*" MinWidth="100" IsReadOnly="True"/>
+                                <DataGridTextColumn x:Name="dg_addOrderhostNameColumn" Binding="{Binding HostName}" Header="Host Name" Width="*" MinWidth="100" IsReadOnly="True"/>
+                                <DataGridTemplateColumn x:Name="dg_addorderDateColumn" Header="Order Date" Width="*" MinWidth="100" IsReadOnly="True">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <DatePicker SelectedDate="{Binding OrderDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                            <DatePicker SelectedDate="{Binding OrderDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectedDateFormat="Short" Focusable="false" SelectedDateChanged="Dp_SelectedDateChanged"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn x:Name="dg_addOrderKey" Binding="{Binding OrderKey}" Header="Order Key" Width="*"/>
-                                <DataGridTextColumn x:Name="dg_addOrderstatus" Binding="{Binding Status}" Header="Status" Width="*"/>
+                                <DataGridTextColumn x:Name="dg_addOrderKey" Binding="{Binding OrderKey}" Header="Order Key" Width="*" MinWidth="100" IsReadOnly="True"/>
+                                <DataGridTextColumn x:Name="dg_addOrderstatus" Binding="{Binding Status}" Header="Status" Width="*" MinWidth="100" IsReadOnly="True"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
                     <Grid Grid.Row="1" Background="DarkSeaGreen">
-                    <Button x:Name="pb_ClosedOrdersBack" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10"  Grid.Column="0" Click="Pb_back_Click"/>
+                        <Button x:Name="pb_ClosedOrdersBack" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10"  Grid.Column="0" Click="Pb_back_Click"/>
                     </Grid>
                 </Grid>
             </TabItem>

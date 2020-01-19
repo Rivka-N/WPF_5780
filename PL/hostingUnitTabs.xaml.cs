@@ -23,7 +23,7 @@ namespace PL
         IBL myBL;
         HostingUnit unit;
         List<Order> myOrders;
-        List<Order> addOrders;
+        List<GuestRequest> addOrders;
         
         public hostingUnitTabs(HostingUnit hosting)
         {
@@ -36,8 +36,8 @@ namespace PL
             dg_orderDataGrid.ItemsSource = myOrders;//all closed orders from this host
 
             //sets addOrders data grid source
-            addOrders = myBL.getOrders(ord => ord.HostingUnitKey == unit.HostingUnitKey && (ord.Status == Enums.OrderStatus.Mailed || ord.Status == Enums.OrderStatus.Started));
-            dg_addOrder.ItemsSource = addOrders;
+            addOrders = unit.guestForUnit;
+            dg_guestRequestDataGrid.ItemsSource = addOrders;
 
             //set enums also
             dg_updateUnitGrid.DataContext = unit;
@@ -72,6 +72,8 @@ namespace PL
        
         private void Tab_updateDeleteUnit_Unselected(object sender, RoutedEventArgs e)
         {
+            addOrders = unit.guestForUnit;//make sure it was filtered through again
+            dg_guestRequestDataGrid.ItemsSource = addOrders;
             //resets available orders from non- mailed orders based on what's relevent now
         }
         private void Tab_addOrders_Unselected(object sender, RoutedEventArgs e)
@@ -83,21 +85,27 @@ namespace PL
             dg_orderDataGrid.ItemsSource = myOrders;//all closed orders from this host
 
             //resets addOrders data grid source
-            addOrders = myBL.getOrders(ord => ord.HostingUnitKey == unit.HostingUnitKey && (ord.Status == Enums.OrderStatus.Mailed || ord.Status == Enums.OrderStatus.Started));
-            dg_addOrder.ItemsSource = addOrders;
+            addOrders = unit.guestForUnit;//sets to all available guests for adding
+            dg_guestRequestDataGrid.ItemsSource = addOrders;
         }
 
         #endregion
         #region reset date
-        private void Dp_Registration_SelectedDateChanged(object sender, SelectionChangedEventArgs e)//changes date back to original date selected
+        //not done
+        private void Dp_SelectedDateChanged(object sender, SelectionChangedEventArgs e)//changes date back to original date selected
         {
-            if (sender is DatePicker && 
-                .SelectedItem!=null)
-            {
-                (sender as DatePicker).SelectedDate = (ds_guestRequestDataGrid.SelectedItem as GuestRequest).Registration;
-
-            }
-}
+            if (sender is DatePicker)
+                if (tc_mainControl.SelectedItem == tab_addOrders)
+                    if (dg_addOrder.SelectedItem != null)//there's an item selected
+                    { if (dg_addOrder.SelectedCells != null)
+                            (sender as DatePicker).SelectedDate = (dg_addOrder.SelectedItem as GuestRequest).Registration;
+                    }
+                    //change each date based on what's relevent
+                    else
+                        if (tc_mainControl.SelectedItem == tab_closedOrders)
+                        if (dg_orderDataGrid.SelectedItem != null)
+                            (sender as DatePicker).SelectedDate = (dg_orderDataGrid.SelectedItem as Order).CreateDate;//find which date is selected and only change that one?
+        }
 
 #endregion
 
@@ -294,9 +302,16 @@ private void pb_addOrder_Click(object sender, RoutedEventArgs e)//what does this
         }
 
 
+
         #endregion //not finish
 
-      
+        private void Window_Loaded_1(object sender, RoutedEventArgs e)
+        {
+
+            System.Windows.Data.CollectionViewSource guestRequestViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("guestRequestViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // guestRequestViewSource.Source = [generic data source]
+        }
     }
 }
 
