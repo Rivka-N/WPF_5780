@@ -26,7 +26,7 @@ namespace DS
         private static void initData()
         {
             #region addGeustRequest
-            guestRequests.Add(new GuestRequest() { GuestRequestKey = 10000011, Name = "miri", LastName = "green", Mail = new System.Net.Mail.MailAddress("miri@gmail.com"), Status = Enums.OrderStatus.Started, Registration = new DateTime(2020, 01, 01), EntryDate = new DateTime(2020, 01, 10), ReleaseDate = new DateTime(2020, 01, 15), AreaVacation = Enums.Area.Center, SubArea = "Tel Aviv", TypeOfUnit = Enums.HostingUnitType.Hotel, NumAdult = 2, NumChildren = 5, Pool = Enums.Preference.Yes, Jacuzzi = Enums.Preference.No, Garden = Enums.Preference.Yes, Meal= Enums.MealType.None});
+            guestRequests.Add(new GuestRequest() { GuestRequestKey = 10000011, Name = "miri", LastName = "green", Mail = new System.Net.Mail.MailAddress("rgrin4365@gmail.com"), Status = Enums.OrderStatus.Started, Registration = new DateTime(2020, 01, 01), EntryDate = new DateTime(2020, 01, 10), ReleaseDate = new DateTime(2020, 01, 15), AreaVacation = Enums.Area.Center, SubArea = "Tel Aviv", TypeOfUnit = Enums.HostingUnitType.Hotel, NumAdult = 2, NumChildren = 5, Pool = Enums.Preference.Yes, Jacuzzi = Enums.Preference.No, Garden = Enums.Preference.Yes, Meal= Enums.MealType.None});
             guestRequests.Add(new GuestRequest() { GuestRequestKey = 10000012, Name = "gal", LastName = "bloom", Mail = new System.Net.Mail.MailAddress("gal@gmail.com"), Status = Enums.OrderStatus.Started, Registration = new DateTime(2019, 12, 31), EntryDate = new DateTime(2020, 02, 01), ReleaseDate = new DateTime(2019, 02, 10), AreaVacation = Enums.Area.Galil, SubArea = "Tel Aviv", TypeOfUnit = Enums.HostingUnitType.Hotel, NumAdult = 2, NumChildren = 5, Pool = Enums.Preference.Yes, Jacuzzi = Enums.Preference.Yes, Garden = Enums.Preference.No, Meal= Enums.MealType.Half});
             guestRequests.Add(new GuestRequest() { GuestRequestKey = 10000013, Name = "ben", LastName = "lev", Mail = new System.Net.Mail.MailAddress("lev@gmail.com"), Status = Enums.OrderStatus.Started, Registration = new DateTime(2020, 01, 14), EntryDate = new DateTime(2020, 01, 20), ReleaseDate = new DateTime(2020, 01, 28), AreaVacation = Enums.Area.Golan, SubArea = "Tel Aviv", TypeOfUnit = Enums.HostingUnitType.Hotel, NumAdult = 2, NumChildren = 5, Pool = Enums.Preference.No, Jacuzzi = Enums.Preference.Yes, Garden = Enums.Preference.Yes, Meal = Enums.MealType.Full});
             #endregion
@@ -50,11 +50,11 @@ namespace DS
             hostingUnits.Add(new HostingUnit() { HostingUnitKey = 10000003, HostingUnitName = "c", Host = hosts[0], AreaVacation = Enums.Area.Golan, HostingUnitType = Enums.HostingUnitType.Camping, Pool = Enums.Preference.No, NumAdult = 10, NumChildren = 2, Jacuzzi = Enums.Preference.No, Garden = Enums.Preference.Yes, Meal=Enums.MealType.Half });
             #endregion
 
-            #region addOrders
-            orders.Add(new Order() { HostingUnitKey = 10000001, GuestRequestKey = 10000011, OrderKey = 10000111, OrderDate = new DateTime(2020, 01, 01), CreateDate= new DateTime(2020, 01, 01), Status=Enums.OrderStatus.Mailed });
-            orders.Add(new Order() { HostingUnitKey = 10000002, GuestRequestKey = 10000012, OrderKey = 10000112, OrderDate = new DateTime(2020, 01, 10), CreateDate=new DateTime(2020,01,01), Status=Enums.OrderStatus.Closed });
-            orders.Add(new Order() { HostingUnitKey = 10000003, GuestRequestKey = 10000013, OrderKey = 10000113, OrderDate = new DateTime(2020, 01, 15), CreateDate = new DateTime(2019, 08, 03), Status=Enums.OrderStatus.Closed });
-            #endregion
+            //#region addOrders
+            //orders.Add(new Order() { HostingUnitKey = 10000001, GuestRequestKey = 10000011, OrderKey = 10000111, OrderDate = new DateTime(2020, 01, 01), CreateDate= new DateTime(2020, 01, 01), Status=Enums.OrderStatus.Mailed });
+            //orders.Add(new Order() { HostingUnitKey = 10000002, GuestRequestKey = 10000012, OrderKey = 10000112, OrderDate = new DateTime(2020, 01, 10), CreateDate=new DateTime(2020,01,01), Status=Enums.OrderStatus.Closed });
+            //orders.Add(new Order() { HostingUnitKey = 10000003, GuestRequestKey = 10000013, OrderKey = 10000113, OrderDate = new DateTime(2020, 01, 15), CreateDate = new DateTime(2019, 08, 03), Status=Enums.OrderStatus.Closed });
+            //#endregion
 
            
 

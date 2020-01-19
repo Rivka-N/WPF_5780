@@ -33,6 +33,7 @@ namespace PL
             bL = factoryBL.getBL();
             areaVacationComboBox.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
             hostingUnitTypeComboBox.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
+           
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -229,6 +230,11 @@ namespace PL
         }
 
         private void hostingUnitKeyTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

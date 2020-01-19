@@ -121,7 +121,7 @@ namespace PL
             {
                 GuestRequest row = (GuestRequest)dg_guestRequestDataGrid.SelectedItem;
                 var curOrder=myBL.getOrders(ord => ord.GuestRequestKey == row.GuestRequestKey && ord.HostingUnitKey == unit.HostingUnitKey);//finds the applicable order
-                { if (curOrder==null)//there is no order existing yet
+                { if (curOrder.Count == 0)//there is no order existing yet
                     pb_sendMail.IsEnabled = true;//has to send mail first
                  else 
                     { if (curOrder[0].Status == Enums.OrderStatus.Mailed)//already sent mail
@@ -168,6 +168,7 @@ namespace PL
             {
                 if (dg_guestRequestDataGrid.SelectedItem != null && dg_guestRequestDataGrid.SelectedItem is GuestRequest)
                 {
+                    myBL.sendGuestMail(unit, (GuestRequest)dg_guestRequestDataGrid.SelectedItem);
                    //needs to send mail, add order, update guest status and add to num suggestions?
                 }
                 else

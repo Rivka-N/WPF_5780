@@ -48,6 +48,7 @@ namespace BL
         List<GuestRequest> searchRequests(DateTime? selectedDate, string query, Enums.FunctionSender owner);//all statuses selected
         List<Order> searchOrders(DateTime? selectedDate, string text, Enums.FunctionSender owner, Enums.OrderStatus status = Enums.OrderStatus.Closed);
         string printOrdersByUnit(int unitNum);
+        void sendGuestMail(HostingUnit unit, GuestRequest guest);//guest and hosting unit, sends mail to guest and creates order from details
 
         //not finished functions
         /*   void mail(List<HostingUnit> Offers);//sends mail to the guest with all the hostingUnits which appropriate. 

@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Mail;
 
 namespace BL
 {
@@ -71,15 +72,39 @@ namespace BL
                 ord.GuestRequestKey = guest.GuestRequestKey;
                 ord.OrderDate = guest.Mailed;
                 addOrder(ord);//send to the function which adds the order to the order list
-            }
-            catch(Exception ex)
+
+                #region send mail
+                MailMessage mail = new MailMessage();
+                mail.To.Add(guest.Mail);
+                mail.From = new MailAddress("amazingvacations169@gmail.com", "Amazing Vacations");
+                mail.Subject = "Hosting Unit Offer";
+                mail.Body = "We found a " + guest.TypeOfUnit + " for you.\n Here are the details:\n" + unit.ToString() +
+                    "Please respond to " + unit.Host.Mail + " and finalize the details\n";//change the to string
+
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+
+                 smtp.Credentials = new System.Net.NetworkCredential("amazingvacations169@gmail.com",
+                "vacation169");
+                smtp.EnableSsl = true;
+                
+        
+                smtp.Send(mail);//send mail
+
+                #endregion
+
+            
+
+}
+            catch (Exception ex)
             {
-                throw new InvalidException("unable to send mail: "+ex.Message);
+                throw new InvalidException("unable to send mail: " + ex.Message);
             }
         }
-        public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with the list of units to the guest
+        public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with guest details to the host
         {
             //sends mail to the guest
+            
             guest.Mailed = new DateTime();
 
         }
@@ -150,7 +175,7 @@ namespace BL
                 Order thisOrder = findOrder(guest, unit);
                 myDAL.deleteOrders(order => { return order.GuestRequestKey == thisOrder.GuestRequestKey && order.HostingUnitKey != thisOrder.HostingUnitKey; });
                 //deletes orders with the same guestrequestKey as this one
-                myDAL.changeOrder(order => order == thisOrder, order => { order.Status = Enums.OrderStatus.Closed; return order; });
+                myDAL.changeOrder(order => order.OrderDate==thisOrder.OrderDate, order => { order.Status = Enums.OrderStatus.Closed; return order; });
                 //changes current order status
                 myDAL.changeStatus(guest, Enums.OrderStatus.Closed);//changes guest status
                 int numDays = numOfDays(guest.EntryDate, guest.ReleaseDate);
