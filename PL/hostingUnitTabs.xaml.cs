@@ -88,8 +88,21 @@ namespace PL
         }
 
         #endregion
-        #region add order tab
-        private void pb_addOrder_Click(object sender, RoutedEventArgs e)//what does this do?
+        #region reset date
+        private void Dp_Registration_SelectedDateChanged(object sender, SelectionChangedEventArgs e)//changes date back to original date selected
+        {
+            if (sender is DatePicker && 
+                .SelectedItem!=null)
+            {
+                (sender as DatePicker).SelectedDate = (ds_guestRequestDataGrid.SelectedItem as GuestRequest).Registration;
+
+            }
+}
+
+#endregion
+
+#region add order tab
+private void pb_addOrder_Click(object sender, RoutedEventArgs e)//what does this do?
         {
             try
             {
