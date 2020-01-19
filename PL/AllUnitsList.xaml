@@ -63,6 +63,7 @@
             </Grid.ColumnDefinitions>
             <Button x:Name="pb_addUnit" Content="Add Unit" Padding="10" Margin="5" Click="AddUnit_Click" Grid.Column="5"/>
             <Button x:Name="pb_changeUnit" Content="Update Unit" Padding="10" Margin="5" Grid.Column="4" IsEnabled="False" Click="Pb_changeUnit_Click"/>
+            <Button x:Name="pb_order" Content="Add Order" Padding="10" Margin="5" Grid.Column="3" IsEnabled="False" Click="pb_order_Click"/>
             <Button x:Name="pb_back" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10" Grid.Column="0" Click="Pb_back_Click"/>
         </Grid>
         <DataGrid x:Name="dg_hostingUnitDataGrid" AutoGenerateColumns="False" AlternatingRowBackground="AliceBlue" IsReadOnly="True" EnableRowVirtualization="True" ItemsSource="{Binding}" Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="Dg_hostingUnitDataGrid_SelectionChanged">

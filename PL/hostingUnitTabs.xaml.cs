@@ -44,6 +44,11 @@ namespace PL
             
            
         }
+        public hostingUnitTabs(HostingUnit hosting, int tab): this(hosting)
+        {
+            tc_mainControl.SelectedIndex = tab;//selects required tab
+        }
+
         #region windows events
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -78,14 +83,13 @@ namespace PL
         }
         private void Tab_addOrders_Unselected(object sender, RoutedEventArgs e)
         {
-            //resets orders shown after added order
 
             //resets closed orders
             myOrders = myBL.getOrders(ord => ord.Status == Enums.OrderStatus.Closed && unit.HostingUnitKey == ord.HostingUnitKey);//sets source for orders
             dg_orderDataGrid.ItemsSource = myOrders;//all closed orders from this host
 
             //resets addOrders data grid source
-            addOrders = unit.guestForUnit;//sets to all available guests for adding
+            addOrders = unit.guestForUnit;//sets to all available guests for adding (minus the one already added)
             dg_guestRequestDataGrid.ItemsSource = addOrders;
         }
 
@@ -109,26 +113,7 @@ namespace PL
 
 #endregion
 
-#region add order tab
-private void pb_addOrder_Click(object sender, RoutedEventArgs e)//what does this do?
-        {
-            try
-            {
-                if (dg_guestRequestDataGrid.SelectedItem != null && dg_guestRequestDataGrid.SelectedItem is GuestRequest)
-                {
-                    //Order newOrder= new Order();//creates new order
-                    //newOrder.CreateDate = DateTime.Now;
-                    //newOrder.GuestName=dg_guestRequestDataGrid.SelectedItem
-                    //myBL.addOrder(newOrder);//adds order
-                    //add request to orders and update status or update order to closed and status everywhere
-                }
-                else MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch
-            {
-                MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+#region add order datagrid
 
         private void dg_guestRequestDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -158,10 +143,31 @@ private void pb_addOrder_Click(object sender, RoutedEventArgs e)//what does this
 
             }
         }
+        #endregion
+        #region button clicks add order
+        private void pb_addOrder_Click(object sender, RoutedEventArgs e)//adds final order. deletes from the rest
+        {
+            try
+            {
+                if (dg_guestRequestDataGrid.SelectedItem != null && dg_guestRequestDataGrid.SelectedItem is GuestRequest)
+                {
+                    //update order to closed, change status everywhere and delete other orders with guest...
+                }
+                else MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch
+            {
+                MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         private void pb_sendMail_Click(object sender, RoutedEventArgs e)
-        {
-
+        {//Order newOrder= new Order();//creates new order
+         //newOrder.CreateDate = DateTime.Now;
+         //newOrder.GuestName=dg_guestRequestDataGrid.SelectedItem
+         //myBL.addOrder(newOrder);//adds order
+         //add request to orders and update status or update order to closed and status everywhere
+         //sends mail and adds order
         }
         #endregion
 

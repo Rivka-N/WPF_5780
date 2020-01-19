@@ -53,7 +53,17 @@ namespace PL
             
         }
 
+        private void pb_order_Click(object sender, RoutedEventArgs e)
+        {
+            if (dg_hostingUnitDataGrid.SelectedItem != null && dg_hostingUnitDataGrid.SelectedItem is HostingUnit)
+            {
+                new hostingUnitTabs((HostingUnit)dg_hostingUnitDataGrid.SelectedItem, 1).Show();
+                closeOpenMain = false;//don't open main after closing
+                this.Close();
+            }
+            else MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
 
+        }
         private void AddUnit_Click(object sender, RoutedEventArgs e)//make sure unit gets added to list
         {
             new newHostingUnit().ShowDialog();
@@ -80,10 +90,13 @@ namespace PL
             if (dg_hostingUnitDataGrid.CurrentItem != null)//something was selected
             {
                 pb_changeUnit.IsEnabled = true;//allows button clicks
+                if (((HostingUnit)dg_hostingUnitDataGrid.CurrentItem).Host.CollectionClearance)//if he has collection clearance
+                 pb_order.IsEnabled = true;
             }
             else
             {
                 pb_changeUnit.IsEnabled = false;//otherwise disables them
+                pb_order.IsEnabled = false;
             }
         }
         #endregion
@@ -139,6 +152,7 @@ namespace PL
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
         }
+
 
         #endregion
 
