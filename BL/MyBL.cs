@@ -70,11 +70,11 @@ namespace BL
                 Order ord = new Order(guest.Registration);//makes new order
                 ord.HostingUnitKey = unit.HostingUnitKey;
                 ord.GuestRequestKey = guest.GuestRequestKey;
-                ord.OrderDate = guest.Mailed;
+                ord.OrderDate = DateTime.Today;//sent mail today
                 addOrder(ord);//send to the function which adds the order to the order list
 
                 #region send mail
-                
+
                 MailMessage mail = new MailMessage();
                 mail.To.Add(guest.Mail);
                 mail.From = new MailAddress("amazingvacations169@gmail.com", "Amazing Vacations");
@@ -85,15 +85,14 @@ namespace BL
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = "smtp.gmail.com";
 
-                 smtp.Credentials = new System.Net.NetworkCredential("amazingvacations169@gmail.com",
-                "vacation169");
+                smtp.Credentials = new System.Net.NetworkCredential("amazingvacations169@gmail.com",
+               "vacation169");
                 smtp.EnableSsl = true;
-                
-        
+
+
                 smtp.Send(mail);//send mail
 
                 #endregion
-
             
 
 }
@@ -104,13 +103,11 @@ namespace BL
         }
         public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with guest details to the host
         {
-            //sends mail to the guest
-            
-            guest.Mailed = new DateTime();
+            //sends mail to the host
 
         }
 
-        public bool available(HostingUnit unit, GuestRequest guest)//checks if guest request's dates are available in this unit
+        public bool availableDates(HostingUnit unit, GuestRequest guest)//checks if guest request's dates are available in this unit
         {
             try
             {
@@ -126,15 +123,15 @@ namespace BL
                 }
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
-                throw new InvalidException("index out of bounds");
+                throw new InvalidException(ex.Message);
             }
-            
+
         }
 
         public void checkOrder(Host h1, HostingUnit hu1, GuestRequest g1, GuestRequest foundGuest)
-            //checks if it's a valid order and adds it to orders
+        //checks if it's a valid order and adds it to orders
         {
             if (h1.HostKey != hu1.Host.HostKey)
                 throw new InvalidException("host details don't match");
@@ -153,7 +150,7 @@ namespace BL
             return ans;
         }
         public void order(HostingUnit unit, GuestRequest guest)//final order
-                                                                //makes sure that the days in the request available
+                                                               //makes sure that the days in the request available
                                                                //update guest status
                                                                //take off transaction fee
         {
@@ -176,13 +173,13 @@ namespace BL
                 Order thisOrder = findOrder(guest, unit);
                 myDAL.deleteOrders(order => { return order.GuestRequestKey == thisOrder.GuestRequestKey && order.HostingUnitKey != thisOrder.HostingUnitKey; });
                 //deletes orders with the same guestrequestKey as this one
-                myDAL.changeOrder(order => order.OrderDate==thisOrder.OrderDate, order => { order.Status = Enums.OrderStatus.Closed; return order; });
+                myDAL.changeOrder(order => order.OrderDate == thisOrder.OrderDate, order => { order.Status = Enums.OrderStatus.Closed; return order; });
                 //changes current order status
                 myDAL.changeStatus(guest, Enums.OrderStatus.Closed);//changes guest status
                 int numDays = numOfDays(guest.EntryDate, guest.ReleaseDate);
                 myDAL.addCharge(unit, numDays);//adds charge for number of days guest is staying
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new InvalidException(ex.Message);
             }
@@ -194,9 +191,18 @@ namespace BL
         }
 
         private Order findOrder(GuestRequest guest, HostingUnit unit)//returns the order with this hosting unit and this guest
-        {  Func<Order, bool> func= order => order.GuestRequestKey == guest.GuestRequestKey && order.HostingUnitKey == unit.HostingUnitKey;
-            var ords= getOrders(func);
+        {
+            var ords = getOrders( order => order.GuestRequestKey == guest.GuestRequestKey && order.HostingUnitKey == unit.HostingUnitKey);//gets order from guest and unit
             return ords.First();//returns first item found
+        }
+
+        private bool matchesUnit(HostingUnit unit, GuestRequest guest)//returns true if guest can be placed in this unit. false otherwise
+        {
+            if (unit.Host.CollectionClearance && guest.Status!=Enums.OrderStatus.Closed)//if the host has collection clearance and the guest isn't already booked
+                if (guest.TypeOfUnit == unit.HostingUnitType && guest.AreaVacation == unit.AreaVacation && availableDates(unit, guest))
+                    if ((guest.NumAdult+guest.NumChildren) <= (unit.NumAdult + unit.NumChildren))//if the size of the hotel almost matches request
+                        return true;//this person can be in his unit
+            return false; //can't have anyone in his unit
         }
 
         public List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest)//finds applicable units and sends mail to hosts
@@ -204,21 +210,17 @@ namespace BL
             List<HostingUnit> listOfUnits = new List<HostingUnit>();
             for (int i = 0; i < units.Count(); i++)
             {
-                if (units[i].Host.CollectionClearance)
+                if (matchesUnit(units[i], guest))//if guest can be put in his unit
                 {
-                    if (guest.TypeOfUnit == units[i].HostingUnitType && guest.AreaVacation == units[i].AreaVacation && available(units[i], guest))
-                    {
-                        if (guest.NumAdult <= units[i].NumAdult   && guest.NumChildren <= units[i].NumChildren )
-                        {
-                            listOfUnits.Add(units[i]);//adds to the guest list
-                            myDAL.addGuestToUnit(units[i], guest);                        }
-                    }
+                    listOfUnits.Add(units[i]);//adds to the guest list
+                    myDAL.addGuestToUnit(units[i], guest);
                 }
             }
             if (listOfUnits.Count() == 0)
                 throw new InvalidException("no units found");
-            mail(listOfUnits, guest);  //sends mail to all of the hosts 
-            return listOfUnits;
+        mail(listOfUnits, guest);  //sends mail to all of the hosts 
+            
+        return listOfUnits;
         }
 
         #endregion
@@ -233,7 +235,7 @@ namespace BL
         }
 
       
-        public GuestRequest findGuest(GuestRequest g1, string text)
+        public GuestRequest findGuest(GuestRequest g1, string text)//find guest based on text of guestnum.
         {
             int guestNum;
             if (!Int32.TryParse(text, out guestNum) || guestNum <= 0)
@@ -406,6 +408,22 @@ namespace BL
 
         #endregion
         #region gets
+        public List<GuestRequest> getReleventRequests(HostingUnit unit)//finds requests relevent for this unit
+        {
+            //var orders= getOrders(ord => unit.HostingUnitKey == ord.HostingUnitKey && ord.Status!=Enums.OrderStatus.Closed);//finds requests for this unit that aren't closed
+            //List<GuestRequest> relevent = new List<GuestRequest>();//makes list to keep guest requests to return 
+            //foreach (Order o in orders)//goes over orders found
+            //    relevent.Add(getRequests(req => req.GuestRequestKey == o.GuestRequestKey)[0]);//adds first of list of matching guests found to list (should only find one)
+            var guests = from g in getRequests()
+                         where matchesUnit(unit, g)
+                         select g;//selects guests the ones that can fit in unit
+            return guests.ToList();
+            //relevent.AddRange(guests.ToList());//adds guests to relevent
+            //return relevent.Distinct().ToList();//returns all the unique guests for unit 
+            
+        }
+
+
         public List<HostingUnit> getAllHostingUnits()
         {
             return myDAL.getAllHostingUnits();
@@ -677,10 +695,6 @@ namespace BL
                    group HostingUnit by HostingUnit.Host into newGroup
                    select newGroup;
         }
-
-
-
-
 
 
         #endregion

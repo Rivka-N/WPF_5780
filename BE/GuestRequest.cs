@@ -16,8 +16,6 @@ namespace BE
         public string LastName { get => lastName; set { lastName = value; } }
         System.Net.Mail.MailAddress mail;
         public System.Net.Mail.MailAddress Mail { get => mail; set { mail = value; } }
-        DateTime mailed;
-        public DateTime Mailed { get => mailed; set { mailed = value; } }
         public Enums.OrderStatus Status { get; set; }
         DateTime registration;
         public DateTime Registration { get => registration; set { registration = value; } }

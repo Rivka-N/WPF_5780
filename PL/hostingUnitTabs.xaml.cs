@@ -40,7 +40,7 @@ namespace PL
             dg_orderDataGrid.ItemsSource = myOrders;//all closed orders from this host
 
             //sets addOrders data grid source
-            addOrders = unit.guestForUnit;
+            addOrders = myBL.getReleventRequests(unit);
             dg_guestRequestDataGrid.ItemsSource = addOrders;
 
             //set enums also
@@ -84,8 +84,9 @@ namespace PL
        
         private void Tab_updateDeleteUnit_Unselected(object sender, RoutedEventArgs e)
         {
-            addOrders = unit.guestForUnit;//make sure it was filtered through again
+            addOrders = myBL.getReleventRequests(unit);
             dg_guestRequestDataGrid.ItemsSource = addOrders;
+            
             //resets available orders from non- mailed orders based on what's relevent now
         }
         private void Tab_addOrders_Unselected(object sender, RoutedEventArgs e)
@@ -96,7 +97,8 @@ namespace PL
             dg_orderDataGrid.ItemsSource = myOrders;//all closed orders from this host
 
             //resets addOrders data grid source
-            addOrders = unit.guestForUnit;//sets to all available guests for adding (minus the one already added)
+
+            addOrders = myBL.getReleventRequests(unit);//sets to all available guests for adding (minus the one already added)
             dg_guestRequestDataGrid.ItemsSource = addOrders;
         }
 
@@ -424,7 +426,7 @@ namespace PL
         {
             var guests = myBL.GuestSearchQuery(null, tb_addOrder_SearchTextBox.Text, Enums.FunctionSender.Host);//sends to function to find relevent orders
 
-            addOrders = unit.guestForUnit.Where(g => guests(g)).Select(g => g).ToList();
+            addOrders = myBL.getReleventRequests(unit).Where(g => guests(g)).Select(g => g).ToList();
             dg_guestRequestDataGrid.ItemsSource = addOrders;
 
         }

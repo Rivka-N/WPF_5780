@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="600" Width="1000"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Color x:Key="Color1">#FFB4B4B4</Color>

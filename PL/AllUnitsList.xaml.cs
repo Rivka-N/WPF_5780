@@ -149,11 +149,7 @@ namespace PL
                 closeOpenMain = true;//otherwise resets flag
         }
 
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-        }
-
-
+       
         #endregion
 
        

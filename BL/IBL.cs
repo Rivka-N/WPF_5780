@@ -22,7 +22,6 @@ namespace BL
         #region hosting Units
         void addHostingUnit(HostingUnit unit);
         HostingUnit findUnit(int unitKey);
-
         List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest);//find hostingUnit accoerding to the guestRequest
         List<HostingUnit> getAllHostingUnits();
         List<HostingUnit> getHostingUnits(Func<HostingUnit, bool> p);
@@ -33,6 +32,7 @@ namespace BL
 
         bool checkUnit(HostingUnit hostingUnit1);
 
+        List<GuestRequest> getReleventRequests(HostingUnit unit);//returns all requests that are applicable for unit
 
         #endregion
         #region calculations
@@ -44,7 +44,6 @@ namespace BL
         List<Order> getAllOrders();
         void checkOrder(Host h1, HostingUnit hu1, GuestRequest g1, GuestRequest foundGuest);
         void order(HostingUnit unit, GuestRequest guest);//add order
-        bool available(HostingUnit unit, GuestRequest guest);
         List<Order> getOrders(Func<Order, bool> predicate);
         List<GuestRequest> searchRequests(Enums.OrderStatus status, DateTime? selectedDate, string query, Enums.FunctionSender owner);
         List<GuestRequest> searchRequests(DateTime? selectedDate, string query, Enums.FunctionSender owner);//all statuses selected
