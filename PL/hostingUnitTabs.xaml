@@ -166,7 +166,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Button x:Name="pb_addOrder" Content="Add Order" Padding="10" Margin="5" Click="pb_addOrder_Click" IsEnabled="False" Grid.Column="5"/>
-                            <Button x:Name="pb_sendMail" Content="Send Mail" Padding="10" Margin="5" Grid.Column="4" IsEnabled="False" Click="pb_sendMail_Click" Background="{x:Null}"/>
+                            <Button x:Name="pb_sendMail" Content="Send Mail" Padding="10" Margin="5" Grid.Column="4" IsEnabled="False" Click="pb_sendMail_Click"/>
                             <Button x:Name="pb_back" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10"  Grid.Column="0" Click="Pb_back_Click"/>
                         </Grid>
 

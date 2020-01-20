@@ -71,7 +71,48 @@ namespace PL
         #region doubleclick
         private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+
             //same as adding order/mailing with button depending on which is available
+        }
+
+        #endregion
+        #region cell selected guests
+        private void dg_guestRequestDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dg_guestRequestDataGrid.SelectedItem != null)//something was selected
+            {
+                GuestRequest row = (GuestRequest)dg_guestRequestDataGrid.SelectedItem;
+                var curOrder = myBL.getOrders(ord => ord.GuestRequestKey == row.GuestRequestKey && ord.HostingUnitKey == unit.HostingUnitKey);//finds the applicable order
+                {
+                    if (curOrder.Count == 0)//there is no order existing yet
+                    {
+                        pb_sendMail.IsEnabled = true;//has to send mail first
+                        pb_addOrder.IsEnabled = false;//disables buttons
+                    }
+                    else
+                    {
+                        if (curOrder[0].Status == Enums.OrderStatus.Mailed)//already sent mail
+                        {
+                            pb_addOrder.IsEnabled = true;
+                            pb_sendMail.IsEnabled = false;
+
+                        }
+                        else
+                        {
+                            pb_sendMail.IsEnabled = false;
+                            pb_addOrder.IsEnabled = false;//disables buttons
+                            MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+
+                    }
+                }
+            }
+            else//selected item is null
+            {
+                pb_sendMail.IsEnabled = false;
+                pb_addOrder.IsEnabled = false;
+
+            }
         }
         #endregion
         #region back button
@@ -122,37 +163,6 @@ namespace PL
 
 #endregion
 
-         #region addOrder datagrid
-
-        private void dg_guestRequestDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (dg_guestRequestDataGrid.SelectedItem != null)//something was selected
-            {
-                GuestRequest row = (GuestRequest)dg_guestRequestDataGrid.SelectedItem;
-                var curOrder=myBL.getOrders(ord => ord.GuestRequestKey == row.GuestRequestKey && ord.HostingUnitKey == unit.HostingUnitKey);//finds the applicable order
-                { if (curOrder.Count == 0)//there is no order existing yet
-                    pb_sendMail.IsEnabled = true;//has to send mail first
-                 else 
-                    { if (curOrder[0].Status == Enums.OrderStatus.Mailed)//already sent mail
-                            pb_addOrder.IsEnabled = true;
-                        else
-                        {
-                            pb_sendMail.IsEnabled = false;
-                            pb_addOrder.IsEnabled = false;//disables buttons
-                            MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-
-                    }
-                        }
-            }
-            else//selected item is null
-            {
-                pb_sendMail.IsEnabled = false;
-                pb_addOrder.IsEnabled = false;
-
-            }
-        }
-        #endregion
         #region button addOrder
         private void pb_addOrder_Click(object sender, RoutedEventArgs e)//adds final order. deletes from the rest
         {
@@ -161,7 +171,16 @@ namespace PL
                 if (dg_guestRequestDataGrid.SelectedItem != null && dg_guestRequestDataGrid.SelectedItem is GuestRequest)
                 {
                     myBL.order(unit, (GuestRequest)dg_guestRequestDataGrid.SelectedItem);
-                    //update order to closed, change status everywhere and delete other orders with guest...
+                    
+                    //updates lists
+
+                    //sets closed orders data grid source
+                    myOrders = myBL.getOrders(ord => ord.Status == Enums.OrderStatus.Closed && unit.HostingUnitKey == ord.HostingUnitKey);//sets source for orders
+                    dg_orderDataGrid.ItemsSource = myOrders;//all closed orders from this host
+
+                    //sets addOrders data grid source
+                    addOrders = myBL.getReleventRequests(unit);
+                    dg_guestRequestDataGrid.ItemsSource = addOrders;
                 }
                 else MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
             }

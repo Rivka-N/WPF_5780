@@ -168,8 +168,11 @@ namespace BL
                 {
                     unit.Diary[start.Month, start.Day] = true;
                 }
+
+                //relevent only if using guest list in hosting units
                 myDAL.deleteGuest(guest);
                 myDAL.deleteSameDate(unit, guest);
+
                 Order thisOrder = findOrder(guest, unit);
                 myDAL.deleteOrders(order => { return order.GuestRequestKey == thisOrder.GuestRequestKey && order.HostingUnitKey != thisOrder.HostingUnitKey; });
                 //deletes orders with the same guestrequestKey as this one
@@ -410,17 +413,17 @@ namespace BL
         #region gets
         public List<GuestRequest> getReleventRequests(HostingUnit unit)//finds requests relevent for this unit
         {
-            //var orders= getOrders(ord => unit.HostingUnitKey == ord.HostingUnitKey && ord.Status!=Enums.OrderStatus.Closed);//finds requests for this unit that aren't closed
-            //List<GuestRequest> relevent = new List<GuestRequest>();//makes list to keep guest requests to return 
-            //foreach (Order o in orders)//goes over orders found
-            //    relevent.Add(getRequests(req => req.GuestRequestKey == o.GuestRequestKey)[0]);//adds first of list of matching guests found to list (should only find one)
-            var guests = from g in getRequests()
+            var orders = getOrders(ord => unit.HostingUnitKey == ord.HostingUnitKey && ord.Status != Enums.OrderStatus.Closed);//finds requests for this unit that aren't closed
+            List<GuestRequest> relevent = new List<GuestRequest>();//makes list to keep guest requests to return 
+            var releventQuery= from g in getRequests()
                          where matchesUnit(unit, g)
                          select g;//selects guests the ones that can fit in unit
-            return guests.ToList();
-            //relevent.AddRange(guests.ToList());//adds guests to relevent
-            //return relevent.Distinct().ToList();//returns all the unique guests for unit 
-            
+            relevent = releventQuery.ToList();//saves as list
+            foreach (Order o in orders)//goes over mailed orders found
+                if (relevent.Where(g => g.GuestRequestKey == o.GuestRequestKey).Select(g => g) == null)//if didn't find other requests with the same guest request key
+                    relevent.Add(getRequests(req => req.GuestRequestKey == o.GuestRequestKey)[0]);//adds first of list of guests for this order found (it should only find one)
+            return relevent;
+
         }
 
 
