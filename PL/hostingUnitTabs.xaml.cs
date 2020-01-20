@@ -36,27 +36,29 @@ namespace PL
             closeProgram = false;
 
             //sets closed orders data grid source
-            myOrders = myBL.getOrders(ord => ord.Status == Enums.OrderStatus.Closed && unit.HostingUnitKey==ord.HostingUnitKey);//sets source for orders
-            dg_orderDataGrid.ItemsSource = myOrders;//all closed orders from this host
+            updateOrdersSource();
 
             //sets addOrders data grid source
-            addOrders = myBL.getReleventRequests(unit);
-            dg_guestRequestDataGrid.ItemsSource = addOrders;
+            updateGuestsSource();
 
             //set enums also
             dg_updateUnitGrid.DataContext = unit;
-            
+
+            //error textboxes
+            //if (myOrders.Count==0 || myOrders==null)
+           
            
         }
         public hostingUnitTabs(HostingUnit hosting, int tab): this(hosting)
         {
             tc_mainControl.SelectedIndex = tab;//selects required tab
+
         }
         #endregion
         #region windows events
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-
+            System.Windows.Data.CollectionViewSource orderViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("orderViewSource")));
             System.Windows.Data.CollectionViewSource guestRequestViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("guestRequestViewSource")));
             // Load data by setting the CollectionViewSource.Source property:
             // guestRequestViewSource.Source = [generic data source]
@@ -75,6 +77,51 @@ namespace PL
             //same as adding order/mailing with button depending on which is available
         }
 
+        #endregion
+        #region update lists source
+        private void updateGuestsSource()
+        {
+            //updates
+            addOrders = myBL.getReleventRequests(unit);
+            dg_guestRequestDataGrid.ItemsSource = addOrders;
+
+            //prints error textbox if empty
+
+            if (addOrders == null || addOrders.Count == 0)//nothing to show
+            {
+                tb_guest_error.Visibility = Visibility.Visible;//shows textbox
+                dg_guestRequestDataGrid.Visibility = Visibility.Collapsed;
+                if (!unit.Host.CollectionClearance)//no collection clearance
+                    tb_guest_error.Text = "Add Bank Collection Permission";
+                else
+                    tb_guest_error.Text = "No Relevent Orders";
+            }
+            else
+            {
+                tb_guest_error.Visibility = Visibility.Collapsed;//hides textbox
+                dg_guestRequestDataGrid.Visibility = Visibility.Visible;//shows datagrid
+            }
+        }
+        private void updateOrdersSource()
+        {
+            myOrders = myBL.getOrders(ord => ord.Status == Enums.OrderStatus.Closed && unit.HostingUnitKey == ord.HostingUnitKey);//sets source for orders
+            dg_orderDataGrid.ItemsSource = myOrders;//all closed orders from this host
+                                                    //prints error textbox if empty
+
+            if (myOrders == null || myOrders.Count == 0)//nothing to show
+            {
+                tb_order_error.Visibility = Visibility.Visible;//shows textbox
+                dg_orderDataGrid.Visibility = Visibility.Collapsed;
+                tb_order_error.Text = "No relevent orders\n";
+                if (!unit.Host.CollectionClearance)//no collection clearance
+                    tb_order_error.Text += "Add Bank Collection Permission";
+            }
+            else
+            {
+                tb_order_error.Visibility = Visibility.Collapsed;//hides textbox
+                dg_orderDataGrid.Visibility = Visibility.Visible;//shows datagrid
+            }
+        }
         #endregion
         #region cell selected guests
         private void dg_guestRequestDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -125,22 +172,17 @@ namespace PL
        
         private void Tab_updateDeleteUnit_Unselected(object sender, RoutedEventArgs e)
         {
-            addOrders = myBL.getReleventRequests(unit);
-            dg_guestRequestDataGrid.ItemsSource = addOrders;
-            
+            updateGuestsSource();
             //resets available orders from non- mailed orders based on what's relevent now
         }
         private void Tab_addOrders_Unselected(object sender, RoutedEventArgs e)
         {
 
             //resets closed orders
-            myOrders = myBL.getOrders(ord => ord.Status == Enums.OrderStatus.Closed && unit.HostingUnitKey == ord.HostingUnitKey);//sets source for orders
-            dg_orderDataGrid.ItemsSource = myOrders;//all closed orders from this host
+            updateOrdersSource();
 
             //resets addOrders data grid source
-
-            addOrders = myBL.getReleventRequests(unit);//sets to all available guests for adding (minus the one already added)
-            dg_guestRequestDataGrid.ItemsSource = addOrders;
+            updateGuestsSource();
         }
 
         #endregion
@@ -171,16 +213,14 @@ namespace PL
                 if (dg_guestRequestDataGrid.SelectedItem != null && dg_guestRequestDataGrid.SelectedItem is GuestRequest)
                 {
                     myBL.order(unit, (GuestRequest)dg_guestRequestDataGrid.SelectedItem);
-                    
+
                     //updates lists
 
                     //sets closed orders data grid source
-                    myOrders = myBL.getOrders(ord => ord.Status == Enums.OrderStatus.Closed && unit.HostingUnitKey == ord.HostingUnitKey);//sets source for orders
-                    dg_orderDataGrid.ItemsSource = myOrders;//all closed orders from this host
+                    updateOrdersSource();
 
                     //sets addOrders data grid source
-                    addOrders = myBL.getReleventRequests(unit);
-                    dg_guestRequestDataGrid.ItemsSource = addOrders;
+                    updateGuestsSource();
                 }
                 else MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
             }

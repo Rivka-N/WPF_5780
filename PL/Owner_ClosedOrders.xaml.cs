@@ -33,6 +33,7 @@ namespace PL
            
         }
 
+        #region date reset
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)//resets date if changed
 
         {
@@ -42,7 +43,7 @@ namespace PL
 
             }
         }
-
+        #endregion
         #region searching
         private void Tb_SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
