@@ -4,7 +4,12 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        
+        <Style x:Key="s_imageIcon" TargetType="Image">
+            <Setter Property="MinHeight" Value="10"/>
+            <Setter Property="MinHeight" Value="10"/>
+            <Setter Property="MaxHeight" Value="20"/>
+            <Setter Property="MaxWidth" Value="20"/>
+        </Style>
         <!--<Style TargetType="Button">
             <Setter Property="Background" Value="Wheat" />
             <Setter Property="Foreground" Value="LightSeaGreen"/>

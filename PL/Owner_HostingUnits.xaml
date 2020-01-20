@@ -24,21 +24,11 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="DarkSeaGreen">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-        <Label Name="lb_search" Content="Search" Grid.Row="0" HorizontalAlignment="Center" Width="50" VerticalAlignment="Center" />
-        <TextBox x:Name="tb_SearchTextBox" Grid.Row="1" Height="20" Width="80" TextWrapping="Wrap"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="3" TextChanged="tb_SearchTextBox_TextChanged"/>
+        <DockPanel Background="DarkSeaGreen">
+            <Image x:Name="im_closedOrdersSearch" Stretch="Uniform" Grid.Column="0" DockPanel.Dock="Left" Style="{StaticResource s_imageIcon}" Margin="5,0,0,0" Source="http://t2.gstatic.com/images?q=tbn:ANd9GcT0W7-WTWv2PuxQnuXVOElowgBcXOa9-LoH5BYGr-tvHxAcivldm-N1TNha"/>
+            <TextBox x:Name="tb_SearchTextBox" Grid.Row="1" Grid.Column="1" DockPanel.Dock="Left" MinWidth="100" Width="auto" TextWrapping="Wrap"  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,10" TextChanged="tb_SearchTextBox_TextChanged"/>
 
-        </Grid>
+        </DockPanel>
         <Grid Grid.Row="1">
         <DataGrid x:Name="dg_hostingUnitDataGrid" Grid.Row="2" AlternatingRowBackground="AliceBlue"
                   RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" IsReadOnly="True" AutoGenerateColumns="False">

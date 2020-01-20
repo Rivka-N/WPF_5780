@@ -26,13 +26,16 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
+        
+             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="5"/>
             </Grid.RowDefinitions>
-            <Label Name="lb_search" Content="Search" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Width="50" VerticalAlignment="Center" />
-            <TextBox x:Name="tb_SearchTextBox" Grid.Row="1" Grid.Column="0" Width="auto" MinWidth="100" TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Center" TextChanged="Tb_SearchTextBox_TextChanged" Margin="20,0,20,3"/>
+            <DockPanel Grid.Row="1">
+                <Image x:Name="im_closedOrdersSearch" Stretch="Uniform" Style="{StaticResource s_imageIcon}" Margin="5,0,5,0" VerticalAlignment="Center" Source="http://t2.gstatic.com/images?q=tbn:ANd9GcT0W7-WTWv2PuxQnuXVOElowgBcXOa9-LoH5BYGr-tvHxAcivldm-N1TNha"/>
+                <TextBox x:Name="tb_SearchTextBox" Width="auto" MinWidth="100" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextChanged="Tb_SearchTextBox_TextChanged"/>
+            </DockPanel>
             <Label x:Name="lb_status" Content="Order status" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
             <ComboBox x:Name="cb_status" Grid.Column="1" MinWidth="100" Width="auto" SelectedIndex="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" SelectionChanged="Cb_status_SelectionChanged" />
             <Label x:Name="lb_date" Content="Registration Date" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
