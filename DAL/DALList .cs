@@ -105,8 +105,14 @@ namespace DAL
         #region delete
         public void deleteUnit(HostingUnit toDelete)
         {
-            if (!DataSource.hostingUnits.Remove(toDelete))//removes unit from list.  if unsuccesful
+            try
+            {
+                DataSource.hostingUnits.RemoveAll(hu => hu.HostingUnitKey == toDelete.HostingUnitKey);//removes unit from list.  if unsuccesful
+            }
+            catch
+            {
                 throw new dataException("unable to delete item");
+            }
         }
 
         public void deleteGuest(GuestRequest guest)//deletes guest from other hosts' guest list

@@ -18,7 +18,8 @@
         {
             Closed,
             Mailed,
-            Started          
+            Started,
+            Expired
         }
         public enum MealType
         {
@@ -45,7 +46,8 @@
             Default,
             Owner,
             AddGuest,
-            HostList
+            HostList,
+            Host
         }
     }
 

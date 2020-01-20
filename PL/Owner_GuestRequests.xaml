@@ -32,7 +32,7 @@
                 <RowDefinition Height="5"/>
             </Grid.RowDefinitions>
             <Label Name="lb_search" Content="Search" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Width="50" VerticalAlignment="Center" />
-            <TextBox x:Name="tb_SearchTextBox" Grid.Row="1" Grid.Column="0" Width="auto" MinWidth="100" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextChanged="Tb_SearchTextBox_TextChanged"/>
+            <TextBox x:Name="tb_SearchTextBox" Grid.Row="1" Grid.Column="0" Width="auto" MinWidth="100" TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Center" TextChanged="Tb_SearchTextBox_TextChanged" Margin="20,0,20,3"/>
             <Label x:Name="lb_status" Content="Order status" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
             <ComboBox x:Name="cb_status" Grid.Column="1" MinWidth="100" Width="auto" SelectedIndex="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" SelectionChanged="Cb_status_SelectionChanged" />
             <Label x:Name="lb_date" Content="Registration Date" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />

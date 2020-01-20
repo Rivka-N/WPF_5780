@@ -19,7 +19,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="25*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="AliceBlue">
+        <Grid Grid.Row="0" Background="DarkSeaGreen">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>

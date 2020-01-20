@@ -26,12 +26,14 @@ namespace PL
         HostingUnit unit;
         List<Order> myOrders;
         List<GuestRequest> addOrders;
+        bool closeProgram;//for exiting window
         #region c-tors
         public hostingUnitTabs(HostingUnit hosting)
         {
             myBL = BL.factoryBL.getBL();
             InitializeComponent();
             unit = hosting;
+            closeProgram = false;
 
             //sets closed orders data grid source
             myOrders = myBL.getOrders(ord => ord.Status == Enums.OrderStatus.Closed && unit.HostingUnitKey==ord.HostingUnitKey);//sets source for orders
@@ -52,15 +54,18 @@ namespace PL
         }
         #endregion
         #region windows events
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
 
+            System.Windows.Data.CollectionViewSource guestRequestViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("guestRequestViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // guestRequestViewSource.Source = [generic data source]
         }
-       
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            new AllUnitsList().Show();//opens previous window again
+            if(!closeProgram)//if doesn't want to close program
+               new AllUnitsList().Show();//opens previous window again
         }
         #endregion
         #region doubleclick
@@ -115,7 +120,7 @@ namespace PL
 
 #endregion
 
-    #region addOrder datagrid
+         #region addOrder datagrid
 
         private void dg_guestRequestDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -187,13 +192,7 @@ namespace PL
         }
         #endregion
 
-        #region delete Unit button 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
-
-        }
-        #endregion
+   
 
         #region textBox updateUnit
         private void nameTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -349,43 +348,87 @@ namespace PL
 
         #endregion //not finish
 
-        private void Window_Loaded_1(object sender, RoutedEventArgs e)
-        {
-
-            System.Windows.Data.CollectionViewSource guestRequestViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("guestRequestViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // guestRequestViewSource.Source = [generic data source]
-        }
-
+        #region unitUpdateTab buttons
         private void pb_update_Click(object sender, RoutedEventArgs e)
         {
             if (myBL.checkUnit(unit))
             {
                 myBL.changeUnit(unit);
-                MessageBoxResult mb = MessageBox.Show("The unit updated\n");//prints message
+               MessageBox.Show("The unit updated\n");//prints message
             }
             
-            Close();//closes window
+            Close();
 
         }
 
         private void pb_delete_Click(object sender, RoutedEventArgs e)
         {
-            string message = "Are you sure you want to delete this unit?";
-            string caption = "Confirmation";
-            MessageBoxButton buttons = MessageBoxButton.YesNo;
-            MessageBoxImage icon = MessageBoxImage.Question;
+           
+                string message = "Are you sure you want to delete this unit?";
+                string caption = "Confirmation";
+                MessageBoxButton buttons = MessageBoxButton.YesNo;
+                MessageBoxImage icon = MessageBoxImage.Question;
+            try { 
             if (MessageBox.Show(message, caption, buttons, icon) == MessageBoxResult.Yes)
-            {
-                // OK code here
-                myBL.deleteUnit(unit.HostingUnitKey);//send to the delete function in bl, there is problem in the remove functios ds
-                MessageBox.Show("the unit" + unit.HostingUnitKey + "removed");
+                {
+                    // OK code here
+                    myBL.deleteUnit(unit.HostingUnitKey);//send to the delete function in bl, there is problem in the remove functios ds
+                    if (MessageBox.Show("the unit" + unit.HostingUnitKey + " : " + unit.HostingUnitName + "was removed\n Exit program?", "unit Removed", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+                        closeProgram = true;//exit all the way
+                    Close();
+                }
+                else
+                {
+                    // Cancel code here. nothing needs to happen then
+                }
             }
-            else
+            catch(Exception ex)
             {
-                // Cancel code here. nothing needs to happen then
+                MessageBox.Show("Unable to Delete Unit:" + ex.Message, "error!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        }
+
+        #endregion
+        #region Closed Order searching
+
+        private void searchOrders()//searches through orders based on criteria
+        {
+            try
+            {
+                myOrders = myBL.searchOrders(dp_closed_orderDate.SelectedDate, tb_closed_SearchTextBox.Text, Enums.FunctionSender.Host);
+                dg_orderDataGrid.ItemsSource = myOrders;//updates data source
+            }
+            catch
+            {
+                MessageBox.Show("invalid query");
             }
         }
+        private void Tb_closed_SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            searchOrders();//refilters orders
+        }
+        private void Pb_closed_resetDate_Click(object sender, RoutedEventArgs e)
+        {
+            dp_closed_orderDate.SelectedDate = null;
+            searchOrders();//refilters orders
+        }
+        private void Dp_closed_orderDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            searchOrders();
+        }
+
+        #endregion
+        #region requests searching
+        private void Tb_addOrder_SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var guests = myBL.GuestSearchQuery(null, tb_addOrder_SearchTextBox.Text, Enums.FunctionSender.Host);//sends to function to find relevent orders
+
+            addOrders = unit.guestForUnit.Where(g => guests(g)).Select(g => g).ToList();
+            dg_guestRequestDataGrid.ItemsSource = addOrders;
+
+        }
+        #endregion
     }
 }
 

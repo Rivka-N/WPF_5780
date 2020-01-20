@@ -309,7 +309,8 @@ namespace BL
                 throw new InvalidException("Unable to find items");
             }
         }
-        public List<GuestRequest> searchRequests(DateTime? selectedDate, string query, Enums.FunctionSender owner)//all statuses selected
+
+        public Func<GuestRequest, bool> GuestSearchQuery(DateTime? selectedDate, string query, Enums.FunctionSender owner)//calculates condition to filter by
         {
             try
             {
@@ -317,23 +318,40 @@ namespace BL
                 if (query == null)
                     throw new InvalidException("error in search query");
                 switch (owner)
-            {
-                case Enums.FunctionSender.Owner:
+                {
+                    case Enums.FunctionSender.Owner:
                         p = guest => guest.Name.Contains(query) || guest.LastName.Contains(query)
-                                || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query);//initial conditions
+                               || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query);//initial conditions
+
+                        if (selectedDate != null)
+                            return (g => p(g) && g.Registration == selectedDate);
+                        break;
+                    case Enums.FunctionSender.Host:
+                        p = guest => guest.Name.Contains(query) || guest.LastName.Contains(query);//initial conditions
+                        if (selectedDate != null)
+                            return (g => p(g) && g.EntryDate == selectedDate);//what date to filter by?
                         break;
                     default:
                         p = guest => guest.TypeOfUnit.ToString().Contains(query) || guest.Name.Contains(query) || guest.LastName.Contains(query)
                            || guest.GuestRequestKey.ToString().Contains(query) || guest.Mail.Address.Contains(query);
+                        if (selectedDate != null)
+                            return (g => p(g) && g.Registration == selectedDate);
                         break;
-            }
-                var reqs = getRequests(p);//gets request that match all conditions based on individual functions
-                if (selectedDate == null)//no date selected
-                    return reqs;//returns requests found
-                else//also date to filter by
-                {
-                    return reqs.Where(gr => gr.Registration == selectedDate).Select(guest => guest).ToList();//returns list filtered by date
                 }
+                return p;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidException(ex.Message);
+            }
+                
+        }
+        public List<GuestRequest> searchRequests(DateTime? selectedDate, string query, Enums.FunctionSender owner)//all statuses selected
+        {
+            try
+            {
+                var reqs = GuestSearchQuery(selectedDate, query, owner);
+                return getRequests(reqs);//gets all requests who match condition
             }
             catch(Exception ex)
             {
