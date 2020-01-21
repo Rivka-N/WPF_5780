@@ -33,7 +33,7 @@ namespace PL
             bL = factoryBL.getBL();
             cb_hostingUnitType.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
             cb_area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
-            cb_area.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
+            cb_meal.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
 
         }
 
@@ -80,13 +80,13 @@ namespace PL
             {
                 if (text < 0)
                 {
-                    numAdultTextBox.Background = Brushes.OrangeRed;
+                    numAdultTextBox.BorderBrush = Brushes.Red;
                     numAdultTextBox.Text = "";
                 }
                 else
                 {
                     hosting.NumAdult = text;
-                    numAdultTextBox.Background = Brushes.White;
+                    numAdultTextBox.BorderBrush = Brushes.red;
                 }
             }
             else
@@ -106,19 +106,20 @@ namespace PL
             {
                 if (text < 0)
                 {
-                    numChildrenTextBox.Background = Brushes.OrangeRed;
+                    numChildrenTextBox.BorderBrush = Brushes.Red ;
                     numChildrenTextBox.Text = "";
                 }
 
                 else
                 {
                     hosting.NumChildren = text;
-                    numChildrenTextBox.Background = Brushes.White;
+                    numChildrenTextBox.BorderBrush = Brushes.White;
                 }
             }
             else
             {
-                numChildrenTextBox.Background = Brushes.OrangeRed;
+                numChildrenTextBox.BorderBrush = Brushes.Red;
+
                 numChildrenTextBox.Text = "";
             }
         }
@@ -130,13 +131,13 @@ namespace PL
             if(Regex.IsMatch(lastNameTextBox.Text, @"^[a-zA-Z]+$"))
             {
                 hosting.Host.LastName = lastNameTextBox.Text;
-                lastNameTextBox.Background = Brushes.White;
+                lastNameTextBox.BorderBrush = Brushes.White;
 
             }
             else
             {
                 lastNameTextBox.Text = "";
-                lastNameTextBox.Background = Brushes.Red;
+                lastNameTextBox.BorderBrush = Brushes.Red;
             }
         }
 
@@ -225,18 +226,37 @@ namespace PL
 
         private void phoneTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-           if (Regex.Match(phoneTextBox.Text, @"^(\+[0-9]{9})$").Success)
+            int text = 0;
+            if (Int32.TryParse(phoneTextBox.Text, out text))
             {
-                int text = 0;
-                if (Int32.TryParse(phoneTextBox.Text, out text))
+                if (text < 0)
                 {
-                    phoneTextBox.BorderBrush = Brushes.Black;
+                    phoneTextBox.BorderBrush = Brushes.Red;
+                    phoneTextBox.Text = "";
                 }
                 else
                 {
-                    phoneTextBox.BorderBrush = Brushes.Red;
+                    hosting.Host.Phone = text;
+                    phoneTextBox.BorderBrush = Brushes.Black;
                 }
             }
+            else
+            {
+                phoneTextBox.BorderBrush = Brushes.Red;
+                phoneTextBox.Text = "";
+            }
+            //if (Regex.Match(phoneTextBox.Text, @"^(\+[0-9]{9})$").Success)
+            // {
+            //     int text = 0;
+            //     if (Int32.TryParse(phoneTextBox.Text, out text))
+            //     {
+            //         phoneTextBox.BorderBrush = Brushes.Black;
+            //     }
+            //     else
+            //     {
+            //         phoneTextBox.BorderBrush = Brushes.Red;
+            //     }
+            // }
         }
 
         private void hostingUnitKeyTextBox_TextChanged(object sender, TextChangedEventArgs e)

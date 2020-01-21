@@ -166,6 +166,7 @@ namespace DAL
             try
             {
                 DataSource.guestRequests.Find(gr => guest.Status == gr.Status).Status = status;
+
             }
             catch
             {
@@ -182,5 +183,7 @@ namespace DAL
         }
 
         #endregion
+
+        #region
     }
 }
