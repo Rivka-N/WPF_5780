@@ -31,9 +31,17 @@ namespace PL
             
             InitializeComponent();
             bL = factoryBL.getBL();
-            areaVacationComboBox.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
-            hostingUnitTypeComboBox.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
-           
+
+            #region sets combobox
+            var addArea = Enum.GetValues(typeof(Enums.Area));
+            var addType = Enum.GetValues(typeof(Enums.MealType));
+            areaVacationComboBox.Items.Add("All");
+            hostingUnitTypeComboBox.Items.Add("All");
+            foreach (Enums.Area item in addArea)
+                areaVacationComboBox.Items.Add(item);//adds all statuses to combobox options 
+            foreach (Enums.HostingUnitType item in addType)
+                hostingUnitTypeComboBox.Items.Add(item);
+            #endregion
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
