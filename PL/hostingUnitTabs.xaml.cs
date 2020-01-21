@@ -237,7 +237,8 @@ namespace PL
                 if (dg_guestRequestDataGrid.SelectedItem != null && dg_guestRequestDataGrid.SelectedItem is GuestRequest)
                 {
                     myBL.sendGuestMail(unit, (GuestRequest)dg_guestRequestDataGrid.SelectedItem);
-                   //needs to send mail, add order, update guest status and add to num suggestions?
+                    MessageBox.Show("Mail sent. Please wait for response from " + ((GuestRequest)dg_guestRequestDataGrid.SelectedItem).Name + " " + ((GuestRequest)dg_guestRequestDataGrid.SelectedItem).LastName, "Mail Confirmation", MessageBoxButton.OK, MessageBoxImage.Information);
+                    updateGuestsSource();
                 }
                 else
                     MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);

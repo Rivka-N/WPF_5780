@@ -82,8 +82,7 @@ namespace DAL
         {
             return DataSource.orders.Select(order => (Order)order.Clone()).ToList();
         }
-
-
+        
         #endregion
         
         #region search functions

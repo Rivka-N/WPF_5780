@@ -25,12 +25,14 @@ namespace PL
         public addGuest()
         {
             InitializeComponent();
-             g1 = new GuestRequest();//new guest request
+            g1 = new GuestRequest();//new guest request
             cb_hostingUnitType.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
             cb_area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
             cb_meal.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
-
-
+            dg_guest.DataContext = g1;
+            cb_area.SelectedIndex = -1;
+            cb_hostingUnitType.SelectedIndex = -1;
+            cb_meal.SelectedIndex = -1;
         }
 
         #region window
@@ -61,10 +63,11 @@ namespace PL
             }
             catch(Exception ex)
             {
+                tb_enterAdult.Text = "";
                 tb_enterAdult.BorderBrush = Brushes.Red;//colors border
-                tb_enterAdult.Text = "";//resets text
                 if (ex is LargeNumberExceptionPL)
                     MessageBox.Show(ex.Message);//if the number was too big, explains why number wasn't valid
+                    
             }
         }
 
@@ -79,7 +82,7 @@ namespace PL
             catch (Exception ex)
             {
                 tb_enterChildren.BorderBrush = Brushes.Red;//colors border
-                tb_enterChildren.Text = "";//resets text
+                tb_enterChildren.Text = "";
                 if (ex is LargeNumberExceptionPL)
                     MessageBox.Show(ex.Message);//if the number was too big, explains why number wasn't valid
             }

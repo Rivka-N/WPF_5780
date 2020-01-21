@@ -62,7 +62,6 @@ namespace BE
             pool = Enums.Preference.Maybe;
             jacuzzi = Enums.Preference.Maybe;
             garden = Enums.Preference.Maybe;
-            NumSuggestions = -1;//none yet
             Status = Enums.OrderStatus.Started;
         }
         #endregion
