@@ -135,6 +135,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ExceptionsPL.cs" />
     <Compile Include="hostingUnitsControl.xaml.cs">
       <DependentUpon>hostingUnitsControl.xaml</DependentUpon>
     </Compile>
@@ -254,5 +255,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\search1.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

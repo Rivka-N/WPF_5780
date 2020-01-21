@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="DarkSeaGreen">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -32,8 +32,8 @@
                 <RowDefinition Height="5"/>
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="1">
-                <Image x:Name="im_closedOrdersSearch" Style="{StaticResource s_imageIcon}" Margin="5,0,5,0" VerticalAlignment="Center" Source="http://t2.gstatic.com/images?q=tbn:ANd9GcT0W7-WTWv2PuxQnuXVOElowgBcXOa9-LoH5BYGr-tvHxAcivldm-N1TNha"/>
-                <TextBox x:Name="tb_SearchTextBox" Width="auto" MinWidth="100" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" TextChanged="Tb_SearchTextBox_TextChanged"/>
+                <Image x:Name="im_closedOrdersSearch" Grid.Row="1" Stretch="Uniform" Style="{StaticResource s_imageIcon}" Margin="5,0,0,0" VerticalAlignment="Center" />
+                <TextBox x:Name="tb_SearchTextBox" Grid.Row="1" Width="auto" MinWidth="100" VerticalAlignment="Center" TextChanged="Tb_SearchTextBox_TextChanged" Margin="5"/>
             </DockPanel>
             <Label x:Name="lb_date" Content="Request Created" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
             <DatePicker x:Name="dp_requestDate" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" SelectedDateChanged="searchDatePicker_SelectedDateChanged_1"/>

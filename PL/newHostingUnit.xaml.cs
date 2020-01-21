@@ -31,17 +31,10 @@ namespace PL
             
             InitializeComponent();
             bL = factoryBL.getBL();
+            cb_hostingUnitType.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
+            cb_area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
+            cb_meal.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
 
-            #region sets combobox
-            var addArea = Enum.GetValues(typeof(Enums.Area));
-            var addType = Enum.GetValues(typeof(Enums.MealType));
-            areaVacationComboBox.Items.Add("All");
-            hostingUnitTypeComboBox.Items.Add("All");
-            foreach (Enums.Area item in addArea)
-                areaVacationComboBox.Items.Add(item);//adds all statuses to combobox options 
-            foreach (Enums.HostingUnitType item in addType)
-                hostingUnitTypeComboBox.Items.Add(item);
-            #endregion
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -50,6 +43,7 @@ namespace PL
             System.Windows.Data.CollectionViewSource hostingUnitViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("hostingUnitViewSource")));
             // Load data by setting the CollectionViewSource.Source property:
             // hostingUnitViewSource.Source = [generic data source]
+
             System.Windows.Data.CollectionViewSource bankAccountViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("bankAccountViewSource")));
             // Load data by setting the CollectionViewSource.Source property:
             // bankAccountViewSource.Source = [generic data source]
@@ -60,14 +54,14 @@ namespace PL
         {
             try
             {
-                if (hostingUnitTypeComboBox.SelectedIndex == -1)//check if unit type wasn't selected
+                if (cb_hostingUnitType.SelectedIndex == -1)//check if unit type wasn't selected
                 {
-                    hostingUnitTypeComboBox.Background = Brushes.Red;
+                    cb_hostingUnitType.Background = Brushes.Red;
                     return;
                 }
-                if (areaVacationComboBox.SelectedIndex == -1)//check if area wasn't selected
+                if (cb_area.SelectedIndex == -1)//check if area wasn't selected
                 {
-                    areaVacationComboBox.Background = Brushes.Red;
+                    cb_area.Background = Brushes.Red;
                     return;
                 }
                 bL.addHostingUnit(hosting);
@@ -89,13 +83,13 @@ namespace PL
             {
                 if (text < 0)
                 {
-                    numAdultTextBox.Background = Brushes.OrangeRed;
+                    numAdultTextBox.BorderBrush = Brushes.Red;
                     numAdultTextBox.Text = "";
                 }
                 else
                 {
                     hosting.NumAdult = text;
-                    numAdultTextBox.Background = Brushes.White;
+                    numAdultTextBox.BorderBrush = Brushes.red;
                 }
             }
             else
@@ -115,19 +109,20 @@ namespace PL
             {
                 if (text < 0)
                 {
-                    numChildrenTextBox.Background = Brushes.OrangeRed;
+                    numChildrenTextBox.BorderBrush = Brushes.Red ;
                     numChildrenTextBox.Text = "";
                 }
 
                 else
                 {
                     hosting.NumChildren = text;
-                    numChildrenTextBox.Background = Brushes.White;
+                    numChildrenTextBox.BorderBrush = Brushes.White;
                 }
             }
             else
             {
-                numChildrenTextBox.Background = Brushes.OrangeRed;
+                numChildrenTextBox.BorderBrush = Brushes.Red;
+
                 numChildrenTextBox.Text = "";
             }
         }
@@ -139,13 +134,13 @@ namespace PL
             if(Regex.IsMatch(lastNameTextBox.Text, @"^[a-zA-Z]+$"))
             {
                 hosting.Host.LastName = lastNameTextBox.Text;
-                lastNameTextBox.Background = Brushes.White;
+                lastNameTextBox.BorderBrush = Brushes.White;
 
             }
             else
             {
                 lastNameTextBox.Text = "";
-                lastNameTextBox.Background = Brushes.Red;
+                lastNameTextBox.BorderBrush = Brushes.Red;
             }
         }
 
@@ -154,12 +149,12 @@ namespace PL
             if (Regex.IsMatch(nameTextBox.Text, @"^[a-zA-Z]+$"))//if contains only letters
             {
                 hosting.Host.Name = nameTextBox.Text;
-                nameTextBox.Background = Brushes.White;
+                nameTextBox.BorderBrush = Brushes.Black;
             }
             else
             {
                 nameTextBox.Text = "";
-                nameTextBox.Background = Brushes.Red;
+                nameTextBox.BorderBrush = Brushes.Red;
             }
         }
 
@@ -173,20 +168,20 @@ namespace PL
         #region comboBox
         private void hostingUnitTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            hostingUnitTypeComboBox.Background = Brushes.White;
-            hosting.HostingUnitType = (Enums.HostingUnitType)(hostingUnitTypeComboBox.SelectedIndex);
+            cb_hostingUnitType.Background = Brushes.White;
+            hosting.HostingUnitType = (Enums.HostingUnitType)(cb_hostingUnitType.SelectedIndex);
         }
 
         private void areaVacationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            areaVacationComboBox.Background = Brushes.White;
-            hosting.AreaVacation = (Enums.Area)(areaVacationComboBox.SelectedIndex);
+            cb_area.Background = Brushes.White;
+            hosting.AreaVacation = (Enums.Area)(cb_area.SelectedIndex);
         }
 
         private void mealComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            mealComboBox.Background = Brushes.White;
-            hosting.Meal = (Enums.MealType)(mealComboBox.SelectedIndex);
+            cb_meal.Background = Brushes.White;
+            hosting.Meal = (Enums.MealType)(cb_meal.SelectedIndex);
         }
 
         #endregion
@@ -234,7 +229,37 @@ namespace PL
 
         private void phoneTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            int text = 0;
+            if (Int32.TryParse(phoneTextBox.Text, out text))
+            {
+                if (text < 0)
+                {
+                    phoneTextBox.BorderBrush = Brushes.Red;
+                    phoneTextBox.Text = "";
+                }
+                else
+                {
+                    hosting.Host.Phone = text;
+                    phoneTextBox.BorderBrush = Brushes.Black;
+                }
+            }
+            else
+            {
+                phoneTextBox.BorderBrush = Brushes.Red;
+                phoneTextBox.Text = "";
+            }
+            //if (Regex.Match(phoneTextBox.Text, @"^(\+[0-9]{9})$").Success)
+            // {
+            //     int text = 0;
+            //     if (Int32.TryParse(phoneTextBox.Text, out text))
+            //     {
+            //         phoneTextBox.BorderBrush = Brushes.Black;
+            //     }
+            //     else
+            //     {
+            //         phoneTextBox.BorderBrush = Brushes.Red;
+            //     }
+            // }
         }
 
         private void hostingUnitKeyTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -243,6 +268,11 @@ namespace PL
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void cb_hostingUnitType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

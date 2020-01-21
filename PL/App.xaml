@@ -9,6 +9,16 @@
             <Setter Property="MinHeight" Value="10"/>
             <Setter Property="MaxHeight" Value="20"/>
             <Setter Property="MaxWidth" Value="20"/>
+            <Setter Property="Source" Value="Resources/search1.jpg"/>
+        </Style>
+
+        <Style x:Key="s_numPeople" TargetType="TextBox">
+            <Setter Property="MinWidth" Value="25"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="MaxWidth" Value="125"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Height" Value="24"/>
         </Style>
         <!--<Style TargetType="Button">
             <Setter Property="Background" Value="Wheat" />

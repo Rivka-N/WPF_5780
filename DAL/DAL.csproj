@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Cloning.cs" />
     <Compile Include="DALList .cs" />
+    <Compile Include="DALXML.cs" />
     <Compile Include="dataException.cs" />
     <Compile Include="factoryDAL.cs" />
     <Compile Include="IDAL.cs" />

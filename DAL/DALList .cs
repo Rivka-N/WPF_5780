@@ -82,8 +82,7 @@ namespace DAL
         {
             return DataSource.orders.Select(order => (Order)order.Clone()).ToList();
         }
-
-
+        
         #endregion
         
         #region search functions
@@ -166,6 +165,7 @@ namespace DAL
             try
             {
                 DataSource.guestRequests.Find(gr => guest.Status == gr.Status).Status = status;
+
             }
             catch
             {
@@ -182,5 +182,7 @@ namespace DAL
         }
 
         #endregion
+
+        #region
     }
 }
