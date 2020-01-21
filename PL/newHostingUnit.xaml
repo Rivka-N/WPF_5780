@@ -43,13 +43,9 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Label VerticalAlignment="Center" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Area Vacation:"/>
-                <ComboBox x:Name="areaVacationComboBox" Width="120" VerticalAlignment="Center" Grid.Row="6" Margin="3" ItemsSource="{Binding}" Height="Auto" HorizontalAlignment="Left" DisplayMemberPath="AreaVacation" Grid.Column="1" SelectionChanged="areaVacationComboBox_SelectionChanged">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel/>
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                </ComboBox>
+                <ComboBox x:Name="cb_area" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="6" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+
+
                 <Label VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Garden:"/>
                 <CheckBox x:Name="gardenCheckBox" VerticalAlignment="Center" Grid.Row="12" Margin="3" IsChecked="{Binding Garden, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content="" Checked="gardenCheckBox_Checked"/>
                 <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Hosting Unit Key:"/>
@@ -57,13 +53,13 @@
                 <Label VerticalAlignment="Center" Grid.Row="4" Margin="4" HorizontalAlignment="Left" Grid.Column="0" Content="Hosting Unit Name:"/>
                 <TextBox x:Name="hostingUnitNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" TextChanged="hostingUnitNameTextBox_TextChanged"/>
                 <Label VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Hosting Unit Type:"/>
-                <ComboBox x:Name="hostingUnitTypeComboBox" Width="120" VerticalAlignment="Center" Grid.Row="5" Margin="3" ItemsSource="{Binding}" Height="Auto" HorizontalAlignment="Left" DisplayMemberPath="HostingUnitType" Grid.Column="1" SelectionChanged="hostingUnitTypeComboBox_SelectionChanged"/>
+                <ComboBox x:Name="cb_hostingUnitType" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
 
 
                 <Label VerticalAlignment="Center" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Jacuzzi:"/>
                 <CheckBox x:Name="jacuzziCheckBox" VerticalAlignment="Center" Grid.Row="11" Margin="3" IsChecked="{Binding Jacuzzi, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content="" Checked="jacuzziCheckBox_Checked"/>
                 <Label VerticalAlignment="Center" Grid.Row="7" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Meal:"/>
-                <ComboBox x:Name="cb_mealComboBox" Width="120" VerticalAlignment="Center" Grid.Row="7" Margin="3" ItemsSource="{Binding}" Height="Auto" HorizontalAlignment="Left" DisplayMemberPath="Meal" Grid.Column="1" SelectionChanged="mealComboBox_SelectionChanged"/>
+                <ComboBox x:Name="cb_meal" Width="120" VerticalAlignment="Center" Grid.Row="7" Margin="3" ItemsSource="{Binding}" Height="Auto" HorizontalAlignment="Left" DisplayMemberPath="Meal" Grid.Column="1"/>
 
                 <Label VerticalAlignment="Center" Grid.Row="8" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Num Adult:"/>
                 <TextBox x:Name="numAdultTextBox" Width="120" VerticalAlignment="Bottom" Text="{Binding NumAdult, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="8" Margin="3.4,0,0,4.6" Height="23" HorizontalAlignment="Left" Grid.Column="1" TextChanged="numAdultTextBox_TextChanged"/>
