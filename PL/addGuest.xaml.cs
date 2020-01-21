@@ -72,14 +72,14 @@ namespace PL
         {
             try
             {
-                g1.NumAdult = addNum(tb_enterChildren.Text);//checks this is a valid number. -1 if not
-                tb_enterAdult.BorderBrush = Brushes.Black;
+                g1.NumChildren = addNum(tb_enterChildren.Text);//checks this is a valid number. -1 if not
+                tb_enterChildren.BorderBrush = Brushes.Black;
 
             }
             catch (Exception ex)
             {
-                tb_enterAdult.BorderBrush = Brushes.Red;//colors border
-                tb_enterAdult.Text = "";//resets text
+                tb_enterChildren.BorderBrush = Brushes.Red;//colors border
+                tb_enterChildren.Text = "";//resets text
                 if (ex is LargeNumberExceptionPL)
                     MessageBox.Show(ex.Message);//if the number was too big, explains why number wasn't valid
             }
