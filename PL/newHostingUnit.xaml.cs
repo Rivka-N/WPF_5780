@@ -31,8 +31,9 @@ namespace PL
             
             InitializeComponent();
             bL = factoryBL.getBL();
-            areaVacationComboBox.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
-            hostingUnitTypeComboBox.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
+            cb_hostingUnitType.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
+            cb_area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
+            cb_area.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
 
         }
 
@@ -50,14 +51,14 @@ namespace PL
         {
             try
             {
-                if (hostingUnitTypeComboBox.SelectedIndex == -1)//check if unit type wasn't selected
+                if (cb_hostingUnitType.SelectedIndex == -1)//check if unit type wasn't selected
                 {
-                    hostingUnitTypeComboBox.Background = Brushes.Red;
+                    cb_hostingUnitType.Background = Brushes.Red;
                     return;
                 }
-                if (areaVacationComboBox.SelectedIndex == -1)//check if area wasn't selected
+                if (cb_area.SelectedIndex == -1)//check if area wasn't selected
                 {
-                    areaVacationComboBox.Background = Brushes.Red;
+                    cb_area.Background = Brushes.Red;
                     return;
                 }
                 bL.addHostingUnit(hosting);
@@ -163,20 +164,20 @@ namespace PL
         #region comboBox
         private void hostingUnitTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            hostingUnitTypeComboBox.Background = Brushes.White;
-            hosting.HostingUnitType = (Enums.HostingUnitType)(hostingUnitTypeComboBox.SelectedIndex);
+            cb_hostingUnitType.Background = Brushes.White;
+            hosting.HostingUnitType = (Enums.HostingUnitType)(cb_hostingUnitType.SelectedIndex);
         }
 
         private void areaVacationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            areaVacationComboBox.Background = Brushes.White;
-            hosting.AreaVacation = (Enums.Area)(areaVacationComboBox.SelectedIndex);
+            cb_area.Background = Brushes.White;
+            hosting.AreaVacation = (Enums.Area)(cb_area.SelectedIndex);
         }
 
         private void mealComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            cb_mealComboBox.Background = Brushes.White;
-            hosting.Meal = (Enums.MealType)(cb_mealComboBox.SelectedIndex);
+            cb_meal.Background = Brushes.White;
+            hosting.Meal = (Enums.MealType)(cb_meal.SelectedIndex);
         }
 
         #endregion
