@@ -20,7 +20,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="DarkSeaGreen">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -33,7 +33,7 @@
                 <RowDefinition Height="5"/>
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="1">
-                <Image x:Name="im_closedOrdersSearch" Stretch="Uniform" Style="{StaticResource s_imageIcon}" Margin="5,0,5,0" VerticalAlignment="Center" Source="http://t2.gstatic.com/images?q=tbn:ANd9GcT0W7-WTWv2PuxQnuXVOElowgBcXOa9-LoH5BYGr-tvHxAcivldm-N1TNha"/>
+                <Image x:Name="im_closedOrdersSearch" Stretch="Uniform" Style="{StaticResource s_imageIcon}" Margin="5,0,5,0" VerticalAlignment="Center" />
                 <TextBox x:Name="tb_SearchTextBox" Width="auto" MinWidth="100" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextChanged="Tb_SearchTextBox_TextChanged"/>
             </DockPanel>
             <Label x:Name="lb_status" Content="Order status" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />

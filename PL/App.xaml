@@ -9,6 +9,7 @@
             <Setter Property="MinHeight" Value="10"/>
             <Setter Property="MaxHeight" Value="20"/>
             <Setter Property="MaxWidth" Value="20"/>
+            <Setter Property="Source" Value="Resources/search1.jpg"/>
         </Style>
         <!--<Style TargetType="Button">
             <Setter Property="Background" Value="Wheat" />

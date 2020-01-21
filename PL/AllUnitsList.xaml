@@ -33,8 +33,8 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="DarkSeaGreen">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="2*"/>
@@ -44,10 +44,12 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="5"/>
             </Grid.RowDefinitions>
-            <Label Name="lb_search" Content="Search" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
-            <TextBox Name="tb_search" Grid.Row="1" Grid.Column="0" Width="auto" MinWidth="100" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="center" TextChanged="Tb_SearchTextBox_TextChanged"/>
+            <DockPanel Grid.Row="1">
+                <Image x:Name="im_closedOrdersSearch" Stretch="Uniform" Style="{StaticResource s_imageIcon}" Margin="5,0,0,0" VerticalAlignment="Center" />
+                <TextBox x:Name="tb_SearchTextBox" Width="auto" MinWidth="100" TextWrapping="Wrap" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" TextChanged="Tb_SearchTextBox_TextChanged"/>
+            </DockPanel>
             <Label Name="lb_type" Content="Unit Type" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <ComboBox Name="cb_unitType" Grid.Column="1" MinWidth="100" Width="auto" SelectedIndex="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" SelectionChanged="Cb_unitType_SelectionChanged" />
+            <ComboBox Name="cb_unitType" Grid.Column="1" MinWidth="100" Width="auto" SelectedIndex="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Margin="5" Grid.Row="1" VerticalAlignment="Center" SelectionChanged="Cb_unitType_SelectionChanged" />
             <Label Name="lb_area" Content="Unit Location" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
             <ComboBox Name="cb_area" Grid.Column="2" MinWidth="100" Width="auto" SelectedIndex="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" SelectionChanged="Cb_area_SelectionChanged" />
             <Button Name="pb_reset" Content="Reset All" Grid.Column="3" Margin="10" Padding="10,5" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Click="Pb_reset_Click" />

@@ -25,7 +25,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <DockPanel Background="DarkSeaGreen">
-            <Image x:Name="im_closedOrdersSearch" Stretch="Uniform" Grid.Column="0" DockPanel.Dock="Left" Style="{StaticResource s_imageIcon}" Margin="5,0,0,0" Source="http://t2.gstatic.com/images?q=tbn:ANd9GcT0W7-WTWv2PuxQnuXVOElowgBcXOa9-LoH5BYGr-tvHxAcivldm-N1TNha"/>
+            <Image x:Name="im_closedOrdersSearch" Stretch="Uniform" Grid.Column="0" DockPanel.Dock="Left" Style="{StaticResource s_imageIcon}" Margin="5,0,0,0" />
             <TextBox x:Name="tb_SearchTextBox" Grid.Row="1" Grid.Column="1" DockPanel.Dock="Left" MinWidth="100" Width="auto" TextWrapping="Wrap"  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,10" TextChanged="tb_SearchTextBox_TextChanged"/>
 
         </DockPanel>
