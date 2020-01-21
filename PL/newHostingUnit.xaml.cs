@@ -33,7 +33,7 @@ namespace PL
             bL = factoryBL.getBL();
             areaVacationComboBox.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
             hostingUnitTypeComboBox.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
-           
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -42,9 +42,7 @@ namespace PL
             System.Windows.Data.CollectionViewSource hostingUnitViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("hostingUnitViewSource")));
             // Load data by setting the CollectionViewSource.Source property:
             // hostingUnitViewSource.Source = [generic data source]
-            System.Windows.Data.CollectionViewSource bankAccountViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("bankAccountViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // bankAccountViewSource.Source = [generic data source]
+            
         }
 
         #region buttonAdd
@@ -177,8 +175,8 @@ namespace PL
 
         private void mealComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            mealComboBox.Background = Brushes.White;
-            hosting.Meal = (Enums.MealType)(mealComboBox.SelectedIndex);
+            cb_mealComboBox.Background = Brushes.White;
+            hosting.Meal = (Enums.MealType)(cb_mealComboBox.SelectedIndex);
         }
 
         #endregion

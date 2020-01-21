@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BE;
 namespace PL
 {
     /// <summary>
@@ -22,6 +22,11 @@ namespace PL
         public addGuest()
         {
             InitializeComponent();
+            cb_hostingUnitType.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
+            cb_area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
+            cb_area.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
+
+
         }
 
         #region window

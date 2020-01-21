@@ -46,7 +46,7 @@
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="1">
                 <Image x:Name="im_closedOrdersSearch" Stretch="Uniform" Style="{StaticResource s_imageIcon}" Margin="5,0,0,0" VerticalAlignment="Center" />
-                <TextBox x:Name="tb_SearchTextBox" Width="auto" MinWidth="100" TextWrapping="Wrap" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" TextChanged="Tb_SearchTextBox_TextChanged"/>
+                <TextBox x:Name="tb_search" Width="auto" MinWidth="100" TextWrapping="Wrap" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" TextChanged="Tb_SearchTextBox_TextChanged"/>
             </DockPanel>
             <Label Name="lb_type" Content="Unit Type" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
             <ComboBox Name="cb_unitType" Grid.Column="1" MinWidth="100" Width="auto" SelectedIndex="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Margin="5" Grid.Row="1" VerticalAlignment="Center" SelectionChanged="Cb_unitType_SelectionChanged" />
