@@ -135,6 +135,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ExceptionsPL.cs" />
     <Compile Include="hostingUnitsControl.xaml.cs">
       <DependentUpon>hostingUnitsControl.xaml</DependentUpon>
     </Compile>
