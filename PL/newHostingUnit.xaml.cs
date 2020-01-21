@@ -145,12 +145,12 @@ namespace PL
             if (Regex.IsMatch(nameTextBox.Text, @"^[a-zA-Z]+$"))//if contains only letters
             {
                 hosting.Host.Name = nameTextBox.Text;
-                nameTextBox.Background = Brushes.White;
+                nameTextBox.BorderBrush = Brushes.Black;
             }
             else
             {
                 nameTextBox.Text = "";
-                nameTextBox.Background = Brushes.Red;
+                nameTextBox.BorderBrush = Brushes.Red;
             }
         }
 
@@ -225,7 +225,18 @@ namespace PL
 
         private void phoneTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+           if (Regex.Match(phoneTextBox.Text, @"^(\+[0-9]{9})$").Success)
+            {
+                int text = 0;
+                if (Int32.TryParse(phoneTextBox.Text, out text))
+                {
+                    phoneTextBox.BorderBrush = Brushes.Black;
+                }
+                else
+                {
+                    phoneTextBox.BorderBrush = Brushes.Red;
+                }
+            }
         }
 
         private void hostingUnitKeyTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -234,6 +245,11 @@ namespace PL
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void cb_hostingUnitType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

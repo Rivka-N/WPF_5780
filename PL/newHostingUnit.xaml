@@ -53,13 +53,13 @@
                 <Label VerticalAlignment="Center" Grid.Row="4" Margin="4" HorizontalAlignment="Left" Grid.Column="0" Content="Hosting Unit Name:"/>
                 <TextBox x:Name="hostingUnitNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" TextChanged="hostingUnitNameTextBox_TextChanged"/>
                 <Label VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Hosting Unit Type:"/>
-                <ComboBox x:Name="cb_hostingUnitType" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+                <ComboBox x:Name="cb_hostingUnitType" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" SelectionChanged="cb_hostingUnitType_SelectionChanged"/>
 
 
                 <Label VerticalAlignment="Center" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Jacuzzi:"/>
                 <CheckBox x:Name="jacuzziCheckBox" VerticalAlignment="Center" Grid.Row="11" Margin="3" IsChecked="{Binding Jacuzzi, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content="" Checked="jacuzziCheckBox_Checked"/>
                 <Label VerticalAlignment="Center" Grid.Row="7" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Meal:"/>
-                <ComboBox x:Name="cb_meal" Width="120" VerticalAlignment="Center" Grid.Row="7" Margin="3" ItemsSource="{Binding}" Height="Auto" HorizontalAlignment="Left" DisplayMemberPath="Meal" Grid.Column="1"/>
+                <ComboBox x:Name="cb_meal" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="7" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
 
                 <Label VerticalAlignment="Center" Grid.Row="8" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Num Adult:"/>
                 <TextBox x:Name="numAdultTextBox" Width="120" VerticalAlignment="Bottom" Text="{Binding NumAdult, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="8" Margin="3.4,0,0,4.6" Height="23" HorizontalAlignment="Left" Grid.Column="1" TextChanged="numAdultTextBox_TextChanged"/>
@@ -72,7 +72,7 @@
                 <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Name:"/>
                 <TextBox x:Name="nameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Host.Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" TextChanged="nameTextBox_TextChanged"/>
                 <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Phone:"/>
-                <TextBox x:Name="phoneTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Host.Phone, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" TextChanged="phoneTextBox_TextChanged"/>
+                <TextBox x:Name="phoneTextBox" Width="120" VerticalAlignment="Top" Text="{Binding Host.Phone, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3,4,0,0" Height="24" HorizontalAlignment="Left" Grid.Column="1" TextChanged="phoneTextBox_TextChanged"/>
             </Grid>
         </Grid>
         <Button Content="Add Unit" HorizontalAlignment="Center" Margin="20" VerticalAlignment="Center" Width="75" Grid.Row="1" Click="Button_Click"/>
