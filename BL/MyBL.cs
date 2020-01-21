@@ -7,7 +7,8 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net.Mail;
+using System.Net.Mail;
+
 
 namespace BL
 {
@@ -66,7 +67,7 @@ namespace BL
         {
             try
             {
-                guest.Status = Enums.OrderStatus.Mailed;//closed status
+                myDAL.changeStatus(guest, Enums.OrderStatus.Mailed);//mailed status
                 Order ord = new Order(guest.Registration);//makes new order
                 ord.HostingUnitKey = unit.HostingUnitKey;
                 ord.GuestRequestKey = guest.GuestRequestKey;
@@ -81,18 +82,18 @@ namespace BL
                 mail.Subject = "Hosting Unit Offer";
                 mail.Body = "We found a " + guest.TypeOfUnit + " for you.\n Here are the details:\n" + unit.ToString() +
                     "Please respond to " + unit.Host.Mail + " and finalize the details\n";//change the to string
-
+                mail.IsBodyHtml = true;
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = "smtp.gmail.com";
+                smtp.Credentials = new System.Net.NetworkCredential("amazingvacations169@gmail.com", "vacation169");
 
-                smtp.Credentials = new System.Net.NetworkCredential("amazingvacations169@gmail.com",
-               "vacation169");
                 smtp.EnableSsl = true;
 
 
                 smtp.Send(mail);//send mail
 
-                #endregion
+                #endregion
+
             
 
 }

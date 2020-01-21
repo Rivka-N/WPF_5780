@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PL.addGuest"
         mc:Ignorable="d"
-        Title="New Guest" Height="450" Width="600" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="New Guest" Height="450" Width="600" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing">
     <Window.Resources>
         <CollectionViewSource x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:GuestRequest}, CreateList=True}"/>
     </Window.Resources>
@@ -48,20 +48,26 @@
             <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Name:"/>
             <TextBox x:Name="nameTextBox" Width="120" VerticalAlignment="Center" Grid.Row="0" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
             <Label VerticalAlignment="Center" Grid.Row="7" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Num Adult:"/>
-            <TextBox x:Name="tb_enterAdult" Text="{Binding NumAdult, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource s_numPeople}" Grid.Row="7" Margin="3,4,0,4" Grid.Column="1" TextChanged="tb_enterAdult_TextChanged"/>
+            <TextBox x:Name="tb_enterAdult" Grid.Row="7" Margin="3,4,0,4" Grid.Column="1" Style="{StaticResource s_numPeople}" TextChanged="tb_enterAdult_TextChanged"/>
             <Label VerticalAlignment="Center" Grid.Row="8" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Num Children:"/>
-            <TextBox x:Name="tb_enterChildren" Text="{Binding NumChildren, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource s_numPeople}"  Grid.Row="8" Margin="3" Grid.Column="1" TextChanged="tb_enterChildren_TextChanged"/>
+            <TextBox x:Name="tb_enterChildren" Style="{StaticResource s_numPeople}"  Grid.Row="8" Margin="3" Grid.Column="1" TextChanged="tb_enterChildren_TextChanged"/>
             <Label VerticalAlignment="Center" Grid.Row="9" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Pool:"/>
             <CheckBox x:Name="poolCheckBox" VerticalAlignment="Center" Grid.Row="9" Margin="3" IsChecked="{Binding Pool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content=""/>
             <Label VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Type Of Unit:"/>
-            <ComboBox x:Name="cb_area" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-            <ComboBox x:Name="cb_hostingUnitType" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+            <ComboBox x:Name="cb_area" Width="120" SelectedIndex="-1" VerticalAlignment="Center" Text="{Binding AreaVacation, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+            <ComboBox x:Name="cb_hostingUnitType" SelectedIndex="-1" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Foreground="Black">
+                <ComboBox.Background>
+                    <ImageBrush/>
+                </ComboBox.Background>
+                <ComboBox.BorderBrush>
+                    <ImageBrush/>
+                </ComboBox.BorderBrush>
+            </ComboBox>
             <Label VerticalAlignment="Center" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Meal:"/>
-            <ComboBox x:Name="cb_meal" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="6" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-
+            <ComboBox x:Name="cb_meal" Width="120" SelectedIndex="-1"  VerticalAlignment="Center" Text="{Binding Meal, Mode=TwoWay, NotifyOnValidationError=False, ValidatesOnExceptions=False}" Grid.Row="6" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
 
             <Label VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Email:"/>
-            <TextBox x:Name="addressTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Meal, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="12" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+            <TextBox x:Name="addressTextBox" Width="120" VerticalAlignment="Center" Grid.Row="12" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
         </Grid>
 
     </Grid>
