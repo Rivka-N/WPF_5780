@@ -38,7 +38,7 @@ namespace PL
         {
             try
             {
-                myBL.addHostNum(tb_id.Text, out hostNum);
+                //myBL.addHostNum(tb_id.Text, out hostNum);
                 hostingUnit1.Host.HostKey = hostNum;
                 tb_id_txt.Background = Brushes.White;
                 tb_id_txt.Text = "קוד מארח";
@@ -69,7 +69,7 @@ namespace PL
         {
             try
             {
-                myBL.addMail(tb_email.Text, hostingUnit1.Host);
+                //myBL.addMail(tb_email.Text, hostingUnit1.Host);
                 tb_email_txt.Text = "כתובת מייל";
             }
             catch

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Mail;
-
+using System.Text.RegularExpressions;
 
 namespace BL
 {
@@ -61,7 +61,31 @@ namespace BL
         #region add guest
         public void addGuest(GuestRequest guest)//add guest to the data list in DS
         {
-            myDAL.addGuest(guest.Clone());
+            myDAL.addGuest(guest.Clone());//adds guest to list
+            findUnit(guest);//tries to find units for this guest request
+        }
+        public List<HostingUnit> findUnit(GuestRequest guest)//finds applicable units for request and sends mail to hosts
+        {
+            var units = myDAL.getAllHostingUnits();
+            List<HostingUnit> listOfUnits = new List<HostingUnit>();
+            for (int i = 0; i < units.Count(); i++)
+            {
+                if (matchesUnit(units[i], guest))//if guest can be put in his unit
+                {
+                    listOfUnits.Add(units[i]);//adds to the guest list
+                    myDAL.addGuestToUnit(units[i], guest);
+                }
+            }
+            if (listOfUnits.Count() == 0)
+                throw new unfoundRequestExceptionBL();
+            mail(listOfUnits, guest);  //sends mail to all of the hosts 
+
+            return listOfUnits;
+        }
+        public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with guest details to the host
+        {
+            //sends mail to the host
+
         }
         #endregion
         #region order
@@ -104,11 +128,7 @@ namespace BL
                 throw new InvalidException("unable to send mail: " + ex.Message);
             }
         }
-        public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with guest details to the host
-        {
-            //sends mail to the host
-
-        }
+      
 
         public bool availableDates(HostingUnit unit, GuestRequest guest)//checks if guest request's dates are available in this unit
         {
@@ -144,14 +164,7 @@ namespace BL
                 throw new InvalidException("guest already booked");
             order(hu1, foundGuest);//if everything is valid adds order
         }
-        public string printOrdersByUnit(int unitNum)//return string of all orders from that unit
-        {
-            var orderUnit = ordersOfUnit(unitNum);
-            string ans = "";
-            foreach (Order ord in orderUnit)
-                ans += ord;
-            return ans;
-        }
+        
         public void order(HostingUnit unit, GuestRequest guest)//final order
                                                                //makes sure that the days in the request available
                                                                //update guest status
@@ -211,23 +224,7 @@ namespace BL
             return false; //can't have anyone in his unit
         }
 
-        public List<HostingUnit> findUnit(List<HostingUnit> units, GuestRequest guest)//finds applicable units and sends mail to hosts
-        {
-            List<HostingUnit> listOfUnits = new List<HostingUnit>();
-            for (int i = 0; i < units.Count(); i++)
-            {
-                if (matchesUnit(units[i], guest))//if guest can be put in his unit
-                {
-                    listOfUnits.Add(units[i]);//adds to the guest list
-                    myDAL.addGuestToUnit(units[i], guest);
-                }
-            }
-            if (listOfUnits.Count() == 0)
-                throw new InvalidException("no units found");
-        mail(listOfUnits, guest);  //sends mail to all of the hosts 
-            
-        return listOfUnits;
-        }
+        
 
         #endregion
 
@@ -568,50 +565,34 @@ namespace BL
             else
                 throw new InvalidException("invalid host num");
         }
-#endregion
-        #region mail cheks for pl
-        public void addMail(string text, GuestRequest g1)//checks if recieved mail is valid
-        {
-            try
-            {   
-               g1.Mail = getMail(text);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidException(ex.Message);
-            }
-
-        }
-        public void addMail(string text, Host h1)
-        {
-            try
-            {
-                h1.Mail = getMail(text);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidException(ex.Message);
-            }
-        }
-        public System.Net.Mail.MailAddress getMail(string text)//cheks if text is email address and returns it if it is
-        {
-            var mail = new System.Net.Mail.MailAddress(text);
-            if (mail.Address != text)
-                throw new InvalidException("invalid email");
-            return mail;
-        }
-
         #endregion
-        #region LINQ and grouping
-
-        public IEnumerable<IGrouping<Enums.Area, HostingUnit>> groupUnitsByArea()
+        #region mail
+        public System.Net.Mail.MailAddress checkMail(string text)//cheks if text is email address and returns it if it is
         {
+            try
+            {
+                //if (
+                var mail = new System.Net.Mail.MailAddress(text);
+                if (mail.Address != text)
+                    throw new invalidFormatBL();
+                return mail;
+            }
+            catch
+            {
+                throw new invalidFormatBL();
+            }
+        }
+            #endregion
+            #region LINQ and grouping
+
+            public IEnumerable<IGrouping<Enums.Area, HostingUnit>> groupUnitsByArea()
+            {
             var units = myDAL.getAllHostingUnits();
             var groupArea = from unit in units
                             group unit by unit.AreaVacation into newGroup
                             select newGroup;
             return groupArea;
-        }
+          }
         public IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupRequestsByArea()
         {
             var guests=myDAL.getRequests();

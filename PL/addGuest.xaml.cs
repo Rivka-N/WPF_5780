@@ -76,7 +76,6 @@ namespace PL
             {
                 g1.NumAdult = addNum(tb_enterAdult.Text);//checks this is a valid number. -1 if not
                 tb_enterAdult.BorderBrush = Brushes.Black;
-                checkButton();//sends to function to check if add button should be allowed
 
             }
             catch (Exception ex)
@@ -95,7 +94,6 @@ namespace PL
             {
                 g1.NumChildren = addNum(tb_enterChildren.Text);//checks this is a valid number. -1 if not
                 tb_enterChildren.BorderBrush = Brushes.Black;
-                checkButton();//sends to function to check if add button should be allowed
 
             }
             catch (Exception ex)
@@ -135,25 +133,31 @@ namespace PL
 
         private void Pb_add_Click(object sender, RoutedEventArgs e)//check fields again
         {
-            if (Regex.IsMatch(tb_nameTextBox.Text, @"^[\p{L}]+$"))//first contains only letters
+            try
             {
-                if (Regex.IsMatch(tb_lastNameTextBox.Text, @"^[\p{L}]+$"))//last contains only letters
+                if (Regex.IsMatch(tb_nameTextBox.Text, @"^[\p{L}]+$"))//first contains only letters
                 {
-                    if (g1.Mail != null)//recieved a mail address
+                    if (Regex.IsMatch(tb_lastNameTextBox.Text, @"^[\p{L}]+$"))//last contains only letters
                     {
-                        if (g1.EntryDate >= DateTime.Today && g1.ReleaseDate >= DateTime.Today)//dates are chosen
+                        if (g1.Mail != null)//recieved a mail address
                         {
-                            if (cb_area.SelectedIndex != -1)
+                            if (g1.EntryDate >= DateTime.Today && g1.ReleaseDate >= DateTime.Today)//dates are chosen
                             {
+                                if (cb_area.SelectedIndex != -1)
+                                {
                                     if (cb_hostingUnitType.SelectedIndex != -1)
                                     {
                                         if (g1.NumAdult > 0 && g1.NumChildren > 0)//checks there are people
+                                        {
                                             bl.addGuest(g1); //if it's all valid, adsds guest
+                                            MessageBox.Show("Request added. You will be contacted at " + g1.Mail.Address + " with vacation suggestions", "Added Successfully", MessageBoxButton.OK, MessageBoxImage.Information);
+                                            Close();//closes window
+                                        }
                                         else MessageBox.Show("Number of people can't be empty", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                                     }
                                     else MessageBox.Show("Select unit type", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            }
-                            else MessageBox.Show("Select vacation area", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
+                                else MessageBox.Show("Select vacation area", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
                             }
 
@@ -176,6 +180,17 @@ namespace PL
                     MessageBox.Show("Please enter first name", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     tb_nameTextBox.BorderBrush = Brushes.Red;
                 }
+            }
+            catch(Exception ex)
+            {
+                if (ex is unfoundRequestExceptionBL)//no request found error
+                {
+                    MessageBox.Show("No units found. We will contact you if any become available.",
+                         "Error in request", MessageBoxButton.OK, MessageBoxImage.Warning);
+                   
+                }
+                else MessageBox.Show(ex.Message, "Error", MessageBoxButton.YesNo, MessageBoxImage.Error);
+                    }
          }
 
             #endregion
@@ -188,7 +203,6 @@ namespace PL
                     {
                         g1.EntryDate = (DateTime)dp_entryDateDatePicker.SelectedDate;
                         g1.ReleaseDate = (DateTime)dp_releaseDateDatePicker.SelectedDate;//sets dates
-                        checkButton();//checks if it can enable add button
                     }
                     else//invalid dates
                         MessageBox.Show("vacation start must be at least 1 day after vacation end", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -197,33 +211,6 @@ namespace PL
         
 
 
-        #endregion
-        #region check allowing add
-        private void checkButton()  //checks all fields are valid and allows button
-
-        {
-            //if (tb_nameTextBox != null)
-            //{
-            //    if (tb_lastNameTextBox != null)//name was entered
-            //    {
-            //        if (g1.Mail != null)//recieved a mail address
-            //        {
-            //            if (g1.EntryDate >= DateTime.Today && g1.ReleaseDate >= DateTime.Today)//dates are chosen
-            //            {
-            //                if (cb_area.SelectedIndex != -1 && cb_meal.SelectedIndex != -1 && cb_hostingUnitType.SelectedIndex != -1)
-
-            //                    if (g1.NumAdult > 0 && g1.NumChildren > 0)//checks there are people
-            //                {
-            //                    pb_add.IsEnabled = true;
-            //                }
-            //            }
-            //        }
-
-            //    }
-
-            //}
-
-        }
         #endregion
         #region check name and email
         private void NameTextBox_TextChanged(object sender, TextChangedEventArgs e)

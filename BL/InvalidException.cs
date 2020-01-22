@@ -8,7 +8,7 @@ namespace BL
     {
         public InvalidException()
         {
-            
+
         }
 
         public InvalidException(string message) : base(message)
@@ -23,4 +23,9 @@ namespace BL
         {
         }
     }
+    public class invalidFormatBL : Exception//item isn't in the expceted format
+    { }
+
+    public class unfoundRequestExceptionBL:Exception//only empty list to return (where error is relevent)
+        {}
 }
