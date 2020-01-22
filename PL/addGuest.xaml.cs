@@ -75,7 +75,7 @@ namespace PL
             try
             {
                 g1.NumAdult = addNum(tb_enterAdult.Text);//checks this is a valid number. -1 if not
-                tb_enterAdult.BorderBrush = Brushes.Black;
+                tb_enterAdult.BorderBrush = Brushes.Gray;
 
             }
             catch (Exception ex)
@@ -93,7 +93,7 @@ namespace PL
             try
             {
                 g1.NumChildren = addNum(tb_enterChildren.Text);//checks this is a valid number. -1 if not
-                tb_enterChildren.BorderBrush = Brushes.Black;
+                tb_enterChildren.BorderBrush = Brushes.Gray;
 
             }
             catch (Exception ex)
@@ -186,7 +186,7 @@ namespace PL
                 if (ex is unfoundRequestExceptionBL)//no request found error
                 {
                     MessageBox.Show("No units found. We will contact you if any become available.",
-                         "Error in request", MessageBoxButton.OK, MessageBoxImage.Warning);
+                         "Error in request", MessageBoxButton.OK, MessageBoxImage.Information);
                    
                 }
                 else MessageBox.Show(ex.Message, "Error", MessageBoxButton.YesNo, MessageBoxImage.Error);
@@ -218,7 +218,7 @@ namespace PL
             if (Regex.IsMatch(tb_nameTextBox.Text, @"^[\p{L}]+$"))//contains only letters
             {
                 g1.Name = tb_nameTextBox.Text;//sets first name
-                tb_nameTextBox.BorderBrush = Brushes.Black;//resets border
+                tb_nameTextBox.BorderBrush = Brushes.Gray;//resets border
             }
             else
             {
@@ -231,7 +231,7 @@ namespace PL
             if (Regex.IsMatch(tb_lastNameTextBox.Text, @"^[\p{L}]+$"))//contains only letters
             {
                 g1.Name = tb_lastNameTextBox.Text;//sets first name
-                tb_lastNameTextBox.BorderBrush = Brushes.Black;//resets border
+                tb_lastNameTextBox.BorderBrush = Brushes.Gray;//resets border
             }
             else
             {
@@ -241,8 +241,21 @@ namespace PL
 
         private void Tb_mail_MouseLeave(object sender, MouseEventArgs e)
         {
-            //checks it's valid mail
-            if (tb_mail.Text!="")//not an empty textbox
+            try
+            {
+                //need additional check besides converting to mail address?
+                //if (!Regex.IsMatch(tb_nameTextBox.Text, @"^[a-zA-Z0-9]+@{1}"))//letters and numbers in the beginning
+                //    throw new invalidTypeExceptionPL();//not mail format
+
+                //checks it's valid mail
+                if (tb_mail.Text == "")//empty textbox
+                {
+                    throw new invalidTypeExceptionPL();//not mail format
+                }
+                g1.Mail=bl.checkMail(tb_mail.Text);//checks if it's an email
+
+            }
+            catch
             {
                 tb_mail.Text = "";
                 tb_mail.BorderBrush = Brushes.Red;
