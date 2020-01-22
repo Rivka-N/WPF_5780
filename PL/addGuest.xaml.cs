@@ -34,6 +34,7 @@ namespace PL
             cb_hostingUnitType.SelectedIndex = -1;
             cb_meal.SelectedIndex = -1;
         }
+        //every time text is changed check if all others are valid and if so, allow the add button
 
         #region window
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -59,6 +60,7 @@ namespace PL
             {
                 g1.NumAdult=addNum(tb_enterAdult.Text);//checks this is a valid number. -1 if not
                 tb_enterAdult.BorderBrush = Brushes.Black;
+                checkButton();//sends to function to check if add button should be allowed
 
             }
             catch(Exception ex)
@@ -77,6 +79,7 @@ namespace PL
             {
                 g1.NumChildren = addNum(tb_enterChildren.Text);//checks this is a valid number. -1 if not
                 tb_enterChildren.BorderBrush = Brushes.Black;
+                checkButton();//sends to function to check if add button should be allowed
 
             }
             catch (Exception ex)
@@ -87,6 +90,16 @@ namespace PL
                     MessageBox.Show(ex.Message);//if the number was too big, explains why number wasn't valid
             }
         }
+
+        private void checkButton()
+        {
+            if (g1.NumAdult > 0 || g1.NumChildren > 0)//checks there are people
+                //if....
+                pb_add.IsEnabled = true;
+            //checks all fields are valid and allows button
+            //not checkboxes
+        }
+
         private int addNum(string number)
         {
             int text = 0;

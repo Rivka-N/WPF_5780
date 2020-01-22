@@ -39,7 +39,6 @@ namespace BE
         public Enums.Preference Jacuzzi { get => jacuzzi; set { jacuzzi = value; } }
         Enums.Preference garden;
         public Enums.Preference Garden { get => garden; set { garden = value; } }
-        public int NumSuggestions { get; set; }//number of hosting suggestions
         public Enums.MealType Meal { get; set; }
 
         #endregion
