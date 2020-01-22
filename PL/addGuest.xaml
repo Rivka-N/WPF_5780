@@ -58,21 +58,15 @@
             <CheckBox x:Name="poolCheckBox" VerticalAlignment="Center" Grid.Row="9" Margin="3" IsChecked="{Binding Pool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content=""/>
             <Label VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Type Of Unit:"/>
             <ComboBox x:Name="cb_area" Width="120" SelectedIndex="-1" VerticalAlignment="Center" Text="{Binding AreaVacation, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-            <ComboBox x:Name="cb_hostingUnitType" SelectedIndex="-1" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Foreground="Black">
-                <ComboBox.Background>
-                    <ImageBrush/>
-                </ComboBox.Background>
-                <ComboBox.BorderBrush>
-                    <ImageBrush/>
-                </ComboBox.BorderBrush>
-            </ComboBox>
+            <ComboBox x:Name="cb_hostingUnitType" SelectedIndex="-1" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+
             <Label VerticalAlignment="Center" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Meal:"/>
             <ComboBox x:Name="cb_meal" Width="120" SelectedIndex="-1"  VerticalAlignment="Center" Text="{Binding Meal, Mode=TwoWay, NotifyOnValidationError=False, ValidatesOnExceptions=False}" Grid.Row="6" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
 
             <Label VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Email:"/>
             <TextBox x:Name="addressTextBox" Width="120" VerticalAlignment="Center" Grid.Row="12" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
         </Grid>
-        <Button x:Name="pb_add" Content="Add Unit" HorizontalAlignment="Center" Margin="20" VerticalAlignment="Center" Grid.Row="1" Click="Button_Click" Padding="20,10" IsEnabled="False"/>
+        <Button x:Name="pb_add" Content="Add Unit" HorizontalAlignment="Center" Margin="20" VerticalAlignment="Center" Grid.Row="1" Padding="20,10" IsEnabled="False"/>
 
     </Grid>
 </Window>

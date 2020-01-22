@@ -63,9 +63,9 @@
                 <ComboBox x:Name="cb_meal" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="7" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
 
                 <Label VerticalAlignment="Center" Grid.Row="8" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Num Adult:"/>
-                <TextBox x:Name="numAdultTextBox" Width="120" VerticalAlignment="Bottom" Text="{Binding NumAdult, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="8" Margin="3.4,0,0,4.6" Height="23" HorizontalAlignment="Left" Grid.Column="1" TextChanged="numAdultTextBox_TextChanged"/>
+                <TextBox x:Name="numAdultTextBox" Text="{Binding NumAdult, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="8" Margin="3.4,0,0,4.6" Style="{StaticResource s_numPeople}" Grid.Column="1" TextChanged="numAdultTextBox_TextChanged"/>
                 <Label VerticalAlignment="Center" Grid.Row="9" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Num Children:"/>
-                <TextBox x:Name="numChildrenTextBox" Width="120" VerticalAlignment="Center" Text="{Binding NumChildren, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="9" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" TextChanged="numChildrenTextBox_TextChanged"/>
+                <TextBox x:Name="numChildrenTextBox" Text="{Binding NumChildren, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource s_numPeople}" Grid.Row="9" Margin="3" Grid.Column="1" TextChanged="numChildrenTextBox_TextChanged"/>
                 <Label VerticalAlignment="Center" Grid.Row="10" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Pool:"/>
                 <CheckBox x:Name="poolCheckBox" VerticalAlignment="Center" Grid.Row="10" Margin="3" IsChecked="{Binding Pool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content="" Checked="poolCheckBox_Checked"/>
                 <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Last Name:"/>
