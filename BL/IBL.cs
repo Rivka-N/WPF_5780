@@ -61,15 +61,12 @@ namespace BL
 
         #region pl set fields check
 
-        void addEntryDate(DateTime? selectedDate, GuestRequest g1);
-        void addReleaseDate(DateTime? selectedDate, GuestRequest g1);
+       
         void addHostNum(string text, out Int32 h1);
         void addHostingUnitNum(string text, out int unitKey);
         void addMail(string text, GuestRequest g1);
         void addMail(string text, Host h1);
-        void checkPhone(string text, Host host);//checks if it's a number and adds it to the host if so
         bool sameUnit(HostingUnit hu1, int hostsKey);
-        bool checkGuest(GuestRequest g1);
 
         #endregion
         #region grouping and queries

@@ -506,31 +506,7 @@ namespace BL
         }
         #endregion
         
-        #region add dates for pl
-        public void addEntryDate(DateTime? selectedDate, GuestRequest g1)//adds selected date to guest
-        {
-            g1.EntryDate = (DateTime)selectedDate;
-            if (g1.ReleaseDate!=default(DateTime))
-            {
-                if (g1.ReleaseDate <= g1.EntryDate)
-                    throw new InvalidException("entry date is smaller");
-            }
-
-         }
-
-        public void addReleaseDate(DateTime? selectedDate, GuestRequest g1)
-        {
-            g1.ReleaseDate = (DateTime)selectedDate;
-            if (g1.EntryDate != default(DateTime))
-            {
-                if (g1.ReleaseDate <= g1.EntryDate)
-                    throw new InvalidException("entry date is smaller");
-            }
-            else if (g1.ReleaseDate == DateTime.Today)
-                throw new InvalidException("invalid release date");
-        }
-
-        #endregion
+     
         #region unit checks pl
         
         public void addHostingUnitNum(string text, out int unitKey)//adds hosting unit number recieved to hosting unit
@@ -580,41 +556,7 @@ namespace BL
 
         #endregion
         #region guest and host checks for pl
-        public bool checkGuest(GuestRequest g1)
-        {
-            if (g1.EntryDate == default(DateTime) || g1.ReleaseDate < g1.EntryDate)//invalid date
-                throw new InvalidException("invalid date");
-            if (g1.NumAdult == 0 && g1.NumChildren == 0)//no guests
-                throw new InvalidException("invalid number of guests");
-            if (g1.Name == null || g1.Name == "")//g1.Name.isNullOrEmpty()?
-                throw new InvalidException("invalid first name");
-            if (g1.LastName == null || g1.LastName == "")//invalid last name
-                throw new InvalidException("invalid last name" +
-                    "");
-            if (g1.Mail == null)//no mail address
-                throw new InvalidException("invalid email");
-            try
-            {
-                addGuest(g1);//if it's valid adds the guest
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidException(ex.Message);
-            }
-
-        }
-        public void checkPhone(string text, Host host)
-        {
-            int number;
-            if (!Int32.TryParse(text, out number))
-                throw new InvalidException("invalid phone number");
-            host.Phone = number;//sets phone number to host
-            //if (!text.All(char.IsDigit))
-            //    throw new InvalidException("invalid phone number");
-
-        }
-        public void addHostNum(string text, out Int32 h1)//adds host number to host
+     public void addHostNum(string text, out Int32 h1)//adds host number to host
         {
             if (Int32.TryParse(text, out h1))
             {

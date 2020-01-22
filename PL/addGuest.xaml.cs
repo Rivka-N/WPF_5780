@@ -11,7 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 using BE;
+
 using BL;
 
 namespace PL
@@ -22,6 +24,7 @@ namespace PL
     public partial class addGuest : Window
     {
         GuestRequest g1;
+        #region ctor
         public addGuest()
         {
             InitializeComponent();
@@ -30,12 +33,15 @@ namespace PL
             cb_area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
             cb_meal.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
             dg_guest.DataContext = g1;
-            cb_area.SelectedIndex = -1;
-            cb_hostingUnitType.SelectedIndex = -1;
-            cb_meal.SelectedIndex = -1;
+
+            //allow dates to choose from
+            dp_entryDateDatePicker.DisplayDateStart = DateTime.Today;//only allows to pick dates in the future or today
+            dp_releaseDateDatePicker.DisplayDateStart = DateTime.Today;
+            dp_entryDateDatePicker.DisplayDateEnd = DateTime.Today.AddYears(1);//last date is a year from now
+            dp_releaseDateDatePicker.DisplayDateEnd = DateTime.Today.AddYears(1);
         }
         //every time text is changed check if all others are valid and if so, allow the add button
-
+        #endregion
         #region window
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -91,14 +97,7 @@ namespace PL
             }
         }
 
-        private void checkButton()
-        {
-            if (g1.NumAdult > 0 || g1.NumChildren > 0)//checks there are people
-                //if....
-                pb_add.IsEnabled = true;
-            //checks all fields are valid and allows button
-            //not checkboxes
-        }
+        
 
         private int addNum(string number)
         {
@@ -121,6 +120,83 @@ namespace PL
             if (MessageBox.Show("Are you sure you want to exit without placing ordering?", "Message", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 Close();
             //otherwise does nothing
+        }
+        #endregion
+        #region datepicked
+        private void dp_DateSelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dp_entryDateDatePicker.SelectedDate != null && dp_releaseDateDatePicker != null)//both dates are selected
+            {
+                if (dp_entryDateDatePicker.SelectedDate < dp_releaseDateDatePicker.SelectedDate)//if release date is after entry date
+                {
+                    g1.EntryDate = (DateTime)dp_entryDateDatePicker.SelectedDate;
+                    g1.ReleaseDate = (DateTime)dp_releaseDateDatePicker.SelectedDate;//sets dates
+                    checkButton();//checks if it can enable add button
+                }
+                else//invalid dates
+                    MessageBox.Show("vacation start must be at least 1 day after vacation end", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+        #endregion
+        #region check allowing add
+        private void checkButton()  //checks all fields are valid and allows button
+
+        {
+            if (tb_nameTextBox != null)
+            {
+                if (tb_lastNameTextBox != null)//name was entered
+                {
+                    if (g1.Mail != null)//recieved a mail address
+                    {
+                        if (g1.EntryDate >= DateTime.Today && g1.ReleaseDate >= DateTime.Today)//dates are chosen
+                        {
+                            if (g1.NumAdult > 0 && g1.NumChildren > 0)//checks there are people
+                            {
+                                pb_add.IsEnabled = true;
+                            }
+                            else MessageBox.Show("Number of people can't be empty", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        else MessageBox.Show("Please enter dates of stay", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please enter email address", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        tb_mail.BorderBrush = Brushes.Red;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please enter last name", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    tb_lastNameTextBox.BorderBrush = Brushes.Red;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter last name", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                tb_nameTextBox.BorderBrush = Brushes.Red;
+            }
+        }
+        #endregion
+        #region check name and email
+        private void NameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Regex.IsMatch(tb_nameTextBox.Text, @"^[\p{L}]+$"))//contains only letters
+            {
+                g1.Name = tb_nameTextBox.Text;//sets first name
+                tb_nameTextBox.BorderBrush = Brushes.Black;//resets border
+            }
+            else
+            {
+                tb_nameTextBox.BorderBrush = Brushes.Red;
+            }
+
+        }
+
+        private void Tb_mail_MouseLeave(object sender, MouseEventArgs e)
+        {
+            tb_nameTextBox.Text = "LEFT!";
         }
         #endregion
     }
