@@ -112,9 +112,16 @@ namespace PL
             return text;//if it's valid, returns it
         }
 
-       
-        #endregion
 
-       
+
+        #endregion
+        #region button
+        private void Pb_back_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to exit without placing ordering?", "Message", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                Close();
+            //otherwise does nothing
+        }
+        #endregion
     }
 }

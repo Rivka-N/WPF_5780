@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PL.addGuest"
         mc:Ignorable="d"
-        Title="New Guest" Height="550" Width="400"  MinHeight="450" MinWidth="600" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="New Guest" Height="550" Width="400"  MinHeight="450" MinWidth="600" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing"
+    Background="DarkSeaGreen">
     <Window.Resources>
         <CollectionViewSource x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:GuestRequest}, CreateList=True}"/>
     </Window.Resources>
@@ -37,7 +38,6 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Label x:Name="lb_areaVacation" VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Area Vacation:"/>
             <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Entry Date:"/>
             <Label VerticalAlignment="Center" Grid.Row="4" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Release Date:"/>
             <DatePicker x:Name="releaseDateDatePicker" VerticalAlignment="Bottom" Grid.Row="4" Margin="3,0,0,4" HorizontalAlignment="Left" Grid.Column="1"/>
@@ -56,17 +56,25 @@
             <TextBox x:Name="tb_enterChildren" Style="{StaticResource s_numPeople}"  Grid.Row="8" Margin="3" Grid.Column="1" TextChanged="tb_enterChildren_TextChanged"/>
             <Label VerticalAlignment="Center" Grid.Row="9" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Pool:"/>
             <CheckBox x:Name="poolCheckBox" VerticalAlignment="Center" Grid.Row="9" Margin="3" IsChecked="{Binding Pool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content=""/>
-            <Label VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Type Of Unit:"/>
-            <ComboBox x:Name="cb_area" Width="120" SelectedIndex="-1" VerticalAlignment="Center" Text="{Binding AreaVacation, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+            <Label x:Name="lb_unitType" VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Type Of Unit:"/>
+            <Label x:Name="lb_areaVacation" VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Area Vacation:"/>
+
+            <ComboBox x:Name="cb_area" Width="120" SelectedIndex="-1" Grid.Row="12" VerticalAlignment="Center" Text="{Binding AreaVacation, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+
+            <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Email:"/>
+            <TextBox x:Name="tb_mail" Width="120" VerticalAlignment="Center" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+
+
             <ComboBox x:Name="cb_hostingUnitType" SelectedIndex="-1" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
 
             <Label VerticalAlignment="Center" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Meal:"/>
             <ComboBox x:Name="cb_meal" Width="120" SelectedIndex="-1"  VerticalAlignment="Center" Text="{Binding Meal, Mode=TwoWay, NotifyOnValidationError=False, ValidatesOnExceptions=False}" Grid.Row="6" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
 
-            <Label VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Email:"/>
-            <TextBox x:Name="addressTextBox" Width="120" VerticalAlignment="Center" Grid.Row="12" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
         </Grid>
+        <Grid Grid.Row="1">
+            
         <Button x:Name="pb_add" Content="Add Unit" HorizontalAlignment="Center" Margin="20" VerticalAlignment="Center" Grid.Row="1" Padding="20,10" IsEnabled="False"/>
-
+            <Button x:Name="pb_back" Content="Back" HorizontalAlignment="Left"   Margin="20" VerticalAlignment="Center" Grid.Row="1" Padding="20,10" Click="Pb_back_Click"/>
+        </Grid>
     </Grid>
 </Window>
