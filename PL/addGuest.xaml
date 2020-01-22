@@ -6,13 +6,16 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PL.addGuest"
         mc:Ignorable="d"
-        Title="New Guest" Height="450" Width="600" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="New Guest" Height="550" Width="400"  MinHeight="450" MinWidth="600" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing">
     <Window.Resources>
         <CollectionViewSource x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:GuestRequest}, CreateList=True}"/>
     </Window.Resources>
     <Grid>
-
-        <Grid x:Name="dg_guest" VerticalAlignment="Center" HorizontalAlignment="Center" DataContext="{StaticResource guestRequestViewSource}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="dg_guest" VerticalAlignment="Center" HorizontalAlignment="Center" DataContext="{StaticResource guestRequestViewSource}" Height="auto" Width="auto">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -69,6 +72,7 @@
             <Label VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Email:"/>
             <TextBox x:Name="addressTextBox" Width="120" VerticalAlignment="Center" Grid.Row="12" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
         </Grid>
+        <Button Content="Add Unit" HorizontalAlignment="Center" Margin="20" VerticalAlignment="Center" Grid.Row="1" Click="Button_Click" Padding="20,10" IsEnabled="False"/>
 
     </Grid>
 </Window>
