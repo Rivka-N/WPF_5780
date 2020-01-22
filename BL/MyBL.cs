@@ -33,10 +33,7 @@ namespace BL
         #endregion
 
         #region add items
-        public void addGuest(GuestRequest guest)//add guest to the data list in DS
-        {
-            myDAL.addGuest(guest.Clone());
-        }
+       
 
         public void addHostingUnit(HostingUnit unit)//add hostingUnit to the hostingUnit list in DS
         {
@@ -58,6 +55,13 @@ namespace BL
             foreach (HostingUnit hu in units)//goes over units
                 sum += hu.MoneyPaid;//adds money paid from this unit to toal
             return sum;
+        }
+        #endregion
+
+        #region add guest
+        public void addGuest(GuestRequest guest)//add guest to the data list in DS
+        {
+            myDAL.addGuest(guest.Clone());
         }
         #endregion
         #region order

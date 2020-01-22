@@ -56,7 +56,7 @@ namespace PL
        {
             try
             {
-                myBL.checkPhone(tb_phone.Text, hostingUnit1.Host);
+                //myBL.checkPhone(tb_phone.Text, hostingUnit1.Host);
                 tb_phonetxt.Background = Brushes.White;
             }
             catch
