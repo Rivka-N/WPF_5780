@@ -10,7 +10,7 @@ using BE;
 
 namespace DAL
 {
-    class DALXML : IDAL
+    class DALXML //: IDAL
     {
         //save banks
         bool bankDownloaded;
@@ -40,10 +40,10 @@ namespace DAL
 
             
         }
-        List<BankAccount> GetBankAccounts()
-        {
+        //List<BankAccount> GetBankAccounts()
+        //{
             
-        }
+        //}
 
     }
 }

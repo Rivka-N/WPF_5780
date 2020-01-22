@@ -89,7 +89,7 @@ namespace PL
                 else
                 {
                     hosting.NumAdult = text;
-                    numAdultTextBox.BorderBrush = Brushes.red;
+                    numAdultTextBox.BorderBrush = Brushes.Red;
                 }
             }
             else
