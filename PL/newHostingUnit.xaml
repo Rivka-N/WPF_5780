@@ -44,7 +44,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Label VerticalAlignment="Center" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Area Vacation:"/>
-                <ComboBox x:Name="cb_area" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="6" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+                <ComboBox x:Name="cb_area" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
 
 
                 <Label VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Garden:"/>

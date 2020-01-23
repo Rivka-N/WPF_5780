@@ -34,7 +34,7 @@ namespace PL
             myBL = BL.factoryBL.getBL();
             InitializeComponent();
             unit = hosting;
-            originalUnit = hosting;//to compare unit to see if there were changes
+            originalUnit = myBL.copy(hosting);//to compare unit to see if there were changes. makes copy of hosting
             closeProgram = false;
 
             //sets closed orders data grid source
@@ -45,7 +45,7 @@ namespace PL
 
             //set enums also
             dg_updateUnitGrid.DataContext = unit;
-            dg_bank.DataContext = (unit.Host != null && unit.Host.Bank != null) ? unit.Host : null;//equals bank if exists
+            dg_bank.DataContext = (!(unit.Host == null) && !(unit.Host.Bank == null)) ? unit.Host : null;//equals bank if exists
             //combobox sources
             cb_updateUnitType.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
             cb_meal.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
@@ -53,6 +53,11 @@ namespace PL
 
             //initialize mail
             tb_mail.Text = originalUnit.Host.Mail.Address;
+
+            //init checkboxes
+            cb_gardenCheckBox.IsChecked = unit.Garden == Enums.Preference.Yes ? true : false;
+            cb_poolCheckBox.IsChecked = unit.Pool == Enums.Preference.Yes ? true : false;
+            cb_jacuzziCheckBox.IsChecked = unit.Jacuzzi == Enums.Preference.Yes ? true : false;
 
         }
         public hostingUnitTabs(HostingUnit hosting, int tab) : this(hosting)
@@ -305,7 +310,7 @@ namespace PL
                 if (!Regex.IsMatch(tb_name.Text, @"[\p{L}]{2,}"))//contains some letters
                     throw new invalidTypeExceptionPL();//not a valid name
                 tb_unitname.BorderBrush = Brushes.Gray;
-                if (originalUnit.HostingUnitName != tb_unitname.Text)
+                if (!(originalUnit.HostingUnitName == tb_unitname.Text))
                 {
                     unit.HostingUnitName = tb_unitname.Text;
                     pb_update.IsEnabled = true;
@@ -335,7 +340,7 @@ namespace PL
 
                     unit.Host.Phone = text;//sets new number
                     tb_phone.BorderBrush = Brushes.Gray;
-                    if (text != originalUnit.Host.Phone)//was changed
+                    if (!(text == originalUnit.Host.Phone))//was changed
                         pb_update.IsEnabled = true;//allows update
                 }
                 else
@@ -380,7 +385,7 @@ namespace PL
             {
                 if (Regex.IsMatch(tb_name.Text, @"^[\p{L}]+$"))//contains only letters
                 {
-                    if (tb_name.Text != originalUnit.Host.Name)//name was changed
+                    if (!(tb_name.Text == originalUnit.Host.Name))//name was changed
                     {
                         unit.Host.Name = tb_name.Text;//sets first name
                         pb_update.IsEnabled = true;
@@ -406,7 +411,7 @@ namespace PL
                     unit.Host.Mail = myBL.checkMail(tb_mail.Text);//checks if it's an email
 
                     tb_mail.BorderBrush = Brushes.Gray;
-                if (unit.Host.Mail != originalUnit.Host.Mail)
+                if (!(unit.Host.Mail == originalUnit.Host.Mail))
                     pb_update.IsEnabled = true;
 
             }
@@ -427,7 +432,7 @@ namespace PL
 
                 unit.NumAdult = addNum(tb_numAdultTextBox.Text);//checks this is a valid number. 
                 tb_numAdultTextBox.BorderBrush = Brushes.Gray;
-                if (unit.NumAdult != originalUnit.NumAdult)
+                if (!(unit.NumAdult== originalUnit.NumAdult))
                     pb_update.IsEnabled = true;
 
             }
@@ -447,7 +452,7 @@ namespace PL
 
                 unit.NumChildren = addNum(tb_numChildrenTextBox.Text);//checks this is a valid number. 
                 tb_numChildrenTextBox.BorderBrush = Brushes.Gray;
-                if (unit.NumChildren != originalUnit.NumChildren)
+                if (!(unit.NumChildren == originalUnit.NumChildren))
                     pb_update.IsEnabled = true;
 
             }
@@ -475,16 +480,16 @@ namespace PL
         #region comboBox UpdateUnit
         private void cb_hostingUnitType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if ((Enums.HostingUnitType)cb_updateUnitType.SelectedIndex != originalUnit.HostingUnitType)//different unit type
+            if (!((Enums.HostingUnitType)cb_updateUnitType.SelectedIndex == originalUnit.HostingUnitType))//different unit type
             {
                 pb_update.IsEnabled = true;
                 unit.HostingUnitType = (Enums.HostingUnitType)cb_updateUnitType.SelectedIndex;
             }
         }
 
-        private void Cb_area_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        private void Cb_area_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if ((Enums.Area)cb_area.SelectedIndex != originalUnit.AreaVacation)//different unit type
+            if (!((Enums.Area)cb_area.SelectedIndex == originalUnit.AreaVacation))//different unit type
             {
                 pb_update.IsEnabled = true;
                 unit.AreaVacation = (Enums.Area)cb_area.SelectedIndex;
@@ -494,7 +499,7 @@ namespace PL
 
         private void Cb_meal_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if ((Enums.MealType)cb_meal.SelectedIndex != originalUnit.Meal)//different unit type
+            if (!((Enums.MealType)cb_meal.SelectedIndex == originalUnit.Meal))//different unit type
             {
                 pb_update.IsEnabled = true;
                 unit.Meal = (Enums.MealType)cb_meal.SelectedIndex;
@@ -515,7 +520,7 @@ namespace PL
                 else
                     unit.Jacuzzi = Enums.Preference.Maybe;//otherwise it's the third state
             }
-            if (unit.Jacuzzi!=originalUnit.Jacuzzi)
+            if (!(unit.Jacuzzi==originalUnit.Jacuzzi))
                 pb_update.IsEnabled = true;
 
         }
@@ -531,7 +536,7 @@ namespace PL
                 else
                     unit.Pool = Enums.Preference.Maybe;//otherwise it's the third state
             }
-            if (unit.Pool!=originalUnit.Pool)  
+            if (!(unit.Pool==originalUnit.Pool)) 
                 pb_update.IsEnabled = true;
 
         }
@@ -547,7 +552,7 @@ namespace PL
                 else
                     unit.Garden = Enums.Preference.Maybe;//otherwise it's the third state
             }
-            if (unit.Garden!=originalUnit.Garden)
+            if (!(unit.Garden==originalUnit.Garden))
                 pb_update.IsEnabled = true;
 
         }
@@ -650,6 +655,7 @@ namespace PL
 
         #endregion
 
+       
     }
 }
 

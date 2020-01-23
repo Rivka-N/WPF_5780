@@ -28,8 +28,8 @@ namespace BL
         void changeUnit(HostingUnit hostingUnit1);
         List<HostingUnit> searchUnits(string text, Enums.FunctionSender fs=0);
         List<HostingUnit> searchUnits(string text, int unitType, int area, Enums.FunctionSender sender);
-
         bool checkUnit(HostingUnit hostingUnit1);
+        HostingUnit copy(HostingUnit hosting);
 
         List<GuestRequest> getReleventRequests(HostingUnit unit);//returns all requests that are applicable for unit
 

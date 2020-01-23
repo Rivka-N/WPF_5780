@@ -474,6 +474,10 @@ namespace BL
         {
             myDAL.changeUnit(hostingUnit1);
         }
+        public HostingUnit copy(HostingUnit hosting)//returns copy of the hosting unit
+        {
+            return hosting.Clone();
+        }
 
         #endregion
         #region delete
@@ -511,24 +515,7 @@ namespace BL
      
         #region unit checks pl
         
-        public void addHostingUnitNum(string text, out int unitKey)//adds hosting unit number recieved to hosting unit
-        {
-            if (Int32.TryParse(text, out unitKey))
-            {
-                if (unitKey<=0)
-                {
-                    throw new InvalidException("invalid unit number");
-                }
-            }
-            else
-                throw new InvalidException("invalid unit number");
 
-        }
-
-        public bool sameUnit(HostingUnit hu1, int hostsKey)//checks if hu1 and hostkey point to the same unit
-        {
-            return (hu1.Host.HostKey == hostsKey) ;
-        }
 
         public bool checkUnit(HostingUnit hostingUnit1)
         {
@@ -633,6 +620,7 @@ namespace BL
                    group HostingUnit by HostingUnit.Host into newGroup
                    select newGroup;
         }
+
 
 
         #endregion

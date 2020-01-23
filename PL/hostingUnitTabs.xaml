@@ -79,26 +79,26 @@
 
                             </Grid.RowDefinitions>
                             <Label VerticalAlignment="Center" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Area Vacation:"/>
-                            <ComboBox x:Name="cb_area" Width="120" VerticalAlignment="Center" Text="{Binding AreaVacation, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="6" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+                            <ComboBox x:Name="cb_area" Width="120" VerticalAlignment="Center" Text="{Binding AreaVacation, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="6" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" SelectionChanged="Cb_area_SelectionChanged"/>
                             <Label VerticalAlignment="Center" Grid.Row="13" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Garden:"/>
-                            <CheckBox x:Name="cb_gardenCheckBox" VerticalAlignment="Center" Grid.Row="13" Margin="3" IsChecked="{Binding Garden, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content="" Checked="gardenCheckBox_Checked"/>
+                            <CheckBox x:Name="cb_gardenCheckBox" VerticalAlignment="Center" Grid.Row="13" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Unchecked="gardenCheckBox_Checked" Checked="gardenCheckBox_Checked"/>
                             <Label VerticalAlignment="Center" Grid.Row="4" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Hosting Unit Key:"/>
                             <TextBox x:Name="tb_unitKey" IsReadOnly="True" Width="120" VerticalAlignment="Center" Text="{Binding HostingUnitKey}" Grid.Row="4" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
                             <Label VerticalAlignment="Center" Grid.Row="5" Margin="4" HorizontalAlignment="Left" Grid.Column="0" Content="Hosting Unit Name:"/>
                             <TextBox x:Name="tb_unitname" Width="120" VerticalAlignment="Center" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_unitname_LostFocus"/>
                             <Label VerticalAlignment="Center" Grid.Row="7" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Hosting Unit Type:"/>
-                            <ComboBox x:Name="cb_updateUnitType" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="7" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" SelectionChanged="cb_hostingUnitType_SelectionChanged"/>
+                            <ComboBox x:Name="cb_updateUnitType" Width="120" VerticalAlignment="Center" Text="{Binding HostingUnitType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="7" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" SelectionChanged="cb_hostingUnitType_SelectionChanged"/>
+
                             <Label VerticalAlignment="Center" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Jacuzzi:"/>
-                            <CheckBox x:Name="cb_jacuzziCheckBox" VerticalAlignment="Center" Grid.Row="11" Margin="3" IsChecked="{Binding Jacuzzi, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content="" Checked="jacuzziCheckBox_Checked"/>
+                            <CheckBox x:Name="cb_jacuzziCheckBox" VerticalAlignment="Center" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Unchecked="jacuzziCheckBox_Checked" Checked="jacuzziCheckBox_Checked"/>
                             <Label VerticalAlignment="Center" Grid.Row="8" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Meal:"/>
-                            <ComboBox x:Name="cb_meal" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="8" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+                            <ComboBox x:Name="cb_meal" Width="120" VerticalAlignment="Center" Text="{Binding Meal, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="8" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
                             <Label VerticalAlignment="Center" Grid.Row="10" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Num Adult:"/>
-                            <TextBox x:Name="tb_numAdultTextBox" Grid.Row="10" Margin="3.4,0,0,4.6" Style="{StaticResource s_numPeople}" Grid.Column="1" LostFocus="Tb_numAdultTextBox_LostFocus"/>
+                            <TextBox x:Name="tb_numAdultTextBox" Grid.Row="10" Margin="3.4,0,0,4.6"  Text="{Binding NumAdult, Mode=OneTime}" Style="{StaticResource s_numPeople}" Grid.Column="1" LostFocus="Tb_numAdultTextBox_LostFocus"/>
                             <Label VerticalAlignment="Center" Grid.Row="9" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Num Children:"/>
-                            <TextBox x:Name="tb_numChildrenTextBox" Style="{StaticResource s_numPeople}" Grid.Row="9" Margin="3" Grid.Column="1" LostFocus="Tb_numChildrenTextBox_LostFocus"/>
+                            <TextBox x:Name="tb_numChildrenTextBox" Text="{Binding NumChildren, Mode=OneTime}" Style="{StaticResource s_numPeople}" Grid.Row="9" Margin="3" Grid.Column="1" LostFocus="Tb_numChildrenTextBox_LostFocus"/>
                             <Label VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Pool:"/>
-                            <CheckBox x:Name="cb_poolCheckBox" VerticalAlignment="Center" Grid.Row="12" Margin="3" IsChecked="{Binding Pool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content="" Checked="poolCheckBox_Checked"/>
-                            
+                            <CheckBox x:Name="cb_poolCheckBox" VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Unchecked="poolCheckBox_Checked" Checked="poolCheckBox_Checked"/>
                             <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Last Name:"/>
                             <TextBox x:Name="tb_lastName" Width="120" VerticalAlignment="Top" Text="{Binding Host.LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3.4,4,0,0" Height="24" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_lastName_LostFocus"/>
                             <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Name:"/>
@@ -137,7 +137,7 @@
                             <Label Content="Branch Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
                             <TextBox x:Name="branchNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="5" Text="{Binding Bank.BranchNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
                             <Label Name="lb_collectionClearance" Content="collection clearance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
-                            <CheckBox x:Name="cb_collectionClearance" Grid.Column="1" Margin="3" HorizontalAlignment="Left" Grid.Row="6" IsChecked="{Binding CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Checked="Cb_collectionClearance_Checked"/>
+                            <CheckBox x:Name="cb_collectionClearance" Grid.Column="1" Margin="3" HorizontalAlignment="Left" Grid.Row="6" IsChecked="{Binding CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Unchecked="Cb_collectionClearance_Checked" Checked="Cb_collectionClearance_Checked"/>
 
                         </Grid>
                     </Grid>
@@ -220,9 +220,9 @@
                     <Grid Grid.Row="0">
                           <Grid.Background>
                                 <RadialGradientBrush>
-                                    <GradientStop Color="BlueViolet" Offset="1"/>
-                                    <GradientStop Color="IndianRed"/>
-                                    <GradientStop Color="Thistle" Offset="0.25"/>
+                                    <GradientStop Color="SeaGreen" Offset="1"/>
+                                    <GradientStop Color="MediumSeaGreen"/>
+                                    <GradientStop Color="LightSeaGreen" Offset="0.25"/>
                                 </RadialGradientBrush>
                             </Grid.Background>
                     <DataGrid x:Name="dg_guestRequestDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" IsReadOnly="True" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="dg_guestRequestDataGrid_SelectionChanged">
@@ -263,6 +263,13 @@
             </TabItem>
             <TabItem Name="tab_closedOrders" Header="Closed Orders">
                 <Grid DataContext="{StaticResource orderViewSource}">
+                    <Grid.Background>
+                        <RadialGradientBrush>
+                            <GradientStop Color="SeaGreen" Offset="1"/>
+                            <GradientStop Color="MediumSeaGreen"/>
+                            <GradientStop Color="LightSeaGreen" Offset="0.25"/>
+                        </RadialGradientBrush>
+                    </Grid.Background>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
