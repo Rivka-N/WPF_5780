@@ -324,7 +324,9 @@
                         <Button x:Name="pb_ClosedOrdersBack" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10"  Grid.Column="0" Click="Pb_back_Click"/>
                     </Grid>
                     <TextBlock Name="tb_order_error" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Visibility="Collapsed" Foreground="White" FontSize="40">
-                        
+                        <TextBlock.Effect>
+                            <DropShadowEffect/>
+                        </TextBlock.Effect>
                     </TextBlock>
                 </Grid>
                 

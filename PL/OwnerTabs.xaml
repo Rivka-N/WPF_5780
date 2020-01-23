@@ -13,6 +13,10 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TabItem Name="ti_guestRequests" Header="Guests">
                 <Frame Source="Owner_GuestRequests.xaml" />
@@ -24,13 +28,13 @@
                 <!--change to all orders with an option to sort by mailed or closed ones?-->
                 <Frame Source="Owner_ClosedOrders.xaml"/>
             </TabItem>
-            <TabItem Name="ti_information" Header="Details">
-                <Frame Source="Owner_Data.xaml"/>
-            </TabItem>
-            
+           
         </TabControl>
         <Grid Grid.Row="1" Background="DarkSeaGreen">
             <Button x:Name="pb_back" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10" Click="Pb_back_Click"/>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Frame Source="Owner_Data.xaml"/>
         </Grid>
     </Grid>
 </Window>

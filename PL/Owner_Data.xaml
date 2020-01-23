@@ -5,23 +5,48 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PL"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="200" Width="auto" Height="auto"
       Title="Owner_Data">
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
 
-    <Grid Background="AliceBlue">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    </Page.Resources>
+    <Grid Background="LightSeaGreen">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Name="lb_moneyCollectedTag" Content="Money Collected" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBlock Name="tb_moneyCollected" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        <StackPanel Grid.Row="0">
+        <Label Name="lb_moneyCollectedTag" Content="Money Collected"/>
+        <TextBlock Name="tb_moneyCollected" />
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <Label Name="lb_unitNum" Content="Number Hosting Units:"/>
+            <TextBlock Name="tb_units" />
+
+        </StackPanel>
+        <StackPanel Grid.Row="2">
+            <Label Name="lb_finalguests" Content="Number of Placed Guests:"/>
+            <TextBlock Name="tb_finalguests" />
+        </StackPanel>
+        <StackPanel Grid.Row="3">
+            <Label Name="lb_guests" Content="Number of Guests Total:"/>
+            <TextBlock Name="tb_guests" />
+        </StackPanel>
+
 
         <!--<Expander Header="Details"/>
         <ProgressBar Name="Guest Requests to Orders Ratio" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="auto"/>-->
