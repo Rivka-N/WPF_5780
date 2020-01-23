@@ -93,7 +93,7 @@ namespace PL
         {
             try
             {
-                g1.NumChildren = addNum(tb_enterChildren.Text);//checks this is a valid number. -1 if not
+                g1.NumChildren = addNum(tb_enterChildren.Text);//checks this is a valid number.
                 tb_enterChildren.BorderBrush = Brushes.Gray;
 
             }
@@ -235,9 +235,7 @@ namespace PL
                 tb_lastNameTextBox.BorderBrush = Brushes.Red;
             }
         }
-
        
-        
         private void Tb_mail_MouseLeave(object sender, MouseEventArgs e)
         {
             try

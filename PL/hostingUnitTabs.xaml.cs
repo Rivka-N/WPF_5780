@@ -24,6 +24,7 @@ namespace PL
     {
         IBL myBL;
         HostingUnit unit;
+        private readonly HostingUnit originalUnit;//to compare changed one to
         List<Order> myOrders;
         List<GuestRequest> addOrders;
         bool closeProgram;//for exiting window
@@ -33,6 +34,7 @@ namespace PL
             myBL = BL.factoryBL.getBL();
             InitializeComponent();
             unit = hosting;
+            originalUnit = hosting;//to compare unit to see if there were changes
             closeProgram = false;
 
             //sets closed orders data grid source
@@ -43,7 +45,7 @@ namespace PL
 
             //set enums also
             dg_updateUnitGrid.DataContext = unit;
-
+            dg_bank.DataContext = (unit.Host != null && unit.Host.Bank != null) ? unit.Host : null;//equals bank if exists
             //combobox sources
             cb_updateUnitType.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
             cb_meal.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
@@ -54,7 +56,7 @@ namespace PL
 
 
         }
-        public hostingUnitTabs(HostingUnit hosting, int tab): this(hosting)
+        public hostingUnitTabs(HostingUnit hosting, int tab) : this(hosting)
         {
             tc_mainControl.SelectedIndex = tab;//selects required tab
 
@@ -65,21 +67,22 @@ namespace PL
         {
             System.Windows.Data.CollectionViewSource orderViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("orderViewSource")));
             System.Windows.Data.CollectionViewSource guestRequestViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("guestRequestViewSource")));
+
             // Load data by setting the CollectionViewSource.Source property:
-            // guestRequestViewSource.Source = [generic data source]
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if(!closeProgram)//if doesn't want to close program
-               new AllUnitsList().Show();//opens previous window again
+            if (!closeProgram)//if doesn't want to close program
+                new AllUnitsList().Show();//opens previous window again
         }
         #endregion
         #region doubleclick
-        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
+        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)//same as adding order/mailing with button depending on which is available
 
-            //same as adding order/mailing with button depending on which is available
+        {
+            //if (pb_addOrder.IsEnabled)//add order
+
         }
 
         #endregion
@@ -87,7 +90,7 @@ namespace PL
         private void updateGuestsSource()
         {
             //updates
-            addOrders = myBL.getReleventRequests(unit);
+            addOrders = (unit.Host.CollectionClearance == true) ? myBL.getReleventRequests(unit) : null;
             dg_guestRequestDataGrid.ItemsSource = addOrders;
 
             //prints error textbox if empty
@@ -170,14 +173,33 @@ namespace PL
         #region back button
         private void Pb_back_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();//closes window and returns to other window
+            Close();//closes window and returns to other window
+
+        }
+        private void Pb_UnitBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (pb_update.IsEnabled)//if there were changes
+                if (MessageBox.Show("Are you sure you want to exit without saving changes?", "unsaved changes", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
+                    //wants to exit
+                    Close();//closes window
+                            //otherwise does nothing
         }
         #endregion
         #region tabs
-       
+
         private void Tab_updateDeleteUnit_Unselected(object sender, RoutedEventArgs e)
         {
+            if (pb_update.IsEnabled)//if there were changes
+                if (MessageBox.Show("Are you sure you want to exit without saving changes?", "unsaved changes", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.No)
+                {
+                    tc_mainControl.SelectedIndex = 0;//selects first tab again
+                    return;
+                }
+
+            //wants to exit
+            //otherwise does nothing
             updateGuestsSource();
+
             //resets available orders from non- mailed orders based on what's relevent now
         }
         private void Tab_addOrders_Unselected(object sender, RoutedEventArgs e)
@@ -208,7 +230,7 @@ namespace PL
                             (sender as DatePicker).SelectedDate = (dg_orderDataGrid.SelectedItem as Order).CreateDate;//find which date is selected and only change that one?
         }
 
-#endregion
+        #endregion
 
         #region button addOrder
         private void pb_addOrder_Click(object sender, RoutedEventArgs e)//adds final order. deletes from the rest
@@ -259,43 +281,201 @@ namespace PL
         }
         #endregion
 
-   
-
-        #region textBox updateUnit
-        private void nameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        #region check bank and collection clearance
+        private void Cb_collectionClearance_Checked(object sender, RoutedEventArgs e)//need to add check other conditions
         {
+            if (cb_collectionClearance.IsChecked == false)//set to false
+            {
+                if (MessageBox.Show("You will not be able to add any more orders. Proceed?", "warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                    unit.Host.CollectionClearance = false;
+                else
+                    cb_collectionClearance.IsChecked = true;//adds check again
+            }
+            else//checked
+                MessageBox.Show("go over to your add Orders tab to start talking to customers", "Unit Allowed", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        #endregion
+     
+        #region updateUnit text lost focus
+        //checks if item was updated, if it's valid, and if both then updates new host and allows update button
+        private void Tb_unitname_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (!Regex.IsMatch(tb_name.Text, @"[\p{L}]{2,}"))//contains some letters
+                    throw new invalidTypeExceptionPL();//not a valid name
+                tb_unitname.BorderBrush = Brushes.Gray;
+                if (originalUnit.HostingUnitName != tb_unitname.Text)
+                {
+                    unit.HostingUnitName = tb_unitname.Text;
+                    pb_update.IsEnabled = true;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("unit name must contain at least two letters", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+                tb_unitname.BorderBrush = Brushes.Red;
+                tb_unitname.Text = originalUnit.HostingUnitName;
+            }
+        }
+
+        private void Tb_phone_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int text = 0;
+                if (!Regex.IsMatch(tb_phone.Text, @"^(\+[0-9]{9,10})$"))//9-10 numbers
+                    throw new invalidTypeExceptionPL();
+                if (Int32.TryParse(tb_phone.Text, out text))
+                {
+                    if (text < 0)
+                    {
+                        throw new invalidTypeExceptionPL();
+                    }
+
+                    unit.Host.Phone = text;//sets new number
+                    tb_phone.BorderBrush = Brushes.Gray;
+                    if (text != originalUnit.Host.Phone)//was changed
+                        pb_update.IsEnabled = true;//allows update
+                }
+                else
+                {
+                    throw new invalidTypeExceptionPL();//not valid phone number
+                }
+            }
+            catch
+            {
+                tb_phone.BorderBrush = Brushes.Red;
+                tb_phone.Text = originalUnit.Host.Phone.ToString();//resets text
+            }
 
         }
 
-        private void hostingUnitKeyTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void Tb_lastName_LostFocus(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                if (Regex.IsMatch(tb_lastName.Text, @"^[\p{L}]+$"))//contains only letters
+                {
+                    if (tb_lastName.Text == originalUnit.Host.LastName)//name was changed
+                    {
+                        unit.Host.LastName = tb_lastName.Text;//sets first name
+                        pb_update.IsEnabled = true;
+                    }
+                    tb_lastName.BorderBrush = Brushes.Gray;//resets border
+                }
+                else
+                    throw new invalidTypeExceptionPL();//not name
+            }
+            catch
+            {
+                tb_lastName.BorderBrush = Brushes.Red;
+                tb_lastName.Text = originalUnit.Host.LastName;
+            }
         }
 
-        private void hostingUnitNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void Tb_name_LostFocus(object sender, RoutedEventArgs e)
         {
-
-            if (Regex.IsMatch(hostingUnitNameTextBox.Text, @"^[a-zA-Z]+$"))
+            try
             {
-                unit.HostingUnitName = hostingUnitNameTextBox.Text;//set the new name
-                hostingUnitNameTextBox.Background = Brushes.White;
-                pb_update.IsEnabled = true;
+                if (Regex.IsMatch(tb_name.Text, @"^[\p{L}]+$"))//contains only letters
+                {
+                    if (tb_name.Text != originalUnit.Host.Name)//name was changed
+                    {
+                        unit.Host.Name = tb_name.Text;//sets first name
+                        pb_update.IsEnabled = true;
+                    }
+                    tb_name.BorderBrush = Brushes.Gray;//resets border
+                }
+                else
+                    throw new invalidTypeExceptionPL();//not name
+            }
+            catch
+            {
+                tb_name.BorderBrush = Brushes.Red;
+                tb_name.Text = originalUnit.Host.Name;
+            }
+        }
+
+        private void Tb_mail_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //checks it's valid mail
+
+                    unit.Host.Mail = myBL.checkMail(tb_mail.Text);//checks if it's an email
+
+                    tb_mail.BorderBrush = Brushes.Gray;
+                if (unit.Host.Mail != originalUnit.Host.Mail)
+                    pb_update.IsEnabled = true;
 
             }
-            else
+            catch
             {
-                hostingUnitNameTextBox.Text = "";
-                hostingUnitNameTextBox.Background = Brushes.Red;
+                tb_mail.Text = originalUnit.Host.Mail.Address;
+                tb_mail.BorderBrush = Brushes.Red;
             }
+        }
+
+
+        #endregion
+        #region update unit number checks
+        private void Tb_numAdultTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                unit.NumAdult = addNum(tb_numAdultTextBox.Text);//checks this is a valid number. 
+                tb_numAdultTextBox.BorderBrush = Brushes.Gray;
+                if (unit.NumAdult != originalUnit.NumAdult)
+                    pb_update.IsEnabled = true;
+
+            }
+            catch (Exception ex)
+            {
+                tb_numAdultTextBox.BorderBrush = Brushes.Red;//colors border
+                tb_numAdultTextBox.Text = originalUnit.NumAdult.ToString();
+                if (ex is LargeNumberExceptionPL)
+                    MessageBox.Show(ex.Message);//if the number was too big, explains why number wasn't valid
+            }
+        }
+
+        private void Tb_numChildrenTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                unit.NumChildren = addNum(tb_numChildrenTextBox.Text);//checks this is a valid number. 
+                tb_numChildrenTextBox.BorderBrush = Brushes.Gray;
+                if (unit.NumChildren != originalUnit.NumChildren)
+                    pb_update.IsEnabled = true;
+
+            }
+            catch (Exception ex)
+            {
+                tb_numChildrenTextBox.BorderBrush = Brushes.Red;//colors border
+                tb_numChildrenTextBox.Text = originalUnit.NumChildren.ToString();
+                if (ex is LargeNumberExceptionPL)
+                    MessageBox.Show(ex.Message);//if the number was too big, explains why number wasn't valid
+            }
+        }
+        private int addNum(string number)
+        {
+            int text = 0;
+            if (!Int32.TryParse(number, out text))//if it's not a number
+                throw new invalidTypeExceptionPL();
+            if (text < 0)//not a valid number
+                throw new negativeNumberExceptionPL();
+            if (text > 1000)
+                throw new LargeNumberExceptionPL("Number cannot be over 1000");
+            return text;//if it's valid, returns it
         }
         #endregion
 
         #region comboBox UpdateUnit
         private void hostingUnitTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            cb_updateUnitType.Background = Brushes.White;
             unit.HostingUnitType = (Enums.HostingUnitType)(cb_updateUnitType.SelectedIndex);
-            
             pb_update.IsEnabled = true;
 
             //(Enums.HostingUnitType)(hostingUnitTypeComboBox.SelectedIndex);
@@ -311,7 +491,7 @@ namespace PL
         }
         private void Cb_area_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cb_area.SelectedIndex!=-1)//if something was selected
+            if (cb_area.SelectedIndex != -1)//if something was selected
                 pb_update.IsEnabled = true;
 
         }
@@ -439,13 +619,13 @@ namespace PL
 
         private void pb_delete_Click(object sender, RoutedEventArgs e)
         {
-           
-                string message = "Are you sure you want to delete this unit?";
-                string caption = "Confirmation";
-                MessageBoxButton buttons = MessageBoxButton.YesNo;
-                MessageBoxImage icon = MessageBoxImage.Question;
-            try { 
-            if (MessageBox.Show(message, caption, buttons, icon) == MessageBoxResult.Yes)
+
+            string message = "Are you sure you want to delete this unit?";
+            string caption = "Confirmation";
+            MessageBoxButton buttons = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Question;
+            try {
+                if (MessageBox.Show(message, caption, buttons, icon) == MessageBoxResult.Yes)
                 {
                     // OK code here
                     myBL.deleteUnit(unit.HostingUnitKey);//send to the delete function in bl, there is problem in the remove functios ds
@@ -458,7 +638,7 @@ namespace PL
                     // Cancel code here. nothing needs to happen then
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Unable to Delete Unit:" + ex.Message, "error!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -504,9 +684,24 @@ namespace PL
             dg_guestRequestDataGrid.ItemsSource = addOrders;
 
         }
-        #endregion
 
-       
+
+
+
+
+
+
+
+        #endregion
+        #region combobox changes
+        private void cb_hostingUnitType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((Enums.HostingUnitType)cb_updateUnitType.SelectedIndex!=originalUnit.HostingUnitType)//different unit type
+            {
+                pb_update.IsEnabled = true;
+                unit.HostingUnitType = (Enums.HostingUnitType)cb_updateUnitType.SelectedIndex;
+            }
+        }
     }
 }
 

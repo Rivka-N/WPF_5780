@@ -101,7 +101,7 @@ namespace BL
                 addOrder(ord);//send to the function which adds the order to the order list
 
                 #region send mail
-
+                //add new background worker here
                 MailMessage mail = new MailMessage();
                 mail.To.Add(guest.Mail);
                 mail.From = new MailAddress("amazingvacations169@gmail.com", "Amazing Vacations");
@@ -125,6 +125,7 @@ namespace BL
 }
             catch (Exception ex)
             {
+                //try to send mail again with a few second wait?
                 throw new InvalidException("unable to send mail: " + ex.Message);
             }
         }
@@ -571,6 +572,9 @@ namespace BL
         {
             try
             {
+
+                if (!Regex.IsMatch(text, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,})+)$"))//words@
+                     throw new invalidFormatBL();//not mailformat
 
                 //if (!Regex.IsMatch(text, @"^[a-zA-Z0-9]+@{1}[a-zA-Z0-9]+\.[a-zA-Z]{1,3}$"))//letters and numbers in the beginning
                 // throw new invalidFormatBL();//not mail format
