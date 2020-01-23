@@ -14,16 +14,18 @@
     <!--<Window.Background>
         <ImageBrush ImageSource="images\khaos_Installer_UI.png"/>
     </Window.Background>-->
-    <Grid>
+    <Grid Opacity="0.8">
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Name="pb_guest" Click="pb_guest_Click" Grid.Row="1" Content="Book a vacation" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" Background="{x:Null}" FontStyle="Italic" >
-            <Button.BorderBrush>
-                <SolidColorBrush Color="#FFB4B4B4"/>
-            </Button.BorderBrush>
+        <Grid Opacity="0.2">
+            
+        </Grid>
+        <Button Name="pb_guest" Click="pb_guest_Click" Grid.Row="1" Background="Transparent" Content="Book a vacation" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" Width="400"  >
+            
         </Button>
         <Button Name="pb_host" Click="pb_host_Click" Grid.Row="2" Content="Host"  Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="673,50,9.6,53" BorderBrush="#FF15806F" Background="#3302707B" Width="111" Height="35"/>
         <Button Name="pb_owner" Click="pb_owner_Click" Grid.Row="2" Content="Administration" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="673,92,9.6,10" Width="111" Height="35" Background="#3302707B"/>

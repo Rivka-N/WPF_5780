@@ -361,6 +361,11 @@ namespace PL
                 g1.AreaVacation = (Enums.Area)cb_area.SelectedIndex;//sets vacation area to selection
         }
         #endregion
+
+        private void tb_mail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
 

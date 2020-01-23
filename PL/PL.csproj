@@ -254,7 +254,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\download.jpg" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\search.png" />
   </ItemGroup>

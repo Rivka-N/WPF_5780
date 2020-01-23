@@ -504,9 +504,13 @@ namespace PL
             dg_guestRequestDataGrid.ItemsSource = addOrders;
 
         }
+
         #endregion
 
-       
+        private void tc_mainControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
 

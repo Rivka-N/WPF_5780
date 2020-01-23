@@ -46,7 +46,7 @@
             <TextBox x:Name="tb_lastNameTextBox" Width="120" VerticalAlignment="Center" Grid.Row="1" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" MouseLeave="Tb_lastNameTextBox_MouseLeave" TextChanged="Tb_lastNameTextBox_TextChanged"/>
 
             <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Email:"/>
-            <TextBox x:Name="tb_mail" Width="120" VerticalAlignment="Bottom" Grid.Row="2" Margin="3,0,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_mail_LostFocus" MouseLeave="Tb_mail_MouseLeave"/>
+            <TextBox x:Name="tb_mail" Width="120" VerticalAlignment="Bottom" Grid.Row="2" Margin="3,0,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_mail_LostFocus" MouseLeave="Tb_mail_MouseLeave" TextChanged="tb_mail_TextChanged"/>
             <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Entry Date:"/>
             <DatePicker x:Name="dp_entryDateDatePicker" VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="1" SelectedDateChanged="dp_DateSelectedDateChanged"/>
             <Label VerticalAlignment="Center" Grid.Row="4" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Release Date:"/>
