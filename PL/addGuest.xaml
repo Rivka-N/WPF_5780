@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PL.addGuest"
         mc:Ignorable="d"
-        Title="New Guest" Height="550" Width="400"  MinHeight="450" MinWidth="600" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing"
+        Title="New Guest" Height="550" Width="400"  MinHeight="450" MinWidth="300" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing"
     Background="DarkSeaGreen">
     <Window.Resources>
         <CollectionViewSource x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:GuestRequest}, CreateList=True}"/>
@@ -38,38 +38,40 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
+
+            <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Name:"/>
+            <TextBox x:Name="tb_nameTextBox" Width="120" VerticalAlignment="Center" Grid.Row="0" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" TextChanged="NameTextBox_TextChanged" MouseLeave="Tb_nameTextBox_MouseLeave"/>
+
+            <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Last Name:"/>
+            <TextBox x:Name="tb_lastNameTextBox" Width="120" VerticalAlignment="Center" Grid.Row="1" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" MouseLeave="Tb_lastNameTextBox_MouseLeave" TextChanged="Tb_lastNameTextBox_TextChanged"/>
+
+            <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Email:"/>
+            <TextBox x:Name="tb_mail" Width="120" VerticalAlignment="Bottom" Grid.Row="2" Margin="3,0,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_mail_LostFocus" MouseLeave="Tb_mail_MouseLeave"/>
             <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Entry Date:"/>
             <DatePicker x:Name="dp_entryDateDatePicker" VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="1" SelectedDateChanged="dp_DateSelectedDateChanged"/>
             <Label VerticalAlignment="Center" Grid.Row="4" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Release Date:"/>
             <DatePicker x:Name="dp_releaseDateDatePicker" VerticalAlignment="Bottom" Grid.Row="4" Margin="3,0,0,4" HorizontalAlignment="Left" Grid.Column="1" SelectedDateChanged="dp_DateSelectedDateChanged"/>
+            <Label x:Name="lb_unitType" VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Type Of Unit:"/>
+            <Label x:Name="lb_areaVacation" VerticalAlignment="Center" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Area Vacation:"/>
 
-            <Label VerticalAlignment="Center" Grid.Row="10" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Garden:"/>
-            <CheckBox x:Name="cb_gardenCheckBox" VerticalAlignment="Center" Grid.Row="10" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Checked="Cb_gardenCheckBox_Checked"/>
-            <Label VerticalAlignment="Center" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Jacuzzi:"/>
-            <CheckBox x:Name="cb_jacuzziCheckBox" VerticalAlignment="Center" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Checked="Cb_jacuzziCheckBox_Checked" />
-            <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Last Name:"/>
-            <TextBox x:Name="tb_lastNameTextBox" Width="120" VerticalAlignment="Center" Grid.Row="1" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" MouseLeave="Tb_lastNameTextBox_MouseLeave" TextChanged="Tb_lastNameTextBox_TextChanged"/>
-            <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Name:"/>
-            <TextBox x:Name="tb_nameTextBox" Width="120" VerticalAlignment="Center" Grid.Row="0" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" TextChanged="NameTextBox_TextChanged" MouseLeave="Tb_nameTextBox_MouseLeave"/>
-            <Label VerticalAlignment="Center" Grid.Row="7" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Num Adult:"/>
-            <TextBox x:Name="tb_enterAdult" Grid.Row="7" Margin="3,4,0,4" Grid.Column="1" Style="{StaticResource s_numPeople}" TextChanged="tb_enterAdult_TextChanged"/>
+            <ComboBox x:Name="cb_area" Width="120" SelectedIndex="-1" Grid.Row="6" VerticalAlignment="Center" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+
+            <ComboBox x:Name="cb_hostingUnitType" SelectedIndex="-1" Width="120" VerticalAlignment="Center" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" SelectionChanged="Cb_hostingUnitType_SelectionChanged"/>
+
+            <Label VerticalAlignment="Center" Grid.Row="7" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Meal:"/>
+            <ComboBox x:Name="cb_meal" Width="120" VerticalAlignment="Center" Text="{Binding Meal, Mode=TwoWay, NotifyOnValidationError=False, ValidatesOnExceptions=False}" Grid.Row="7" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+
+            <Label VerticalAlignment="Center" Grid.Row="9" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Num Adult:"/>
+            <TextBox x:Name="tb_enterAdult" Grid.Row="9" Margin="3,4,0,4" Grid.Column="1" Style="{StaticResource s_numPeople}" TextChanged="tb_enterAdult_TextChanged"/>
             <Label VerticalAlignment="Center" Grid.Row="8" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Num Children:"/>
             <TextBox x:Name="tb_enterChildren" Style="{StaticResource s_numPeople}"  Grid.Row="8" Margin="3" Grid.Column="1" TextChanged="tb_enterChildren_TextChanged"/>
-            <Label VerticalAlignment="Center" Grid.Row="9" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Pool:"/>
-            <CheckBox x:Name="cb_poolCheckBox" VerticalAlignment="Center" Grid.Row="9" Margin="0,8,107,8" HorizontalAlignment="Right" Grid.Column="1" Checked="Cb_poolCheckBox_Checked"/>
-            <Label x:Name="lb_unitType" VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Type Of Unit:"/>
-            <Label x:Name="lb_areaVacation" VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Area Vacation:"/>
 
-            <ComboBox x:Name="cb_area" Width="120" SelectedIndex="-1" Grid.Row="12" VerticalAlignment="Center" Text="{Binding AreaVacation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-
-            <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Email:"/>
-            <TextBox x:Name="tb_mail" Width="120" VerticalAlignment="Center" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" MouseLeave="Tb_mail_MouseLeave"/>
-
-
-            <ComboBox x:Name="cb_hostingUnitType" SelectedIndex="-1" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-
-            <Label VerticalAlignment="Center" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Meal:"/>
-            <ComboBox x:Name="cb_meal" Width="120" VerticalAlignment="Center" Text="{Binding Meal, Mode=TwoWay, NotifyOnValidationError=False, ValidatesOnExceptions=False}" Grid.Row="6" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+            <Label VerticalAlignment="Center" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Pool:"/>
+            <CheckBox x:Name="cb_poolCheckBox" VerticalAlignment="Center" Grid.Row="11" Margin="0,8,107,8" HorizontalAlignment="Right" Grid.Column="1" Checked="Cb_poolCheckBox_Checked"/>
+            <Label VerticalAlignment="Center" Grid.Row="10" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Garden:"/>
+            <CheckBox x:Name="cb_gardenCheckBox" VerticalAlignment="Center" Grid.Row="10" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Checked="Cb_gardenCheckBox_Checked"/>
+            <Label VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Jacuzzi:"/>
+            <CheckBox x:Name="cb_jacuzziCheckBox" VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Checked="Cb_jacuzziCheckBox_Checked" />
 
         </Grid>
         <Grid Grid.Row="1">

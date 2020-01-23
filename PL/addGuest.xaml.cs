@@ -32,6 +32,12 @@ namespace PL
             g1 = new GuestRequest();//new guest request
             bl = factoryBL.getBL();//sets bl
 
+            //set g1 default values of checkboxes and meal
+            g1.Meal = Enums.MealType.None;
+            g1.Garden = Enums.Preference.Maybe;
+            g1.Pool = Enums.Preference.Maybe;
+            g1.Jacuzzi = Enums.Preference.Maybe;
+
             //sets combobox values
             cb_hostingUnitType.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
             cb_area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
@@ -44,12 +50,7 @@ namespace PL
             dp_entryDateDatePicker.DisplayDateEnd = DateTime.Today.AddYears(1);//last date is a year from now
             dp_releaseDateDatePicker.DisplayDateEnd = DateTime.Today.AddYears(1);
 
-            //set g1 default values of checkboxes and meal
-            g1.Meal = Enums.MealType.None;
-            g1.Garden = Enums.Preference.Maybe;
-            g1.Pool = Enums.Preference.Maybe;
-            g1.Jacuzzi = Enums.Preference.Maybe;
-
+            
         }
         #endregion
         #region window
@@ -105,8 +106,6 @@ namespace PL
             }
         }
 
-
-
         private int addNum(string number)
         {
             int text = 0;
@@ -118,8 +117,6 @@ namespace PL
                 throw new LargeNumberExceptionPL("Number cannot be over 1000");
             return text;//if it's valid, returns it
         }
-
-
 
         #endregion
         #region button
@@ -139,7 +136,7 @@ namespace PL
                 {
                     if (Regex.IsMatch(tb_lastNameTextBox.Text, @"^[\p{L}]+$"))//last contains only letters
                     {
-                        if (g1.Mail != null)//recieved a mail address
+                        if (g1.Mail != null && bl.checkMail(tb_mail.Text)!=null)//recieved a mail address and it's still in the textbox
                         {
                             if (g1.EntryDate >= DateTime.Today && g1.ReleaseDate >= DateTime.Today)//dates are chosen
                             {
@@ -147,7 +144,7 @@ namespace PL
                                 {
                                     if (cb_hostingUnitType.SelectedIndex != -1)
                                     {
-                                        if (g1.NumAdult > 0 && g1.NumChildren > 0)//checks there are people
+                                        if (g1.NumAdult > 0 || g1.NumChildren > 0)//checks there are people
                                         {
                                             bl.addGuest(g1); //if it's all valid, adsds guest
                                             MessageBox.Show("Request added. You will be contacted at " + g1.Mail.Address + " with vacation suggestions", "Added Successfully", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -189,7 +186,7 @@ namespace PL
                          "Error in request", MessageBoxButton.OK, MessageBoxImage.Information);
                    
                 }
-                else MessageBox.Show(ex.Message, "Error", MessageBoxButton.YesNo, MessageBoxImage.Error);
+                else MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
          }
 
@@ -239,20 +236,38 @@ namespace PL
             }
         }
 
+       
+        
         private void Tb_mail_MouseLeave(object sender, MouseEventArgs e)
         {
             try
             {
-                //need additional check besides converting to mail address?
-                //if (!Regex.IsMatch(tb_nameTextBox.Text, @"^[a-zA-Z0-9]+@{1}"))//letters and numbers in the beginning
-                //    throw new invalidTypeExceptionPL();//not mail format
+                //checks it's valid mail
+                if (tb_mail.Text != "")//empty textbox
+                {
+                    g1.Mail = bl.checkMail(tb_mail.Text);//checks if it's an email
+                    tb_mail.BorderBrush = Brushes.Gray;
+                }
 
+            }
+            catch
+            {
+                tb_mail.Text = "";
+                tb_mail.BorderBrush = Brushes.Red;
+            }
+        }
+
+        private void Tb_mail_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
                 //checks it's valid mail
                 if (tb_mail.Text == "")//empty textbox
-                {
-                    throw new invalidTypeExceptionPL();//not mail format
-                }
-                g1.Mail=bl.checkMail(tb_mail.Text);//checks if it's an email
+                    throw new invalidTypeExceptionPL();//not email
+
+                g1.Mail = bl.checkMail(tb_mail.Text);//checks if it's an email
+                tb_mail.BorderBrush = Brushes.Gray;
+                
 
             }
             catch
@@ -272,6 +287,7 @@ namespace PL
                     tb_nameTextBox.BorderBrush = Brushes.Red;
                 }
             }
+            
         }
 
         private void Tb_lastNameTextBox_MouseLeave(object sender, MouseEventArgs e)
@@ -332,10 +348,19 @@ namespace PL
         }
         #endregion
 
-        private void Cb_meal_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        #region comboboxes
+        private void Cb_hostingUnitType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            cb_area.SelectedIndex = 2;
+            if (cb_hostingUnitType.SelectedIndex != -1)//selected
+                g1.TypeOfUnit = (Enums.HostingUnitType)cb_hostingUnitType.SelectedIndex;
         }
+
+        private void Cb_area_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cb_area.SelectedIndex != -1)
+                g1.AreaVacation = (Enums.Area)cb_area.SelectedIndex;//sets vacation area to selection
+        }
+        #endregion
     }
 }
 

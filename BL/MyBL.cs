@@ -571,7 +571,10 @@ namespace BL
         {
             try
             {
-                //if (
+
+                //if (!Regex.IsMatch(text, @"^[a-zA-Z0-9]+@{1}[a-zA-Z0-9]+\.[a-zA-Z]{1,3}$"))//letters and numbers in the beginning
+                // throw new invalidFormatBL();//not mail format
+
                 var mail = new System.Net.Mail.MailAddress(text);
                 if (mail.Address != text)
                     throw new invalidFormatBL();
