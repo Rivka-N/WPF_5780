@@ -28,7 +28,6 @@ namespace DAL
             target.Jacuzzi = original.Jacuzzi;
             target.Garden = original.Garden;
             target.Meal = original.Meal;
-            target.NumSuggestions = original.NumSuggestions;
             target.Status = original.Status;
             return target;
         }

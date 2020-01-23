@@ -44,10 +44,15 @@ namespace PL
             //set enums also
             dg_updateUnitGrid.DataContext = unit;
 
+            //combobox sources
+            cb_updateUnitType.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
+            cb_meal.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
+            cb_area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
+
             //error textboxes
             //if (myOrders.Count==0 || myOrders==null)
-           
-           
+
+
         }
         public hostingUnitTabs(HostingUnit hosting, int tab): this(hosting)
         {
@@ -288,8 +293,9 @@ namespace PL
         #region comboBox UpdateUnit
         private void hostingUnitTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            hostingUnitTypeComboBox.Background = Brushes.White;
-            unit.HostingUnitType = (Enums.HostingUnitType)(hostingUnitTypeComboBox.SelectedIndex);
+            cb_updateUnitType.Background = Brushes.White;
+            unit.HostingUnitType = (Enums.HostingUnitType)(cb_updateUnitType.SelectedIndex);
+            
             pb_update.IsEnabled = true;
 
             //(Enums.HostingUnitType)(hostingUnitTypeComboBox.SelectedIndex);
@@ -297,13 +303,18 @@ namespace PL
 
         private void mealComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            mealComboBox.Background = Brushes.White;
-            unit.Meal = (Enums.MealType)(mealComboBox.SelectedIndex);
+            cb_meal.Background = Brushes.White;
+            unit.Meal = (Enums.MealType)(cb_meal.SelectedIndex);
             pb_update.IsEnabled = true;
 
             //(Enums.MealType)(mealComboBox.SelectedIndex)
         }
+        private void Cb_area_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cb_area.SelectedIndex!=-1)//if something was selected
+                pb_update.IsEnabled = true;
 
+        }
         #endregion
         #region numbers UpdateUnit
         private void numChildrenTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -416,11 +427,14 @@ namespace PL
             if (myBL.checkUnit(unit))
             {
                 myBL.changeUnit(unit);
-               MessageBox.Show("The unit updated\n");//prints message
-            }
-            
-            Close();
+                MessageBox.Show("The unit was updated\n", "Unit update", MessageBoxButton.OK, MessageBoxImage.Asterisk);//prints message
+                Close();
 
+            }
+            else//didn't update anything
+                if (MessageBox.Show("No changes were made.\n Exit anyway?\n", "unit update", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)//prints message
+                Close();//closes
+            //otherwise does nothing
         }
 
         private void pb_delete_Click(object sender, RoutedEventArgs e)
@@ -491,6 +505,8 @@ namespace PL
 
         }
         #endregion
+
+       
     }
 }
 
