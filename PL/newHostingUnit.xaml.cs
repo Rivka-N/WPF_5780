@@ -1,4 +1,22 @@
-﻿using System;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+//using System.Windows;
+//using System.Windows.Controls;
+//using System.Windows.Data;
+//using System.Windows.Documents;
+//using System.Windows.Input;
+//using System.Windows.Media;
+//using System.Windows.Media.Imaging;
+//using System.Windows.Shapes;
+//using System.Text.RegularExpressions;
+//using BE;
+//using BL;
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +33,7 @@ using System.Text.RegularExpressions;
 using BE;
 using BL;
 
+
 namespace PL
 {
     /// <summary>
@@ -22,13 +41,13 @@ namespace PL
     /// </summary>
     public partial class newHostingUnit : Window
     {
-        private IBL bL;
+        public IBL bL;
         public HostingUnit hosting = new HostingUnit();
 
 
         public newHostingUnit()
         {
-            
+
             InitializeComponent();
             bL = factoryBL.getBL();
             cb_hostingUnitType.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
@@ -36,6 +55,7 @@ namespace PL
             cb_meal.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
 
         }
+
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -56,7 +76,7 @@ namespace PL
             {
                 if (cb_hostingUnitType.SelectedIndex == -1)//check if unit type wasn't selected
                 {
-                    cb_hostingUnitType.Background = Brushes.Red;
+                    cb_hostingUnitType.BorderBrush = Brushes.Red;
                     return;
                 }
                 if (cb_area.SelectedIndex == -1)//check if area wasn't selected
@@ -71,7 +91,7 @@ namespace PL
             {
                 MessageBoxResult mbr = MessageBox.Show(ex.Message);
             }
-            
+
         }
         #endregion
 
@@ -89,17 +109,17 @@ namespace PL
                 else
                 {
                     hosting.NumAdult = text;
-                    numAdultTextBox.BorderBrush = Brushes.red;
+                    numAdultTextBox.BorderBrush = Brushes.Red;
                 }
             }
             else
             {
 
-                numAdultTextBox.Background = Brushes.OrangeRed;
+                numAdultTextBox.BorderBrush = Brushes.Red;
                 numAdultTextBox.Text = "";
             }
         }
-        
+
 
         private void numChildrenTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -109,7 +129,7 @@ namespace PL
             {
                 if (text < 0)
                 {
-                    numChildrenTextBox.BorderBrush = Brushes.Red ;
+                    numChildrenTextBox.BorderBrush = Brushes.Red;
                     numChildrenTextBox.Text = "";
                 }
 
@@ -127,11 +147,11 @@ namespace PL
             }
         }
         #endregion
-        
+
         #region names
         private void lastNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(Regex.IsMatch(lastNameTextBox.Text, @"^[a-zA-Z]+$"))
+            if (Regex.IsMatch(lastNameTextBox.Text, @"^[a-zA-Z]+$"))
             {
                 hosting.Host.LastName = lastNameTextBox.Text;
                 lastNameTextBox.BorderBrush = Brushes.White;
@@ -276,5 +296,147 @@ namespace PL
         {
 
         }
+
+        private void bankAcountNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int text = 0;
+            if (Int32.TryParse(bankAcountNumberTextBox.Text, out text))
+            {
+                if (text < 0)
+                {
+                    bankAcountNumberTextBox.BorderBrush = Brushes.Red;
+                    bankAcountNumberTextBox.Text = "";
+                }
+                else
+                {
+                    hosting.Host.Bank.BankAcountNumber = text;
+                    bankAcountNumberTextBox.BorderBrush = Brushes.Black;
+                }
+            }
+            else
+            {
+                bankAcountNumberTextBox.BorderBrush = Brushes.Red;
+                bankAcountNumberTextBox.Text = "";
+            }
+        }
+
+        private void bankNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int text = 0;
+            if (Int32.TryParse(bankNumberTextBox.Text, out text))
+            {
+                if (text < 0)
+                {
+                    bankNumberTextBox.BorderBrush = Brushes.Red;
+                    bankNumberTextBox.Text = "";
+                }
+                else
+                {
+                    hosting.Host.Bank.BankNumber = text;
+                    bankNumberTextBox.BorderBrush = Brushes.Black;
+                }
+            }
+            else
+            {
+                bankNumberTextBox.BorderBrush = Brushes.Red;
+                bankNumberTextBox.Text = "";
+            }
+        }
+
+        private void bankNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
+
+
+
+
+
+//namespace PL
+//{
+//    /// <summary>
+//    /// Interaction logic for newHostingUnit.xaml
+//    /// </summary>
+//    public partial class newHostingUnit : Window
+//    {
+//        private IBL bL;
+//        public HostingUnit hosting = new HostingUnit();
+
+
+//        public newHostingUnit()
+//        {
+
+//            InitializeComponent();
+//            bL = factoryBL.getBL();
+//            cb_hostingUnitType.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
+//            cb_area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
+//            cb_meal.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
+
+//        }
+
+//        private void Window_Loaded(object sender, RoutedEventArgs e)
+//        {
+
+//            System.Windows.Data.CollectionViewSource hostingUnitViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("hostingUnitViewSource")));
+//            // Load data by setting the CollectionViewSource.Source property:
+//            // hostingUnitViewSource.Source = [generic data source]
+
+//            System.Windows.Data.CollectionViewSource bankAccountViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("bankAccountViewSource")));
+//            // Load data by setting the CollectionViewSource.Source property:
+//            // bankAccountViewSource.Source = [generic data source]
+//        }
+
+//        #region buttonAdd
+//        private void Button_Click(object sender, RoutedEventArgs e)
+//        {
+//            try
+//            {
+//                if (cb_hostingUnitType.SelectedIndex == -1)//check if unit type wasn't selected
+//                {
+//                    cb_hostingUnitType.Background = Brushes.Red;
+//                    return;
+//                }
+//                if (cb_area.SelectedIndex == -1)//check if area wasn't selected
+//                {
+//                    cb_area.Background = Brushes.Red;
+//                    return;
+//                }
+//                bL.addHostingUnit(hosting);
+//                Close();
+//            }
+//            catch (Exception ex)
+//            {
+//                MessageBoxResult mbr = MessageBox.Show(ex.Message);
+//            }
+
+//        }
+//        #endregion
+
+//        #region numbers
+//        private void numAdultTextBox_TextChanged(object sender, TextChangedEventArgs e)
+//        {
+//            int text = 0;
+//            if (Int32.TryParse(numAdultTextBox.Text, out text))
+//            {
+//                if (text < 0)
+//                {
+//                    numAdultTextBox.BorderBrush = Brushes.Red;
+//                    numAdultTextBox.Text = "";
+//                }
+//                else
+//                {
+//                    hosting.NumAdult = text;
+//                    numAdultTextBox.BorderBrush = Brushes.Red;
+//                }
+//            }
+//            else
+//            {
+
+//                numAdultTextBox.Background = Brushes.OrangeRed;
+//                numAdultTextBox.Text = "";
+//            }
+//        }
+//    }
+//}
