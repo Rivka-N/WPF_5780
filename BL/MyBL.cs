@@ -93,13 +93,7 @@ namespace BL
         {
             try
             {
-                myDAL.changeStatus(guest, Enums.OrderStatus.Mailed);//mailed status
-                Order ord = new Order(guest.Registration);//makes new order
-                ord.HostingUnitKey = unit.HostingUnitKey;
-                ord.GuestRequestKey = guest.GuestRequestKey;
-                ord.OrderDate = DateTime.Today;//sent mail today
-                addOrder(ord);//send to the function which adds the order to the order list
-
+               
                 #region send mail
                 //add new background worker here
                 MailMessage mail = new MailMessage();
@@ -108,9 +102,12 @@ namespace BL
                 mail.Subject = "Hosting Unit Offer";
                 mail.Body = "We found a " + guest.TypeOfUnit + " for you.\n Here are the details:\n" + unit.ToString() +
                     "Please respond to " + unit.Host.Mail + " and finalize the details\n";//change the to string
+                
                 mail.IsBodyHtml = true;
                 SmtpClient smtp = new SmtpClient();
+                smtp.UseDefaultCredentials = false;
                 smtp.Host = "smtp.gmail.com";
+                smtp.EnableSsl = true;
                 smtp.Credentials = new System.Net.NetworkCredential("amazingvacations169@gmail.com", "vacation169");
 
                 smtp.EnableSsl = true;
@@ -120,9 +117,14 @@ namespace BL
 
                 #endregion
 
-            
+                myDAL.changeStatus(guest, Enums.OrderStatus.Mailed);//mailed status
+                Order ord = new Order(guest.Registration);//makes new order
+                ord.HostingUnitKey = unit.HostingUnitKey;
+                ord.GuestRequestKey = guest.GuestRequestKey;
+                ord.OrderDate = DateTime.Today;//sent mail today
+                addOrder(ord);//send to the function which adds the order to the order list
 
-}
+            }
             catch (Exception ex)
             {
                 //try to send mail again with a few second wait?

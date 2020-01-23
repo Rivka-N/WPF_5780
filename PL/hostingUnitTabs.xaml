@@ -79,9 +79,7 @@
 
                             </Grid.RowDefinitions>
                             <Label VerticalAlignment="Center" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Area Vacation:"/>
-                            <ComboBox x:Name="cb_area" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="6" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-
-
+                            <ComboBox x:Name="cb_area" Width="120" VerticalAlignment="Center" Text="{Binding AreaVacation, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="6" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
                             <Label VerticalAlignment="Center" Grid.Row="13" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Garden:"/>
                             <CheckBox x:Name="cb_gardenCheckBox" VerticalAlignment="Center" Grid.Row="13" Margin="3" IsChecked="{Binding Garden, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content="" Checked="gardenCheckBox_Checked"/>
                             <Label VerticalAlignment="Center" Grid.Row="4" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Hosting Unit Key:"/>
@@ -90,19 +88,17 @@
                             <TextBox x:Name="tb_unitname" Width="120" VerticalAlignment="Center" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_unitname_LostFocus"/>
                             <Label VerticalAlignment="Center" Grid.Row="7" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Hosting Unit Type:"/>
                             <ComboBox x:Name="cb_updateUnitType" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="7" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" SelectionChanged="cb_hostingUnitType_SelectionChanged"/>
-
-
                             <Label VerticalAlignment="Center" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Jacuzzi:"/>
                             <CheckBox x:Name="cb_jacuzziCheckBox" VerticalAlignment="Center" Grid.Row="11" Margin="3" IsChecked="{Binding Jacuzzi, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content="" Checked="jacuzziCheckBox_Checked"/>
                             <Label VerticalAlignment="Center" Grid.Row="8" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Meal:"/>
                             <ComboBox x:Name="cb_meal" Width="120" VerticalAlignment="Center" Text="{Binding TypeOfUnit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="8" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-
                             <Label VerticalAlignment="Center" Grid.Row="10" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Num Adult:"/>
                             <TextBox x:Name="tb_numAdultTextBox" Grid.Row="10" Margin="3.4,0,0,4.6" Style="{StaticResource s_numPeople}" Grid.Column="1" LostFocus="Tb_numAdultTextBox_LostFocus"/>
                             <Label VerticalAlignment="Center" Grid.Row="9" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Num Children:"/>
                             <TextBox x:Name="tb_numChildrenTextBox" Style="{StaticResource s_numPeople}" Grid.Row="9" Margin="3" Grid.Column="1" LostFocus="Tb_numChildrenTextBox_LostFocus"/>
                             <Label VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Pool:"/>
                             <CheckBox x:Name="cb_poolCheckBox" VerticalAlignment="Center" Grid.Row="12" Margin="3" IsChecked="{Binding Pool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content="" Checked="poolCheckBox_Checked"/>
+                            
                             <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Last Name:"/>
                             <TextBox x:Name="tb_lastName" Width="120" VerticalAlignment="Top" Text="{Binding Host.LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3.4,4,0,0" Height="24" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_lastName_LostFocus"/>
                             <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Name:"/>
@@ -110,7 +106,7 @@
                             <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Phone:"/>
                             <TextBox x:Name="tb_phone" Width="120" VerticalAlignment="Top" Text="{Binding Host.Phone}" Grid.Row="2" Margin="3,4,0,0" Height="24" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_phone_LostFocus"/>
                             <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Email:"/>
-                            <TextBox x:Name="tb_mail" Width="120" VerticalAlignment="Top" Text="{Binding Host.Mail.Address}" Grid.Row="3" Margin="3,4,0,0" Height="24" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_mail_LostFocus"/>
+                            <TextBox x:Name="tb_mail" Width="120" VerticalAlignment="Top" Grid.Row="3" Margin="3,4,0,0" Height="24" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_mail_LostFocus"/>
 
                         </Grid>
 

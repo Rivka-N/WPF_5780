@@ -51,9 +51,8 @@ namespace PL
             cb_meal.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
             cb_area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
 
-            //error textboxes
-            //if (myOrders.Count==0 || myOrders==null)
-
+            //initialize mail
+            tb_mail.Text = originalUnit.Host.Mail.Address;
 
         }
         public hostingUnitTabs(HostingUnit hosting, int tab) : this(hosting)
@@ -292,7 +291,8 @@ namespace PL
                     cb_collectionClearance.IsChecked = true;//adds check again
             }
             else//checked
-                MessageBox.Show("go over to your add Orders tab to start talking to customers", "Unit Allowed", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (!originalUnit.Host.CollectionClearance)//check if was allowed before
+                    MessageBox.Show("go over to your add Orders tab to start talking to customers", "Unit Allowed", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         #endregion
      
@@ -473,133 +473,88 @@ namespace PL
         #endregion
 
         #region comboBox UpdateUnit
-        private void hostingUnitTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cb_hostingUnitType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            unit.HostingUnitType = (Enums.HostingUnitType)(cb_updateUnitType.SelectedIndex);
-            pb_update.IsEnabled = true;
-
-            //(Enums.HostingUnitType)(hostingUnitTypeComboBox.SelectedIndex);
-        }
-
-        private void mealComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            cb_meal.Background = Brushes.White;
-            unit.Meal = (Enums.MealType)(cb_meal.SelectedIndex);
-            pb_update.IsEnabled = true;
-
-            //(Enums.MealType)(mealComboBox.SelectedIndex)
-        }
-        private void Cb_area_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cb_area.SelectedIndex != -1)//if something was selected
+            if ((Enums.HostingUnitType)cb_updateUnitType.SelectedIndex != originalUnit.HostingUnitType)//different unit type
+            {
                 pb_update.IsEnabled = true;
-
-        }
-        #endregion
-        #region numbers UpdateUnit
-        private void numChildrenTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            int text = 0;
-            if (Int32.TryParse(numChildrenTextBox.Text, out text))
-            {
-                if (text < 0)
-                {
-                    numChildrenTextBox.Background = Brushes.OrangeRed;
-                    numChildrenTextBox.Text = "";
-                }
-                else
-                {
-                    unit.NumChildren = text;
-                    numChildrenTextBox.Background = Brushes.White;
-                    pb_update.IsEnabled = true;
-
-                }
-            }
-            else
-            {
-
-                numChildrenTextBox.Background = Brushes.OrangeRed;
-                numChildrenTextBox.Text = "";
+                unit.HostingUnitType = (Enums.HostingUnitType)cb_updateUnitType.SelectedIndex;
             }
         }
 
-        private void numAdultTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void Cb_area_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-            int text = 0;
-            if (Int32.TryParse(numAdultTextBox.Text, out text))
+            if ((Enums.Area)cb_area.SelectedIndex != originalUnit.AreaVacation)//different unit type
             {
-                if (text < 0)
-                {
-                    numAdultTextBox.Background = Brushes.OrangeRed;
-                    numAdultTextBox.Text = "";
-                }
-                else
-                {
-                    unit.NumAdult = text;
-                    numAdultTextBox.Background = Brushes.White;
-                    pb_update.IsEnabled = true;
-
-                }
+                pb_update.IsEnabled = true;
+                unit.AreaVacation = (Enums.Area)cb_area.SelectedIndex;
             }
-            else
-            {
+        }
 
-                numAdultTextBox.Background = Brushes.OrangeRed;
-                numAdultTextBox.Text = "";
+
+        private void Cb_meal_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((Enums.MealType)cb_meal.SelectedIndex != originalUnit.Meal)//different unit type
+            {
+                pb_update.IsEnabled = true;
+                unit.Meal = (Enums.MealType)cb_meal.SelectedIndex;
             }
         }
         #endregion
-
+      
 
         #region checkBox update unit
         private void jacuzziCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            if (jacuzziCheckBox.IsChecked == true)//changed to true
+            if (cb_jacuzziCheckBox.IsChecked == true)//changed to true
                 unit.Jacuzzi = Enums.Preference.Yes;
             else
             {
-                if (jacuzziCheckBox.IsChecked == false)//changed to false
+                if (cb_jacuzziCheckBox.IsChecked == false)//changed to false
                     unit.Jacuzzi = Enums.Preference.No;
                 else
                     unit.Jacuzzi = Enums.Preference.Maybe;//otherwise it's the third state
             }
-            pb_update.IsEnabled = true;
+            if (unit.Jacuzzi!=originalUnit.Jacuzzi)
+                pb_update.IsEnabled = true;
 
         }
 
         private void poolCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            if (poolCheckBox.IsChecked == true)//changed to true
+            if (cb_poolCheckBox.IsChecked == true)//changed to true
                 unit.Pool = Enums.Preference.Yes;
             else
             {
-                if (poolCheckBox.IsChecked == false)//changed to false
+                if (cb_poolCheckBox.IsChecked == false)//changed to false
                     unit.Pool = Enums.Preference.No;
                 else
                     unit.Pool = Enums.Preference.Maybe;//otherwise it's the third state
             }
-            pb_update.IsEnabled = true;
+            if (unit.Pool!=originalUnit.Pool)  
+                pb_update.IsEnabled = true;
 
         }
 
         private void gardenCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            if (gardenCheckBox.IsChecked == true)//changed to true
+            if (cb_gardenCheckBox.IsChecked == true)//changed to true
                 unit.Garden = Enums.Preference.Yes;
             else
             {
-                if (gardenCheckBox.IsChecked == false)//changed to false
+                if (cb_gardenCheckBox.IsChecked == false)//changed to false
                     unit.Garden = Enums.Preference.No;
                 else
                     unit.Garden = Enums.Preference.Maybe;//otherwise it's the third state
             }
-            pb_update.IsEnabled = true;
+            if (unit.Garden!=originalUnit.Garden)
+                pb_update.IsEnabled = true;
 
         }
 
 
 
-        #endregion //not finish
+        #endregion
 
         #region unitUpdateTab buttons
         private void pb_update_Click(object sender, RoutedEventArgs e)
@@ -692,16 +647,9 @@ namespace PL
 
 
 
+
         #endregion
-        #region combobox changes
-        private void cb_hostingUnitType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if ((Enums.HostingUnitType)cb_updateUnitType.SelectedIndex!=originalUnit.HostingUnitType)//different unit type
-            {
-                pb_update.IsEnabled = true;
-                unit.HostingUnitType = (Enums.HostingUnitType)cb_updateUnitType.SelectedIndex;
-            }
-        }
+
     }
 }
 
