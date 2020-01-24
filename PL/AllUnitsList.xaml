@@ -31,7 +31,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="1" Name="tb_order_error" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Visibility="Collapsed" FontSize="40">
+        <TextBlock Grid.Row="1" Name="tb_order_error" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Visibility="Collapsed" FontSize="40" Text="no available orders" Foreground="White">
             <TextBlock.Effect>
                 <DropShadowEffect/>
             </TextBlock.Effect>
