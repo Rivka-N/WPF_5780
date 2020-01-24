@@ -93,24 +93,21 @@ namespace BL
         {
             try
             {
-                myDAL.changeStatus(guest, Enums.OrderStatus.Mailed);//mailed status
-                Order ord = new Order(guest.Registration);//makes new order
-                ord.HostingUnitKey = unit.HostingUnitKey;
-                ord.GuestRequestKey = guest.GuestRequestKey;
-                ord.OrderDate = DateTime.Today;//sent mail today
-                addOrder(ord);//send to the function which adds the order to the order list
-
+               
                 #region send mail
-
+                //add new background worker here
                 MailMessage mail = new MailMessage();
                 mail.To.Add(guest.Mail);
                 mail.From = new MailAddress("amazingvacations169@gmail.com", "Amazing Vacations");
                 mail.Subject = "Hosting Unit Offer";
                 mail.Body = "We found a " + guest.TypeOfUnit + " for you.\n Here are the details:\n" + unit.ToString() +
                     "Please respond to " + unit.Host.Mail + " and finalize the details\n";//change the to string
+                
                 mail.IsBodyHtml = true;
                 SmtpClient smtp = new SmtpClient();
+                smtp.UseDefaultCredentials = false;
                 smtp.Host = "smtp.gmail.com";
+                smtp.EnableSsl = true;
                 smtp.Credentials = new System.Net.NetworkCredential("amazingvacations169@gmail.com", "vacation169");
 
                 smtp.EnableSsl = true;
@@ -120,11 +117,17 @@ namespace BL
 
                 #endregion
 
-            
+                myDAL.changeStatus(guest, Enums.OrderStatus.Mailed);//mailed status
+                Order ord = new Order(guest.Registration);//makes new order
+                ord.HostingUnitKey = unit.HostingUnitKey;
+                ord.GuestRequestKey = guest.GuestRequestKey;
+                ord.OrderDate = DateTime.Today;//sent mail today
+                addOrder(ord);//send to the function which adds the order to the order list
 
-}
+            }
             catch (Exception ex)
             {
+                //try to send mail again with a few second wait?
                 throw new InvalidException("unable to send mail: " + ex.Message);
             }
         }
@@ -471,6 +474,10 @@ namespace BL
         {
             myDAL.changeUnit(hostingUnit1);
         }
+        public HostingUnit copy(HostingUnit hosting)//returns copy of the hosting unit
+        {
+            return hosting.Clone();
+        }
 
         #endregion
         #region delete
@@ -508,24 +515,7 @@ namespace BL
      
         #region unit checks pl
         
-        public void addHostingUnitNum(string text, out int unitKey)//adds hosting unit number recieved to hosting unit
-        {
-            if (Int32.TryParse(text, out unitKey))
-            {
-                if (unitKey<=0)
-                {
-                    throw new InvalidException("invalid unit number");
-                }
-            }
-            else
-                throw new InvalidException("invalid unit number");
 
-        }
-
-        public bool sameUnit(HostingUnit hu1, int hostsKey)//checks if hu1 and hostkey point to the same unit
-        {
-            return (hu1.Host.HostKey == hostsKey) ;
-        }
 
         public bool checkUnit(HostingUnit hostingUnit1)
         {
@@ -571,6 +561,9 @@ namespace BL
         {
             try
             {
+
+                if (!Regex.IsMatch(text, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,})+)$"))//words@
+                     throw new invalidFormatBL();//not mailformat
 
                 //if (!Regex.IsMatch(text, @"^[a-zA-Z0-9]+@{1}[a-zA-Z0-9]+\.[a-zA-Z]{1,3}$"))//letters and numbers in the beginning
                 // throw new invalidFormatBL();//not mail format
@@ -627,6 +620,7 @@ namespace BL
                    group HostingUnit by HostingUnit.Host into newGroup
                    select newGroup;
         }
+
 
 
         #endregion

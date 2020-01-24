@@ -28,6 +28,7 @@ namespace PL
             InitializeComponent();
             closeOpenMain = true;
             dg_hostingUnitDataGrid.ItemsSource = myBL.getAllHostingUnits();
+
             #region sets combobox
             var addArea = Enum.GetValues(typeof(Enums.Area));
             var addType = Enum.GetValues(typeof(Enums.MealType));
