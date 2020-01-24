@@ -40,9 +40,9 @@ namespace PL
 
             #region enmus
            
-            cb_hostingUnitType.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
-            cb_area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
-            cb_meal.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
+            hostingUnitType.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
+            area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
+            meal.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
             #endregion
         }
 
@@ -65,17 +65,17 @@ namespace PL
             try
             {
                 //checks it's valid mail
-                if (hostingUnitMailTextbox.Text != "")//empty textbox
+                if (cb_email.Text != "")//empty textbox
                 {
-                    hosting.Host.Mail = checkMail(hostingUnitMailTextbox.Text);//checks if it's an email
-                    hostingUnitMailTextbox.BorderBrush = Brushes.Gray;
+                    hosting.Host.Mail = checkMail(cb_email.Text);//checks if it's an email
+                    cb_email.BorderBrush = Brushes.Gray;
                 }
 
             }
             catch
             {
-                hostingUnitMailTextbox.Text = "";
-                hostingUnitMailTextbox.BorderBrush = Brushes.Red;
+                cb_email.Text = "";
+                cb_email.BorderBrush = Brushes.Red;
             }
         }
 
@@ -104,25 +104,25 @@ namespace PL
         {
             try
             {
-                if (Regex.IsMatch(nameTextBox.Text, @"^[\p{L}]+$"))//first contains only letters
+                if (Regex.IsMatch(cb_nameTextBox.Text, @"^[\p{L}]+$"))//first contains only letters
                 {
-                    if (Regex.IsMatch(lastNameTextBox.Text, @"^[\p{L}]+$"))//last contains only letters
+                    if (Regex.IsMatch(NameTextBox.Text, @"^[\p{L}]+$"))//last contains only letters
                     {
                         if (IsValidUSPhoneNumber((hosting.Host.Phone).ToString()))
                         {
-                            if (hosting.Host.Mail != null && checkMail(hostingUnitMailTextbox.Text) != null)//recieved a mail address and it's still in the textbox
+                            if (hosting.Host.Mail != null && checkMail(cb_email.Text) != null)//recieved a mail address and it's still in the textbox
                             {
-                                if (Regex.IsMatch(hostingUnitNameTextBox.Text, @"^[\p{L}]+$"))
+                                if (Regex.IsMatch(cb_hostingUnitNameTextBox.Text, @"^[\p{L}]+$"))
                                 {
-                                    if (cb_hostingUnitType.SelectedIndex != -1)
+                                    if (hostingUnitType.SelectedIndex != -1)
 
                                     {
 
-                                        if (cb_area.SelectedIndex != -1)
+                                        if (area.SelectedIndex != -1)
                                         {
 
 
-                                            if (cb_meal.SelectedIndex != -1)
+                                            if (meal.SelectedIndex != -1)
                                             {
                                                 if (hosting.NumAdult > 0 || hosting.NumChildren > 0)//checks there are people
 
@@ -165,7 +165,7 @@ namespace PL
                             else
                             {
                                 MessageBox.Show("Please enter email address", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                hostingUnitMailTextbox.BorderBrush = Brushes.Red;
+                                cb_email.BorderBrush = Brushes.Red;
                             }
                         }
                         else MessageBox.Show("invalid number phone");
@@ -174,14 +174,14 @@ namespace PL
                         else
                         {
                             MessageBox.Show("Please enter last name", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            lastNameTextBox.BorderBrush = Brushes.Red;
+                            NameTextBox.BorderBrush = Brushes.Red;
                         }
                     }
 
                     else
                     {
                         MessageBox.Show("Please enter first name", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        nameTextBox.BorderBrush = Brushes.Red;
+                        cb_nameTextBox.BorderBrush = Brushes.Red;
                     }
 
                 
@@ -207,14 +207,14 @@ namespace PL
         {
             try
             {
-                hosting.NumAdult = addNum(numAdultTextBox.Text);//checks this is a valid number. -1 if not
-                numAdultTextBox.BorderBrush = Brushes.Gray;
+                hosting.NumAdult = addNum(cb_numAdultTextBox.Text);//checks this is a valid number. -1 if not
+                cb_numAdultTextBox.BorderBrush = Brushes.Gray;
 
             }
             catch (Exception ex)
             {
-                numAdultTextBox.Text = "";
-                numAdultTextBox.BorderBrush = Brushes.Red;//colors border
+                cb_numAdultTextBox.Text = "";
+                cb_numAdultTextBox.BorderBrush = Brushes.Red;//colors border
                 if (ex is LargeNumberExceptionPL)
                     MessageBox.Show(ex.Message);//if the number was too big, explains why number wasn't valid
 
@@ -228,14 +228,14 @@ namespace PL
         {
             try
             {
-                hosting.NumChildren = addNum(numChildrenTextBox.Text);//checks this is a valid number. -1 if not
-                numChildrenTextBox.BorderBrush = Brushes.Gray;
+                hosting.NumChildren = addNum(cb_numChildrenTextBox.Text);//checks this is a valid number. -1 if not
+                cb_numChildrenTextBox.BorderBrush = Brushes.Gray;
 
             }
             catch (Exception ex)
             {
-                numChildrenTextBox.BorderBrush = Brushes.Red;//colors border
-                numChildrenTextBox.Text = "";
+                cb_numChildrenTextBox.BorderBrush = Brushes.Red;//colors border
+                cb_numChildrenTextBox.Text = "";
                 if (ex is LargeNumberExceptionPL)
                     MessageBox.Show(ex.Message);//if the number was too big, explains why number wasn't valid
             }
@@ -254,132 +254,31 @@ namespace PL
                 throw new LargeNumberExceptionPL("Number cannot be over 1000");
             return text;//if it's valid, returns it
         }
-        #endregion
 
-        #region names
-        private void lastNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (Regex.IsMatch(lastNameTextBox.Text, @"^[a-zA-Z]+$"))
-            {
-                hosting.Host.LastName = lastNameTextBox.Text;
-                lastNameTextBox.BorderBrush = Brushes.Gray;
-
-            }
-            else
-            {
-                lastNameTextBox.Text = "";
-                lastNameTextBox.BorderBrush = Brushes.Red;
-            }
-        }
-
-        private void nameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (Regex.IsMatch(nameTextBox.Text, @"^[a-zA-Z]+$"))//if contains only letters
-            {
-                hosting.Host.Name = nameTextBox.Text;
-                nameTextBox.BorderBrush = Brushes.Gray;
-            }
-            else
-            {
-                nameTextBox.Text = "";
-                nameTextBox.BorderBrush = Brushes.Red;
-            }
-        }
-
-        private void hostingUnitNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            hosting.HostingUnitName = hostingUnitNameTextBox.Text;
-
-        }
-        #endregion
-
-        #region comboBox
-        private void cb_hostingUnitType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cb_hostingUnitType.SelectedIndex != -1)//selected
-                hosting.HostingUnitType = (Enums.HostingUnitType)cb_hostingUnitType.SelectedIndex;
-        }
-
-        private void cb_area_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if(cb_area.SelectedIndex != -1)
-                hosting.AreaVacation = (Enums.Area)(cb_area.SelectedIndex);
-        }
-
-        private void cb_meal_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if(cb_meal.SelectedIndex != -1)
-                hosting.Meal = (Enums.MealType)(cb_meal.SelectedIndex);
-        }
-
-        #endregion
-
-        #region checkBox
-        private void poolCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            if (poolCheckBox.IsChecked == true)//changed to true
-                hosting.Pool = Enums.Preference.Yes;
-            else
-            {
-                if (poolCheckBox.IsChecked == false)//changed to false
-                    hosting.Pool = Enums.Preference.No;
-                else
-                    hosting.Pool = Enums.Preference.Maybe;//otherwise it's the third state
-            }
-        }
-
-        private void jacuzziCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            if (jacuzziCheckBox.IsChecked == true)//changed to true
-                hosting.Jacuzzi = Enums.Preference.Yes;
-            else
-            {
-                if (jacuzziCheckBox.IsChecked == false)//changed to false
-                    hosting.Jacuzzi = Enums.Preference.No;
-                else
-                    hosting.Jacuzzi = Enums.Preference.Maybe;//otherwise it's the third state
-            }
-        }
-
-        private void gardenCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            if (gardenCheckBox.IsChecked == true)//changed to true
-                hosting.Garden = Enums.Preference.Yes;
-            else
-            {
-                if (gardenCheckBox.IsChecked == false)//changed to false
-                    hosting.Garden = Enums.Preference.No;
-                else
-                    hosting.Garden = Enums.Preference.Maybe;//otherwise it's the third state
-            }
-        }
-        #endregion
-
-        #region bank
         private void phoneTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            
+
 
             Int32 text = 0;
-            if (Int32.TryParse(phoneTextBox.Text, out text))
+            if (Int32.TryParse(cb_phoneTextBox.Text, out text))
             {
                 if (text < 0)
                 {
-                    phoneTextBox.BorderBrush = Brushes.Red;
-                    phoneTextBox.Text = "";
+                    cb_phoneTextBox.BorderBrush = Brushes.Red;
+                    cb_phoneTextBox.Text = "";
                 }
                 else
                 {
                     hosting.Host.Phone = text;
-                    phoneTextBox.BorderBrush = Brushes.Black;
-                    
+                    cb_phoneTextBox.BorderBrush = Brushes.Black;
+
 
                 }
             }
             else
             {
-                phoneTextBox.BorderBrush = Brushes.Red;
-                phoneTextBox.Text = "";
+                cb_phoneTextBox.BorderBrush = Brushes.Red;
+                cb_phoneTextBox.Text = "";
             }
 
         }
@@ -396,54 +295,156 @@ namespace PL
             return pattern.IsMatch(str);
         }
 
+        #endregion
+
+        #region names
+        private void lastNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Regex.IsMatch(NameTextBox.Text, @"^[a-zA-Z]+$"))
+            {
+                hosting.Host.LastName = NameTextBox.Text;
+                NameTextBox.BorderBrush = Brushes.Gray;
+
+            }
+            else
+            {
+                NameTextBox.Text = "";
+                NameTextBox.BorderBrush = Brushes.Red;
+            }
+        }
+
+        private void nameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Regex.IsMatch(cb_nameTextBox.Text, @"^[a-zA-Z]+$"))//if contains only letters
+            {
+                hosting.Host.Name = cb_nameTextBox.Text;
+                cb_nameTextBox.BorderBrush = Brushes.Gray;
+            }
+            else
+            {
+                cb_nameTextBox.Text = "";
+                cb_nameTextBox.BorderBrush = Brushes.Red;
+            }
+        }
+
+        private void hostingUnitcb_nameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region comboBox
+        private void cb_hostingUnitType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (hostingUnitType.SelectedIndex != -1)//selected
+                hosting.HostingUnitType = (Enums.HostingUnitType)hostingUnitType.SelectedIndex;
+        }
+
+        private void cb_area_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(area.SelectedIndex != -1)
+                hosting.AreaVacation = (Enums.Area)(area.SelectedIndex);
+        }
+
+        private void cb_meal_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(meal.SelectedIndex != -1)
+                hosting.Meal = (Enums.MealType)(meal.SelectedIndex);
+        }
+
+        #endregion
+
+        #region checkBox
+        private void poolCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (cb_poolCheckBox.IsChecked == true)//changed to true
+                hosting.Pool = Enums.Preference.Yes;
+            else
+            {
+                if (cb_poolCheckBox.IsChecked == false)//changed to false
+                    hosting.Pool = Enums.Preference.No;
+                else
+                    hosting.Pool = Enums.Preference.Maybe;//otherwise it's the third state
+            }
+        }
+
+        private void jacuzziCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (cb_jacuzziCheckBox.IsChecked == true)//changed to true
+                hosting.Jacuzzi = Enums.Preference.Yes;
+            else
+            {
+                if (cb_jacuzziCheckBox.IsChecked == false)//changed to false
+                    hosting.Jacuzzi = Enums.Preference.No;
+                else
+                    hosting.Jacuzzi = Enums.Preference.Maybe;//otherwise it's the third state
+            }
+        }
+
+        private void gardenCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (cb_gardenCheckBox.IsChecked == true)//changed to true
+                hosting.Garden = Enums.Preference.Yes;
+            else
+            {
+                if (cb_gardenCheckBox.IsChecked == false)//changed to false
+                    hosting.Garden = Enums.Preference.No;
+                else
+                    hosting.Garden = Enums.Preference.Maybe;//otherwise it's the third state
+            }
+        }
+        #endregion
+
+        #region bank
+       
 
         private void bankAcountNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             int text = 0;
-            if (Int32.TryParse(bankAcountNumberTextBox.Text, out text))
+            if (Int32.TryParse(cb_bankAcountNumberTextBox.Text, out text))
             {
                 if (text < 0)
                 {
-                    bankAcountNumberTextBox.BorderBrush = Brushes.Red;
-                    bankAcountNumberTextBox.Text = "";
+                    cb_bankAcountNumberTextBox.BorderBrush = Brushes.Red;
+                    cb_bankAcountNumberTextBox.Text = "";
                 }
                 else
                 {
                     hosting.Host.Bank.BankAcountNumber = text;
-                    bankAcountNumberTextBox.BorderBrush = Brushes.Black;
+                    cb_bankAcountNumberTextBox.BorderBrush = Brushes.Black;
                 }
             }
             else
             {
-                bankAcountNumberTextBox.BorderBrush = Brushes.Red;
-                bankAcountNumberTextBox.Text = "";
+                cb_bankAcountNumberTextBox.BorderBrush = Brushes.Red;
+                cb_bankAcountNumberTextBox.Text = "";
             }
         }
 
         private void bankNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             int text = 0;
-            if (Int32.TryParse(bankNumberTextBox.Text, out text))
+            if (Int32.TryParse(cb_bankNumberTextBox.Text, out text))
             {
                 if (text < 0)
                 {
-                    bankNumberTextBox.BorderBrush = Brushes.Red;
-                    bankNumberTextBox.Text = "";
+                    cb_bankNumberTextBox.BorderBrush = Brushes.Red;
+                    cb_bankNumberTextBox.Text = "";
                 }
                 else
                 {
                     hosting.Host.Bank.BankNumber = text;
-                    bankNumberTextBox.BorderBrush = Brushes.Black;
+                    cb_bankNumberTextBox.BorderBrush = Brushes.Black;
                 }
             }
             else
             {
-                bankNumberTextBox.BorderBrush = Brushes.Red;
-                bankNumberTextBox.Text = "";
+                cb_bankNumberTextBox.BorderBrush = Brushes.Red;
+                cb_bankNumberTextBox.Text = "";
             }
         }
 
-        private void bankNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void cb_bankNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
@@ -454,6 +455,22 @@ namespace PL
         {
 
         }
+
+        private void cb_meal_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void hostingUnitNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void bankNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
     }
 }
 
