@@ -7,28 +7,28 @@
         mc:Ignorable="d"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Title="MainWindow" Height="600" Width="1000"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" Opacity="0.99" >
     <Window.Resources>
         <Color x:Key="Color1">#FFB4B4B4</Color>
     </Window.Resources>
     <!--<Window.Background>
         <ImageBrush ImageSource="images\khaos_Installer_UI.png"/>
     </Window.Background>-->
+
     <Grid Opacity="0.8">
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Opacity="0.2">
-            
+        <Grid Opacity="0.8" Cursor="ScrollWE">
+            <Grid.Background>
+                <ImageBrush ImageSource="Resources/images (3).jpg"/>
+            </Grid.Background>
         </Grid>
-        <Button Name="pb_guest" Click="pb_guest_Click" Grid.Row="1" Background="Transparent" Content="Book a vacation" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" Width="400"  >
-            
-        </Button>
-        <Button Name="pb_host" Click="pb_host_Click" Grid.Row="2" Content="Host"  Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="673,50,9.6,53" BorderBrush="#FF15806F" Background="#3302707B" Width="111" Height="35"/>
-        <Button Name="pb_owner" Click="pb_owner_Click" Grid.Row="2" Content="Administration" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="673,92,9.6,10" Width="111" Height="35" Background="#3302707B"/>
+        <Label Grid.Row="0" Content="TAKE YOUR VACATION NOW" Foreground="White" HorizontalAlignment="Center" FontSize="60" Margin="84,72,77.6,394.4"/>
+        <Button Name="pb_guest" Click="pb_guest_Click" Foreground="White" Background="Transparent" BorderBrush="White" Grid.Row="0" Content="BOOK NOW" Padding="10" VerticalAlignment="Center" FontSize="40" Margin="346,205,324.6,282.4"   />
+        <Button Name="pb_host" Click="pb_host_Click" Content="Host" Background="Transparent" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="773,432,109.6,103.4" BorderBrush="#FF15806F" Width="111" Height="35"/>
+        <Button Name="pb_owner" Click="pb_owner_Click" Content="Administration" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="773,472,109.6,63.4" Width="111" Height="35" Background="Transparent"/>
     </Grid>
 </Window>
 
