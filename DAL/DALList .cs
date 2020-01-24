@@ -60,11 +60,7 @@ namespace DAL
             DS.DataSource.orders.Add(ord.Clone());
         }
 
-        public void addGuestToUnit(HostingUnit hostingUnit, GuestRequest guest)
-        {
-           int index = DataSource.hostingUnits.FindIndex(a => a.HostingUnitKey == hostingUnit.HostingUnitKey);
-            DataSource.hostingUnits[index].guestForUnit.Add(guest.Clone());
-        }
+   
         #endregion
         #region get Lists
         public List<HostingUnit> getAllHostingUnits()
@@ -114,18 +110,6 @@ namespace DAL
             }
         }
 
-        
-
-        public void deleteSameDate(HostingUnit unit, GuestRequest guest)//deletes units with same dates as added order
-        {
-            int index = DataSource.hostingUnits.FindIndex(cur => { return unit.HostingUnitKey == cur.HostingUnitKey; });//finds index of it in list
-            var curUnit = DataSource.hostingUnits[index];
-            var temp= from u in curUnit.guestForUnit
-                                   where u.EntryDate > guest.ReleaseDate || u.ReleaseDate < guest.EntryDate
-                                   select u;
-            curUnit.guestForUnit = temp.ToList();
-
-        }
 
         public void deleteOrders(Func<Order, bool> p)//deletes orders that have condition
         {

@@ -73,7 +73,6 @@ namespace BL
                 if (matchesUnit(units[i], guest))//if guest can be put in his unit
                 {
                     listOfUnits.Add(units[i]);//adds to the guest list
-                    myDAL.addGuestToUnit(units[i], guest);
                 }
             }
             if (listOfUnits.Count() == 0)
@@ -188,9 +187,6 @@ namespace BL
                     unit.Diary[start.Month, start.Day] = true;
                 }
 
-                //relevent only if using guest list in hosting units
-                myDAL.deleteSameDate(unit, guest);
-
                 Order thisOrder = findOrder(guest, unit);
                 myDAL.deleteOrders(order => { return order.GuestRequestKey == thisOrder.GuestRequestKey && order.HostingUnitKey != thisOrder.HostingUnitKey; });
                 //deletes orders with the same guestrequestKey as this one
@@ -202,7 +198,7 @@ namespace BL
             }
             catch (Exception ex)
             {
-                throw new InvalidException(ex.Message);
+                throw ex;
             }
         }
 
