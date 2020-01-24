@@ -20,9 +20,7 @@ namespace PL
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    ///// /*<Grid.Background>
-    //        <ImageBrush ImageSource = "download.jpg" Opacity="0.8"/>
-    //    </Grid.Background>
+    ///// /*
         
     public partial class MainWindow : Window
     {
