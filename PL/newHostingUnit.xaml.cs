@@ -39,7 +39,9 @@ namespace PL
             hosting.Jacuzzi = Enums.Preference.No;
 
             #region enmus
-           
+
+            hosting.Host.CollectionClearance = false;
+
             hostingUnitType.ItemsSource = Enum.GetValues(typeof(Enums.HostingUnitType)).Cast<Enums.HostingUnitType>();
             area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
             meal.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
@@ -407,10 +409,22 @@ namespace PL
                     hosting.Garden = Enums.Preference.Maybe;//otherwise it's the third state
             }
         }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+
+            if (cb_CollectionClearance.IsChecked == true)//changed to true
+                hosting.Host.CollectionClearance = true;
+            else
+            {
+                    hosting.Host.CollectionClearance = false;
+               
+            }
+        }
         #endregion
 
         #region bank
-       
+
 
         private void bankAcountNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -482,6 +496,7 @@ namespace PL
 
         }
 
+        
     }
 }
 

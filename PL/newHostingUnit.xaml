@@ -106,6 +106,8 @@
                 <Label Content="Branch Number:" Grid.Column="0" Foreground="White" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
                 <TextBox x:Name="branchNumberTextBox" BorderBrush="White" Background="Transparent" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="5" Text="{Binding BranchNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
             </Grid>
+            <CheckBox x:Name="cb_CollectionClearance" Grid.Column="1" HorizontalAlignment="Left" BorderBrush="White" Background="Transparent" Margin="158.2,207,0,0" VerticalAlignment="Top" Height="33" Width="120" Checked="CheckBox_Checked"/>
+            <Label Content="Collection Clearance" Grid.Column="1" Foreground="White" HorizontalAlignment="Left" Margin="19.2,202,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.469,0.016"/>
         </Grid>
         <Button  Content="Add Unit" Background="Transparent"   Foreground="White" BorderBrush="White" HorizontalAlignment="Right" Margin="0,0,240.6,9.8" VerticalAlignment="Bottom" Width="100" Grid.Row="1" Click="Button_Click" Height="34"/>
 
