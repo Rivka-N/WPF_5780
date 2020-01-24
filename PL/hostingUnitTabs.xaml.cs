@@ -79,6 +79,7 @@ namespace PL
         {
             if (!closeProgram)//if doesn't want to close program
                 new AllUnitsList().Show();//opens previous window again
+
         }
         #endregion
         #region doubleclick

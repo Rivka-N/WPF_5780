@@ -100,6 +100,7 @@ namespace PL
         #endregion
 
         #region buttonAdd
+        
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -159,7 +160,7 @@ namespace PL
                                     else MessageBox.Show("Select unit type", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                                 }
 
-                                else MessageBox.Show("Please Enter unit name");
+                                else MessageBox.Show("Please Enter unit name", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
                             }
                             else
@@ -327,6 +328,19 @@ namespace PL
             }
         }
 
+        private void hostingUnitNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Regex.IsMatch(cb_hostingUnitNameTextBox.Text, @"^[a-zA-Z]+$"))//if contains only letters
+            {
+                hosting.HostingUnitName = cb_hostingUnitNameTextBox.Text;
+                cb_hostingUnitNameTextBox.BorderBrush = Brushes.Gray;
+            }
+            else
+            {
+                cb_hostingUnitNameTextBox.Text = "";
+                cb_hostingUnitNameTextBox.BorderBrush = Brushes.Red;
+            }
+        }
         private void hostingUnitcb_nameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
@@ -461,10 +475,7 @@ namespace PL
 
         }
 
-        private void hostingUnitNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
+       
 
         private void bankNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Closing="Window_Closing"
-        Title="Site Information" Height="600" Width="1000" MinWidth="600" MinHeight="300" WindowStartupLocation="CenterScreen">
+        Title="Site Information" Height="600" Width="1000" MinWidth="600" MinHeight="300" WindowStartupLocation="CenterScreen" >
     
     <Grid>
         <Grid.RowDefinitions>

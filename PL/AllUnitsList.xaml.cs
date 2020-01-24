@@ -144,10 +144,10 @@ namespace PL
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (closeOpenMain == true)
-                new MainWindow().Show();//opens main window again
-            else
-                closeOpenMain = true;//otherwise resets flag
+            //if (closeOpenMain == true)
+            //    new MainWindow().Show();//opens main window again
+            //else
+            //    closeOpenMain = true;//otherwise resets flag
         }
 
        

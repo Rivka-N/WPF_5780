@@ -64,7 +64,7 @@ namespace PL
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            new MainWindow().Show();
+            //new MainWindow().Show();
         }
         #endregion
 
@@ -147,7 +147,7 @@ namespace PL
                                         if (g1.NumAdult > 0 || g1.NumChildren > 0)//checks there are people
                                         {
                                             bl.addGuest(g1); //if it's all valid, adsds guest
-                                            MessageBox.Show("Request added. You will be contacted at " + g1.Mail.Address + " with vacation suggestions", "Added Successfully", MessageBoxButton.OK, MessageBoxImage.Information);
+                                            MessageBox.Show("Thanks you " + g1.Name + " " + g1.LastName+ " we hope to find for you the perfect vacation!"+ " You will be contacted at " + g1.Mail.Address + " with vacation suggestions", "Added Successfully", MessageBoxButton.OK, MessageBoxImage.Information);
                                             Close();//closes window
                                         }
                                         else MessageBox.Show("Number of people can't be empty", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -227,7 +227,7 @@ namespace PL
         {
             if (Regex.IsMatch(tb_lastNameTextBox.Text, @"^[\p{L}]+$"))//contains only letters
             {
-                g1.Name = tb_lastNameTextBox.Text;//sets first name
+                g1.LastName = tb_lastNameTextBox.Text;//sets first name
                 tb_lastNameTextBox.BorderBrush = Brushes.Gray;//resets border
             }
             else

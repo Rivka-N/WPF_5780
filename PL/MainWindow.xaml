@@ -20,15 +20,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Opacity="0.8" Cursor="ScrollWE">
+        <Grid Cursor="ScrollWE">
             <Grid.Background>
                 <ImageBrush ImageSource="Resources/images (3).jpg"/>
             </Grid.Background>
         </Grid>
-        <Label Grid.Row="0" Content="TAKE YOUR VACATION NOW" Foreground="White" HorizontalAlignment="Center" FontSize="60" Margin="84,72,77.6,394.4"/>
-        <Button Name="pb_guest" Click="pb_guest_Click" Foreground="White" Background="Transparent" BorderBrush="White" Grid.Row="0" Content="BOOK NOW" Padding="10" VerticalAlignment="Center" FontSize="40" Margin="346,205,324.6,282.4"   />
-        <Button Name="pb_host" Click="pb_host_Click" Content="Host" Background="Transparent" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="773,432,109.6,103.4" BorderBrush="#FF15806F" Width="111" Height="35"/>
-        <Button Name="pb_owner" Click="pb_owner_Click" Content="Administration" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="773,472,109.6,63.4" Width="111" Height="35" Background="Transparent"/>
+        <Label Grid.Row="0" Content="TAKE YOUR VACATION NOW"  Foreground="White" FontSize="60" Margin="140,49,79.6,417.4" Width="774"/>
+        <Button Name="pb_guest" Click="pb_guest_Click" Foreground="White" Background="Transparent" BorderBrush="White" Grid.Row="0" Content="BOOK NOW&#xD;&#xA;" Padding="10" VerticalAlignment="Center" FontSize="30" Margin="409,153,376.6,351.4" HorizontalAlignment="Center" Height="66" Width="208"   />
+        <Button Name="pb_host" Click="pb_host_Click" Foreground="White" BorderBrush="White" Content="Host" Background="Transparent" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="853,464,29.6,71.4"  Width="111" Height="35"/>
+        <Button Name="pb_owner" Click="pb_owner_Click"  Foreground="White" BorderBrush="White" Content="Administration" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="853,504,29.6,31.4" Width="111" Height="35" Background="Transparent"/>
     </Grid>
 </Window>
 

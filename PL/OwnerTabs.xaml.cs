@@ -31,7 +31,7 @@ namespace PL
 
             private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            new MainWindow().Show();//opens main window again
+           // new MainWindow().Show();//opens main window again
         }
         #endregion
 
