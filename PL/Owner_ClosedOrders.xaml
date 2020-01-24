@@ -19,7 +19,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="25*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="DarkSeaGreen">
+        <Grid Grid.Row="0" Background="Transparent">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
@@ -40,7 +40,7 @@
             <Button Name="pb_resetDate" Content="Reset" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="10" Grid.Row="1" Margin="2" Click="Button_Click"/>
         </Grid>
 
-        <DataGrid x:Name="dg_orderDataGrid" AlternatingRowBackground="AliceBlue" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="1">
+        <DataGrid x:Name="dg_orderDataGrid" Background="Transparent" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="1">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="guestRequestKeyColumn" MinWidth="100" Binding="{Binding GuestRequestKey}" Header="Request Key" Width="*" IsReadOnly="True"/>
                 <DataGridTextColumn x:Name="hostingUnitKeyColumn" MinWidth="100" Binding="{Binding HostingUnitKey}" Header="Hosting Unit Key" Width="*" IsReadOnly="True"/>

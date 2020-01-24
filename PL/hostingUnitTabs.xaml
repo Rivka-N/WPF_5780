@@ -10,6 +10,7 @@
         Closing="Window_Closing"
         Title="Personal Area" Height="600" Width="1000" Loaded="Window_Loaded_1"
         WindowStartupLocation="CenterScreen"
+        Background="Pink"
         >
     <Window.Resources>
         <CollectionViewSource x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
@@ -34,14 +35,14 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <TabControl x:Name="tc_mainControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <TabControl x:Name="tc_mainControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent">
             <TabItem Name="tab_updateDeleteUnit" Header="delete /update unit" Selector.Unselected="Tab_updateDeleteUnit_Unselected">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="2" Background="DarkSeaGreen">
+                    <Grid Grid.Row="2" Background="Transparent">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -148,7 +149,7 @@
                 </Grid>
             </TabItem>
             <TabItem Name="tab_addOrders" Header="add order" Selector.Unselected="Tab_addOrders_Unselected">
-                <Grid DataContext="{StaticResource guestRequestViewSource}">
+                <Grid DataContext="{StaticResource guestRequestViewSource}" Background="Transparent">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
@@ -158,7 +159,7 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Column="1" Background="MediumSeaGreen">
+                    <Grid Grid.Column="1" Background="Transparent">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -201,7 +202,7 @@
                         </StackPanel>
                     </Grid>
 
-                    <Grid Grid.Row="1" Background="DarkSeaGreen" Grid.ColumnSpan="5">
+                    <Grid Grid.Row="1" Background="Transparent" Grid.ColumnSpan="5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -215,14 +216,8 @@
                         <Button x:Name="pb_back" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10"  Grid.Column="0" Click="Pb_back_Click"/>
                     </Grid>
                     <Grid Grid.Row="0">
-                          <Grid.Background>
-                                <RadialGradientBrush>
-                                    <GradientStop Color="SeaGreen" Offset="1"/>
-                                    <GradientStop Color="MediumSeaGreen"/>
-                                    <GradientStop Color="LightSeaGreen" Offset="0.25"/>
-                                </RadialGradientBrush>
-                            </Grid.Background>
-                    <DataGrid x:Name="dg_guestRequestDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" IsReadOnly="True" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="dg_guestRequestDataGrid_SelectionChanged">
+                         
+                    <DataGrid x:Name="dg_guestRequestDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" IsReadOnly="True" Background="transparent"  RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="dg_guestRequestDataGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="*" MinWidth="100" IsReadOnly="True"/>
                             <DataGridTextColumn x:Name="lastNameColumn" Binding="{Binding LastName}" Header="Last Name" Width="*" MinWidth="100" IsReadOnly="True"/>
@@ -260,13 +255,7 @@
             </TabItem>
             <TabItem Name="tab_closedOrders" Header="Closed Orders">
                 <Grid DataContext="{StaticResource orderViewSource}">
-                    <Grid.Background>
-                        <RadialGradientBrush>
-                            <GradientStop Color="SeaGreen" Offset="1"/>
-                            <GradientStop Color="MediumSeaGreen"/>
-                            <GradientStop Color="LightSeaGreen" Offset="0.25"/>
-                        </RadialGradientBrush>
-                    </Grid.Background>
+                    
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
@@ -275,7 +264,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="1" Background="MediumSeaGreen">
+                    <Grid Grid.Column="1" Background="Transparent">
                         <StackPanel>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -292,7 +281,7 @@
 
                         </StackPanel>
                     </Grid>
-                    <DataGrid x:Name="dg_orderDataGrid" Grid.Row="0" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False">
+                    <DataGrid x:Name="dg_orderDataGrid" Grid.Row="0" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" Background="Transparent" CanUserAddRows="False">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn x:Name="dg_addOrdercreateDateColumn" Header="Create Date" Width="SizeToHeader" MinWidth="100" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -316,10 +305,10 @@
                             <DataGridTextColumn x:Name="dg_addOrderstatus" Binding="{Binding Status}" Header="Status" Width="*" MinWidth="100" IsReadOnly="True"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Grid Grid.Row="2" Background="DarkSeaGreen" Grid.ColumnSpan="5">
+                    <Grid Grid.Row="2" Background="Transparent" Grid.ColumnSpan="5">
                         <Button x:Name="pb_ClosedOrdersBack" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10"  Grid.Column="0" Click="Pb_back_Click"/>
                     </Grid>
-                    <TextBlock Name="tb_order_error" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Visibility="Collapsed" Foreground="White" FontSize="40">
+                    <TextBlock Name="tb_order_error" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Visibility="Collapsed" Foreground="Transparent" FontSize="40">
                         <TextBlock.Effect>
                             <DropShadowEffect/>
                         </TextBlock.Effect>

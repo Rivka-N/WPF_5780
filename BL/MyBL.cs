@@ -117,10 +117,13 @@ namespace BL
                 #endregion
 
                 myDAL.changeStatus(guest, Enums.OrderStatus.Mailed);//mailed status
-                Order ord = new Order(guest.Registration);//makes new order
+                Order ord = new Order();//makes new order
                 ord.HostingUnitKey = unit.HostingUnitKey;
                 ord.GuestRequestKey = guest.GuestRequestKey;
+                ord.HostName = unit.Host.Name +" "+ unit.Host.LastName;
+                ord.GuestName = guest.Name + " "+guest.LastName;
                 ord.OrderDate = DateTime.Today;//sent mail today
+                ord.CreateDate = guest.Registration;//original request created
                 addOrder(ord);//send to the function which adds the order to the order list
 
             }

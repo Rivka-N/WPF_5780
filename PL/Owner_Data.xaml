@@ -6,13 +6,14 @@
       xmlns:local="clr-namespace:PL"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="200" Width="auto" Height="auto"
-      Title="Owner_Data">
+      Title="Owner_Data" Background="Transparent" >
     <Page.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
+            
         </Style>
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="20"/>
@@ -22,7 +23,7 @@
         </Style>
 
     </Page.Resources>
-    <Grid Background="LightSeaGreen">
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
