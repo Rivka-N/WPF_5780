@@ -25,7 +25,14 @@ namespace BL
     }
     public class invalidFormatBL : Exception//item isn't in the expceted format
     { }
-
+    public class networkErrorExceptionBL : Exception//error in accessing server or sending mail
+    {
+        public networkErrorExceptionBL(string message) : base(message)
+        {
+        }
+    }
     public class unfoundRequestExceptionBL:Exception//only empty list to return (where error is relevent)
         {}
+    public class overbookedExceptionBL:Exception//no available dates
+    { }
 }

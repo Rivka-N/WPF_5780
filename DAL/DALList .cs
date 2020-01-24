@@ -114,13 +114,7 @@ namespace DAL
             }
         }
 
-        public void deleteGuest(GuestRequest guest)//deletes guest from other hosts' guest list
-        {
-          foreach(HostingUnit unit in DataSource.hostingUnits)
-            {
-                unit.guestForUnit.Remove(guest);
-            }
-        }
+        
 
         public void deleteSameDate(HostingUnit unit, GuestRequest guest)//deletes units with same dates as added order
         {

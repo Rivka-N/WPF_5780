@@ -363,38 +363,7 @@ namespace PL
             }
         }
 
-        private void Tb_phone_LostFocus(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                int text = 0;
-                if (!Regex.IsMatch(tb_phone.Text, @"^(\+[0-9]{9,10})$"))//9-10 numbers
-                    throw new invalidTypeExceptionPL();
-                if (Int32.TryParse(tb_phone.Text, out text))
-                {
-                    if (text < 0)
-                    {
-                        throw new invalidTypeExceptionPL();
-                    }
-
-                    unit.Host.Phone = text;//sets new number
-                    tb_phone.BorderBrush = Brushes.Gray;
-                    if (!(text == originalUnit.Host.Phone))//was changed
-                        pb_update.IsEnabled = true;//allows update
-                }
-                else
-                {
-                    throw new invalidTypeExceptionPL();//not valid phone number
-                }
-            }
-            catch
-            {
-                tb_phone.BorderBrush = Brushes.Red;
-                tb_phone.Text = originalUnit.Host.Phone.ToString();//resets text
-            }
-
-        }
-
+       
         private void Tb_lastName_LostFocus(object sender, RoutedEventArgs e)
         {
             try

@@ -107,8 +107,6 @@
                             <TextBox x:Name="tb_lastName" Width="120" VerticalAlignment="Top" Text="{Binding Host.LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3.4,4,0,0" Height="24" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_lastName_LostFocus"/>
                             <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Name:"/>
                             <TextBox x:Name="tb_name" Width="120" VerticalAlignment="Center" Text="{Binding Host.Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_name_LostFocus"/>
-                            <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Phone:"/>
-                            <TextBox x:Name="tb_phone" Width="120" VerticalAlignment="Top" Text="{Binding Host.Phone}" Grid.Row="2" Margin="3,4,0,0" Height="24" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_phone_LostFocus"/>
                             <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Email:"/>
                             <TextBox x:Name="tb_mail" Width="120" VerticalAlignment="Top" Grid.Row="3" Margin="3,4,0,0" Height="24" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_mail_LostFocus"/>
 

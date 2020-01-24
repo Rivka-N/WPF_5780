@@ -37,7 +37,6 @@ namespace DAL
         void addCharge(HostingUnit unit, int numDays);
 
         #region delete
-        void deleteGuest(GuestRequest guest);
         void deleteSameDate(HostingUnit unit, GuestRequest guest);
         void deleteOrders(Func<Order, bool> p);
         #endregion

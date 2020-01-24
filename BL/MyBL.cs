@@ -128,7 +128,7 @@ namespace BL
             catch (Exception ex)
             {
                 //try to send mail again with a few second wait?
-                throw new InvalidException("unable to send mail: " + ex.Message);
+                throw new networkErrorExceptionBL("unable to send mail: " + ex.Message);
             }
         }
       
@@ -180,7 +180,7 @@ namespace BL
                 {
                     if (unit.Diary[start.Month, start.Day] == true)
                     {
-                        throw new InvalidException("dates already full");//if its already occupied
+                        throw new overbookedExceptionBL();//if its already occupied
                     }
                 }
                 for (DateTime start = guest.EntryDate; start <= end; start = start.AddDays(1))//set the days
@@ -189,7 +189,6 @@ namespace BL
                 }
 
                 //relevent only if using guest list in hosting units
-                myDAL.deleteGuest(guest);
                 myDAL.deleteSameDate(unit, guest);
 
                 Order thisOrder = findOrder(guest, unit);
