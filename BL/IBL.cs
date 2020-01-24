@@ -15,7 +15,7 @@ namespace BL
         List<GuestRequest> getRequests();
         List<GuestRequest> getRequests(Func<GuestRequest, bool> p);
         GuestRequest findGuest(GuestRequest g1, string text);//puts text as g1's number and returns instance of it in ds if found
-        Func<GuestRequest, bool> GuestSearchQuery(DateTime? selectedDate, string query, Enums.FunctionSender owner);
+        Func<GuestRequest, bool> GuestSearchQuery(string query, string child, string adult, bool? garden, bool? jaccuzi, bool? pool, int meal);
 
         #endregion
 
@@ -63,6 +63,7 @@ namespace BL
         IEnumerable<IGrouping<Host, HostingUnit>> groupHostsByUnits();
         IEnumerable<IGrouping<Enums.Area, HostingUnit>> groupUnitsByArea();
         IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupRequestsByArea();
+        IEnumerable<IGrouping<Enums.MealType, GuestRequest>> groupRequestsByMeal();
         #endregion
     }
 }

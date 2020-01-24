@@ -24,13 +24,13 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <DockPanel Background="DarkSeaGreen">
+        <DockPanel Background="Transparent">
             <Image x:Name="im_closedOrdersSearch" Stretch="Uniform" Grid.Column="0" DockPanel.Dock="Left" Style="{StaticResource s_imageIcon}" Margin="5,0,0,0" />
             <TextBox x:Name="tb_SearchTextBox" Grid.Row="1" Grid.Column="1" DockPanel.Dock="Left" MinWidth="100" Width="auto" TextWrapping="Wrap"  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,10" TextChanged="tb_SearchTextBox_TextChanged"/>
 
         </DockPanel>
         <Grid Grid.Row="1">
-        <DataGrid x:Name="dg_hostingUnitDataGrid" Grid.Row="2" AlternatingRowBackground="AliceBlue"
+        <DataGrid x:Name="dg_hostingUnitDataGrid" Grid.Row="2" AlternatingRowBackground="Pink" Background="Transparent"
                   RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
                     <DataGridTextColumn x:Name="hostKeyColumn" Binding="{Binding Host.HostKey}" Header="Host Id" Width="*" MinWidth="100" IsReadOnly="True"/>

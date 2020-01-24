@@ -6,13 +6,17 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Closing="Window_Closing"
-        Title="Site Information" Height="600" Width="1000" MinWidth="600" MinHeight="300" WindowStartupLocation="CenterScreen" >
+        Title="Site Information" Height="600" Width="1000" MinWidth="600" MinHeight="300" WindowStartupLocation="CenterScreen" Background="Pink">
     
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TabItem Name="ti_guestRequests" Header="Guests">
                 <Frame Source="Owner_GuestRequests.xaml" />
@@ -22,15 +26,15 @@
             </TabItem>
             <TabItem Name="ti_closedOrders" Header="Closed Orders">
                 <!--change to all orders with an option to sort by mailed or closed ones?-->
-                <Frame Source="Owner_ClosedOrders.xaml"/>
+                <Frame Source="Owner_ClosedOrders.xaml" Background="Transparent"/>
             </TabItem>
-            <TabItem Name="ti_information" Header="Details">
-                <Frame Source="Owner_Data.xaml"/>
-            </TabItem>
-            
+           
         </TabControl>
-        <Grid Grid.Row="1" Background="DarkSeaGreen">
+        <Grid Grid.Row="1">
             <Button x:Name="pb_back" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10" Click="Pb_back_Click"/>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Frame Source="Owner_Data.xaml"/>
         </Grid>
     </Grid>
 </Window>

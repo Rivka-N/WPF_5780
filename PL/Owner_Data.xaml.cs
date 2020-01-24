@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BL;
+using BE;
 namespace PL
 {
     /// <summary>
@@ -27,6 +28,9 @@ namespace PL
             InitializeComponent();
             int sum = myBL.TotalSumCollectedFromUnits();
             tb_moneyCollected.Text = sum.ToString();//text is sum collected
+            tb_guests.Text = myBL.getRequests().Count.ToString();//total requests
+            tb_units.Text = myBL.getAllHostingUnits().Count.ToString();//total hosts
+            tb_finalguests.Text = myBL.getRequests(req => req.Status == Enums.OrderStatus.Closed).Count.ToString();//all closed requests
         }
     }
 }

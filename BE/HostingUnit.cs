@@ -34,7 +34,6 @@ namespace BE
         public Enums.Preference Garden { get => garden; set { garden = value; } }
         public Enums.MealType Meal{ get; set; }
         public int MoneyPaid { get; set; }//paid to owner
-        public List<GuestRequest> guestForUnit { get; set; }
         #endregion
         #region ctors
         public HostingUnit()
@@ -50,7 +49,6 @@ namespace BE
             pool = Enums.Preference.No;
             HostingUnitName = "";
             Host = new Host();
-            guestForUnit = new List<GuestRequest>();
             MoneyPaid = 0;
 
         }

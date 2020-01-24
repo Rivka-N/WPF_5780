@@ -73,7 +73,6 @@ namespace BL
                 if (matchesUnit(units[i], guest))//if guest can be put in his unit
                 {
                     listOfUnits.Add(units[i]);//adds to the guest list
-                    myDAL.addGuestToUnit(units[i], guest);
                 }
             }
             if (listOfUnits.Count() == 0)
@@ -118,17 +117,20 @@ namespace BL
                 #endregion
 
                 myDAL.changeStatus(guest, Enums.OrderStatus.Mailed);//mailed status
-                Order ord = new Order(guest.Registration);//makes new order
+                Order ord = new Order();//makes new order
                 ord.HostingUnitKey = unit.HostingUnitKey;
                 ord.GuestRequestKey = guest.GuestRequestKey;
+                ord.HostName = unit.Host.Name +" "+ unit.Host.LastName;
+                ord.GuestName = guest.Name + " "+guest.LastName;
                 ord.OrderDate = DateTime.Today;//sent mail today
+                ord.CreateDate = guest.Registration;//original request created
                 addOrder(ord);//send to the function which adds the order to the order list
 
             }
             catch (Exception ex)
             {
                 //try to send mail again with a few second wait?
-                throw new InvalidException("unable to send mail: " + ex.Message);
+                throw new networkErrorExceptionBL("unable to send mail: " + ex.Message);
             }
         }
       
@@ -180,17 +182,13 @@ namespace BL
                 {
                     if (unit.Diary[start.Month, start.Day] == true)
                     {
-                        throw new InvalidException("dates already full");//if its already occupied
+                        throw new overbookedExceptionBL();//if its already occupied
                     }
                 }
                 for (DateTime start = guest.EntryDate; start <= end; start = start.AddDays(1))//set the days
                 {
                     unit.Diary[start.Month, start.Day] = true;
                 }
-
-                //relevent only if using guest list in hosting units
-                myDAL.deleteGuest(guest);
-                myDAL.deleteSameDate(unit, guest);
 
                 Order thisOrder = findOrder(guest, unit);
                 myDAL.deleteOrders(order => { return order.GuestRequestKey == thisOrder.GuestRequestKey && order.HostingUnitKey != thisOrder.HostingUnitKey; });
@@ -203,7 +201,7 @@ namespace BL
             }
             catch (Exception ex)
             {
-                throw new InvalidException(ex.Message);
+                throw ex;
             }
         }
 
@@ -316,6 +314,75 @@ namespace BL
                     throw ex;
                 throw new InvalidException("Unable to find items");
             }
+        }
+
+        public Func<GuestRequest, bool> GuestSearchQuery(string query, string child, string adult, bool? garden, bool? jaccuzi, bool? pool, int meal)
+            //builds function to sort guests by
+        {
+            try
+            {
+                Func<GuestRequest, bool> text = (g=> true), children= (g => true), adults= (g => true), wantGarden= (g => true), wantJ= (g => true), wantPool= (g => true), wantMeal=(g => true);
+                //goes one by one and sets all of the queries based on the value of the items
+                #region conditions
+                if (query != null && query != "")//has query
+                    text = guest => guest.Name.Contains(query) || guest.LastName.Contains(query)
+                              || guest.GuestRequestKey.ToString().Contains(query);
+                if (child != "")
+                    children = (guest => guest.NumChildren.ToString() == child);
+                if (adult != "")
+                    adults = (guest => guest.NumAdult.ToString() == adult);
+                if (garden != null)
+                {
+                    if (garden == false)//no
+                        wantGarden = (guest => guest.Garden == Enums.Preference.No);
+                    else
+                        wantGarden = (guest => guest.Garden == Enums.Preference.Yes);
+                    
+                }
+
+                if (pool != null)
+                {
+                    if (pool == false)//no
+                        wantPool = (guest => guest.Pool== Enums.Preference.No);
+                    else
+                        wantPool= (guest => guest.Pool== Enums.Preference.Yes);
+
+                }//true, false, null
+                if (jaccuzi != null)
+                {
+                    if (jaccuzi== false)//no
+                        wantJ= (guest => guest.Jacuzzi == Enums.Preference.No);
+                    else
+                        wantJ= (guest => guest.Jacuzzi == Enums.Preference.Yes);
+
+                }
+                if (meal!=-1)//something was selected
+                {
+                    if (meal == 0)
+                    {
+                        wantMeal = (guest => guest.Meal == Enums.MealType.Full);
+                    }
+                    else if (meal == 1)
+                    {
+                        wantMeal = (guest => guest.Meal == Enums.MealType.Half);
+                    }
+                    else if (meal == 2)
+                    {
+                        wantMeal = (guest => guest.Meal == Enums.MealType.None);
+
+                    }
+                    else throw new invalidFormatBL();//not a valid number from the combobox
+                        
+                 }
+                #endregion
+                return gu => text(gu) && children(gu) && adults(gu) && wantGarden(gu) && wantJ(gu) && wantPool(gu) && wantMeal(gu);
+                //returns all conditions combined
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidException(ex.Message);
+            }
+
         }
 
         public Func<GuestRequest, bool> GuestSearchQuery(DateTime? selectedDate, string query, Enums.FunctionSender owner)//calculates condition to filter by
@@ -597,6 +664,15 @@ namespace BL
                             select newGroup;
             return groupArea;
         }
+        public IEnumerable<IGrouping<Enums.MealType, GuestRequest>> groupRequestsByMeal()
+        {
+            var guests = myDAL.getRequests();
+            var mealGroup= from GuestRequest in guests
+                            group GuestRequest by GuestRequest.Meal into newGroup
+                            select newGroup;
+            return mealGroup;
+        }
+
         public IEnumerable<Order> ordersOfUnit(HostingUnit hu)
         {
             return ordersOfUnit(hu.HostingUnitKey);

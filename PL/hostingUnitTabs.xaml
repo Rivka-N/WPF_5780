@@ -10,6 +10,7 @@
         Closing="Window_Closing"
         Title="Personal Area" Height="600" Width="1000" Loaded="Window_Loaded_1"
         WindowStartupLocation="CenterScreen"
+        Background="Pink"
         >
     <Window.Resources>
         <CollectionViewSource x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
@@ -28,16 +29,20 @@
             <Setter Property="Width" Value="auto"/>
             <Setter Property="MinHeight" Value="100"/>
         </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="IsThreeState" Value="True"/>
+            <Setter Property="IsChecked" Value="{x:Null}"/>
+        </Style>
     </Window.Resources>
     <Grid>
-        <TabControl x:Name="tc_mainControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <TabControl x:Name="tc_mainControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent">
             <TabItem Name="tab_updateDeleteUnit" Header="delete /update unit" Selector.Unselected="Tab_updateDeleteUnit_Unselected">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="2" Background="DarkSeaGreen">
+                    <Grid Grid.Row="2" Background="Transparent">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -103,8 +108,6 @@
                             <TextBox x:Name="tb_lastName" Width="120" VerticalAlignment="Top" Text="{Binding Host.LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3.4,4,0,0" Height="24" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_lastName_LostFocus"/>
                             <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Name:"/>
                             <TextBox x:Name="tb_name" Width="120" VerticalAlignment="Center" Text="{Binding Host.Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_name_LostFocus"/>
-                            <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Phone:"/>
-                            <TextBox x:Name="tb_phone" Width="120" VerticalAlignment="Top" Text="{Binding Host.Phone}" Grid.Row="2" Margin="3,4,0,0" Height="24" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_phone_LostFocus"/>
                             <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Email:"/>
                             <TextBox x:Name="tb_mail" Width="120" VerticalAlignment="Top" Grid.Row="3" Margin="3,4,0,0" Height="24" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_mail_LostFocus"/>
 
@@ -146,7 +149,7 @@
                 </Grid>
             </TabItem>
             <TabItem Name="tab_addOrders" Header="add order" Selector.Unselected="Tab_addOrders_Unselected">
-                <Grid DataContext="{StaticResource guestRequestViewSource}">
+                <Grid DataContext="{StaticResource guestRequestViewSource}" Background="Transparent">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
@@ -156,7 +159,7 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Column="1" Background="MediumSeaGreen">
+                    <Grid Grid.Column="1" Background="Transparent">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -170,11 +173,7 @@
                                 <Image x:Name="im_GuestSearch" Stretch="Uniform" Grid.Column="0" Style="{StaticResource s_imageIcon}" Margin="5,0,0,0" />
                                 <TextBox x:Name="tb_addOrder_SearchTextBox" Grid.Column="1" Width="auto" MinWidth="100" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="5" VerticalAlignment="Center" TextChanged="Tb_closed_SearchTextBox_TextChanged" />
                             </Grid>
-                            <Label x:Name="lb_addOrder_vacationDate" Content="Vacation Start" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            <DatePicker x:Name="dp_addOrderDate" HorizontalAlignment="Center"/>
-                            <Button Name="pb_addorder_resetDate" Content="Reset" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Margin="5" />
-
-                            <Expander Header="Request Details" Height="auto" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Expander Header="Request Details" Height="auto" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">
                                 <StackPanel>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -189,22 +188,21 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBox x:Name="tb_addOrder_child" Grid.Column="0" Width="auto" MinWidth="25" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="5"/>
-                                        <TextBox x:Name="tb_addOrder_adult" Grid.Column="1"  Width="auto" MinWidth="25" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="5"/>
+                                        <TextBox x:Name="tb_addOrder_child" Grid.Column="0" Width="auto" MinWidth="25" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="5" LostFocus="Tb_addOrder_numLostFocus"  TextChanged="Tb_addOrder_adult_TextChanged"/>
+                                        <TextBox x:Name="tb_addOrder_adult" Grid.Column="1"  Width="auto" MinWidth="25" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="5" LostFocus="Tb_addOrder_numLostFocus" TextChanged="Tb_addOrder_adult_TextChanged"/>
                                     </Grid>
                                     <Label x:Name="lb_addOrder_meal" Grid.Row="3" Content="Meal Type" Width="auto" MinWidth="50"/>
-                                    <ComboBox x:Name="cb_addorder_meal" ItemsSource="{Binding}"/>
-                                    <CheckBox x:Name="lb_addOrder_garden" Grid.Row="0" Content="Garden" Margin="5"/>
-                                    <CheckBox x:Name="lb_addOrder_pool" Grid.Row="1" Content="Pool" Margin="5"/>
-                                    <CheckBox x:Name="lb_addOrder_jaccuzi" Grid.Row="2" Content="Jaccuzzi" Margin="5"/>
-
+                                    <ComboBox x:Name="cb_addorder_meal" ItemsSource="{Binding}" SelectionChanged="Cb_addorder_meal_SelectionChanged"/>
+                                    <CheckBox x:Name="cb_addOrder_garden" Grid.Row="0" Content="Garden" Margin="5" Indeterminate="Lb_addOrder_garden_Checked" Checked="Lb_addOrder_garden_Checked" Unchecked="Lb_addOrder_garden_Checked"/>
+                                    <CheckBox x:Name="cb_addOrder_pool" Grid.Row="1" Content="Pool" Margin="5" Indeterminate="Lb_addOrder_pool_Checked" Checked="Lb_addOrder_pool_Checked" Unchecked="Lb_addOrder_pool_Checked"/>
+                                    <CheckBox x:Name="cb_addOrder_jaccuzi" Grid.Row="2" Content="Jaccuzzi" Margin="5" Indeterminate="Lb_addOrder_jaccuzi_Checked" Checked="Lb_addOrder_jaccuzi_Checked"  Unchecked="Lb_addOrder_jaccuzi_Checked"/>
+                                    <Button Name="pb_addorderReset" Content="Reset All" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" Margin="5" Padding="5" Click="Pb_addorderReset_Click"/>
                                 </StackPanel>
                             </Expander>
-
                         </StackPanel>
                     </Grid>
 
-                    <Grid Grid.Row="1" Background="DarkSeaGreen" Grid.ColumnSpan="5">
+                    <Grid Grid.Row="1" Background="Transparent" Grid.ColumnSpan="5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -218,34 +216,28 @@
                         <Button x:Name="pb_back" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10"  Grid.Column="0" Click="Pb_back_Click"/>
                     </Grid>
                     <Grid Grid.Row="0">
-                          <Grid.Background>
-                                <RadialGradientBrush>
-                                    <GradientStop Color="SeaGreen" Offset="1"/>
-                                    <GradientStop Color="MediumSeaGreen"/>
-                                    <GradientStop Color="LightSeaGreen" Offset="0.25"/>
-                                </RadialGradientBrush>
-                            </Grid.Background>
-                    <DataGrid x:Name="dg_guestRequestDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" IsReadOnly="True" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="dg_guestRequestDataGrid_SelectionChanged">
+                         
+                    <DataGrid x:Name="dg_guestRequestDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" IsReadOnly="True" Background="transparent"  RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="dg_guestRequestDataGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="*" MinWidth="100" IsReadOnly="True"/>
                             <DataGridTextColumn x:Name="lastNameColumn" Binding="{Binding LastName}" Header="Last Name" Width="*" MinWidth="100" IsReadOnly="True"/>
                             <DataGridTemplateColumn x:Name="entryDateColumn" Header="Entry Date" Width="*" MinWidth="100" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding EntryDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectedDateFormat="Short" Focusable="false" SelectedDateChanged="Dp_SelectedDateChanged"/>
+                                            <DatePicker SelectedDate="{Binding EntryDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectedDateFormat="Short" Focusable="false" SelectedDateChanged="Dp_dateChangedEntry"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn x:Name="releaseDateColumn" Header="Release Date" Width="*" MinWidth="100" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding ReleaseDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectedDateFormat="Short" Focusable="false" SelectedDateChanged="Dp_SelectedDateChanged"/>
+                                            <DatePicker SelectedDate="{Binding ReleaseDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectedDateFormat="Short" Focusable="false" SelectedDateChanged="Dp_dateChangedRelease"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridCheckBoxColumn x:Name="gardenColumn" Binding="{Binding Garden}" Header="Garden" Width="SizeToHeader" MinWidth="50" IsReadOnly="True"/>
-                            <DataGridCheckBoxColumn x:Name="jacuzziColumn" Binding="{Binding Jacuzzi}" Header="Jacuzzi" Width="SizeToHeader" MinWidth="50" IsReadOnly="True"/>
-                            <DataGridCheckBoxColumn x:Name="poolColumn" Binding="{Binding Pool}" Header="Pool" Width="SizeToHeader" MinWidth="50" IsReadOnly="True"/>
+                            <DataGridTextColumn x:Name="gardenColumn" Binding="{Binding Garden}" Header="Garden" Width="SizeToHeader" MinWidth="50" IsReadOnly="True"/>
+                            <DataGridTextColumn x:Name="jacuzziColumn" Binding="{Binding Jacuzzi}" Header="Jacuzzi" Width="SizeToHeader" MinWidth="50" IsReadOnly="True"/>
+                            <DataGridTextColumn x:Name="poolColumn" Binding="{Binding Pool}" Header="Pool" Width="SizeToHeader" MinWidth="50" IsReadOnly="True"/>
                             <DataGridTextColumn x:Name="mealColumn" Binding="{Binding Meal}" Header="Meal" Width="*" MinWidth="50" IsReadOnly="True"/>
 
                             <DataGridTextColumn x:Name="numAdultColumn" Binding="{Binding NumAdult}" Header="Adults" Width="*" MinWidth="50" IsReadOnly="True"/>
@@ -263,13 +255,7 @@
             </TabItem>
             <TabItem Name="tab_closedOrders" Header="Closed Orders">
                 <Grid DataContext="{StaticResource orderViewSource}">
-                    <Grid.Background>
-                        <RadialGradientBrush>
-                            <GradientStop Color="SeaGreen" Offset="1"/>
-                            <GradientStop Color="MediumSeaGreen"/>
-                            <GradientStop Color="LightSeaGreen" Offset="0.25"/>
-                        </RadialGradientBrush>
-                    </Grid.Background>
+                    
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
@@ -278,7 +264,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="1" Background="MediumSeaGreen">
+                    <Grid Grid.Column="1" Background="Transparent">
                         <StackPanel>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -287,7 +273,6 @@
                                 </Grid.ColumnDefinitions>
                                 <Image x:Name="im_closedOrdersSearch" Stretch="Uniform" Grid.Column="0" Style="{StaticResource s_imageIcon}" Margin="5,0,0,0"/>
                                 <TextBox x:Name="tb_closed_SearchTextBox" Grid.Column="1" Width="auto" MinWidth="100" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="5" VerticalAlignment="Center" TextChanged="Tb_closed_SearchTextBox_TextChanged" />
-
                             </Grid>
                             
                             <Label x:Name="lb_closed_Date" Content="Request Created" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -296,12 +281,12 @@
 
                         </StackPanel>
                     </Grid>
-                    <DataGrid x:Name="dg_orderDataGrid" Grid.Row="0" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False">
+                    <DataGrid x:Name="dg_orderDataGrid" Grid.Row="0" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" Background="Transparent" CanUserAddRows="False">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn x:Name="dg_addOrdercreateDateColumn" Header="Create Date" Width="SizeToHeader" MinWidth="100" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding CreateDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectedDateFormat="Short" Focusable="false" SelectedDateChanged="Dp_SelectedDateChanged" />
+                                        <DatePicker SelectedDate="{Binding CreateDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectedDateFormat="Short" Focusable="false" SelectedDateChanged="Dp_DateChangedOrderCreated" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -312,7 +297,7 @@
                             <DataGridTemplateColumn x:Name="dg_addorderDateColumn" Header="Order Date" Width="*" MinWidth="100" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding OrderDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectedDateFormat="Short" Focusable="false" SelectedDateChanged="Dp_SelectedDateChanged"/>
+                                        <DatePicker SelectedDate="{Binding OrderDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectedDateFormat="Short" Focusable="false" SelectedDateChanged="Dp_DateChangedOrders"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -320,11 +305,13 @@
                             <DataGridTextColumn x:Name="dg_addOrderstatus" Binding="{Binding Status}" Header="Status" Width="*" MinWidth="100" IsReadOnly="True"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Grid Grid.Row="2" Background="DarkSeaGreen" Grid.ColumnSpan="5">
+                    <Grid Grid.Row="2" Background="Transparent" Grid.ColumnSpan="5">
                         <Button x:Name="pb_ClosedOrdersBack" Content="Back" HorizontalAlignment="Left" Margin="10,5" Padding="20,10"  Grid.Column="0" Click="Pb_back_Click"/>
                     </Grid>
-                    <TextBlock Name="tb_order_error" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Visibility="Collapsed" Foreground="White" FontSize="40">
-                        
+                    <TextBlock Name="tb_order_error" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Visibility="Collapsed" Foreground="Transparent" FontSize="40">
+                        <TextBlock.Effect>
+                            <DropShadowEffect/>
+                        </TextBlock.Effect>
                     </TextBlock>
                 </Grid>
                 

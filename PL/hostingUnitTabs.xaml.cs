@@ -51,6 +51,10 @@ namespace PL
             cb_meal.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
             cb_area.ItemsSource = Enum.GetValues(typeof(Enums.Area)).Cast<Enums.Area>();
 
+
+            //addorder binding
+            cb_addorder_meal.ItemsSource = Enum.GetValues(typeof(Enums.MealType)).Cast<Enums.MealType>();
+
             //initialize mail
             tb_mail.Text = originalUnit.Host.Mail.Address;
 
@@ -92,10 +96,17 @@ namespace PL
 
         #endregion
         #region update lists source
-        private void updateGuestsSource()
+        private void updateGuestsSource(Func<GuestRequest,bool> sortBy=null)
         {
-            //updates
-            addOrders = (unit.Host.CollectionClearance == true) ? myBL.getReleventRequests(unit) : null;
+            if (sortBy == null)
+            {            //updates
+                addOrders = (unit.Host.CollectionClearance == true) ? myBL.getReleventRequests(unit) : null;
+            }
+            else//there are conditions to sort by
+            {
+                addOrders = (unit.Host.CollectionClearance == true) ? myBL.getReleventRequests(unit).Where(g=>sortBy(g)).ToList() : null;
+                //if there's a collection clearance brings the items and sorts again. otherwise, doesn't
+            }
             dg_guestRequestDataGrid.ItemsSource = addOrders;
 
             //prints error textbox if empty
@@ -108,12 +119,16 @@ namespace PL
                     tb_guest_error.Text = "Add Bank Collection Permission";
                 else
                     tb_guest_error.Text = "No Relevent Orders";
+
+               
             }
             else
             {
                 tb_guest_error.Visibility = Visibility.Collapsed;//hides textbox
                 dg_guestRequestDataGrid.Visibility = Visibility.Visible;//shows datagrid
             }
+
+            
         }
         private void updateOrdersSource()
         {
@@ -219,20 +234,44 @@ namespace PL
 
         #endregion
         #region reset date
-        private void Dp_SelectedDateChanged(object sender, SelectionChangedEventArgs e)//changes date back to original date selected
-        //not done
+        private void Dp_DateChangedOrders(object sender, SelectionChangedEventArgs e)//changes date back to original date selected
         {
             if (sender is DatePicker)
-                if (tc_mainControl.SelectedItem == tab_addOrders)
-                    if (dg_guestRequestDataGrid.SelectedItem != null)//there's an item selected
-                    { if (dg_guestRequestDataGrid.SelectedCells != null)//check which one is selected
-                            (sender as DatePicker).SelectedDate = (dg_guestRequestDataGrid.SelectedItem as GuestRequest).Registration;
+                if (dg_orderDataGrid.SelectedItem != null)//there's an item selected
+                    if (dg_orderDataGrid.SelectedCells != null)//check which one is selected
+                    {
+                        (sender as DatePicker).SelectedDate = (dg_guestRequestDataGrid.SelectedItem as Order).OrderDate;
                     }
-                    //change each date based on what's relevent
-                    else
-                        if (tc_mainControl.SelectedItem == tab_closedOrders)
-                        if (dg_orderDataGrid.SelectedItem != null)
-                            (sender as DatePicker).SelectedDate = (dg_orderDataGrid.SelectedItem as Order).CreateDate;//find which date is selected and only change that one?
+        }
+
+        private void Dp_DateChangedOrderCreated(object sender, SelectionChangedEventArgs e)//changes date back to original date selected
+        {
+            if (sender is DatePicker)
+                if (dg_orderDataGrid.SelectedItem != null)//there's an item selected
+                    if (dg_orderDataGrid.SelectedCells != null)//check which one is selected
+                    {
+                        (sender as DatePicker).SelectedDate = (dg_guestRequestDataGrid.SelectedItem as Order).CreateDate;
+                    }
+        }
+
+        private void Dp_dateChangedEntry(object sender, SelectionChangedEventArgs e)//changes date back to original date selected
+        {
+            if (sender is DatePicker)
+                if (dg_guestRequestDataGrid.SelectedItem != null)//there's an item selected
+                {
+                    if (dg_guestRequestDataGrid.SelectedCells != null)//check which one is selected
+                        (sender as DatePicker).SelectedDate = (dg_guestRequestDataGrid.SelectedItem as GuestRequest).EntryDate;
+                }
+
+        }
+        private void Dp_dateChangedRelease(object sender, SelectionChangedEventArgs e)//changes date back to original date selected
+        {
+            if (sender is DatePicker)
+                if (dg_guestRequestDataGrid.SelectedItem != null)//there's an item selected
+                {
+                    if (dg_guestRequestDataGrid.SelectedCells != null)//check which one is selected
+                        (sender as DatePicker).SelectedDate = (dg_guestRequestDataGrid.SelectedItem as GuestRequest).ReleaseDate;
+                }
         }
 
         #endregion
@@ -279,7 +318,7 @@ namespace PL
             }
             catch
             {
-                MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("unable to send email! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
 
@@ -325,38 +364,7 @@ namespace PL
             }
         }
 
-        private void Tb_phone_LostFocus(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                int text = 0;
-                if (!Regex.IsMatch(tb_phone.Text, @"^(\+[0-9]{9,10})$"))//9-10 numbers
-                    throw new invalidTypeExceptionPL();
-                if (Int32.TryParse(tb_phone.Text, out text))
-                {
-                    if (text < 0)
-                    {
-                        throw new invalidTypeExceptionPL();
-                    }
-
-                    unit.Host.Phone = text;//sets new number
-                    tb_phone.BorderBrush = Brushes.Gray;
-                    if (!(text == originalUnit.Host.Phone))//was changed
-                        pb_update.IsEnabled = true;//allows update
-                }
-                else
-                {
-                    throw new invalidTypeExceptionPL();//not valid phone number
-                }
-            }
-            catch
-            {
-                tb_phone.BorderBrush = Brushes.Red;
-                tb_phone.Text = originalUnit.Host.Phone.ToString();//resets text
-            }
-
-        }
-
+       
         private void Tb_lastName_LostFocus(object sender, RoutedEventArgs e)
         {
             try
@@ -639,24 +647,113 @@ namespace PL
         #region requests searching
         private void Tb_addOrder_SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var guests = myBL.GuestSearchQuery(null, tb_addOrder_SearchTextBox.Text, Enums.FunctionSender.Host);//sends to function to find relevent orders
+            sortGuests();
+        }
 
-            addOrders = myBL.getReleventRequests(unit).Where(g => guests(g)).Select(g => g).ToList();
-            dg_guestRequestDataGrid.ItemsSource = addOrders;
+
+        private void Lb_addOrder_jaccuzi_Checked(object sender, RoutedEventArgs e)
+        {
+            sortGuests();
+        }
+
+        private void Lb_addOrder_pool_Checked(object sender, RoutedEventArgs e)
+        {
+            sortGuests();
+
+        }
+
+        private void Lb_addOrder_garden_Checked(object sender, RoutedEventArgs e)
+        {
+            sortGuests();
 
         }
 
 
+        private void Cb_addorder_meal_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            sortGuests();
+        }
 
+        private void Tb_addOrder_adult_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                if (tb_addOrder_adult.Text != "")//has text
+                    addNum(tb_addOrder_adult.Text);//checks it's a valid number
+                if (tb_addOrder_child.Text != "")
+                    addNum(tb_addOrder_child.Text);//checks it's a valid number
+                //if it's a valid number
+                sortGuests();//searches. otherwise doesn't
+            }
+            catch (Exception ex)
+            {
+                //does nothing. only doesn't search
+            }
 
+            //only takes into condieration when it loses focus
+        }
+        private void Tb_addOrder_numLostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (tb_addOrder_adult.Text != "")//has text
+                    addNum(tb_addOrder_adult.Text);//checks it's a valid number
+                if (tb_addOrder_child.Text != "")
+                    addNum(tb_addOrder_child.Text);//checks it's a valid number
+                //if it's a valid number
+                sortGuests();//searches. otherwise doesn't
+            }
+            catch (Exception ex)
+            {
+                if (ex is invalidTypeExceptionPL || ex is negativeNumberExceptionPL || ex is LargeNumberExceptionPL)//invalid number
+                    MessageBox.Show("invalid number. Try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            sortGuests();
+        }
 
+        
+        private void sortGuests()//searches through the guests based on the new selection
+        {
+            try
+            {
+                if (tb_addOrder_SearchTextBox != null)
+                {
+                    var guestList = myBL.GuestSearchQuery
+                        (tb_addOrder_SearchTextBox.Text, tb_addOrder_child.Text, tb_addOrder_adult.Text, 
+                        cb_addOrder_garden.IsChecked, cb_addOrder_jaccuzi.IsChecked, cb_addOrder_pool.IsChecked, 
+                        cb_addorder_meal.SelectedIndex);
+                    updateGuestsSource(g => guestList(g));//updates guests showing           
+                }
+            }
+            catch(Exception ex)
+            {
+                if (! (ex is System.NullReferenceException))
+                    MessageBox.Show("invalid search.", "error", MessageBoxButton.OK, MessageBoxImage.Error);
 
+            }
 
+        }
 
 
         #endregion
 
-       
+        #region reset guest searches
+        private void Pb_addorderReset_Click(object sender, RoutedEventArgs e)
+        {
+            //resets selections
+            cb_addOrder_garden.IsChecked = null;
+            cb_addOrder_jaccuzi.IsChecked = null;
+            cb_addorder_meal.SelectedIndex = -1;
+            cb_addOrder_pool.IsChecked = null;
+            tb_addOrder_adult.Text = "";
+            tb_addOrder_child.Text = "";
+            tb_addOrder_SearchTextBox.Text = "";
+            sortGuests();//resorts guests
+
+        }
+        #endregion
+
+     
     }
 }
 

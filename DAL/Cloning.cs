@@ -50,9 +50,7 @@ namespace DAL
             target.Jacuzzi = original.Jacuzzi;
             target.Pool = original.Pool;
             target.MoneyPaid = original.MoneyPaid;
-            if (original.guestForUnit != null)
-                target.guestForUnit = original.guestForUnit.Select(curGuest => curGuest.Clone()).ToList();
-
+           
 
             return target;
         }

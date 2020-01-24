@@ -106,8 +106,20 @@ namespace PL
         {
             try
             {
-                dg_hostingUnitDataGrid.ItemsSource = myBL.searchUnits(tb_search.Text, cb_unitType.SelectedIndex - 1, cb_area.SelectedIndex - 1, Enums.FunctionSender.HostList);
+                var source = myBL.searchUnits(tb_search.Text, cb_unitType.SelectedIndex - 1, cb_area.SelectedIndex - 1, Enums.FunctionSender.HostList);
+                dg_hostingUnitDataGrid.ItemsSource = source;
+                if (source.Count==0)//none there
+                {
+                    dg_hostingUnitDataGrid.Visibility = Visibility.Collapsed;
+                    tb_order_error.Visibility = Visibility.Visible;
+                }
                 //sets items to new selection
+                else
+                {
+                    dg_hostingUnitDataGrid.Visibility = Visibility.Visible;
+                    tb_order_error.Visibility = Visibility.Collapsed;
+
+                }
             }
             catch (Exception ex)
             {
