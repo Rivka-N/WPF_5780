@@ -77,7 +77,7 @@
                 <TextBox x:Name="NameTextBox" BorderBrush="White" Background="Transparent" Width="120" VerticalAlignment="Top" Text="{Binding Host.LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3.4,4,0,0" Height="24" HorizontalAlignment="Left" Grid.Column="1" TextChanged="lastNameTextBox_TextChanged"/>
                 <Label VerticalAlignment="Center" Foreground="White" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Name:"/>
                 <TextBox x:Name="cb_nameTextBox" BorderBrush="White" Background="Transparent" Width="120" VerticalAlignment="Bottom" Text="{Binding Host.Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" Margin="3.4,0,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="1" TextChanged="nameTextBox_TextChanged"/>
-                <Label VerticalAlignment="Center" Foreground="White" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Phone:"/>
+                <Label VerticalAlignment="Center" Foreground="White" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="ID:"/>
                 <TextBox x:Name="cb_phoneTextBox" BorderBrush="White" Background="Transparent" Width="120" VerticalAlignment="Top" Text="{Binding Host.Phone, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3,4,0,0" Height="24" HorizontalAlignment="Left" Grid.Column="1" TextChanged="phoneTextBox_TextChanged"/>
             </Grid>
             <Grid x:Name="grid2" Grid.Column="1" DataContext="{StaticResource bankAccountViewSource}" HorizontalAlignment="Left" Margin="19,10,0,0" VerticalAlignment="Top">
