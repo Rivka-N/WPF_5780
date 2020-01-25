@@ -30,7 +30,7 @@ namespace PL
 
         public newHostingUnit()
         {
-            
+
             InitializeComponent();
             bL = factoryBL.getBL();
 
@@ -102,7 +102,7 @@ namespace PL
         #endregion
 
         #region buttonAdd
-        
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -111,7 +111,7 @@ namespace PL
                 {
                     if (Regex.IsMatch(NameTextBox.Text, @"^[\p{L}]+$"))//last contains only letters
                     {
-                        if (IsValidUSPhoneNumber((hosting.Host.Phone).ToString()))
+                        if (isValidID(cb_phoneTextBox.Text))
                         {
                             if (hosting.Host.Mail != null && checkMail(cb_email.Text) != null)//recieved a mail address and it's still in the textbox
                             {
@@ -171,25 +171,29 @@ namespace PL
                                 cb_email.BorderBrush = Brushes.Red;
                             }
                         }
-                        else MessageBox.Show("invalid number phone");
-
-                        }
                         else
                         {
-                            MessageBox.Show("Please enter last name", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            NameTextBox.BorderBrush = Brushes.Red;
+                            MessageBox.Show("Invalid id, Please enter new ID", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            cb_phoneTextBox.BorderBrush = Brushes.Red;
                         }
-                    }
 
+                    }
                     else
                     {
-                        MessageBox.Show("Please enter first name", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        cb_nameTextBox.BorderBrush = Brushes.Red;
+                        MessageBox.Show("Please enter last name", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        NameTextBox.BorderBrush = Brushes.Red;
                     }
-
-                
                 }
-            
+
+                else
+                {
+                    MessageBox.Show("Please enter first name", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    cb_nameTextBox.BorderBrush = Brushes.Red;
+                }
+
+
+            }
+
             catch (Exception ex)
             {
                 if (ex is unfoundRequestExceptionBL)//no request found error
@@ -200,7 +204,7 @@ namespace PL
                 }
                 else MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            
+
 
         }
         #endregion
@@ -222,7 +226,7 @@ namespace PL
                     MessageBox.Show(ex.Message);//if the number was too big, explains why number wasn't valid
 
             }
-           
+
         }
 
 
@@ -242,7 +246,7 @@ namespace PL
                 if (ex is LargeNumberExceptionPL)
                     MessageBox.Show(ex.Message);//if the number was too big, explains why number wasn't valid
             }
-            
+
         }
 
 
@@ -272,8 +276,8 @@ namespace PL
                 }
                 else
                 {
-                    hosting.Host.Phone = text;
-                    cb_phoneTextBox.BorderBrush = Brushes.Black;
+                    hosting.Host.HostKey = text;
+                    cb_phoneTextBox.BorderBrush = Brushes.Gray;
 
 
                 }
@@ -297,6 +301,16 @@ namespace PL
             System.Text.RegularExpressions.Regex pattern = new System.Text.RegularExpressions.Regex(regexstr);
             return pattern.IsMatch(str);
         }
+
+        public static bool isValidID(string str)
+        {
+           if (Regex.IsMatch(str, (".*(\\d{8})")))
+            {
+                return true;
+            }
+            return false;
+        }
+
 
         #endregion
 
