@@ -271,7 +271,7 @@ namespace BL
                     (Enum.IsDefined(typeof(Enums.HostingUnitType), unitType) ? unit.HostingUnitType == (Enums.HostingUnitType)unitType : true)
                     && ((Enum.IsDefined(typeof(Enums.Area), area)) ? unit.AreaVacation == (Enums.Area)area : true)//adds unittype to condition
                 && (unit.HostingUnitKey.ToString().Contains(text) || unit.Host.HostKey.ToString().Contains(text)
-                || unit.HostingUnitName.Contains(text) || unit.Host.Phone.ToString().Contains(text)
+                || unit.HostingUnitName.Contains(text)
                 || unit.Host.Name.Contains(text) || unit.Host.LastName.Contains(text)));
                     break;
             }
@@ -287,7 +287,7 @@ namespace BL
                 (u => u.HostingUnitKey.ToString().Contains(text) || u.MoneyPaid.ToString().Contains(text)
                 || u.HostingUnitType.ToString().Contains(text) || u.HostingUnitName.Contains(text)
                 || u.Host.HostKey.ToString().Contains(text) || u.Host.Name.Contains(text) || u.Host.LastName.Contains(text)
-                || u.Host.Phone.ToString().Contains(text)||u.Host.Mail.Address.ToString().Contains(text));//returns all units that contain the text in their details
+                ||u.Host.Mail.Address.ToString().Contains(text));//returns all units that contain the text in their details
         }
         }
         public List<GuestRequest> searchRequests(Enums.OrderStatus status, DateTime? selectedDate, string query, Enums.FunctionSender owner=Enums.FunctionSender.Default)
@@ -603,8 +603,7 @@ namespace BL
                 throw new InvalidException("invalid last name");
             if (hostingUnit1.HostingUnitName == null || hostingUnit1.HostingUnitName == "")
                 throw new InvalidException("invalid unit name");
-            if (hostingUnit1.Host.Phone == 0)//not set
-                throw new InvalidException("invalid phone number");
+           
             return true;
             //try
             //{

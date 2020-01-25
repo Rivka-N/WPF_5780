@@ -64,7 +64,6 @@ namespace DAL
             target.HostKey = original.HostKey;
             target.LastName = original.LastName;
             target.Name = original.Name;
-            target.Phone = original.Phone;
             target.Mail = original.Mail;
             target.Bank = original.Bank.Clone();
             return target;

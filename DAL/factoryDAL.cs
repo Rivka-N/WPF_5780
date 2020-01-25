@@ -11,7 +11,7 @@ namespace DAL
         public static IDAL getDAL()
         { 
             return DALList.Instance;
-                //  return DAL_XML.Instance;
+                //  return DALXML.Instance;
            
         }
     }

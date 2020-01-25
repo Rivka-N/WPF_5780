@@ -22,4 +22,15 @@ namespace DAL
         {
         }
     }
+    class loadExceptionDAL : Exception//loading to and from xml files error
+    {
+        public loadExceptionDAL(string message) : base(message)
+        {
+        }
+    }
+    class objectErrorDAL:Exception//error in finding or accessing object
+    { }
+
+    class duplicateErrorDAL:Exception//trying to use create duplicate information
+    { }
 }

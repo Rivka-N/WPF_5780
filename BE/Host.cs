@@ -13,14 +13,12 @@ namespace BE
         private string name;
         private string lastName;
         private System.Net.Mail.MailAddress mail;
-        private Int32 phoneNumber;
         private BankAccount bank;
         #endregion
         #region properties
         public Int32 HostKey { get=>hostKey; set { hostKey = value; } }
         public string Name { get => name; set { name = value; } }
         public string LastName { get => lastName; set { lastName = value; } }
-        public Int32 Phone { get => phoneNumber; set { phoneNumber = value; } }
         public System.Net.Mail.MailAddress Mail { get => mail; set { mail = value; } }
         public BankAccount Bank { get => bank; set { bank = value; } }
         public bool CollectionClearance { get; set; }
@@ -33,7 +31,6 @@ namespace BE
             name = first;
             lastName = last;
             this.mail = mail;
-            phoneNumber = phone;
             this.bank = bank;
             this.CollectionClearance = CollectionClearance;
         }
@@ -43,7 +40,6 @@ namespace BE
             hostKey = 0;
             CollectionClearance = false;
             mail = null;
-            Phone = 0;
             bank = null;
             name = "";
             lastName = "";
@@ -51,7 +47,7 @@ namespace BE
         #endregion
         public override string ToString()
         {
-            return "Owner id: " + hostKey.ToString("000000000") + "Name: " + name + " " + lastName + "Phone number: " + phoneNumber +
+            return "Owner id: " + hostKey.ToString("000000000") + "Name: " + name + " " + lastName +
                 "Mail address: " + mail + "Bank Account: " + bank + "Collection permission: " + CollectionClearance+"\n";
         }
 
