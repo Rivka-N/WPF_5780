@@ -30,4 +30,7 @@ namespace DAL
     }
     class objectErrorDAL:Exception//error in finding or accessing object
     { }
+
+    class duplicateErrorDAL:Exception//trying to use create duplicate information
+    { }
 }

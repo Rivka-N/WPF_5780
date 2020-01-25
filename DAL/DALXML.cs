@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Net;
 using System.Xml.Linq;
+using System.IO;
 using BE;
 
 
@@ -56,8 +57,13 @@ namespace DAL
             try
             {
                 hostingUnitPath = @"\hostingUnits.xml";//saves hostingUnit path
-                if (!File.Exists(hostingUnitPath))
-                hostingUnits = XElement.Load(hostingUnitPath);//loads units into hostingUnits
+                if (File.Exists(hostingUnitPath))//file exists
+                    hostingUnits = XElement.Load(hostingUnitPath);//loads units into hostingUnits
+                else//creates it
+                {
+                    hostingUnits = new XElement("Unit Root");
+                    hostingUnits.Save(hostingUnitPath);//saves
+                }
             }
             catch
             {
@@ -223,15 +229,15 @@ namespace DAL
         {
             try
             {
-                XElement host=(from unit in hostingUnits.Elements()
-                 where Convert.ToInt32(unit.Element("Unit Key").Value) == hostingUnit1.HostingUnitKey//this unit
-                 select unit).First();//first found
+                XElement host = (from unit in hostingUnits.Elements()
+                                 where Convert.ToInt32(unit.Element("Unit Key").Value) == hostingUnit1.HostingUnitKey//this unit
+                                 select unit).First();//first found
                 //updates 
 
                 host.Element("Unit Key").Value = hostingUnit1.HostingUnitKey.ToString();
                 host.Element("Unit Name").Value = hostingUnit1.HostingUnitName;
                 host.Element("Unit Type").Value = hostingUnit1.HostingUnitType.ToString();
-                host.Element("Unit Area").Value= hostingUnit1.AreaVacation.ToString();
+                host.Element("Unit Area").Value = hostingUnit1.AreaVacation.ToString();
                 host.Element("Adults").Value = hostingUnit1.NumAdult.ToString();
                 host.Element("Children").Value = hostingUnit1.NumChildren.ToString();
                 host.Element("Pool").Value = hostingUnit1.Pool.ToString();
@@ -250,7 +256,8 @@ namespace DAL
                 host.Element("Host").Element("Bank").Element("Bank Number").Value = hostingUnit1.Host.Bank.BankNumber.ToString();
                 host.Element("Host").Element("Bank").Element("Branch Number").Value = hostingUnit1.Host.Bank.BranchNumber.ToString();
                 host.Element("Host").Element("Bank").Element("Branch Address").Value = hostingUnit1.Host.Bank.BranchAddress;
-                
+            }
+
             catch
             {
                 throw new objectErrorDAL();//didn't find item
@@ -270,7 +277,13 @@ namespace DAL
             try
             {
                 #region unit details
-                //creates xelement of unit
+                //checks if exists
+                var u= (from hostingUnit in hostingUnits.Elements()
+                where Convert.ToInt32(hostingUnit.Element("Unit Key").Value) == unit.HostingUnitKey
+                select hostingUnit).First();//first of units found with this key
+                if (u!=null)//unit already exists
+                   throw new duplicateErrorDAL();
+                //otherwise creates xelement of unit and adds it
                 XElement unitKey = new XElement("Unit Key", unit.HostingUnitKey);
                 XElement unitName = new XElement("Unit Name", unit.HostingUnitName);
                 XElement unitType = new XElement("Unit Name", unit.HostingUnitType);
@@ -301,10 +314,13 @@ namespace DAL
 
                 XElement host = new XElement("Host", hostKey, hostFirst, hostLast, mail, clearance, bank);
                 #endregion
-                hostingUnits.Add(new XElement("Hosting Unit", unitKey, unitName, unitType, unitArea, adults, child, pool, garden, j, meals, paid, host);
+                hostingUnits.Add(new XElement("Hosting Unit", unitKey, unitName, unitType, unitArea, adults, child, pool, garden, j, meals, paid, host));
             }
-            catch
+            catch(Exception ex)
             {
+                if (ex is duplicateErrorDAL)
+                    throw ex;
+                //otherwise throws a new exception
                 throw new loadExceptionDAL("unable to save new unit to xml file");
             }
         }
