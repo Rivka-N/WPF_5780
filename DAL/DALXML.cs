@@ -19,7 +19,7 @@ namespace DAL
 
         //xelement
         private string hostingUnitPath;//where it's saved
-
+        private string guestRequestPath = "/Data/guestRequestXML.xml";
         private XElement hostingUnits;
         private XElement guestRequest;
 
@@ -383,6 +383,7 @@ namespace DAL
 
         #endregion
         #region guestRequests
+        #region add guest
         public void addGuestRequest(GuestRequest guest)
         {
             XElement guestName = new XElement("guest name", guest.Name);
@@ -404,13 +405,27 @@ namespace DAL
 
 
         }
+        #endregion
+        #region get list
+        private void LoadData()
+        {
+            try
+            {
+                guestRequest = XElement.Load(guestRequestPath);
+            }
+            catch
+            {
+                Console.WriteLine("File upload problem");
+            }
+        }
 
         public List<GuestRequest> GetguestRequestList()
         {
-        
-            List<GuestRequest> guest;
+
+            LoadData();            List<GuestRequest> guest;
             try
             {
+
                 guest = (from p in guestRequest.Elements()//get all guestRequest
                          select new GuestRequest()
                          {
@@ -439,6 +454,27 @@ namespace DAL
             }
             return guest;
         }
+        #endregion
+        #region change status
+        public void changeStatus(GuestRequest guest)//change status
+        {
+            
+                XElement guestElement = (from p in guestRequest.Elements()
+                                           where Convert.ToInt32(p.Element("guest key").Value) == guest.GuestRequestKey
+                                           select p).FirstOrDefault();            guestElement.Element("status").Value = guest.Status.ToString();
+           try
+            {
+                guestRequest.Save(guestRequestPath);
+            }
+            catch
+            {
+                throw new loadExceptionDAL("unable to save elements after deleting");//error in loading or saving the file
+
+            }
+
+
+        }
+        #endregion
         #endregion
     }
 }

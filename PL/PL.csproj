@@ -258,5 +258,8 @@
   <ItemGroup>
     <Resource Include="Resources\images %283%29.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Data\guestRequestXML.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
