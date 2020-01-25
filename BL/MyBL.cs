@@ -9,6 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
+using System.IO;
+using System.Net;
+using System.Net.Mail;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+
+
 
 namespace BL
 {
@@ -99,10 +106,12 @@ namespace BL
                 mail.To.Add(guest.Mail);
                 mail.From = new MailAddress("amazingvacations169@gmail.com", "Amazing Vacations");
                 mail.Subject = "Hosting Unit Offer";
-                mail.Body = "We found a " + guest.TypeOfUnit + " for you.\n Here are the details:\n" + unit.ToString() +
-                    "Please respond to " + unit.Host.Mail + " and finalize the details\n";//change the to string
+                mail.Body = "Hello " + guest.Name + "\nWe found a " + guest.TypeOfUnit + " for you.\n Here are the details:\n" + unit.ToString() +
+                    "\nPlease respond to " + unit.Host.Mail + " and finalize the details\n";//change the to string
+
+        
+
                 
-                mail.IsBodyHtml = true;
                 SmtpClient smtp = new SmtpClient();
                 smtp.UseDefaultCredentials = false;
                 smtp.Host = "smtp.gmail.com";

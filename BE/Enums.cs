@@ -15,9 +15,9 @@
             XML
         } 
         public enum OrderStatus
-        {
-            Closed,
+        { 
             Mailed,
+            Closed,
             Started,
             Expired
         }

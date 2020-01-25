@@ -142,7 +142,7 @@ namespace DAL
         {
             try
             {
-                DataSource.guestRequests.Find(gr => guest.Status == gr.Status).Status = status;
+                DataSource.guestRequests.Find(gr => gr.Status == guest.Status).Status = status;
 
             }
             catch
