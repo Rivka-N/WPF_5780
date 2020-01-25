@@ -22,4 +22,8 @@ namespace DAL
         {
         }
     }
+    class loadExceptionDAL:Exception//loading to and from xml files error
+    {
+
+    }
 }

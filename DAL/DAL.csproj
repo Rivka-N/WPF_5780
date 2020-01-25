@@ -59,7 +59,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DALXML partial.cs" />
     <Compile Include="Cloning.cs" />
     <Compile Include="DALList .cs" />
     <Compile Include="DALXML.cs" />
