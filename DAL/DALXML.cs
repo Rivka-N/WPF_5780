@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using System.IO;
 using BE;
 using System.Reflection;
+using System.ComponentModel;
 
 namespace DAL
 {
@@ -24,6 +25,9 @@ namespace DAL
         private XElement hostingUnits;
         private XElement guestRequest;
 
+        public static volatile bool bankDownloaded = false;//flag if bank was downloaded
+        BackgroundWorker worker;
+
         public static DALXML Instance
         {
             get { return instance; }
@@ -31,13 +35,16 @@ namespace DAL
         #region c-tors
         private DALXML()
         {
-            try
+            try//bank download
             {
-                DownloadBank();//start bank download. in new thread?
+                worker = new BackgroundWorker();
+                worker.DoWork += Worker_DoWork;
+                worker.RunWorkerAsync();
+         
             }
             catch
             {
-                //throw? print error? retry?
+                
             }
 
             //open xml files (creates if don't exit) and load items
@@ -54,7 +61,7 @@ namespace DAL
 
            
         }
-
+        static DALXML() { }
         private void loadUnits()
         {
             try
@@ -73,13 +80,28 @@ namespace DAL
             }
         }
 
-        static DALXML() { }
+
         #endregion
         #endregion
 
         #region banks
         //save banks
-        public static volatile bool bankDownloaded = false;//flag if bank was downloaded
+        private void Worker_DoWork (object sender, DoWorkEventArgs e)
+        {
+           
+            object ob = e.Argument;
+            while (bankDownloaded == false)//continues until it downloads
+            {
+                try
+                {
+                    DownloadBank();
+                    Thread.Sleep(2000);//sleeps before trying
+                }
+                catch
+                { }
+            }
+            
+        }
         void DownloadBank()
         {
             #region downloadBank
@@ -92,18 +114,13 @@ namespace DAL
                 wc.DownloadFile(xmlServerPath, xmlLocalPath);
                 bankDownloaded = true;
             }
-            catch (Exception ex)
+            catch 
             {
-                try
-                {
+
                     string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
                     wc.DownloadFile(xmlServerPath, xmlLocalPath);
                     bankDownloaded = true;
-                }
-                catch (Exception exeption)
-                {
-                    //tries again if the connection didn't allow to download it
-                }
+                
             }
             finally
             {
@@ -127,10 +144,10 @@ namespace DAL
             return (from host in hostingUnits.Elements()
              select new HostingUnit()//saves to new hosting unit
              {
-                 HostingUnitKey = Convert.ToInt32(host.Element("Unit Key").Value),
-                 HostingUnitName = Convert.ToString(host.Element("Unit Name").Value),
-                 HostingUnitType = (Enums.HostingUnitType)(Enum.Parse(typeof(Enums.HostingUnitType), host.Element("Unit Type").Value)),
-                 AreaVacation = (Enums.Area)(Enum.Parse(typeof(Enums.Area), host.Element("Unit Type").Value)),
+                 HostingUnitKey = Convert.ToInt32(host.Element("Unit_Key").Value),
+                 HostingUnitName = Convert.ToString(host.Element("Unit_Name").Value),
+                 HostingUnitType = (Enums.HostingUnitType)(Enum.Parse(typeof(Enums.HostingUnitType), host.Element("Unit_Type").Value)),
+                 AreaVacation = (Enums.Area)(Enum.Parse(typeof(Enums.Area), host.Element("Unit_Type").Value)),
                  NumAdult = Convert.ToInt32(host.Element("Adults").Value),
                  NumChildren = Convert.ToInt32(host.Element("Children").Value),
                  Pool = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), host.Element("Pool").Value)),
@@ -141,20 +158,20 @@ namespace DAL
                  //host
                  Host =new Host()
                  {
-                     HostKey=Convert.ToInt32(host.Element("Host").Element("Host Key").Value),
-                     Name=host.Element("Host").Element("Host Name").Value,
-                     LastName=host.Element("Host").Element("Host Last").Value,
-                     Mail=new System.Net.Mail.MailAddress(host.Element("Host").Element("Email").Value, host.Element("Host Name").Value + host.Element("Host Last").Value),
+                     HostKey=Convert.ToInt32(host.Element("Host").Element("Host_Key").Value),
+                     Name=host.Element("Host").Element("Host_Name").Value,
+                     LastName=host.Element("Host").Element("Host_Last").Value,
+                     Mail=new System.Net.Mail.MailAddress(host.Element("Host").Element("Email").Value, host.Element("Host_Name").Value + host.Element("Host Last").Value),
                      CollectionClearance=Convert.ToBoolean(host.Element("Host").Element("Clearance").Value),
-                     //Bank=new BankAccount()//bank
-                     //{
-                     //    BankAcountNumber=Convert.ToInt32(host.Element("Host").Element("Bank").Element("Account Number").Value),
-                     //    BankName=host.Element("Host").Element("Bank").Element("Bank Name").Value,
-                     //    BankNumber=Convert.ToInt32(host.Element("Host").Element("Bank").Element("Bank Number").Value),
-                     //    BranchNumber=Convert.ToInt32(host.Element("Host").Element("Bank").Element("Branch Number").Value),
-                     //    BranchAddress= host.Element("Host").Element("Bank").Element("Branch Address").Value
-                     //    //add
-                     //}
+                     Bank = new BankAccount()//bank
+                     {
+                         BankAcountNumber = Convert.ToInt32(host.Element("Host").Element("Bank").Element("Account Number").Value),
+                         BankName = host.Element("Host").Element("Bank").Element("Bank Name").Value,
+                         BankNumber = Convert.ToInt32(host.Element("Host").Element("Bank").Element("Bank Number").Value),
+                         BranchNumber = Convert.ToInt32(host.Element("Host").Element("Bank").Element("Branch Number").Value),
+                         BranchAddress = host.Element("Host").Element("Bank").Element("Branch Address").Value
+                         //add
+                     }
                  }
              }).ToList();
                 //converts hostingunits to list
@@ -164,13 +181,13 @@ namespace DAL
             try
             {
                 return (from unit in hostingUnits.Elements()
-                        where Convert.ToInt32(unit.Element("Unit Key").Value) == unitKey//this unit
+                        where Convert.ToInt32(unit.Element("Unit_Key").Value) == unitKey//this unit
                         select new HostingUnit()//saves to new hosting unit
                         {
-                            HostingUnitKey = Convert.ToInt32(unit.Element("Unit Key").Value),
-                            HostingUnitName = Convert.ToString(unit.Element("Unit Name").Value),
+                            HostingUnitKey = Convert.ToInt32(unit.Element("Unit_Key").Value),
+                            HostingUnitName = Convert.ToString(unit.Element("Unit_Name").Value),
                             HostingUnitType = (Enums.HostingUnitType)(Enum.Parse(typeof(Enums.HostingUnitType), unit.Element("Unit Type").Value)),
-                            AreaVacation = (Enums.Area)(Enum.Parse(typeof(Enums.Area), unit.Element("Unit Type").Value)),
+                            AreaVacation = (Enums.Area)(Enum.Parse(typeof(Enums.Area), unit.Element("Unit_Type").Value)),
                             NumAdult = Convert.ToInt32(unit.Element("Adults").Value),
                             NumChildren = Convert.ToInt32(unit.Element("Children").Value),
                             Pool = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), unit.Element("Pool").Value)),
@@ -182,17 +199,17 @@ namespace DAL
                             Host = new Host()
                             {
                                 HostKey = Convert.ToInt32(unit.Element("Host").Element("Key").Value),
-                                Name = unit.Element("Host").Element("First Name").Value,
-                                LastName = unit.Element("Host").Element("Last Name").Value,
-                                Mail = new System.Net.Mail.MailAddress(unit.Element("Host").Element("Email").Value, unit.Element("Host Name").Value + unit.Element("Host Last").Value),
+                                Name = unit.Element("Host").Element("First_Name").Value,
+                                LastName = unit.Element("Host").Element("Last_Name").Value,
+                                Mail = new System.Net.Mail.MailAddress(unit.Element("Host").Element("Email").Value, unit.Element("Host_Name").Value + unit.Element("Host Last").Value),
                                 CollectionClearance = Convert.ToBoolean(unit.Element("Host").Element("Clearance").Value),
                                 Bank = new BankAccount()//bank
                                 {
-                                    BankAcountNumber = Convert.ToInt32(unit.Element("Host").Element("Bank").Element("Account Number").Value),
-                                    BankName = unit.Element("Host").Element("Bank").Element("Bank Name").Value,
-                                    BankNumber = Convert.ToInt32(unit.Element("Host").Element("Bank").Element("Bank Number").Value),
-                                    BranchNumber = Convert.ToInt32(unit.Element("Host").Element("Bank").Element("Branch Number").Value),
-                                    BranchAddress = unit.Element("Host").Element("Bank").Element("Branch Address").Value
+                                    BankAcountNumber = Convert.ToInt32(unit.Element("Host").Element("Bank").Element("Account_Number").Value),
+                                    BankName = unit.Element("Host").Element("Bank").Element("Bank_Name").Value,
+                                    BankNumber = Convert.ToInt32(unit.Element("Host").Element("Bank").Element("Bank_Number").Value),
+                                    BranchNumber = Convert.ToInt32(unit.Element("Host").Element("Bank").Element("Branch_Number").Value),
+                                    BranchAddress = unit.Element("Host").Element("Bank").Element("Branch_Address").Value
                                     //add branch city?
                                 }
                             }
@@ -317,14 +334,14 @@ namespace DAL
                     XElement clearance = new XElement("Clearance", unit.Host.CollectionClearance);
 
                     //bank
-                    XElement account = new XElement("Account_Number", unit.Host.Bank.BankAcountNumber);
-                    XElement bankName = new XElement("Bank_Name", unit.Host.Bank.BankName);
-                    XElement bankNumber = new XElement("Bank_Number", unit.Host.Bank.BankNumber);
-                    XElement branchNumber = new XElement("Branch_Number", unit.Host.Bank.BranchNumber);
-                    XElement branchAddress = new XElement("Branch_Address", unit.Host.Bank.BranchAddress);
-                    XElement bank = new XElement("Bank", account, bankName, bankNumber, branchNumber, branchAddress);
+                    //XElement account = new XElement("Account_Number", unit.Host.Bank.BankAcountNumber);
+                    //XElement bankName = new XElement("Bank_Name", unit.Host.Bank.BankName);
+                    //XElement bankNumber = new XElement("Bank_Number", unit.Host.Bank.BankNumber);
+                    //XElement branchNumber = new XElement("Branch_Number", unit.Host.Bank.BranchNumber);
+                    //XElement branchAddress = new XElement("Branch_Address", unit.Host.Bank.BranchAddress);
+                    //XElement bank = new XElement("Bank", account, bankName, bankNumber, branchNumber, branchAddress);
 
-                    XElement host = new XElement("Host", hostKey, hostFirst, hostLast, mail, clearance, bank);
+                    XElement host = new XElement("Host", hostKey, hostFirst, hostLast, mail, clearance/*, bank*/);
                     #endregion
                     hostingUnits.Add(new XElement("Unit", unitKey, unitName, unitType, unitArea, adults, child, pool, garden, j, meals, paid, host));
                 }
@@ -342,11 +359,7 @@ namespace DAL
         #region not implemented functions from IDAL
 
 
-        public void addGuest(GuestRequest guest)
-        {
-            throw new NotImplementedException();
-        }
-
+     
         public GuestRequest findGuest(int g1)
         {
             throw new NotImplementedException();
@@ -395,7 +408,7 @@ namespace DAL
         #endregion
         #region guestRequests
         #region add guest
-        public void addGuestRequest(GuestRequest guest)
+        public void addGuest(GuestRequest guest)
         {
             XElement guestName = new XElement("guest name", guest.Name);
             XElement guestLastName = new XElement("guest last name", guest.LastName);

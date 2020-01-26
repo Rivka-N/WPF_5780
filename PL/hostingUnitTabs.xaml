@@ -148,7 +148,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Name="tab_addOrders" Header="add order" Selector.Unselected="Tab_addOrders_Unselected" Height="22" Margin="-2.4,-2,-1.6,0" VerticalAlignment="Top">
+            <TabItem Name="tab_addOrders" Header="add order" Selector.Unselected="Tab_addOrders_Unselected"  VerticalAlignment="Top">
                 <Grid DataContext="{StaticResource guestRequestViewSource}" Background="Transparent">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
