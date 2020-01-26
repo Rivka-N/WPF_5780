@@ -97,8 +97,8 @@ namespace BE
         }
         public static T[,] Expand<T>(this T[] arr, int rows)
         {
-            int length = arr.GetLength(1)-1;//make sure cols and rows are set correctly
-            int columns = length / rows;
+            int length = arr.GetLength(0)+1;//make sure cols and rows are set correctly
+            int columns = length / rows+1;
             T[,] arrExpanded = new T[rows, columns];
             for (int j = 0; j < rows; j++)
             {

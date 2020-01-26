@@ -77,11 +77,10 @@ namespace DAL
             {
                 if (File.Exists(hostingUnitPath))//file exists
                 {
-                  FileStream  file = new FileStream(hostingUnitPath, FileMode.Open);
                     XmlSerializer x = new XmlSerializer(units.GetType()/*, new XmlRootAttribute("Units")*/);
                     FileStream fs = new FileStream(hostingUnitPath, FileMode.Open);
                     units = (List<HostingUnit>)x.Deserialize(fs);
-                    file.Close();//closes file
+                    fs.Close();//closes file
 
                 }
                 //hostingUnits = XElement.Load(guestRequestPath);//loads units into hostingUnits
