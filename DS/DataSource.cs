@@ -32,12 +32,6 @@ namespace DS
             guestRequests.Add(new GuestRequest() { GuestRequestKey = 10000118, Name = "galit", LastName = "levi", Mail = new System.Net.Mail.MailAddress("levi@gmail.com"), Status = Enums.OrderStatus.Mailed, Registration = new DateTime(2020, 03, 03), EntryDate = new DateTime(2020, 01, 02), ReleaseDate = new DateTime(2020, 01, 03), AreaVacation = Enums.Area.Center, TypeOfUnit = Enums.HostingUnitType.Hotel, NumAdult = 1, NumChildren = 1, Pool = Enums.Preference.No });
             #endregion
 
-            #region addBanks
-            banks.Add(new BankAccount() { BankNumber = 1, BankName = "leumi", BranchNumber = 10, BranchAddress = "sfat emet", BranchCity = "beit shemesh", BankAcountNumber = 11115 });
-            banks.Add(new BankAccount() { BankNumber = 2, BankName = "hapoalim", BranchNumber = 11, BranchAddress = "jafo", BranchCity = "jerusalem", BankAcountNumber = 11116 });
-            banks.Add(new BankAccount() { BankNumber = 3, BankName = "leumi", BranchNumber = 10, BranchAddress = "herav mebrisk", BranchCity = "beit shemesh", BankAcountNumber = 11117 });
-            #endregion
-
             #region addHosts
             hosts.Add(new Host() { HostKey = 11111111, Name = "yoni", LastName = "cohen", Mail = new System.Net.Mail.MailAddress("yoni@gmail.com"), Bank = banks[0], CollectionClearance = true });
             hosts.Add(new Host() { HostKey = 11111112, Name = "liel", LastName = "levi", Mail = new System.Net.Mail.MailAddress("liel@gmail.com"), Bank = banks[1], CollectionClearance = true });
@@ -55,10 +49,7 @@ namespace DS
             //orders.Add(new Order() { HostingUnitKey = 10000001, GuestRequestKey = 10000011, OrderKey = 10000111, OrderDate = new DateTime(2020, 01, 01), CreateDate= new DateTime(2020, 01, 01), Status=Enums.OrderStatus.Mailed });
             //orders.Add(new Order() { HostingUnitKey = 10000002, GuestRequestKey = 10000012, OrderKey = 10000112, OrderDate = new DateTime(2020, 01, 10), CreateDate=new DateTime(2020,01,01), Status=Enums.OrderStatus.Closed });
             //orders.Add(new Order() { HostingUnitKey = 10000003, GuestRequestKey = 10000013, OrderKey = 10000113, OrderDate = new DateTime(2020, 01, 15), CreateDate = new DateTime(2019, 08, 03), Status=Enums.OrderStatus.Closed });
-            #endregion
-
-           
-
+            #endregion 
             
         }
 

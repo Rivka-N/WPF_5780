@@ -89,29 +89,28 @@ namespace DAL
 
         #region banks
         //save banks
-        public static List<BankAccount> getAllBrancehs()
+        public List<BankAccount> getAllBranches()
         {
-            if (DS.DataSource.banks != null)
-                return DS.DataSource.banks;
-            //List<BankAccount> list = new List<BankAccount>();
 
-            XmlDocument doc = new XmlDocument();
-            doc.Load(@"snifim_dnld_he.xml");
-            XmlNode rootNode = doc.DocumentElement;
-            //DisplayNodes(rootNode);
+            
+                List<BankAccount> banks = new List<BankAccount>();
+                XmlDocument doc = new XmlDocument();
+                doc.Load(@"atm.xml");
+                XmlNode rootNode = doc.DocumentElement;
+                //DisplayNodes(rootNode);
 
-            XmlNodeList children = rootNode.ChildNodes;
-            foreach (XmlNode child in children)
-            {
-                BankAccount b = GetBranchByXmlNode(child);
-                if (b != null)
+                XmlNodeList children = rootNode.ChildNodes;
+                foreach (XmlNode child in children)
                 {
-                    DS.DataSource.banks.Add(b);
+                    BankAccount b = GetBranchByXmlNode(child);
+                    if (b != null)
+                    {
+                       banks.Add(b);
+                    }
                 }
-            }
-
-            return DS.DataSource.banks;
-        }
+            
+        return banks;
+    }
 
 
         private static BankAccount GetBranchByXmlNode(XmlNode node)
@@ -167,17 +166,18 @@ namespace DAL
                 catch
                 { }
             }
-            
+
+            getAllBranches();//saves branches to ds
         }
         void DownloadBank()
         {
             #region downloadBank
-            const string xmlLocalPath = @"atm.xml";
+             string xmlLocalPath = @"atm.xml";
             WebClient wc = new WebClient();
             try
             {
                 string xmlServerPath =
-               @"http://www.boi.org.il/he/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/atm.xml";
+               @"https://drive.google.com/file/d/1FpcqslnRD6naLHOjrCvKArCg3Ihkb9hR/view";
                 wc.DownloadFile(xmlServerPath, xmlLocalPath);
                 bankDownloaded = true;
             }
