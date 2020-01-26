@@ -459,15 +459,15 @@ namespace DAL
 
 
      
-        public GuestRequest findGuest(int g1)
-        {
-            throw new NotImplementedException();
-        }
+        //public GuestRequest findGuest(int g1)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public GuestRequest findGuest(GuestRequest g1)
-        {
-            throw new NotImplementedException();
-        }
+        //public GuestRequest findGuest(GuestRequest g1)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public List<GuestRequest> getRequests()
         {
@@ -509,7 +509,9 @@ namespace DAL
         #region add guest
         public void addGuest(GuestRequest guest)
         {
-           
+            try
+            {
+
                 XElement guestName = new XElement("guest name", guest.Name);
                 XElement guestLastName = new XElement("guest last name", guest.LastName);
                 XElement guestKey = new XElement("guest key", guest.GuestRequestKey);
@@ -526,14 +528,13 @@ namespace DAL
                 XElement entryDate = new XElement("entry date", guest.EntryDate);
                 XElement releaseDate = new XElement("release date", guest.ReleaseDate);
                 XElement registrationDate = new XElement("registration Date", guest.Registration);
-            try
-            {
+          
                 guestRequest.Add(new XElement("guest", guestLastName, guestName, guestKey, jacuzzi, pool, garden, mail,mael, numAdults, numChildren, status, area, type, entryDate, releaseDate,registrationDate));
                 guestRequest.Save(guestRequestPath);
             }
             catch
             {
-
+                throw new loadExceptionDAL("unable to save new guest to xml file");
             }
 
         }
@@ -610,6 +611,30 @@ namespace DAL
 
 
         }
+        #endregion
+
+        #region find guest
+        public GuestRequest findGuest(int id)
+        {
+            LoadData();
+            GuestRequest guest;
+            try
+            {
+                guest = (from p in guestRequest.Elements()
+                           where Convert.ToInt32(p.Element("guest").Value) == id
+                           select new Student()
+                           {
+                               Id = Convert.ToInt32(p.Element("id").Value),
+                               FirstName = p.Element("name").Element("firstName").Value,
+                               LastName = p.Element("name").Element("lastName").Value
+                           }).FirstOrDefault();
+            }
+            catch
+            {
+                student = null;
+            }
+            return student;
+        }
         #endregion
         #endregion
     }
