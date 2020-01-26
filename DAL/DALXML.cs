@@ -11,7 +11,8 @@ using BE;
 using System.Reflection;
 using System.Xml;
 using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Xml.Serialization;
+
 
 namespace DAL
 {
@@ -508,23 +509,32 @@ namespace DAL
         #region add guest
         public void addGuest(GuestRequest guest)
         {
-            XElement guestName = new XElement("guest name", guest.Name);
-            XElement guestLastName = new XElement("guest last name", guest.LastName);
-            XElement guestKey = new XElement("guest key", guest.GuestRequestKey);
-            XElement jacuzzi = new XElement("jacuzzi", guest.Jacuzzi);
-            XElement pool = new XElement("pool", guest.Pool);
-            XElement garden = new XElement("garden", guest.Garden);
-            XElement mail = new XElement("mail", guest.Mail);
-            XElement mael = new XElement("mael", guest.Meal);
-            XElement numAdults = new XElement("numAdults", guest.NumAdult);
-            XElement numChildren = new XElement("children", guest.NumChildren);
-            XElement status = new XElement("status", guest.Status);
-            XElement area = new XElement("area vacation", guest.AreaVacation);
-            XElement type = new XElement("type of unit", guest.TypeOfUnit);
-            XElement entryDate = new XElement("entry date", guest.EntryDate);
-            XElement releaseDate = new XElement("release date", guest.ReleaseDate);
-            XElement registrationDate = new XElement("registration Date", guest.Registration);
+           
+                XElement guestName = new XElement("guest name", guest.Name);
+                XElement guestLastName = new XElement("guest last name", guest.LastName);
+                XElement guestKey = new XElement("guest key", guest.GuestRequestKey);
+                XElement jacuzzi = new XElement("jacuzzi", guest.Jacuzzi);
+                XElement pool = new XElement("pool", guest.Pool);
+                XElement garden = new XElement("garden", guest.Garden);
+                XElement mail = new XElement("mail", guest.Mail);
+                XElement mael = new XElement("mael", guest.Meal);
+                XElement numAdults = new XElement("numAdults", guest.NumAdult);
+                XElement numChildren = new XElement("children", guest.NumChildren);
+                XElement status = new XElement("status", guest.Status);
+                XElement area = new XElement("area vacation", guest.AreaVacation);
+                XElement type = new XElement("type of unit", guest.TypeOfUnit);
+                XElement entryDate = new XElement("entry date", guest.EntryDate);
+                XElement releaseDate = new XElement("release date", guest.ReleaseDate);
+                XElement registrationDate = new XElement("registration Date", guest.Registration);
+            try
+            {
+                guestRequest.Add(new XElement("guest", guestLastName, guestName, guestKey, jacuzzi, pool, garden, mail,mael, numAdults, numChildren, status, area, type, entryDate, releaseDate,registrationDate));
+                guestRequest.Save(guestRequestPath);
+            }
+            catch
+            {
 
+            }
 
         }
         #endregion
