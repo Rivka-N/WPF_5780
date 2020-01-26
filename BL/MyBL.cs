@@ -131,68 +131,71 @@ namespace BL
                 #endregion
 
 
-            }
+            
            
 
         }
 
         public void sendGuestMail(HostingUnit unit, GuestRequest guest)//guest and hosting unit, sends mail to guest and creates order from details
         {
-            try
+            new Thread(() =>
             {
+                try
+                {
 
-                #region send mail
-                //add new background worker here
-                MailMessage mail = new MailMessage();
-                mail.To.Add(guest.Mail);
-                mail.From = new MailAddress("amazingvacations169@gmail.com", "Amazing Vacations");
-                mail.Subject = "Hosting Unit Offer";
-                //mail.Body = "Hello " + guest.Name + "\nWe found a " + guest.TypeOfUnit + " for you.\n Here are the details:\n" + unit.ToString() +
-                //    "\nPlease respond to " + unit.Host.Mail + " and finalize the details\n";//change the to string
+                    #region send mail
+                    //add new background worker here
+                    MailMessage mail = new MailMessage();
+                    mail.To.Add(guest.Mail);
+                    mail.From = new MailAddress("amazingvacations169@gmail.com", "Amazing Vacations");
+                    mail.Subject = "Hosting Unit Offer";
+                    //mail.Body = "Hello " + guest.Name + "\nWe found a " + guest.TypeOfUnit + " for you.\n Here are the details:\n" + unit.ToString() +
+                    //    "\nPlease respond to " + unit.Host.Mail + " and finalize the details\n";//change the to string
 
-                string filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Data\HTML.html");
+                    string filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Data\HTML.html");
 
-                string mailBody = File.ReadAllText(filePath);
-                mailBody = mailBody
-                    .Replace("@@name@@", guest.Name)
-                    .Replace("@@hostingType@@", (unit.HostingUnitType).ToString())
-                    .Replace("@@hostMail@@", (unit.Host.Mail).ToString());
-                                              
-                mail.Body = mailBody;
+                    string mailBody = File.ReadAllText(filePath);
+                    mailBody = mailBody
+                        .Replace("@@name@@", guest.Name)
+                        .Replace("@@hostingType@@", (unit.HostingUnitType).ToString())
+                        .Replace("@@hostMail@@", (unit.Host.Mail).ToString());
 
-                mail.IsBodyHtml = true;
+                    mail.Body = mailBody;
 
-        SmtpClient smtp = new SmtpClient();
-                smtp.UseDefaultCredentials = false;
-                smtp.Host = "smtp.gmail.com";
-                smtp.EnableSsl = true;
-                smtp.Credentials = new System.Net.NetworkCredential("amazingvacations169@gmail.com", "vacation169");
+                    mail.IsBodyHtml = true;
 
-                smtp.EnableSsl = true;
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.UseDefaultCredentials = false;
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.EnableSsl = true;
+                    smtp.Credentials = new System.Net.NetworkCredential("amazingvacations169@gmail.com", "vacation169");
+
+                    smtp.EnableSsl = true;
 
 
-                smtp.Send(mail);//send mail
+                    smtp.Send(mail);//send mail
 
-                #endregion
+                    #endregion
 
-                myDAL.changeStatus(guest, Enums.OrderStatus.Mailed);//mailed status
-                Order ord = new Order();//makes new order
-                ord.HostingUnitKey = unit.HostingUnitKey;
-                ord.GuestRequestKey = guest.GuestRequestKey;
-                ord.HostName = unit.Host.Name +" "+ unit.Host.LastName;
-                ord.GuestName = guest.Name + " "+guest.LastName;
-                ord.OrderDate = DateTime.Today;//sent mail today
-                ord.CreateDate = guest.Registration;//original request created
-                addOrder(ord);//send to the function which adds the order to the order list
+                    myDAL.changeStatus(guest, Enums.OrderStatus.Mailed);//mailed status
+                    Order ord = new Order();//makes new order
+                    ord.HostingUnitKey = unit.HostingUnitKey;
+                    ord.GuestRequestKey = guest.GuestRequestKey;
+                    ord.HostName = unit.Host.Name + " " + unit.Host.LastName;
+                    ord.GuestName = guest.Name + " " + guest.LastName;
+                    ord.OrderDate = DateTime.Today;//sent mail today
+                    ord.CreateDate = guest.Registration;//original request created
+                    addOrder(ord);//send to the function which adds the order to the order list
 
-            }
-            catch (Exception ex)
-            {
-                //try to send mail again with a few second wait?
-                throw new networkErrorExceptionBL("unable to send mail: " + ex.Message);
-            }
+                }
+                catch (Exception ex)
+                {
+                    //try to send mail again with a few second wait?
+                    throw new networkErrorExceptionBL("unable to send mail: " + ex.Message);
+                }
+
+            }).Start();
         }
-      
 
         public bool availableDates(HostingUnit unit, GuestRequest guest)//checks if guest request's dates are available in this unit
         {
