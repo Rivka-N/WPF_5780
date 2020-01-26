@@ -33,6 +33,7 @@ namespace BE
             this.mail = mail;
             this.bank = bank;
             this.CollectionClearance = CollectionClearance;
+            bank = new BankAccount();
         }
 
         public Host()
