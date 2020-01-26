@@ -27,8 +27,7 @@ namespace PL
             myBL = factoryBL.getBL();
             InitializeComponent();
             closeOpenMain = true;
-            dg_hostingUnitDataGrid.ItemsSource = myBL.getAllHostingUnits();
-
+            search();//finds units
             #region sets combobox
             var addArea = Enum.GetValues(typeof(Enums.Area));
             var addType = Enum.GetValues(typeof(Enums.MealType));
@@ -68,10 +67,15 @@ namespace PL
         private void AddUnit_Click(object sender, RoutedEventArgs e)//make sure unit gets added to list
         {
             new newHostingUnit().ShowDialog();
+            //updates list
+            search();//finds units
+
         }
 
         private void Pb_back_Click(object sender, RoutedEventArgs e)
         {
+            if (closeOpenMain!=false)//asks if should open main
+                new MainWindow().Show();//opens main
             Close();
         }
         #endregion

@@ -48,8 +48,7 @@ namespace BE
         #region ctors
         public HostingUnit()
         {
-            HostingUnitName = null;
-            HostingUnitKey = 0;
+            
             Diary = new bool[13, 32];
             this.hostingUnitType = Enums.HostingUnitType.Zimmer;
             this.AreaVacation = Enums.Area.Center;
@@ -97,9 +96,9 @@ namespace BE
         }
         public static T[,] Expand<T>(this T[] arr, int rows)
         {
-            int length = arr.GetLength(0)+1;//make sure cols and rows are set correctly
-            int columns = length / rows+1;
-            T[,] arrExpanded = new T[rows, columns];
+            int length = arr.GetLength(0);//make sure cols and rows are set correctly
+            int columns = (length / rows);
+            T[,] arrExpanded = new T[columns, rows];
             for (int j = 0; j < rows; j++)
             {
                 for (int i = 0; i < columns; i++)
