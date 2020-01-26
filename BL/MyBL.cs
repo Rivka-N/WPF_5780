@@ -11,10 +11,10 @@ using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Net;
-using System.Net.Mail;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
-
+using System.Reflection;
+using System.Net.Http;
 
 
 namespace BL
@@ -95,24 +95,36 @@ namespace BL
         }
         #endregion
         #region order
+
+       
+
         public void sendGuestMail(HostingUnit unit, GuestRequest guest)//guest and hosting unit, sends mail to guest and creates order from details
         {
             try
             {
-               
+
                 #region send mail
                 //add new background worker here
                 MailMessage mail = new MailMessage();
                 mail.To.Add(guest.Mail);
                 mail.From = new MailAddress("amazingvacations169@gmail.com", "Amazing Vacations");
                 mail.Subject = "Hosting Unit Offer";
-                mail.Body = "Hello " + guest.Name + "\nWe found a " + guest.TypeOfUnit + " for you.\n Here are the details:\n" + unit.ToString() +
-                    "\nPlease respond to " + unit.Host.Mail + " and finalize the details\n";//change the to string
+                //mail.Body = "Hello " + guest.Name + "\nWe found a " + guest.TypeOfUnit + " for you.\n Here are the details:\n" + unit.ToString() +
+                //    "\nPlease respond to " + unit.Host.Mail + " and finalize the details\n";//change the to string
 
-        
+                string filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Data\HTML.html");
 
-                
-                SmtpClient smtp = new SmtpClient();
+                string mailBody = File.ReadAllText(filePath);
+                mailBody = mailBody
+                    .Replace("@@name@@", guest.Name)
+                    .Replace("@@hostingType@@", (unit.HostingUnitType).ToString())
+                    .Replace("@@hostMail@@", (unit.Host.Mail).ToString());
+                                              
+                mail.Body = mailBody;
+
+                mail.IsBodyHtml = true;
+
+        SmtpClient smtp = new SmtpClient();
                 smtp.UseDefaultCredentials = false;
                 smtp.Host = "smtp.gmail.com";
                 smtp.EnableSsl = true;
