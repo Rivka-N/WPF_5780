@@ -259,9 +259,6 @@
     <Resource Include="Resources\images %283%29.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Data\guestRequestXML.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Data\HTML.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
