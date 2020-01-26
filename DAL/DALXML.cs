@@ -8,7 +8,7 @@ using System.Net;
 using System.Xml.Linq;
 using System.IO;
 using BE;
-
+using System.Reflection;
 
 namespace DAL
 {
@@ -18,8 +18,9 @@ namespace DAL
         private static readonly DALXML instance = new DALXML();
 
         //xelement
-        private string hostingUnitPath;//where it's saved
-        private string guestRequestPath = "/Data/guestRequestXML.xml";
+        private string hostingUnitPath = @"hostingUnitsXML.xml";//saves hostingUnit path
+        private string guestRequestPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Data\guestRequestXML.xml");
+
         private XElement hostingUnits;
         private XElement guestRequest;
 
@@ -58,12 +59,11 @@ namespace DAL
         {
             try
             {
-                hostingUnitPath = @"\hostingUnits.xml";//saves hostingUnit path
                 if (File.Exists(hostingUnitPath))//file exists
                     hostingUnits = XElement.Load(hostingUnitPath);//loads units into hostingUnits
                 else//creates it
                 {
-                    hostingUnits = new XElement("Unit Root");
+                    hostingUnits = new XElement("Units");
                     hostingUnits.Save(hostingUnitPath);//saves
                 }
             }
@@ -146,15 +146,15 @@ namespace DAL
                      LastName=host.Element("Host").Element("Host Last").Value,
                      Mail=new System.Net.Mail.MailAddress(host.Element("Host").Element("Email").Value, host.Element("Host Name").Value + host.Element("Host Last").Value),
                      CollectionClearance=Convert.ToBoolean(host.Element("Host").Element("Clearance").Value),
-                     Bank=new BankAccount()//bank
-                     {
-                         BankAcountNumber=Convert.ToInt32(host.Element("Host").Element("Bank").Element("Account Number").Value),
-                         BankName=host.Element("Host").Element("Bank").Element("Bank Name").Value,
-                         BankNumber=Convert.ToInt32(host.Element("Host").Element("Bank").Element("Bank Number").Value),
-                         BranchNumber=Convert.ToInt32(host.Element("Host").Element("Bank").Element("Branch Number").Value),
-                         BranchAddress= host.Element("Host").Element("Bank").Element("Branch Address").Value
-                         //add
-                     }
+                     //Bank=new BankAccount()//bank
+                     //{
+                     //    BankAcountNumber=Convert.ToInt32(host.Element("Host").Element("Bank").Element("Account Number").Value),
+                     //    BankName=host.Element("Host").Element("Bank").Element("Bank Name").Value,
+                     //    BankNumber=Convert.ToInt32(host.Element("Host").Element("Bank").Element("Bank Number").Value),
+                     //    BranchNumber=Convert.ToInt32(host.Element("Host").Element("Bank").Element("Branch Number").Value),
+                     //    BranchAddress= host.Element("Host").Element("Bank").Element("Branch Address").Value
+                     //    //add
+                     //}
                  }
              }).ToList();
                 //converts hostingunits to list
@@ -280,43 +280,54 @@ namespace DAL
             {
                 #region unit details
                 //checks if exists
-                var u= (from hostingUnit in hostingUnits.Elements()
-                where Convert.ToInt32(hostingUnit.Element("Unit Key").Value) == unit.HostingUnitKey
-                select hostingUnit).First();//first of units found with this key
-                if (u!=null)//unit already exists
-                   throw new duplicateErrorDAL();
-                //otherwise creates xelement of unit and adds it
-                XElement unitKey = new XElement("Unit Key", unit.HostingUnitKey);
-                XElement unitName = new XElement("Unit Name", unit.HostingUnitName);
-                XElement unitType = new XElement("Unit Name", unit.HostingUnitType);
-                XElement unitArea = new XElement("Unit Area", unit.AreaVacation);
-                XElement adults = new XElement("Adults", unit.NumAdult);
-                XElement child = new XElement("Children", unit.NumChildren);
-                XElement pool = new XElement("Pool", unit.Pool);
-                XElement garden = new XElement("Garden", unit.Garden);
-                XElement j = new XElement("Jacuzzi", unit.Jacuzzi);
-                XElement meals = new XElement("Meal", unit.Meal);
-                XElement paid = new XElement("Paid", unit.MoneyPaid);
-                #endregion
-                #region host and bank
-                //host
-                XElement hostKey = new XElement("Paid", unit.Host.HostKey);
-                XElement hostFirst = new XElement("Paid", unit.Host.Name);
-                XElement hostLast = new XElement("Paid", unit.Host.LastName);
-                XElement mail = new XElement("Paid", unit.Host.Mail.Address);
-                XElement clearance = new XElement("Clearance", unit.Host.CollectionClearance);
+                try
+                {
+                    var u = (from hostingUnit in hostingUnits.Elements()
+                             where Convert.ToInt32(hostingUnit.Element("Unit Key").Value) == unit.HostingUnitKey
+                             select hostingUnit).First();//first of units found with this key
+                    if (u != null)//unit already exists
+                        throw new duplicateErrorDAL();
+                }
+                catch (Exception ex)
+                {
+                    if (!(ex is InvalidOperationException))
+                        throw;
+                }
+                finally
+                {
+                    //otherwise creates xelement of unit and adds it
+                    XElement unitKey = new XElement("Unit_Key", unit.HostingUnitKey);
+                    XElement unitName = new XElement("Unit_Name", unit.HostingUnitName);
+                    XElement unitType = new XElement("Unit_Name", unit.HostingUnitType);
+                    XElement unitArea = new XElement("Unit_Area", unit.AreaVacation);
+                    XElement adults = new XElement("Adults", unit.NumAdult);
+                    XElement child = new XElement("Children", unit.NumChildren);
+                    XElement pool = new XElement("Pool", unit.Pool);
+                    XElement garden = new XElement("Garden", unit.Garden);
+                    XElement j = new XElement("Jacuzzi", unit.Jacuzzi);
+                    XElement meals = new XElement("Meal", unit.Meal);
+                    XElement paid = new XElement("Paid", unit.MoneyPaid);
+                    #endregion
+                    #region host and bank
+                    //host
+                    XElement hostKey = new XElement("Paid", unit.Host.HostKey);
+                    XElement hostFirst = new XElement("Paid", unit.Host.Name);
+                    XElement hostLast = new XElement("Paid", unit.Host.LastName);
+                    XElement mail = new XElement("Paid", unit.Host.Mail.Address);
+                    XElement clearance = new XElement("Clearance", unit.Host.CollectionClearance);
 
-                //bank
-                XElement account = new XElement("Account Number", unit.Host.Bank.BankAcountNumber);
-                XElement bankName = new XElement("Bank Name", unit.Host.Bank.BankName);
-                XElement bankNumber = new XElement("Bank Number", unit.Host.Bank.BankNumber);
-                XElement branchNumber = new XElement("Branch Number", unit.Host.Bank.BranchNumber);
-                XElement branchAddress = new XElement("Branch Address", unit.Host.Bank.BranchAddress);
-                XElement bank = new XElement("Bank", account, bankName, bankNumber, branchNumber, branchAddress);
+                    //bank
+                    XElement account = new XElement("Account_Number", unit.Host.Bank.BankAcountNumber);
+                    XElement bankName = new XElement("Bank_Name", unit.Host.Bank.BankName);
+                    XElement bankNumber = new XElement("Bank_Number", unit.Host.Bank.BankNumber);
+                    XElement branchNumber = new XElement("Branch_Number", unit.Host.Bank.BranchNumber);
+                    XElement branchAddress = new XElement("Branch_Address", unit.Host.Bank.BranchAddress);
+                    XElement bank = new XElement("Bank", account, bankName, bankNumber, branchNumber, branchAddress);
 
-                XElement host = new XElement("Host", hostKey, hostFirst, hostLast, mail, clearance, bank);
-                #endregion
-                hostingUnits.Add(new XElement("Hosting Unit", unitKey, unitName, unitType, unitArea, adults, child, pool, garden, j, meals, paid, host));
+                    XElement host = new XElement("Host", hostKey, hostFirst, hostLast, mail, clearance, bank);
+                    #endregion
+                    hostingUnits.Add(new XElement("Unit", unitKey, unitName, unitType, unitArea, adults, child, pool, garden, j, meals, paid, host));
+                }
             }
             catch(Exception ex)
             {
@@ -422,7 +433,8 @@ namespace DAL
         public List<GuestRequest> GetguestRequestList()
         {
 
-            LoadData();            List<GuestRequest> guest;
+            LoadData();
+            List<GuestRequest> guest;
             try
             {
 
@@ -451,7 +463,8 @@ namespace DAL
             catch
             {
                 guest = null;
-            }
+            }
+
             return guest;
         }
         #endregion
@@ -461,10 +474,12 @@ namespace DAL
             
                 XElement guestElement = (from p in guestRequest.Elements()
                                            where Convert.ToInt32(p.Element("guest key").Value) == guest.GuestRequestKey
-                                           select p).FirstOrDefault();            guestElement.Element("status").Value = guest.Status.ToString();
+                                           select p).FirstOrDefault();
+            guestElement.Element("status").Value = guest.Status.ToString();
            try
             {
-                guestRequest.Save(guestRequestPath);
+                guestRequest.Save(guestRequestPath);
+
             }
             catch
             {
