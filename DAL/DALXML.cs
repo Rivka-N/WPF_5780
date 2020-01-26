@@ -9,10 +9,13 @@ using System.Xml.Linq;
 using System.IO;
 using BE;
 using System.Reflection;
+using System.Xml;
 
 namespace DAL
 {
-    class DALXML : IDAL
+
+
+        class DALXML : IDAL
     {
         #region Singleton
         private static readonly DALXML instance = new DALXML();
@@ -59,12 +62,12 @@ namespace DAL
         {
             try
             {
-                if (File.Exists(hostingUnitPath))//file exists
-                    hostingUnits = XElement.Load(hostingUnitPath);//loads units into hostingUnits
+                if (File.Exists(guestRequestPath))//file exists
+                    hostingUnits = XElement.Load(guestRequestPath);//loads units into hostingUnits
                 else//creates it
                 {
                     hostingUnits = new XElement("Units");
-                    hostingUnits.Save(hostingUnitPath);//saves
+                    hostingUnits.Save(guestRequestPath);//saves
                 }
             }
             catch
@@ -79,6 +82,70 @@ namespace DAL
 
         #region banks
         //save banks
+        public static List<BankAccount> getAllBrancehs()
+        {
+            if (DS.DataSource.banks != null)
+                return DS.DataSource.banks;
+            //List<BankAccount> list = new List<BankAccount>();
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load(@"snifim_dnld_he.xml");
+            XmlNode rootNode = doc.DocumentElement;
+            //DisplayNodes(rootNode);
+
+            XmlNodeList children = rootNode.ChildNodes;
+            foreach (XmlNode child in children)
+            {
+                BankAccount b = GetBranchByXmlNode(child);
+                if (b != null)
+                {
+                    DS.DataSource.banks.Add(b);
+                }
+            }
+
+            return DS.DataSource.banks;
+        }
+
+
+        private static BankAccount GetBranchByXmlNode(XmlNode node)
+        {
+            if (node.Name != "BRANCH") return null;
+            BankAccount branch = new BankAccount();
+            branch.BankAcountNumber = -1;
+
+            XmlNodeList children = node.ChildNodes;
+
+            foreach (XmlNode child in children)
+            {
+                switch (child.Name)
+                {
+                    case "Bank_Code":
+                        branch.BankNumber = int.Parse(child.InnerText);
+                        break;
+                    case "Bank_Name":
+                        branch.BankName = child.InnerText;
+                        break;
+                    case "Branch_Code":
+                        branch.BranchNumber = int.Parse(child.InnerText);
+                        break;
+                    case "Branch_Address":
+                        branch.BranchAddress = child.InnerText;
+                        break;
+                    case "City":
+                        branch.BranchCity = child.InnerText;
+                        break;
+
+                }
+
+            }
+
+            if (branch.BranchNumber > 0)
+                return branch;
+
+            return null;
+
+        }
+
         public static volatile bool bankDownloaded = false;//flag if bank was downloaded
         void DownloadBank()
         {

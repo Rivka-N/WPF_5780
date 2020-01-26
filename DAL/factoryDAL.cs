@@ -9,9 +9,9 @@ namespace DAL
     public class factoryDAL
     {
         public static IDAL getDAL()
-        { 
-            //return DALList.Instance;
-            return DALXML.Instance;
+        {
+            return DALList.Instance;
+            //return DALXML.Instance;
            
         }
     }
