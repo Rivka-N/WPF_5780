@@ -177,7 +177,7 @@ namespace DAL
             try
             {
                 string xmlServerPath =
-               @"https://drive.google.com/file/d/1FpcqslnRD6naLHOjrCvKArCg3Ihkb9hR/view";
+               @"https://www.boi.org.il/en/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/snifim_en.xml";
                 wc.DownloadFile(xmlServerPath, xmlLocalPath);
                 bankDownloaded = true;
             }
