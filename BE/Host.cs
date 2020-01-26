@@ -42,12 +42,7 @@ namespace BE
 
         public Host()
         {
-            hostKey = 0;
-            CollectionClearance = false;
-            mail = "";
-            bank = null;
-            name = "";
-            lastName = "";
+            
             
         }
         #endregion
