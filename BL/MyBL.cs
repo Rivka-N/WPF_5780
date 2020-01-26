@@ -15,7 +15,7 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Reflection;
 using System.Net.Http;
-
+using System.Threading;
 
 namespace BL
 {
@@ -88,15 +88,53 @@ namespace BL
 
             return listOfUnits;
         }
-        public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with guest details to the host
-        {
-            //sends mail to the host
 
-        }
         #endregion
         #region order
 
-       
+        public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with guest details to the host
+        {
+            //sends mail to the hosts
+
+           
+                #region send mail to hosts
+                new Thread(() =>
+                {
+                    try
+                    {
+                        MailMessage mail = new MailMessage();
+                        foreach (HostingUnit hosting in Offers)
+                        {
+                            mail.To.Add(hosting.Host.Mail);
+
+                        }
+                        mail.From = new MailAddress("amazingvacations169@gmail.com", "Amazing Vacations");
+                        mail.Subject = "Guest Request";
+                        mail.Body = "Hello! " + guest.Name + "\nis intresting in your hostingUnit, for more datails please log in yo your personal area and connect with your guest";
+                        SmtpClient smtp = new SmtpClient();
+                        smtp.UseDefaultCredentials = false;
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.EnableSsl = true;
+                        smtp.Credentials = new System.Net.NetworkCredential("amazingvacations169@gmail.com", "vacation169");
+
+                        smtp.EnableSsl = true;
+
+
+                        smtp.Send(mail);//send mail
+                    }
+                    catch (Exception ex)
+                    {
+                        //try to send mail again with a few second wait?
+                        throw new networkErrorExceptionBL("unable to send mail: " + ex.Message);
+                    }
+                }).Start();
+                #endregion
+
+
+            }
+           
+
+        }
 
         public void sendGuestMail(HostingUnit unit, GuestRequest guest)//guest and hosting unit, sends mail to guest and creates order from details
         {
