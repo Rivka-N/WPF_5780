@@ -10,8 +10,8 @@ namespace DAL
     {
         public static IDAL getDAL()
         {
-            return DALList.Instance;
-            //return DALXML.Instance;
+            //return DALList.Instance;
+            return DALXML.Instance;
            
         }
     }

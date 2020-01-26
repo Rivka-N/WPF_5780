@@ -153,7 +153,6 @@ namespace DAL
 
         }
 
-        public static volatile bool bankDownloaded = false;//flag if bank was downloaded
         private void Worker_DoWork (object sender, DoWorkEventArgs e)
         {
            
