@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TabItem Name="ti_guestRequests" Header="Guests">
-                <Frame Source="Owner_GuestRequests.xaml" />
+                <Frame Source="Owner_GuestRequests.xaml" Background="Transparent"/>
             </TabItem>
             <TabItem Name="ti_hostingUnits" Header="Hosting Units">
                 <Frame Source="Owner_HostingUnits.xaml"/>

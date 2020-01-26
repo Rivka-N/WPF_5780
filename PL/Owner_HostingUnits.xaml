@@ -30,7 +30,12 @@
 
         </DockPanel>
         <Grid Grid.Row="1">
-        <DataGrid x:Name="dg_hostingUnitDataGrid" Grid.Row="2" AlternatingRowBackground="Pink" Background="Transparent"
+            <TextBlock Grid.Row="1" Name="tb_unit_error" HorizontalAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed" VerticalAlignment="Center" FontSize="40" Text="No matching units" Foreground="White">
+                <TextBlock.Effect>
+                    <DropShadowEffect/>
+                </TextBlock.Effect>
+            </TextBlock>
+            <DataGrid x:Name="dg_hostingUnitDataGrid" Grid.Row="2" AlternatingRowBackground="Pink" Background="Transparent"
                   RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
                     <DataGridTextColumn x:Name="hostKeyColumn" Binding="{Binding Host.HostKey}" Header="Host Id" Width="*" MinWidth="100" IsReadOnly="True"/>

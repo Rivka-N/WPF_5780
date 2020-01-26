@@ -43,6 +43,11 @@
             <Button Name="pb_resetDate" Content="Reset" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="10" Grid.Row="1" Margin="2" Click="Button_Click"/>
 
         </Grid>
+        <TextBlock Grid.Row="1" Name="tb_req_error" HorizontalAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed" VerticalAlignment="Center" FontSize="40" Text="No matching requests" Foreground="White">
+            <TextBlock.Effect>
+                <DropShadowEffect/>
+            </TextBlock.Effect>
+        </TextBlock>
         <DataGrid x:Name="ds_guestRequestDataGrid" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible"
                   AlternatingRowBackground="AliceBlue" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" Background="Transparent" AutoGenerateColumns="False" IsReadOnly="True" Height="auto" Padding="10" Grid.Row="1">
             <DataGrid.Columns>

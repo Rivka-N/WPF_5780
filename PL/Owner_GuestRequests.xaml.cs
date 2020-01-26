@@ -28,8 +28,7 @@ namespace PL
             myBL = factoryBL.getBL();
             InitializeComponent();
             myRequests = new List<GuestRequest>();
-            myRequests = myBL.getRequests();//sets binding data to requests
-            ds_guestRequestDataGrid.ItemsSource = myRequests;//binds data
+            search();//shows guest requests
             var add = Enum.GetValues(typeof(Enums.OrderStatus));
             cb_status.Items.Add("All");
             foreach (Enums.OrderStatus item in add)
@@ -46,12 +45,8 @@ namespace PL
         }
 
         #region searches
-        private void Cb_status_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-                Tb_SearchTextBox_TextChanged(sender, null);
-        }
 
-        private void Tb_SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void search()//searches requests
         {
             try
             {
@@ -72,23 +67,42 @@ namespace PL
                 }
                 ds_guestRequestDataGrid.ItemsSource = myRequests;
                 tb_SearchTextBox.BorderBrush = Brushes.Black;
+                if (myRequests.Count==0)//shows error textbox
+                {
+                    tb_req_error.Visibility = Visibility.Visible;
+                    ds_guestRequestDataGrid.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    tb_req_error.Visibility = Visibility.Collapsed;
+                    ds_guestRequestDataGrid.Visibility = Visibility.Visible;
+                }
             }
             catch
             {
                 MessageBox.Show("invalid query");
                 tb_SearchTextBox.BorderBrush = Brushes.Red;
-               
+
             }
+        }
+        private void Cb_status_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            search();
+        }
+
+        private void Tb_SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            search();
         }
         private void Dp_requestDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            Tb_SearchTextBox_TextChanged(sender, null);//sends to textbox text changed
+            search();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             dp_requestDate.SelectedDate = null;
-            Tb_SearchTextBox_TextChanged(sender, null);
+            search();
 
         }
         #endregion

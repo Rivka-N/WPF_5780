@@ -291,7 +291,8 @@ namespace BL
         }
 
         public List<HostingUnit> searchUnits(string text, Enums.FunctionSender fs=0)//returns all units that this text was found in
-        {
+        {   if (text == null || text == "")//no string
+                return getAllHostingUnits();//returns all units
             switch (fs)
             {
                 default://returns search through all units details
@@ -467,21 +468,23 @@ namespace BL
             switch (owner)//sets conditions based on who sent to function and what conditions it wants to be checked
             {
                 case Enums.FunctionSender.Owner:
-
+                    if (text!=null && text!="")//text was entered
                   condition = ord => ord.Status == status
                   && (/*(ord.HostName != null && ord.GuestName != null && ord.HostName.Contains(text) || ord.GuestName.Contains(text))//checks first that guest and host name exist
                   || */ ord.GuestRequestKey.ToString().Contains(text) || ord.HostingUnitKey.ToString().Contains(text)
                   || ord.OrderKey.ToString().Contains(text));//sets function with conditions to check
                     // sees if date selected and sets function accordingly
-                    
+                    else condition = ord => ord.Status == status;
                     break;
 
                 default:
-
-                    condition  = ord => ord.Status == status
+                    if (text != null && text != "")//text was entered
+                        condition = ord => ord.Status == status
                     && ((ord.HostName != null && ord.GuestName != null && ord.HostName.Contains(text) || ord.GuestName.Contains(text))//checks first that guest and host name exist
                     || ord.GuestRequestKey.ToString().Contains(text) || ord.HostingUnitKey.ToString().Contains(text)
                     || ord.OrderKey.ToString().Contains(text));//sets function with conditions to check
+                    else
+                        condition = ord => ord.Status == status;
                     break;
                   
                     
@@ -492,6 +495,7 @@ namespace BL
             }
             else//no date selected
                 dateCondition = ord => condition(ord);
+
             ordersToReturn =
                      from ord in orders
                      let p = dateCondition(ord) //checks that all conditions apply
