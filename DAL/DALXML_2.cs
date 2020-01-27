@@ -27,14 +27,14 @@ namespace DAL
                     XmlSerializer x = new XmlSerializer(orders.GetType());
                     FileStream fs = new FileStream(orderPath, FileMode.Open);
                     orders = (List<Order>)x.Deserialize(fs);
-                    fs.Close();//closes file
-
+                    fs.Close();
                 }
             }
             catch
             {
                 throw new loadExceptionDAL("Unable to load Orders");
             }
+            
         }
 
         private void loadUnits()
@@ -46,9 +46,18 @@ namespace DAL
 
                     XmlSerializer x = new XmlSerializer(units.GetType());
                     FileStream fs = new FileStream(hostingUnitPath, FileMode.Open);
-                    units = (System.Collections.Generic.List<HostingUnit>)x.Deserialize(fs);
-                    fs.Close();//closes file
-
+                    try
+                    {
+                        units = (System.Collections.Generic.List<HostingUnit>)x.Deserialize(fs);
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                    finally
+                    {
+                        fs.Close();//closes file
+                    }
                 }
 
             }
@@ -127,11 +136,15 @@ namespace DAL
             }
             catch
             {
-                file.Close();//closes file
                 throw new loadExceptionDAL("unable to delete orders");
             
         }
-    }
+            finally
+            {
+                file.Close();//closes file
+
+            }
+        }
         public void changeOrderStatus(Func<Order, bool> p1, Enums.OrderStatus status)
         {
             var deleting = orders.Where(ord => p1(ord))
@@ -255,7 +268,9 @@ namespace DAL
                 try
                 {
                     DownloadBank();
+                    new XmlDocument().Load(@"atm.xml");//checks to see if there's an error and file wasn't downloaded correctly
                     Thread.Sleep(2000);//sleeps before trying
+
                 }
                 catch
                 { }

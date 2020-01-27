@@ -65,6 +65,7 @@ namespace PL
             cb_jacuzziCheckBox.IsChecked = unit.Jacuzzi == Enums.Preference.Yes ? true : false;
 
             //bank init
+            dg_bank.DataContext = unit.Host;
             bankSource = myBL.groupBranchesByBank();//branches grouped by bank
             initBank();//sets banks and comboboxes
         }
@@ -758,7 +759,7 @@ namespace PL
 
         #endregion
         #region bank
-        private void initBank()
+        private void initBank()//binding between bank and bank source
         {
             foreach (var bank in bankSource)
             {
@@ -766,12 +767,20 @@ namespace PL
                 cb_bankNumberTextBox.Items.Add(bank.First().BankNumber.ToString());
             }
             //give branches of bank
-            foreach (var bank in bankSource)
+            int curBank = -1;
+            foreach (var bank in bankSource)//sets based on index of this number
             {
-
+                if (bank.Key == unit.Host.Bank.BankNumber)
+                    break;
+                curBank++;
             }
-                cb_bankName.SelectedIndex = bankSource.
-                bankSource.Find(b=>unit.Host.Bank.BankNumber==b.First().BankNumber)
+            cb_bankName.SelectedIndex = curBank;
+            foreach (var bank in bankSource.ElementAt(curBank))
+            {
+                cb_branchAddr.Items.Add(bank.BranchCity + " : " + bank.BranchAddress);//adds key of each group to list
+                cb_branchNumber.Items.Add(bank.BranchNumber.ToString());
+            }
+
         }
         private void BankAcountNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

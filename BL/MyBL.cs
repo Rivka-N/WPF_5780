@@ -559,17 +559,24 @@ namespace BL
 
         public List<GuestRequest> getReleventRequests(HostingUnit unit)//finds requests relevent for this unit
         {
-            var orders = getOrders(ord => unit.HostingUnitKey == ord.HostingUnitKey && ord.Status != Enums.OrderStatus.Closed);//finds requests for this unit that aren't closed
-            List<GuestRequest> relevent = new List<GuestRequest>();//makes list to keep guest requests to return 
-            var releventQuery= from g in getRequests()
-                         where matchesUnit(unit, g)
-                         select g;//selects guests the ones that can fit in unit
-            relevent = releventQuery.ToList();//saves as list
-            foreach (Order o in orders)//goes over mailed orders found
-                if (relevent.Where(g => g.GuestRequestKey == o.GuestRequestKey).Select(g => g) == null)//if didn't find other requests with the same guest request key
-                    relevent.Add(getRequests(req => req.GuestRequestKey == o.GuestRequestKey)[0]);//adds first of list of guests for this order found (it should only find one)
-            return relevent;
+            try
+            {
+                var orders = getOrders(ord => unit.HostingUnitKey == ord.HostingUnitKey && ord.Status != Enums.OrderStatus.Closed);//finds requests for this unit that aren't closed
+                List<GuestRequest> relevent = new List<GuestRequest>();//makes list to keep guest requests to return 
 
+                var releventQuery = from g in getRequests()
+                                    where matchesUnit(unit, g)
+                                    select g;//selects guests the ones that can fit in unit
+                relevent = releventQuery.ToList();//saves as list
+                foreach (Order o in orders)//goes over mailed orders found
+                    if (relevent.Where(g => g.GuestRequestKey == o.GuestRequestKey).Select(g => g) == null)//if didn't find other requests with the same guest request key
+                        relevent.Add(getRequests(req => req.GuestRequestKey == o.GuestRequestKey)[0]);//adds first of list of guests for this order found (it should only find one)
+                return relevent;
+            }
+            catch
+            {
+                return null;//none found
+            }
         }
 
 
@@ -594,6 +601,7 @@ namespace BL
         }
         public List<GuestRequest> getRequests(Func<GuestRequest, bool> predicate)
         {
+            
             var requests = from guest in myDAL.getRequests()
                            let p = predicate(guest)
                            where p
@@ -604,6 +612,8 @@ namespace BL
 
         public List<Order> getOrders(Func<Order, bool> predicate)
         {
+            if (myDAL.getAllOrders()==null)
+                return null;
             var ords = from ord in myDAL.getAllOrders()
                        let p = predicate(ord)
                        where p

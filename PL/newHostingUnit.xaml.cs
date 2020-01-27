@@ -276,14 +276,12 @@ namespace PL
                 }
                 else
                 {
-                    if (isValidID(cb_phoneTextBox.Text))//if it's a valid id
-                    {
-                        hosting.Host.HostKey = text;
-                        cb_phoneTextBox.BorderBrush = Brushes.Gray;
-                        return;
-                    }
-
+                    hosting.Host.HostKey = text;
+                    cb_phoneTextBox.BorderBrush = Brushes.Gray;
+                    return;
                 }
+
+                
             }//if it's not valid
                 cb_phoneTextBox.BorderBrush = Brushes.Red;
                 cb_phoneTextBox.Text = "";
