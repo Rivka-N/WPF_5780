@@ -34,7 +34,6 @@ namespace DAL
             {
                 throw new loadExceptionDAL("Unable to load Orders");
             }
-            
         }
 
         private void loadUnits()
@@ -52,20 +51,14 @@ namespace DAL
                     }
                     catch
                     {
-                        throw;
+                        throw new loadExceptionDAL("Unable to load Hosting Units");
                     }
                     finally
                     {
                         fs.Close();//closes file
                     }
-                }
+                
 
-            }
-            catch
-            {
-                throw new loadExceptionDAL("Unable to load Hosting Units");
-
-            }
         }
         private void loadGuests()//guest file load
         {
@@ -100,6 +93,7 @@ namespace DAL
                 else
                 {
                     configuration = XElement.Load(configPath);//loads existing configs
+                    configuration.Save(configPath);
                 }
             }
             catch
@@ -122,7 +116,7 @@ namespace DAL
         }
         
         #endregion
-        #region orders
+        #region orders 
         public void deleteOrders(Func<Order, bool> p)
         {
             FileStream file = new FileStream(orderPath, FileMode.OpenOrCreate);//opens file
@@ -142,16 +136,17 @@ namespace DAL
             finally
             {
                 file.Close();//closes file
-
-            }
+                throw new loadExceptionDAL("unable to delete orders");
+            
         }
+    }
         public void changeOrderStatus(Func<Order, bool> p1, Enums.OrderStatus status)
-        {
+                     public void changeOrderStatus(Func<Order, bool> p1, Enums.OrderStatus status)
+                {
             var deleting = orders.Where(ord => p1(ord))
                 .Select(ord => {ord.Status = status; return ord; }).ToList();
             
-        }
-
+        } 
         #region get list of orders
         public List<Order> getAllOrders()//returns all orders
         {
@@ -190,7 +185,7 @@ namespace DAL
         }
         #endregion
 
-        #endregion
+        #endregion    //finish need to check
 
         #region banks
         private List<BankAccount> banks = null;

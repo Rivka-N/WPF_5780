@@ -15,7 +15,7 @@ using System.Xml.Serialization;
 
 
 namespace DAL
-{
+{ 
 
     partial class DALXML : IDAL
     {
@@ -103,85 +103,17 @@ namespace DAL
         public List<HostingUnit> getAllHostingUnits()//xelement to hosting unit
                                                      //need to add convert dia
         {
-
+            
             return units;
-            //converts xelement with units to list and returns it
-            //return (from host in hostingUnits.Elements()
-            // select new HostingUnit()//saves to new hosting unit
-            // {
-            //     HostingUnitKey = Convert.ToInt32(host.Element("Unit_Key").Value),
-            //     HostingUnitName = Convert.ToString(host.Element("Unit_Name").Value),
-            //     HostingUnitType = (Enums.HostingUnitType)(Enum.Parse(typeof(Enums.HostingUnitType), host.Element("Unit_Type").Value)),
-            //     AreaVacation = (Enums.Area)(Enum.Parse(typeof(Enums.Area), host.Element("Unit_Type").Value)),
-            //     NumAdult = Convert.ToInt32(host.Element("Adults").Value),
-            //     NumChildren = Convert.ToInt32(host.Element("Children").Value),
-            //     Pool = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), host.Element("Pool").Value)),
-            //     Garden = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), host.Element("Garden").Value)),
-            //     Jacuzzi = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), host.Element("Jacuzzi").Value)),
-            //     Meal = (Enums.MealType)(Enum.Parse(typeof(Enums.MealType), host.Element("Meal").Value)),
-            //     MoneyPaid=Convert.ToInt32(host.Element("Paid").Value),
-            //     #region diary
-
-            //#endregion
-            //      //host
-            //        Host = new Host()
-            //     {
-            //         HostKey=Convert.ToInt32(host.Element("Host").Element("Host_Key").Value),
-            //         Name=host.Element("Host").Element("Host_Name").Value,
-            //         LastName=host.Element("Host").Element("Host_Last").Value,
-            //         Mail=new System.Net.Mail.MailAddress(host.Element("Host").Element("Email").Value, host.Element("Host_Name").Value + host.Element("Host Last").Value),
-            //         CollectionClearance=Convert.ToBoolean(host.Element("Host").Element("Clearance").Value),
-            //         Bank = new BankAccount()//bank
-            //         {
-            //             BankAcountNumber = Convert.ToInt32(host.Element("Host").Element("Bank").Element("Account Number").Value),
-            //             BankName = host.Element("Host").Element("Bank").Element("Bank Name").Value,
-            //             BankNumber = Convert.ToInt32(host.Element("Host").Element("Bank").Element("Bank Number").Value),
-            //             BranchNumber = Convert.ToInt32(host.Element("Host").Element("Bank").Element("Branch Number").Value),
-            //             BranchAddress = host.Element("Host").Element("Bank").Element("Branch Address").Value
-            //             //add
-            //         }
-            //     }
-            // }).ToList();
-            //converts hostingunits to list
+          
         }
         public HostingUnit findUnit(int unitKey)//returns unit with this unit key
         {
             try
             {
-                return (from unit in hostingUnits.Elements()
-                        where Convert.ToInt32(unit.Element("Unit_Key").Value) == unitKey//this unit
-                        select new HostingUnit()//saves to new hosting unit
-                        {
-                            HostingUnitKey = Convert.ToInt32(unit.Element("Unit_Key").Value),
-                            HostingUnitName = Convert.ToString(unit.Element("Unit_Name").Value),
-                            HostingUnitType = (Enums.HostingUnitType)(Enum.Parse(typeof(Enums.HostingUnitType), unit.Element("Unit Type").Value)),
-                            AreaVacation = (Enums.Area)(Enum.Parse(typeof(Enums.Area), unit.Element("Unit_Type").Value)),
-                            NumAdult = Convert.ToInt32(unit.Element("Adults").Value),
-                            NumChildren = Convert.ToInt32(unit.Element("Children").Value),
-                            Pool = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), unit.Element("Pool").Value)),
-                            Garden = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), unit.Element("Garden").Value)),
-                            Jacuzzi = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), unit.Element("Jacuzzi").Value)),
-                            Meal = (Enums.MealType)(Enum.Parse(typeof(Enums.MealType), unit.Element("Meal").Value)),
-                            MoneyPaid = Convert.ToInt32(unit.Element("Paid").Value),
-                            //host
-                            Host = new Host()
-                            {
-                                HostKey = Convert.ToInt32(unit.Element("Host").Element("Key").Value),
-                                Name = unit.Element("Host").Element("First_Name").Value,
-                                LastName = unit.Element("Host").Element("Last_Name").Value,
-                                Mail = new System.Net.Mail.MailAddress(unit.Element("Host").Element("Email").Value, unit.Element("Host_Name").Value + unit.Element("Host Last").Value),
-                                CollectionClearance = Convert.ToBoolean(unit.Element("Host").Element("Clearance").Value),
-                                Bank = new BankAccount()//bank
-                                {
-                                    BankAcountNumber = Convert.ToInt32(unit.Element("Host").Element("Bank").Element("Account_Number").Value),
-                                    BankName = unit.Element("Host").Element("Bank").Element("Bank_Name").Value,
-                                    BankNumber = Convert.ToInt32(unit.Element("Host").Element("Bank").Element("Bank_Number").Value),
-                                    BranchNumber = Convert.ToInt32(unit.Element("Host").Element("Bank").Element("Branch_Number").Value),
-                                    BranchAddress = unit.Element("Host").Element("Bank").Element("Branch_Address").Value
-                                    //add branch city?
-                                }
-                            }
-                        }).First();//returns first matching unit found
+                HostingUnit h = units.Find(ho => { return ho.HostingUnitKey == unitKey; });
+                return h;
+               
             }
             catch
             {
@@ -190,78 +122,92 @@ namespace DAL
         }
         public void deleteUnit(HostingUnit toDelete)//deletes this unit
         {
+            FileStream file = new FileStream(hostingUnitPath, FileMode.OpenOrCreate);//opens file
+
             try
             {
-                (from unit in hostingUnits.Elements()
-                 where Convert.ToInt32(unit.Element("Unit Key").Value) == toDelete.HostingUnitKey//this unit
-                 select unit).First().Remove();//removes first found
+                units.Remove(toDelete);//removes from list
+                XmlSerializer xmlSer = new XmlSerializer(units.GetType());
+                xmlSer.Serialize(file, units);
+
             }
             catch
             {
-                throw new objectErrorDAL();//didn't find item
-            }
-            try
-            {
-                hostingUnits.Save(hostingUnitPath);
-            }
-            catch
-            {
-                throw new loadExceptionDAL("unable to save elements after deleting");//error in loading or saving the file
+                file.Close();//closes file
+                throw new loadExceptionDAL("unable to delete unit");
+
             }
 
 
         }
-
         public void changeUnit(HostingUnit hostingUnit1)//update unit
         {
+
+            FileStream file = new FileStream(hostingUnitPath, FileMode.OpenOrCreate);//opens file
+
             try
             {
-                XElement host = (from unit in hostingUnits.Elements()
-                                 where Convert.ToInt32(unit.Element("Unit Key").Value) == hostingUnit1.HostingUnitKey//this unit
-                                 select unit).First();//first found
-                //updates 
+                HostingUnit h = units.Find(hos => { return hos.HostingUnitKey == hostingUnit1.HostingUnitKey; });
+                units.Remove(h);
+                units.Add(hostingUnit1);
+                XmlSerializer xmlSer = new XmlSerializer(units.GetType());
+                xmlSer.Serialize(file, units);
 
-                host.Element("Unit Key").Value = hostingUnit1.HostingUnitKey.ToString();
-                host.Element("Unit Name").Value = hostingUnit1.HostingUnitName;
-                host.Element("Unit Type").Value = hostingUnit1.HostingUnitType.ToString();
-                host.Element("Unit Area").Value = hostingUnit1.AreaVacation.ToString();
-                host.Element("Adults").Value = hostingUnit1.NumAdult.ToString();
-                host.Element("Children").Value = hostingUnit1.NumChildren.ToString();
-                host.Element("Pool").Value = hostingUnit1.Pool.ToString();
-                host.Element("Garden").Value = hostingUnit1.Garden.ToString();
-                host.Element("Jacuzzi").Value = hostingUnit1.Jacuzzi.ToString();
-                host.Element("Meal").Value = hostingUnit1.Meal.ToString();
-                host.Element("Paid").Value = hostingUnit1.MoneyPaid.ToString();
-                //host
-                host.Element("Host").Element("Host Key").Value = hostingUnit1.Host.HostKey.ToString();
-                host.Element("Host").Element("Host Name").Value = hostingUnit1.Host.Name;
-                host.Element("Host").Element("Host Last").Value = hostingUnit1.Host.LastName;
-                host.Element("Host").Element("Email").Value = hostingUnit1.Host.Mail.Address;
-                host.Element("Host").Element("Clearance").Value = hostingUnit1.Host.CollectionClearance.ToString();
-                host.Element("Host").Element("Bank").Element("Account Number").Value = hostingUnit1.Host.Bank.BankAcountNumber.ToString();
-                host.Element("Host").Element("Bank").Element("Bank Name").Value = hostingUnit1.Host.Bank.BankName;
-                host.Element("Host").Element("Bank").Element("Bank Number").Value = hostingUnit1.Host.Bank.BankNumber.ToString();
-                host.Element("Host").Element("Bank").Element("Branch Number").Value = hostingUnit1.Host.Bank.BranchNumber.ToString();
-                host.Element("Host").Element("Bank").Element("Branch Address").Value = hostingUnit1.Host.Bank.BranchAddress;
-
-            }
-
-            catch
-            {
-                throw new objectErrorDAL();//didn't find item
-            }
-            try
-            {
-                hostingUnits.Save(hostingUnitPath);//saves
             }
             catch
             {
-                throw new loadExceptionDAL("unable to save elements after deleting");//error in loading or saving the file
+                file.Close();//closes file
+                throw new loadExceptionDAL("unable to delete unit");
+
             }
+
+
+
+            //try
+            //{
+            //    XElement host = (from unit in hostingUnits.Elements()
+            //                     where Convert.ToInt32(unit.Element("Unit Key").Value) == hostingUnit1.HostingUnitKey//this unit
+            //                     select unit).First();//first found
+            //    //updates 
+
+            //    host.Element("Unit Key").Value = hostingUnit1.HostingUnitKey.ToString();
+            //    host.Element("Unit Name").Value = hostingUnit1.HostingUnitName;
+            //    host.Element("Unit Type").Value = hostingUnit1.HostingUnitType.ToString();
+            //    host.Element("Unit Area").Value = hostingUnit1.AreaVacation.ToString();
+            //    host.Element("Adults").Value = hostingUnit1.NumAdult.ToString();
+            //    host.Element("Children").Value = hostingUnit1.NumChildren.ToString();
+            //    host.Element("Pool").Value = hostingUnit1.Pool.ToString();
+            //    host.Element("Garden").Value = hostingUnit1.Garden.ToString();
+            //    host.Element("Jacuzzi").Value = hostingUnit1.Jacuzzi.ToString();
+            //    host.Element("Meal").Value = hostingUnit1.Meal.ToString();
+            //    host.Element("Paid").Value = hostingUnit1.MoneyPaid.ToString();
+            //    //host
+            //    host.Element("Host").Element("Host Key").Value = hostingUnit1.Host.HostKey.ToString();
+            //    host.Element("Host").Element("Host Name").Value = hostingUnit1.Host.Name;
+            //    host.Element("Host").Element("Host Last").Value = hostingUnit1.Host.LastName;
+            //    host.Element("Host").Element("Email").Value = hostingUnit1.Host.Mail.Address;
+            //    host.Element("Host").Element("Clearance").Value = hostingUnit1.Host.CollectionClearance.ToString();
+            //    host.Element("Host").Element("Bank").Element("Account Number").Value = hostingUnit1.Host.Bank.BankAcountNumber.ToString();
+            //    host.Element("Host").Element("Bank").Element("Bank Name").Value = hostingUnit1.Host.Bank.BankName;
+            //    host.Element("Host").Element("Bank").Element("Bank Number").Value = hostingUnit1.Host.Bank.BankNumber.ToString();
+            //    host.Element("Host").Element("Bank").Element("Branch Number").Value = hostingUnit1.Host.Bank.BranchNumber.ToString();
+            //    host.Element("Host").Element("Bank").Element("Branch Address").Value = hostingUnit1.Host.Bank.BranchAddress;
+
+            //}
+
+            //catch
+            //{
+            //    throw new objectErrorDAL();//didn't find item
+            //}
+            //try
+            //{
+            //    hostingUnits.Save(hostingUnitPath);//saves
+            //}
+            //catch
+            //{
+            //    throw new loadExceptionDAL("unable to save elements after deleting");//error in loading or saving the file
+            //}
         }
-
-   
-
         public void addHostingUnit(HostingUnit hosting)
         {
             FileStream file = new FileStream(hostingUnitPath, FileMode.OpenOrCreate);//opens file
@@ -282,6 +228,7 @@ namespace DAL
             }
 
         }
+        #endregion      //finish and need to checks if work
 
         #region add charge to unit
         public void addCharge(HostingUnit unit, int numDays)
@@ -312,10 +259,20 @@ namespace DAL
 
         }
         #endregion
+
+
         #region guestRequests
         #region add guest
+        public int getConfi()
+        {
+            Int32 stat = Convert.ToInt32(configuration.Element("GuestRequest").Value);
+            stat++;
+            return stat;
+        }
+
         public void addGuest(GuestRequest guest)
         {
+
             try
             {
 
@@ -450,9 +407,9 @@ namespace DAL
         }
 
         #endregion
-        #endregion
+        #endregion     //finish and work
 
-        #endregion
+    
     }
 }
 
