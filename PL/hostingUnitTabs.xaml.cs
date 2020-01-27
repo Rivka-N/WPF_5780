@@ -27,7 +27,6 @@ namespace PL
         private readonly HostingUnit originalUnit;//to compare changed one to
         List<Order> myOrders;
         List<GuestRequest> addOrders;
-        IEnumerable<IGrouping<int, BankAccount>> bankSource;//bank combobox source
         bool closeProgram;//for exiting window
         #region c-tors
         public hostingUnitTabs(HostingUnit hosting)
@@ -64,15 +63,8 @@ namespace PL
             cb_poolCheckBox.IsChecked = unit.Pool == Enums.Preference.Yes ? true : false;
             cb_jacuzziCheckBox.IsChecked = unit.Jacuzzi == Enums.Preference.Yes ? true : false;
 
-            //bank init
-            bankSource = myBL.groupBranchesByBank();//branches grouped by bank
-            foreach (var bank in bankSource)
-            {
-                cb_bankName.Items.Add(bank.First().BankName);//adds key of each group to list
-                cb_bankNumberTextBox.Items.Add(bank.First().BankNumber.ToString());
-            }
-            //give branches of bank
-           // cb_bankName.SelectedIndex=bankSource.Where()
+            //banks combobox
+            //cb_bankName.ItemsSource=
         }
         public hostingUnitTabs(HostingUnit hosting, int tab) : this(hosting)
         {
@@ -797,6 +789,7 @@ namespace PL
 
         private void Cb_bankName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //give branches of bank
         }
 
 

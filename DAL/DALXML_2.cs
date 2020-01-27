@@ -103,16 +103,12 @@ namespace DAL
         #region last Update order status time
         public void setLastUpdatedStatus()//save today's date to config file 
         {
-            
             configuration.Element("LastStatusUpdate").Value=DateTime.Today.ToString();//sets value to be today
-            configuration.Save(configPath);
         }
         public DateTime getLastUpdatedStatus()
         {
             return Convert.ToDateTime(configuration.Element("LastStatusUpdate").Value);//returns value as datetime
         }
-
-       
         #endregion
         #region orders
         public void deleteOrders(Func<Order, bool> p)

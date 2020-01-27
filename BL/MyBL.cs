@@ -604,8 +604,6 @@ namespace BL
 
         public List<Order> getOrders(Func<Order, bool> predicate)
         {
-            if (myDAL.getAllOrders() == null)
-                return null;
             var ords = from ord in myDAL.getAllOrders()
                        let p = predicate(ord)
                        where p
