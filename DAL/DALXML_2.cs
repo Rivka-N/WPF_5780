@@ -18,16 +18,17 @@ namespace DAL
     partial class DALXML:IDAL
     {
         #region init and save files to lists
-        internal void loadOrders()//loads orders file
+        internal void loadOrders()//loads orders file if exist
         {
             try
             {
                 if (File.Exists(orderPath))
-                    order= XElement.Load(orderPath);//loads orders
-                else
                 {
-                    order= new XElement("Orders");//creates file
-                    order.Save(orderPath);
+                    XmlSerializer x = new XmlSerializer(orders.GetType());
+                    FileStream fs = new FileStream(orderPath, FileMode.Open);
+                    orders = (List<Order>)x.Deserialize(fs);
+                    fs.Close();//closes file
+
                 }
             }
             catch
@@ -38,20 +39,17 @@ namespace DAL
 
         private void loadUnits()
         {
-
-
             try
             {
                 if (File.Exists(hostingUnitPath))//file exists
                 {
                     
-                    XmlSerializer x = new XmlSerializer(units.GetType()/*, new XmlRootAttribute("Units")*/);
+                    XmlSerializer x = new XmlSerializer(units.GetType());
                     FileStream fs = new FileStream(hostingUnitPath, FileMode.Open);
                     units = (System.Collections.Generic.List<HostingUnit>)x.Deserialize(fs);
                     fs.Close();//closes file
 
                 }
-                //hostingUnits = XElement.Load(guestRequestPath);//loads units into hostingUnits
                 else//creates it
                 {
                     new FileStream(hostingUnitPath, FileMode.Create);//creates file
@@ -91,11 +89,11 @@ namespace DAL
                     configuration = new XElement("Configurations",
                         new XElement("HostingUnit", 10000000), new XElement("Order", 10000000), new XElement("GuestRequest", 10000000),
                         new XElement("BankKey", 10000000), new XElement("LastStatusUpdate", default(DateTime).ToString()));//creates file
-                    order.Save(orderPath);
+                    configuration.Save(configPath);
                 }
                 else
                 {
-                    order = XElement.Load(orderPath);//loads existing configs
+                    configuration = XElement.Load(configPath);//loads existing configs
                 }
             }
             catch
@@ -118,72 +116,67 @@ namespace DAL
         #region orders
         public void deleteOrders(Func<Order, bool> p)
         {
-            //order.(ord => p(ord));
-        }
-        public void changeOrderStatus(Func<Order, bool> p1, Enums.OrderStatus status)
-        {
-
-        }
-
-        #region orders
-        #region get list of orders
-        public List<Order> getAllOrders()//returns all orders
-        {
-
-
-            List<Order> orders;
+            FileStream file = new FileStream(orderPath, FileMode.OpenOrCreate);//opens file
+            
             try
             {
-
-                orders = (from p in order.Elements()//get all guestRequest
-                          select new Order()
-                          {
-                              HostingUnitKey = Convert.ToInt32(p.Element("hostingKey").Value),
-                              HostName = p.Element("hostName").Value,
-                              GuestRequestKey = Convert.ToInt32(p.Element("guestKey").Value),
-                              GuestName = p.Element("guestName").Value,
-                              OrderKey = Convert.ToInt32(p.Element("orderKey").Value),
-                              OrderDate = Convert.ToDateTime(p.Element("orderDate").Value),
-                              Status = (Enums.OrderStatus)(Enum.Parse(typeof(Enums.OrderStatus), p.Element("status").Value)),
-                              CreateDate = Convert.ToDateTime(p.Element("createDate").Value)
-
-
-                          }).ToList();
+                orders.RemoveAll(ord => p(ord));//removes from list
+                XmlSerializer xmlSer = new XmlSerializer(orders.GetType());
+                xmlSer.Serialize(file, orders);
+                
             }
             catch
             {
-                orders = null;
+                file.Close();//closes file
+                throw new loadExceptionDAL("unable to delete orders");
+            
+        }
+    }
+        public void changeOrderStatus(Func<Order, bool> p1, Enums.OrderStatus status)
+        {
+            var deleting = orders.Where(ord => p1(ord))
+                .Select(ord => {ord.Status = status; return ord; }).ToList();
+            
+        }
+
+        #region get list of orders
+        public List<Order> getAllOrders()//returns all orders
+        {
+            try {
+                if (orders.Count == 0)//no items
+                    return null;
+                return orders;
+            }
+            catch
+            {
+                return null;
             }
 
-            return orders;
         }
         #endregion
         #region add order
         public void addOrder(Order ord)
         {
+            FileStream file = new FileStream(orderPath, FileMode.OpenOrCreate);//opens file
             try
             {
+                orders.Add(ord);//adds order to list
+                XmlSerializer xmlSer = new XmlSerializer(orders.GetType());
+                xmlSer.Serialize(file, orders);
 
-                XElement guestName = new XElement("guestName", ord.GuestName);
-                XElement hostName = new XElement("hostName", ord.HostName);
-                XElement guestKey = new XElement("guestKey", ord.GuestRequestKey);
-                XElement hostingKey = new XElement("hostingKey", ord.HostingUnitKey);
-                XElement orderKey = new XElement("orderKey", ord.OrderKey);
-                XElement orderDate = new XElement("orderDate", ord.OrderDate);
-                XElement status = new XElement("status", ord.Status);
-                XElement createDate = new XElement("createDate", ord.CreateDate);
-
-                order.Add(new XElement("guest", guestName, hostName, guestKey, hostingKey, orderKey, orderDate, status, createDate));
-                order.Save(orderPath);
             }
             catch
             {
                 throw new loadExceptionDAL("unable to add order to xml file");
             }
+            finally
+            {
+                file.Close();//closes file
+            }
+
         }
         #endregion
 
         #endregion
-        #endregion
-    }
+        }
 }

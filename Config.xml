@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configurations>
+  <HostingUnit>10000000</HostingUnit>
+  <Order>10000000</Order>
+  <GuestRequest>10000000</GuestRequest>
+  <BankKey>10000000</BankKey>
+  <LastStatusUpdate>01/01/0001 0:00:00</LastStatusUpdate>
+</Configurations>
