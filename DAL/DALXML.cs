@@ -15,7 +15,7 @@ using System.Xml.Serialization;
 
 
 namespace DAL
-{
+{ 
 
     partial class DALXML : IDAL
     {
