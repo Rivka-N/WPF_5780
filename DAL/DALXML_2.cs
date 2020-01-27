@@ -118,14 +118,72 @@ namespace DAL
         #region orders
         public void deleteOrders(Func<Order, bool> p)
         {
-            
+            //order.(ord => p(ord));
         }
         public void changeOrderStatus(Func<Order, bool> p1, Enums.OrderStatus status)
         {
 
         }
 
+        #region orders
+        #region get list of orders
+        public List<Order> getAllOrders()//returns all orders
+        {
+
+
+            List<Order> orders;
+            try
+            {
+
+                orders = (from p in order.Elements()//get all guestRequest
+                          select new Order()
+                          {
+                              HostingUnitKey = Convert.ToInt32(p.Element("hostingKey").Value),
+                              HostName = p.Element("hostName").Value,
+                              GuestRequestKey = Convert.ToInt32(p.Element("guestKey").Value),
+                              GuestName = p.Element("guestName").Value,
+                              OrderKey = Convert.ToInt32(p.Element("orderKey").Value),
+                              OrderDate = Convert.ToDateTime(p.Element("orderDate").Value),
+                              Status = (Enums.OrderStatus)(Enum.Parse(typeof(Enums.OrderStatus), p.Element("status").Value)),
+                              CreateDate = Convert.ToDateTime(p.Element("createDate").Value)
+
+
+                          }).ToList();
+            }
+            catch
+            {
+                orders = null;
+            }
+
+            return orders;
+        }
+        #endregion
+        #region add order
+        public void addOrder(Order ord)
+        {
+            try
+            {
+
+                XElement guestName = new XElement("guestName", ord.GuestName);
+                XElement hostName = new XElement("hostName", ord.HostName);
+                XElement guestKey = new XElement("guestKey", ord.GuestRequestKey);
+                XElement hostingKey = new XElement("hostingKey", ord.HostingUnitKey);
+                XElement orderKey = new XElement("orderKey", ord.OrderKey);
+                XElement orderDate = new XElement("orderDate", ord.OrderDate);
+                XElement status = new XElement("status", ord.Status);
+                XElement createDate = new XElement("createDate", ord.CreateDate);
+
+                order.Add(new XElement("guest", guestName, hostName, guestKey, hostingKey, orderKey, orderDate, status, createDate));
+                order.Save(orderPath);
+            }
+            catch
+            {
+                throw new loadExceptionDAL("unable to add order to xml file");
+            }
+        }
         #endregion
 
+        #endregion
+        #endregion
     }
 }

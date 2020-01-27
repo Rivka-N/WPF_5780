@@ -8,7 +8,7 @@ using DS;
 
 namespace DAL
 {
-    internal class DALList : IDAL
+    internal class DALList //: IDAL
     {
         #region Singleton
         private static readonly DALList instance = new DALList();
@@ -25,7 +25,7 @@ namespace DAL
         #region add Items
         public void addGuest(GuestRequest guest)
         {
-            guest.GuestRequestKey = Configuration.GuestRequest++;//sets request key
+            //guest.GuestRequestKey = Configuration.GuestRequest++;//sets request key
             DS.DataSource.guestRequests.Add(guest.Clone());
         }
 
@@ -42,21 +42,21 @@ namespace DAL
                     throw new dataException("host already exists");
                 if (unit.Host.Bank != null)//if there is a bank
                 {
-                    unit.Host.Bank.BankAcountNumber = Configuration.BankAccountKey++;//sets running bank account number
+                    //unit.Host.Bank.BankAcountNumber = Configuration.BankAccountKey++;//sets running bank account number
                 }
 
             }
             else
                 throw new dataException("no host");
-            unit.HostingUnitKey = Configuration.HostingUnit++;//sets unit number
+            //unit.HostingUnitKey = Configuration.HostingUnit++;//sets unit number
             DS.DataSource.hostingUnits.Add(unit.Clone());
 
         }
 
         public void addOrder(Order ord)
         {
-            ord.OrderKey = Configuration.Order;//sets order number
-            Configuration.Order++;
+            //ord.OrderKey = Configuration.Order;//sets order number
+            //Configuration.Order++;
             DS.DataSource.orders.Add(ord.Clone());
         }
 
