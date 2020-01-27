@@ -67,7 +67,7 @@ namespace PL
             //bank init
             dg_bank.DataContext = unit.Host;
             bankSource = myBL.groupBranchesByBank();//branches grouped by bank
-            initBank();//sets banks and comboboxes
+            initBank(true);//sets banks and comboboxes. tells function this is the start
         }
         public hostingUnitTabs(HostingUnit hosting, int tab) : this(hosting)
         {
@@ -759,29 +759,58 @@ namespace PL
 
         #endregion
         #region bank
-        private void initBank()//binding between bank and bank source
+        private void initBank(bool start = false)//binding between bank and bank source
         {
-            foreach (var bank in bankSource)
+            int curBank = -1;//current index of bank
+
+            if (start)//init on start
             {
-                cb_bankName.Items.Add(bank.First().BankName);//adds key of each group to list
-                cb_bankNumberTextBox.Items.Add(bank.First().BankNumber.ToString());
+                foreach (var bank in bankSource)
+                {
+                    cb_bankName.Items.Add(bank.First().BankName);//adds key of each group to list
+                    cb_bankNumberTextBox.Items.Add(bank.First().BankNumber.ToString());
+                }
+                //give branches of bank
+                foreach (var bank in bankSource)//sets based on index of this number
+                {
+                    if (bank.Key == unit.Host.Bank.BankNumber)
+                        break;
+                    curBank++;
+                }
+
+                cb_bankName.SelectedIndex = curBank;
+                cb_bankNumberTextBox.SelectedIndex = curBank;
             }
-            //give branches of bank
-            int curBank = -1;
-            foreach (var bank in bankSource)//sets based on index of this number
+            else//afterwards
             {
-                if (bank.Key == unit.Host.Bank.BankNumber)
-                    break;
-                curBank++;
+                curBank = cb_bankNumberTextBox.SelectedIndex;//current bank is the number in the list of the index selected
             }
-            cb_bankName.SelectedIndex = curBank;
+            int curBranch =-1;
+            int i = -1;
             foreach (var bank in bankSource.ElementAt(curBank))
             {
+                i++;
                 cb_branchAddr.Items.Add(bank.BranchCity + " : " + bank.BranchAddress);//adds key of each group to list
                 cb_branchNumber.Items.Add(bank.BranchNumber.ToString());
+                if (start==true && bank.BranchNumber == unit.Host.Bank.BranchNumber)//if this is the first round
+                    curBranch= i;
             }
-
+            if (start==true && curBranch==-1)//none was selected.resets
+            {
+                cb_branchAddr.Items.Clear();
+                cb_branchAddr.Items.Add(unit.Host.Bank.BranchAddress);
+                cb_branchAddr.SelectedIndex = 0;//selects first
+                cb_branchNumber.Items.Clear();
+                cb_branchNumber.Items.Add(unit.Host.Bank.BranchNumber);
+                cb_branchNumber.SelectedIndex = 0;
+            }
+            if (start==true && curBranch!=-1)
+            {
+                cb_branchNumber.SelectedIndex = curBranch;
+                cb_branchAddr.SelectedIndex = curBranch;//selects index
+            }
         }
+        #region bank number checks
         private void BankAcountNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
@@ -812,13 +841,28 @@ namespace PL
                 bankAcountNumberTextBox.Text = "";
             }
         }
-
+        #endregion
+        #region comboboxes
         private void Cb_bankName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            cb_bankNumberTextBox.SelectedIndex = cb_bankName.SelectedIndex;
+            allBranches();
+        }
+        private void Cb_bankNumberTextBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cb_bankName.SelectedIndex =cb_bankNumberTextBox.SelectedIndex;
+            allBranches();
+
         }
 
+        private void allBranches()
+        {
+            bankSource.ElementAt(cb_bankName.SelectedIndex)//finds correct group
 
+        }
         #endregion
+        #endregion
+
     }
 }
 
