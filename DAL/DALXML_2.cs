@@ -61,6 +61,7 @@ namespace DAL
         }
         private void loadGuests()//guest file load
         {
+
             try
             {
                 if (File.Exists(guestRequestPath))

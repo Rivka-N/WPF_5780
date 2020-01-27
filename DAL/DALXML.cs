@@ -32,6 +32,7 @@ namespace DAL
         //unit list
         List<HostingUnit> units = new List<HostingUnit>();
         List<Order> orders = new List<Order>();//orders
+        List<GuestRequest> guests = new List<GuestRequest>();
       
         private XElement hostingUnits;
         private XElement guestRequest;
@@ -240,33 +241,52 @@ namespace DAL
         public void addGuest(GuestRequest guest)
         {
 
+            FileStream file = new FileStream(guestRequestPath, FileMode.OpenOrCreate);//opens file
             try
             {
                 Int32 x = getConfi();
-                XElement guestName = new XElement("name", guest.Name);
-                XElement guestLastName = new XElement("lastName", guest.LastName);
-                XElement guestKey = new XElement("guestkey", x);
-                XElement jacuzzi = new XElement("jacuzzi", guest.Jacuzzi);
-                XElement pool = new XElement("pool", guest.Pool);
-                XElement garden = new XElement("garden", guest.Garden);
-                XElement mail = new XElement("mail", guest.Mail);
-                XElement mael = new XElement("mael", guest.Meal);
-                XElement numAdults = new XElement("numAdults", guest.NumAdult);
-                XElement numChildren = new XElement("children", guest.NumChildren);
-                XElement status = new XElement("status", guest.Status);
-                XElement area = new XElement("areavacation", guest.AreaVacation);
-                XElement type = new XElement("typeofunit", guest.TypeOfUnit);
-                XElement entryDate = new XElement("entrydate", guest.EntryDate);
-                XElement releaseDate = new XElement("releasedate", guest.ReleaseDate);
-                XElement registrationDate = new XElement("registrationDate", guest.Registration);
+                guest.GuestRequestKey = x;
+                guests.Add(guest);//adds order to list
+                XmlSerializer xmlSer = new XmlSerializer(guests.GetType());
+                xmlSer.Serialize(file, guests);
 
-                guestRequest.Add(new XElement("guest", guestLastName, guestName, guestKey, jacuzzi, pool, garden, mail, mael, numAdults, numChildren, status, area, type, entryDate, releaseDate, registrationDate));
-                guestRequest.Save(guestRequestPath);
             }
             catch
             {
-                throw new loadExceptionDAL("unable to save new guest to xml file");
+                throw new loadExceptionDAL("unable to add guest to xml file");
             }
+            finally
+            {
+                file.Close();//closes file
+            }
+
+            //try
+            //{
+            //    Int32 x = getConfi();
+            //    XElement guestName = new XElement("name", guest.Name);
+            //    XElement guestLastName = new XElement("lastName", guest.LastName);
+            //    XElement guestKey = new XElement("guestkey", x);
+            //    XElement jacuzzi = new XElement("jacuzzi", guest.Jacuzzi);
+            //    XElement pool = new XElement("pool", guest.Pool);
+            //    XElement garden = new XElement("garden", guest.Garden);
+            //    XElement mail = new XElement("mail", guest.Mail);
+            //    XElement mael = new XElement("mael", guest.Meal);
+            //    XElement numAdults = new XElement("numAdults", guest.NumAdult);
+            //    XElement numChildren = new XElement("children", guest.NumChildren);
+            //    XElement status = new XElement("status", guest.Status);
+            //    XElement area = new XElement("areavacation", guest.AreaVacation);
+            //    XElement type = new XElement("typeofunit", guest.TypeOfUnit);
+            //    XElement entryDate = new XElement("entrydate", guest.EntryDate);
+            //    XElement releaseDate = new XElement("releasedate", guest.ReleaseDate);
+            //    XElement registrationDate = new XElement("registrationDate", guest.Registration);
+
+            //    guestRequest.Add(new XElement("guest", guestLastName, guestName, guestKey, jacuzzi, pool, garden, mail, mael, numAdults, numChildren, status, area, type, entryDate, releaseDate, registrationDate));
+            //    guestRequest.Save(guestRequestPath);
+            //}
+            //catch
+            //{
+            //    throw new loadExceptionDAL("unable to save new guest to xml file");
+            //}
 
         }
         #endregion
@@ -278,7 +298,7 @@ namespace DAL
             List<GuestRequest> guest;
             try
             {
-
+                loadGuests();
                 guest = (from p in guestRequest.Elements()//get all guestRequest
                          select new GuestRequest()
                          {
