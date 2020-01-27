@@ -422,7 +422,8 @@ namespace DAL
         public List<GuestRequest> GetguestRequestList()
         {
 
-            LoadData();            List<GuestRequest> guest;
+            LoadData();
+            List<GuestRequest> guest;
             try
             {
 
@@ -451,7 +452,8 @@ namespace DAL
             catch
             {
                 guest = null;
-            }
+            }
+
             return guest;
         }
         #endregion
@@ -461,10 +463,12 @@ namespace DAL
             
                 XElement guestElement = (from p in guestRequest.Elements()
                                            where Convert.ToInt32(p.Element("guest key").Value) == guest.GuestRequestKey
-                                           select p).FirstOrDefault();            guestElement.Element("status").Value = guest.Status.ToString();
+                                           select p).FirstOrDefault();
+            guestElement.Element("status").Value = guest.Status.ToString();
            try
             {
-                guestRequest.Save(guestRequestPath);
+                guestRequest.Save(guestRequestPath);
+
             }
             catch
             {
