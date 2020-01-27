@@ -35,6 +35,7 @@ namespace DAL
         private XElement hostingUnits;
         private XElement guestRequest;
         private XElement order;
+        private XElement configuration;
 
         public static volatile bool bankDownloaded = false;//flag if bank was downloaded
         BackgroundWorker worker;
@@ -438,17 +439,14 @@ namespace DAL
         }
 
         #endregion
-        #region not implemented functions from IDAL
+        #region add charge to unit
         public void addCharge(HostingUnit unit, int numDays)
         {
-            throw new NotImplementedException();
-        }
+            //find hosting unit, update field and save again
+            //var found = DataSource.hostingUnits.Find(u => u.HostingUnitKey == unit.HostingUnitKey);
+            //found.MoneyPaid += Configuration.TransactionFee * numDays;//adds this transaction fee to total transaction fees
 
-        public void deleteOrders(Func<Order, bool> p)
-        {
-            throw new NotImplementedException();
         }
-
         #endregion
         #region guestRequests
         #region add guest
@@ -485,22 +483,10 @@ namespace DAL
         }
         #endregion
         #region get list
-        private void LoadData()
-        {
-            try
-            {
-                guestRequest = XElement.Load(guestRequestPath);
-            }
-            catch
-            {
-                Console.WriteLine("File upload problem");
-            }
-        }
 
         public List<GuestRequest> getRequests()
         {
 
-            LoadData();
             List<GuestRequest> guest;
             try
             {
@@ -536,13 +522,13 @@ namespace DAL
         }
         #endregion
         #region change status
-        public void changeStatus(GuestRequest guest)//change status
+        public void changeStatus(GuestRequest guest, Enums.OrderStatus status)//change status
         {
             
                 XElement guestElement = (from p in guestRequest.Elements()
                                            where Convert.ToInt32(p.Element("guest key").Value) == guest.GuestRequestKey
                                            select p).FirstOrDefault();
-            guestElement.Element("status").Value = guest.Status.ToString();
+            guestElement.Element("status").Value = status.ToString();//sets status
            try
             {
                 guestRequest.Save(guestRequestPath);
@@ -561,7 +547,6 @@ namespace DAL
         #region find guest
         public GuestRequest findGuest(int key)//find guest by key
         {
-            LoadData();
             GuestRequest guest;
             try
             {
@@ -607,8 +592,7 @@ namespace DAL
         public List<Order> getAllOrders()//returns all orders
         {
 
-
-                LoadData();
+                            
                 List<Order> orders;
                 try
                 {
@@ -658,17 +642,6 @@ namespace DAL
             {
                 throw new loadExceptionDAL("unable to save new order to xml file");
             }
-        }
-        #endregion
-        #region change
-        public void changeOrder(Func<Order, bool> p1, Func<Order, Order> p2)
-        {
-
-        }
-
-        public void changeStatus(GuestRequest guest, Enums.OrderStatus status)
-        {
-            throw new NotImplementedException();
         }
         #endregion
         #endregion

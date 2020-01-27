@@ -37,21 +37,16 @@ namespace BL
         }
         private MyBL()
         {
-            //new Thread(() =>
-            //{
-            //    if (myDAL.getLastUpdatedStatus() < DateTime.Today)//only updates them if it didn't update today already
-            //    {
-            //        List<Order> orders = myDAL.getAllOrders();//all orders
-            //        var expired = from ord in orders
-            //                      where ord.Status == Enums.OrderStatus.Mailed && ord.OrderDate < DateTime.Today.AddDays(30)
-            //                      select ord;//selects all orders mailed more than 30 days ago without response
-            //        foreach (Order ord in expired)//goes over orders found
-            //        {
-            //            myDAL.updateStatus(ord, Enums.OrderStatus.Expired);//updates status to expired
-            //        }
-            //        myDAL.setLastUpdatedStatus();//updates date to datetime.today
-            //    }
-            //}).Start();//starts it
+            new Thread(() =>
+            {
+                if (myDAL.getLastUpdatedStatus() < DateTime.Today)//only updates them if it didn't update today already
+                {
+                    List<Order> orders = myDAL.getAllOrders();//all orders
+                    myDAL.changeOrderStatus(ord =>ord.Status == Enums.OrderStatus.Mailed && ord.OrderDate < DateTime.Today.AddDays(30), Enums.OrderStatus.Expired);
+                    //changes status of orders more than 30 days old
+                    myDAL.setLastUpdatedStatus();//updates date to datetime.today
+                }
+            }).Start();//starts it
         }
         #endregion
 
@@ -267,7 +262,7 @@ namespace BL
                 Order thisOrder = findOrder(guest, unit);
                 myDAL.deleteOrders(order => { return order.GuestRequestKey == thisOrder.GuestRequestKey && order.HostingUnitKey != thisOrder.HostingUnitKey; });
                 //deletes orders with the same guestrequestKey as this one
-                myDAL.changeOrder(order => order.OrderDate == thisOrder.OrderDate, order => { order.Status = Enums.OrderStatus.Closed; return order; });
+                myDAL.changeOrderStatus((order => order.OrderKey== thisOrder.OrderKey), Enums.OrderStatus.Closed);//changes order status to closed
                 //changes current order status
                 myDAL.changeStatus(guest, Enums.OrderStatus.Closed);//changes guest status
                 int numDays = numOfDays(guest.EntryDate, guest.ReleaseDate);
