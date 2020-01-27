@@ -64,6 +64,8 @@ namespace BL
         IEnumerable<IGrouping<Enums.Area, HostingUnit>> groupUnitsByArea();
         IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupRequestsByArea();
         IEnumerable<IGrouping<Enums.MealType, GuestRequest>> groupRequestsByMeal();
+        IEnumerable<IGrouping<int, BankAccount>> groupBranchesByBank();
+
         #endregion
     }
 }
