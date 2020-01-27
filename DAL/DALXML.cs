@@ -17,7 +17,7 @@ using System.Xml.Serialization;
 namespace DAL
 {
 
-        partial class DALXML : IDAL
+    partial class DALXML : IDAL
     {
         #region Singleton
         private static readonly DALXML instance = new DALXML();
@@ -53,11 +53,11 @@ namespace DAL
                 worker = new BackgroundWorker();
                 worker.DoWork += Worker_DoWork;
                 worker.RunWorkerAsync();
-         
+
             }
             catch
             {
-                
+
             }
 
             //open xml files (creates if don't exit) and load items
@@ -74,7 +74,7 @@ namespace DAL
                 guestRequestPath = localPath + @"\Guests.xml";
                 orderPath = localPath + @"\Orders.xml";
                 configPath = localPath + @"\Config.xml";
-               
+
                 units.Add(item: new HostingUnit() { HostingUnitKey = 10000001, HostingUnitName = "a", AreaVacation = Enums.Area.Center, HostingUnitType = Enums.HostingUnitType.Hotel, Pool = Enums.Preference.Yes, NumAdult = 12, NumChildren = 2, Jacuzzi = Enums.Preference.No, Garden = Enums.Preference.Yes, Meal = Enums.MealType.Full, MoneyPaid = 23 });
 
                 addHostingUnit();
@@ -84,14 +84,14 @@ namespace DAL
                 loadConfig();//creates if doesn't exist
                 #endregion
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new loadExceptionDAL(ex.Message);
             }
 
         }
         static DALXML() { }
-         #endregion
+        #endregion
         #endregion
 
         #region banks
@@ -99,25 +99,25 @@ namespace DAL
         public List<BankAccount> getAllBranches()
         {
 
-            
-                List<BankAccount> banks = new List<BankAccount>();
-                XmlDocument doc = new XmlDocument();
-                doc.Load(@"atm.xml");
-                XmlNode rootNode = doc.DocumentElement;
-                //DisplayNodes(rootNode);
 
-                XmlNodeList children = rootNode.ChildNodes;
-                foreach (XmlNode child in children)
+            List<BankAccount> banks = new List<BankAccount>();
+            XmlDocument doc = new XmlDocument();
+            doc.Load(@"atm.xml");
+            XmlNode rootNode = doc.DocumentElement;
+            //DisplayNodes(rootNode);
+
+            XmlNodeList children = rootNode.ChildNodes;
+            foreach (XmlNode child in children)
+            {
+                BankAccount b = GetBranchByXmlNode(child);
+                if (b != null)
                 {
-                    BankAccount b = GetBranchByXmlNode(child);
-                    if (b != null)
-                    {
-                       banks.Add(b);
-                    }
+                    banks.Add(b);
                 }
-            
-        return banks;
-    }
+            }
+
+            return banks;
+        }
 
 
         private static BankAccount GetBranchByXmlNode(XmlNode node)
@@ -159,9 +159,9 @@ namespace DAL
 
         }
 
-        private void Worker_DoWork (object sender, DoWorkEventArgs e)
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-           
+
             object ob = e.Argument;
             while (bankDownloaded == false)//continues until it downloads
             {
@@ -179,7 +179,7 @@ namespace DAL
         void DownloadBank()
         {
             #region downloadBank
-             string xmlLocalPath = @"atm.xml";
+            string xmlLocalPath = @"atm.xml";
             WebClient wc = new WebClient();
             try
             {
@@ -188,13 +188,13 @@ namespace DAL
                 wc.DownloadFile(xmlServerPath, xmlLocalPath);
                 bankDownloaded = true;
             }
-            catch 
+            catch
             {
 
-                    string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
-                    wc.DownloadFile(xmlServerPath, xmlLocalPath);
-                    bankDownloaded = true;
-                
+                string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
+                wc.DownloadFile(xmlServerPath, xmlLocalPath);
+                bankDownloaded = true;
+
             }
             finally
             {
@@ -205,7 +205,7 @@ namespace DAL
         }
 
         #endregion
-       
+
         #region hostingUnits
         public List<HostingUnit> getAllHostingUnits()//xelement to hosting unit
                                                      //need to add convert dia
@@ -228,7 +228,7 @@ namespace DAL
             //     Meal = (Enums.MealType)(Enum.Parse(typeof(Enums.MealType), host.Element("Meal").Value)),
             //     MoneyPaid=Convert.ToInt32(host.Element("Paid").Value),
             //     #region diary
-                 
+
             //#endregion
             //      //host
             //        Host = new Host()
@@ -249,7 +249,7 @@ namespace DAL
             //         }
             //     }
             // }).ToList();
-                //converts hostingunits to list
+            //converts hostingunits to list
         }
         public HostingUnit findUnit(int unitKey)//returns unit with this unit key
         {
@@ -315,8 +315,8 @@ namespace DAL
             {
                 throw new loadExceptionDAL("unable to save elements after deleting");//error in loading or saving the file
             }
-           
-            
+
+
         }
 
         public void changeUnit(HostingUnit hostingUnit1)//update unit
@@ -385,7 +385,7 @@ namespace DAL
             {
 
                 //    XElement host = new XElement("Host", hostKey, hostFirst, hostLast, mail, clearance/*, bank*/);
-                   #endregion
+                #endregion
                 //    hostingUnits.Add(new XElement("Unit", unitKey, unitName, unitType, unitArea, adults, child, pool, garden, j, meals, paid, host));
                 //}
             }
@@ -396,7 +396,6 @@ namespace DAL
 
         }
 
-        #endregion
         #region add charge to unit
         public void addCharge(HostingUnit unit, int numDays)
         {
@@ -429,8 +428,8 @@ namespace DAL
                 XElement entryDate = new XElement("entrydate", guest.EntryDate);
                 XElement releaseDate = new XElement("releasedate", guest.ReleaseDate);
                 XElement registrationDate = new XElement("registrationDate", guest.Registration);
-          
-                guestRequest.Add(new XElement("guest", guestLastName, guestName, guestKey, jacuzzi, pool, garden, mail,mael, numAdults, numChildren, status, area, type, entryDate, releaseDate,registrationDate));
+
+                guestRequest.Add(new XElement("guest", guestLastName, guestName, guestKey, jacuzzi, pool, garden, mail, mael, numAdults, numChildren, status, area, type, entryDate, releaseDate, registrationDate));
                 guestRequest.Save(guestRequestPath);
             }
             catch
@@ -482,12 +481,12 @@ namespace DAL
         #region change status
         public void changeStatus(GuestRequest guest, Enums.OrderStatus status)//change status
         {
-            
-                XElement guestElement = (from p in guestRequest.Elements()
-                                           where Convert.ToInt32(p.Element("guest key").Value) == guest.GuestRequestKey
-                                           select p).FirstOrDefault();
+
+            XElement guestElement = (from p in guestRequest.Elements()
+                                     where Convert.ToInt32(p.Element("guest key").Value) == guest.GuestRequestKey
+                                     select p).FirstOrDefault();
             guestElement.Element("status").Value = status.ToString();//sets status
-           try
+            try
             {
                 guestRequest.Save(guestRequestPath);
 
@@ -509,9 +508,9 @@ namespace DAL
             try
             {
                 guest = (from p in guestRequest.Elements()
-                           where Convert.ToInt32(p.Element("guestkey").Value) == key
+                         where Convert.ToInt32(p.Element("guestkey").Value) == key
                          select new GuestRequest()
-                           {
+                         {
                              Name = p.Element("name").Value,
                              LastName = p.Element("name").Element("guest last name").Value,
                              GuestRequestKey = Convert.ToInt32(p.Element("guestkey").Value),
@@ -545,64 +544,9 @@ namespace DAL
 
         #endregion
         #endregion
-        #region order
-        //#region get list of orders
-        //public List<Order> getAllOrders()//returns all orders
-        //{
-
-                            
-        //        List<Order> orders;
-        //        try
-        //        {
-
-        //            orders = (from p in order.Elements()//get all guestRequest
-        //                     select new Order()
-        //                     {
-        //                        HostingUnitKey = Convert.ToInt32(p.Element("hostingKey").Value),
-        //                        HostName = p.Element("hostName").Value,
-        //                        GuestRequestKey = Convert.ToInt32(p.Element("guestKey").Value),
-        //                        GuestName = p.Element("guestName").Value,
-        //                        OrderKey = Convert.ToInt32(p.Element("orderKey").Value),
-        //                        OrderDate = Convert.ToDateTime(p.Element("orderDate").Value),
-        //                        Status = (Enums.OrderStatus)(Enum.Parse(typeof(Enums.OrderStatus), p.Element("status").Value)),
-        //                        CreateDate = Convert.ToDateTime(p.Element("createDate").Value)
 
 
-        //                     }).ToList();
-        //        }
-        //        catch
-        //        {
-        //            orders = null;
-        //        }
-
-        //        return orders;
-        //    }
-        //#endregion
-        //#region add order
-        //public void addOrder(Order ord)
-        //{
-        //    try
-        //    {
-
-        //        XElement guestName = new XElement("guestName", ord.GuestName);
-        //        XElement hostName = new XElement("hostName", ord.HostName);
-        //        XElement guestKey = new XElement("guestKey", ord.GuestRequestKey);
-        //        XElement hostingKey = new XElement("hostingKey", ord.HostingUnitKey);
-        //        XElement orderKey = new XElement("orderKey", ord.OrderKey);
-        //        XElement orderDate = new XElement("orderDate", ord.OrderDate);
-        //        XElement status = new XElement("status", ord.Status);
-        //        XElement createDate = new XElement("createDate", ord.CreateDate);
-
-                order.Add(new XElement("guest", guestName, hostName, guestKey, hostingKey, orderKey, orderDate, status, createDate));
-                order.Save(orderPath);
-            }
-            catch
-            {
-                throw new loadExceptionDAL("unable to save new order to xml file");
-            }
-        }
-        #endregion
-        #endregion
     }
+}
 
 
