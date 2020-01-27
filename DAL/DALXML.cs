@@ -319,11 +319,25 @@ namespace DAL
             //    throw new loadExceptionDAL("unable to save elements after deleting");//error in loading or saving the file
             //}
         }
+
+        public int getHostConfi()
+        {
+            Int32 stati = Convert.ToInt32(configuration.Element("HostingUnit").Value) + 1;
+            configuration.Element("HostingUnit").Value = stati.ToString();
+            configuration.Save(configPath);
+
+            return stati;
+
+        }
+
+
         public void addHostingUnit(HostingUnit hosting)
         {
             FileStream file = new FileStream(hostingUnitPath, FileMode.OpenOrCreate);//opens file
             try
             {
+                Int32 x = getHostConfi();
+                hosting.HostingUnitKey = x;
                 units.Add(hosting);//adds order to list
                 XmlSerializer xmlSer = new XmlSerializer(units.GetType());
                 xmlSer.Serialize(file, units);
@@ -359,9 +373,12 @@ namespace DAL
         #region add guest
         public int getConfi()
         {
-            Int32 stat = Convert.ToInt32(configuration.Element("GuestRequest").Value);
-            stat++;
-            return stat;
+            Int32 stati = Convert.ToInt32(configuration.Element("GuestRequest").Value)+1;
+            configuration.Element("GuestRequest").Value = stati.ToString();
+            configuration.Save(configPath);
+            
+            return stati;
+
         }
 
         public void addGuest(GuestRequest guest)
@@ -369,10 +386,10 @@ namespace DAL
 
             try
             {
-
+                Int32 x = getConfi();
                 XElement guestName = new XElement("name", guest.Name);
                 XElement guestLastName = new XElement("lastName", guest.LastName);
-                XElement guestKey = new XElement("guestkey", guest.GuestRequestKey);
+                XElement guestKey = new XElement("guestkey", x);
                 XElement jacuzzi = new XElement("jacuzzi", guest.Jacuzzi);
                 XElement pool = new XElement("pool", guest.Pool);
                 XElement garden = new XElement("garden", guest.Garden);
