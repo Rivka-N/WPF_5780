@@ -76,6 +76,8 @@ namespace DAL
 
                 loadUnits();//puts units into xelement hostingUnits
                 loadGuests();//guest requests into guest requests
+                loadOrders();
+                loadConfig();//creates if doesn't exist
                 #endregion
             }
             catch(Exception ex)
