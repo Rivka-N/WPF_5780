@@ -31,6 +31,7 @@ namespace DAL
 
         //unit list
         List<HostingUnit> units = new List<HostingUnit>();
+        
 
         private XElement hostingUnits;
         private XElement guestRequest;
@@ -72,11 +73,14 @@ namespace DAL
                 guestRequestPath = localPath + @"\Guests.xml";
                 orderPath = localPath + @"\Orders.xml";
                 configPath = localPath + @"\Config.xml";
+               
+                units.Add(item: new HostingUnit() { HostingUnitKey = 10000001, HostingUnitName = "a", AreaVacation = Enums.Area.Center, HostingUnitType = Enums.HostingUnitType.Hotel, Pool = Enums.Preference.Yes, NumAdult = 12, NumChildren = 2, Jacuzzi = Enums.Preference.No, Garden = Enums.Preference.Yes, Meal = Enums.MealType.Full, MoneyPaid = 23 });
 
+                addHostingUnit();
                 loadUnits();//puts units into xelement hostingUnits
                 loadGuests();//guest requests into guest requests
                 loadOrders();
-                loadConfig();//creates if doesn't exist
+                //loadConfig();//creates if doesn't exist
                 #endregion
             }
             catch(Exception ex)
@@ -203,8 +207,7 @@ namespace DAL
        
         #region hostingUnits
         public List<HostingUnit> getAllHostingUnits()//xelement to hosting unit
-                                                     //need to add convert diary
-
+                                                     //need to add convert dia
         {
 
             return units;
@@ -346,6 +349,7 @@ namespace DAL
                 host.Element("Host").Element("Bank").Element("Bank Number").Value = hostingUnit1.Host.Bank.BankNumber.ToString();
                 host.Element("Host").Element("Bank").Element("Branch Number").Value = hostingUnit1.Host.Bank.BranchNumber.ToString();
                 host.Element("Host").Element("Bank").Element("Branch Address").Value = hostingUnit1.Host.Bank.BranchAddress;
+
             }
 
             catch
@@ -362,79 +366,29 @@ namespace DAL
             }
         }
 
-        public void addHostingUnit(HostingUnit unit)//adds unit to xelement and to xml file
+        public void addHostingUnit()//adds unit to xelement and to xml file
         {
-            FileStream file = new FileStream(hostingUnitPath, FileMode.Append);
+            FileStream file = new FileStream(hostingUnitPath, FileMode.OpenOrCreate);
 
             try
             {
                 XmlSerializer xmlSer = new XmlSerializer(units.GetType());
-                units.Add(unit);//adds to list
-                xmlSer.Serialize(file, units);//save to xml
-              
-                #region unit details
-                //checks if exists
-                //try
-                //{
-                //    var u = (from hostingUnit in hostingUnits.Elements()
-                //             where Convert.ToInt32(hostingUnit.Element("Unit Key").Value) == unit.HostingUnitKey
-                //             select hostingUnit).First();//first of units found with this key
-                //    if (u != null)//unit already exists
-                //        throw new duplicateErrorDAL();
-                //}
-                //catch (Exception ex)
-                //{
-                //    if (!(ex is InvalidOperationException))
-                //        throw;
-                //}
-                //finally
-                //{
-                //    //otherwise creates xelement of unit and adds it
-                //    XElement unitKey = new XElement("Unit_Key", unit.HostingUnitKey);
-                //    XElement unitName = new XElement("Unit_Name", unit.HostingUnitName);
-                //    XElement unitType = new XElement("Unit_Name", unit.HostingUnitType);
-                //    XElement unitArea = new XElement("Unit_Area", unit.AreaVacation);
-                //    XElement adults = new XElement("Adults", unit.NumAdult);
-                //    XElement child = new XElement("Children", unit.NumChildren);
-                //    XElement pool = new XElement("Pool", unit.Pool);
-                //    XElement garden = new XElement("Garden", unit.Garden);
-                //    XElement j = new XElement("Jacuzzi", unit.Jacuzzi);
-                //    XElement meals = new XElement("Meal", unit.Meal);
-                //    XElement paid = new XElement("Paid", unit.MoneyPaid);
-                //    #endregion
-                //    #region host and bank
-                //    //host
-                //    XElement hostKey = new XElement("Paid", unit.Host.HostKey);
-                //    XElement hostFirst = new XElement("Paid", unit.Host.Name);
-                //    XElement hostLast = new XElement("Paid", unit.Host.LastName);
-                //    XElement mail = new XElement("Paid", unit.Host.Mail.Address);
-                //    XElement clearance = new XElement("Clearance", unit.Host.CollectionClearance);
-
-                //    //bank
-                //    //XElement account = new XElement("Account_Number", unit.Host.Bank.BankAcountNumber);
-                //    //XElement bankName = new XElement("Bank_Name", unit.Host.Bank.BankName);
-                //    //XElement bankNumber = new XElement("Bank_Number", unit.Host.Bank.BankNumber);
-                //    //XElement branchNumber = new XElement("Branch_Number", unit.Host.Bank.BranchNumber);
-                //    //XElement branchAddress = new XElement("Branch_Address", unit.Host.Bank.BranchAddress);
-                //    //XElement bank = new XElement("Bank", account, bankName, bankNumber, branchNumber, branchAddress);
-
-                //    XElement host = new XElement("Host", hostKey, hostFirst, hostLast, mail, clearance/*, bank*/);
-                   #endregion
-                //    hostingUnits.Add(new XElement("Unit", unitKey, unitName, unitType, unitArea, adults, child, pool, garden, j, meals, paid, host));
-                //}
-            }
-            catch (Exception ex)
-            {
-                if (ex is duplicateErrorDAL)
-                    throw ex;
-                //otherwise throws a new exception
-                throw new loadExceptionDAL("unable to save new unit to xml file");
-            }
-            finally
-            {
+                xmlSer.Serialize(file, units);
                 file.Close();
+                //XmlSerializer xmlSer = new XmlSerializer(units.GetType());
+                //units.Add(unit);//adds to list
+                //xmlSer.Serialize(file, units);//save to xml
 
             }
+            catch
+            {
+
+            }
+        }
+
+        public void addHostingUnit(HostingUnit hosting)
+        {
+
         }
 
         #endregion
@@ -670,7 +624,20 @@ namespace DAL
         {
             throw new NotImplementedException();
         }
+
+        
+           
+            //catch (Exception ex)
+            //{
+            //    if (ex is duplicateErrorDAL)
+            //        throw ex;
+            //    //otherwise throws a new exception
+            //    throw new loadExceptionDAL("unable to save new unit to xml file");
+            // }
+         
+        }
         #endregion
         #endregion
     }
-}
+
+

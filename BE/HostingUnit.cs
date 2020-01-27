@@ -39,7 +39,8 @@ namespace BE
 
         [XmlIgnore]
         public bool[,] Diary { get; set; }
-        
+
+
         [XmlArray("Diary")]
         public bool[] FlatDiary
         {

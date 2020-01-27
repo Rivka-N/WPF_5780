@@ -31,6 +31,7 @@ namespace DAL
             {
                 if (File.Exists(hostingUnitPath))//file exists
                 {
+                    
                     XmlSerializer x = new XmlSerializer(units.GetType()/*, new XmlRootAttribute("Units")*/);
                     FileStream fs = new FileStream(hostingUnitPath, FileMode.Open);
                     units = (List<HostingUnit>)x.Deserialize(fs);
