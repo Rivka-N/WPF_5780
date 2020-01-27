@@ -17,7 +17,6 @@ using System.Xml.Serialization;
 namespace DAL
 {
 
-
         partial class DALXML : IDAL
     {
         #region Singleton
@@ -87,46 +86,7 @@ namespace DAL
 
         }
         static DALXML() { }
-        #region save files in lists
-        private void loadUnits()
-        {
-            
-
-            try
-            {
-                if (File.Exists(hostingUnitPath))//file exists
-                {
-                    XmlSerializer x = new XmlSerializer(units.GetType()/*, new XmlRootAttribute("Units")*/);
-                    FileStream fs = new FileStream(hostingUnitPath, FileMode.Open);
-                    units = (List<HostingUnit>)x.Deserialize(fs);
-                    fs.Close();//closes file
-
-                }
-                //hostingUnits = XElement.Load(guestRequestPath);//loads units into hostingUnits
-                else//creates it
-                {
-                    new FileStream(hostingUnitPath, FileMode.Create);//creates file
-                }
-            }
-            catch
-            {
-                throw new loadExceptionDAL("Unable to load Hosting Units");
-                
-            }
-        }
-        private void loadGuests()//guest file load
-        {
-            if (File.Exists(guestRequestPath))
-                guestRequest = XElement.Load(guestRequestPath);//loads guests into guestsRequest
-            else
-            {
-                guestRequest = new XElement("Requests");//creates file
-                guestRequest.Save(guestRequestPath);
-            }
-                
-        }
-        #endregion
-        #endregion
+         #endregion
         #endregion
 
         #region banks
