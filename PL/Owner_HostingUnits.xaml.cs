@@ -39,7 +39,7 @@ namespace PL
         {
             unitsList = myBL.searchUnits(tb_SearchTextBox.Text);
             dg_hostingUnitDataGrid.ItemsSource = unitsList;
-            if (unitsList.Count==0)//no units. shows error textbox
+            if (unitsList.Count==0 ||unitsList==null)//no units. shows error textbox
             {
                 tb_unit_error.Visibility = Visibility.Visible;
                 dg_hostingUnitDataGrid.Visibility = Visibility.Collapsed;

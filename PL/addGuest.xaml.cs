@@ -251,7 +251,6 @@ namespace PL
             }
             catch
             {
-                tb_mail.Text = "";
                 tb_mail.BorderBrush = Brushes.Red;
             }
         }

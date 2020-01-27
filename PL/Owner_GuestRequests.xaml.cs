@@ -79,7 +79,7 @@ namespace PL
                 }
             }
             catch
-            {
+            {   
                 MessageBox.Show("invalid query");
                 tb_SearchTextBox.BorderBrush = Brushes.Red;
 
