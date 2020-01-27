@@ -67,10 +67,10 @@ namespace DAL
                 for (int i = 0; i < 3; i++)
                     localPath = Path.GetDirectoryName(localPath);
 
-                hostingUnitPath = localPath + @"\XMLFiles\Units.xml";
-                guestRequestPath = localPath + @"\XMLFiles\Guests.xml";
-                orderPath = localPath + @"\XMLFiles\Orders.xml";
-                configPath = localPath + @"\XMLFiles\Config.xml";
+                hostingUnitPath = localPath + @"\Units.xml";
+                guestRequestPath = localPath + @"\Guests.xml";
+                orderPath = localPath + @"\Orders.xml";
+                configPath = localPath + @"\Config.xml";
 
                 loadUnits();//puts units into xelement hostingUnits
                 loadGuests();//guest requests into guest requests

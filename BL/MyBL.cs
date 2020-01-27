@@ -38,13 +38,13 @@ namespace BL
         private MyBL()
         {
             //new Thread(() =>
-            //{ 
+            //{
             //    if (myDAL.getLastUpdatedStatus() < DateTime.Today)//only updates them if it didn't update today already
             //    {
             //        List<Order> orders = myDAL.getAllOrders();//all orders
             //        var expired = from ord in orders
-            //                       where ord.Status == Enums.OrderStatus.Mailed && ord.OrderDate < DateTime.Today.AddDays(30)
-            //                       select ord;//selects all orders mailed more than 30 days ago without response
+            //                      where ord.Status == Enums.OrderStatus.Mailed && ord.OrderDate < DateTime.Today.AddDays(30)
+            //                      select ord;//selects all orders mailed more than 30 days ago without response
             //        foreach (Order ord in expired)//goes over orders found
             //        {
             //            myDAL.updateStatus(ord, Enums.OrderStatus.Expired);//updates status to expired
