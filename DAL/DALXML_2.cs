@@ -111,8 +111,7 @@ namespace DAL
         {
             return Convert.ToDateTime(configuration.Element("LastStatusUpdate").Value);//returns value as datetime
         }
-
-       
+        
         #endregion
         #region orders
         public void deleteOrders(Func<Order, bool> p)

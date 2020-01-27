@@ -33,7 +33,6 @@ namespace DAL
         List<HostingUnit> units = new List<HostingUnit>();
         List<Order> orders = new List<Order>();//orders
       
-
         private XElement hostingUnits;
         private XElement guestRequest;
         private XElement order;

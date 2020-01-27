@@ -66,13 +66,7 @@ namespace PL
 
             //bank init
             bankSource = myBL.groupBranchesByBank();//branches grouped by bank
-            foreach (var bank in bankSource)
-            {
-                cb_bankName.Items.Add(bank.First().BankName);//adds key of each group to list
-                cb_bankNumberTextBox.Items.Add(bank.First().BankNumber.ToString());
-            }
-            //give branches of bank
-           // cb_bankName.SelectedIndex=bankSource.Where()
+            initBank();//sets banks and comboboxes
         }
         public hostingUnitTabs(HostingUnit hosting, int tab) : this(hosting)
         {
@@ -764,6 +758,21 @@ namespace PL
 
         #endregion
         #region bank
+        private void initBank()
+        {
+            foreach (var bank in bankSource)
+            {
+                cb_bankName.Items.Add(bank.First().BankName);//adds key of each group to list
+                cb_bankNumberTextBox.Items.Add(bank.First().BankNumber.ToString());
+            }
+            //give branches of bank
+            foreach (var bank in bankSource)
+            {
+
+            }
+                cb_bankName.SelectedIndex = bankSource.
+                bankSource.Find(b=>unit.Host.Bank.BankNumber==b.First().BankNumber)
+        }
         private void BankAcountNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 

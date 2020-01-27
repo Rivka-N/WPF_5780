@@ -8,8 +8,7 @@ using BE;
 namespace DAL
 {
     public interface IDAL
-    {
-        
+    {        
         #region HostingUnit        
         //void addHostingUnit(HostingUnit hostingUnit);//duplicate function
         List<HostingUnit> getAllHostingUnits();

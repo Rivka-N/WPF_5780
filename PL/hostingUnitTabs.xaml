@@ -257,7 +257,6 @@
             </TabItem>
             <TabItem Name="tab_closedOrders" Header="Closed Orders">
                 <Grid DataContext="{StaticResource orderViewSource}">
-
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
