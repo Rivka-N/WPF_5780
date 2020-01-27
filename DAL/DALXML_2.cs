@@ -91,6 +91,7 @@ namespace DAL
                 else
                 {
                     configuration = XElement.Load(configPath);//loads existing configs
+                    configuration.Save(configPath);
                 }
             }
             catch
@@ -104,6 +105,7 @@ namespace DAL
         public void setLastUpdatedStatus()//save today's date to config file 
         {
             configuration.Element("LastStatusUpdate").Value=DateTime.Today.ToString();//sets value to be today
+
         }
         public DateTime getLastUpdatedStatus()
         {

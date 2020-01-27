@@ -42,7 +42,7 @@ namespace PL
         private void pb_guest_Click(object sender, RoutedEventArgs e)
         {
             new addGuest().Show();//open guest window
-           this.Close();
+            this.Close();
         }
 
         private void pb_host_Click(object sender, RoutedEventArgs e)
