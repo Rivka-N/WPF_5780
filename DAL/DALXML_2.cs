@@ -17,12 +17,25 @@ namespace DAL
 {
     partial class DALXML:IDAL
     {
-         internal void loadOrders()//loads orders file
+        #region init and save files to lists
+        internal void loadOrders()//loads orders file
         {
-
+            try
+            {
+                if (File.Exists(orderPath))
+                    order= XElement.Load(orderPath);//loads orders
+                else
+                {
+                    order= new XElement("Orders");//creates file
+                    order.Save(orderPath);
+                }
+            }
+            catch
+            {
+                throw new loadExceptionDAL("Unable to load Orders");
+            }
         }
 
-        #region save files in lists
         private void loadUnits()
         {
 
@@ -34,7 +47,7 @@ namespace DAL
                     
                     XmlSerializer x = new XmlSerializer(units.GetType()/*, new XmlRootAttribute("Units")*/);
                     FileStream fs = new FileStream(hostingUnitPath, FileMode.Open);
-                    units = (List<HostingUnit>)x.Deserialize(fs);
+                    units = (System.Collections.Generic.List<HostingUnit>)x.Deserialize(fs);
                     fs.Close();//closes file
 
                 }
@@ -52,15 +65,66 @@ namespace DAL
         }
         private void loadGuests()//guest file load
         {
-            if (File.Exists(guestRequestPath))
-                guestRequest = XElement.Load(guestRequestPath);//loads guests into guestsRequest
-            else
+            try
             {
-                guestRequest = new XElement("Requests");//creates file
-                guestRequest.Save(guestRequestPath);
+                if (File.Exists(guestRequestPath))
+                    guestRequest = XElement.Load(guestRequestPath);//loads guests into guestsRequest
+                else
+                {
+                    guestRequest = new XElement("Requests");//creates file
+                    guestRequest.Save(guestRequestPath);
+                }
             }
+            catch
+            {
+                throw new loadExceptionDAL("Unable to load Guests");
+
+            }
+        }
+
+        internal void loadConfig()//loads orders file
+        {
+            try
+            {
+                if (!File.Exists(configPath))//file doesn't exist. creates it with all the information it needs
+                {
+                    configuration = new XElement("Configurations",
+                        new XElement("HostingUnit", 10000000), new XElement("Order", 10000000), new XElement("GuestRequest", 10000000),
+                        new XElement("BankKey", 10000000), new XElement("LastStatusUpdate", default(DateTime).ToString()));//creates file
+                    order.Save(orderPath);
+                }
+                else
+                {
+                    order = XElement.Load(orderPath);//loads existing configs
+                }
+            }
+            catch
+            {
+                throw new loadExceptionDAL("unable to load configuration file");
+            }
+        }
+
+        #endregion
+        #region last Update order status time
+        public void setLastUpdatedStatus()//save today's date to config file 
+        {
+            configuration.Element("LastStatusUpdate").Value=DateTime.Today.ToString();//sets value to be today
+        }
+        public DateTime getLastUpdatedStatus()
+        {
+            return Convert.ToDateTime(configuration.Element("LastStatusUpdate").Value);//returns value as datetime
+        }
+        #endregion
+        #region orders
+        public void deleteOrders(Func<Order, bool> p)
+        {
+            
+        }
+        public void changeOrderStatus(Func<Order, bool> p1, Enums.OrderStatus status)
+        {
 
         }
+
         #endregion
 
     }
