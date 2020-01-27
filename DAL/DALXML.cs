@@ -160,53 +160,7 @@ namespace DAL
                 throw new loadExceptionDAL("unable to delete unit");
 
             }
-
-
-
-            //try
-            //{
-            //    XElement host = (from unit in hostingUnits.Elements()
-            //                     where Convert.ToInt32(unit.Element("Unit Key").Value) == hostingUnit1.HostingUnitKey//this unit
-            //                     select unit).First();//first found
-            //    //updates 
-
-            //    host.Element("Unit Key").Value = hostingUnit1.HostingUnitKey.ToString();
-            //    host.Element("Unit Name").Value = hostingUnit1.HostingUnitName;
-            //    host.Element("Unit Type").Value = hostingUnit1.HostingUnitType.ToString();
-            //    host.Element("Unit Area").Value = hostingUnit1.AreaVacation.ToString();
-            //    host.Element("Adults").Value = hostingUnit1.NumAdult.ToString();
-            //    host.Element("Children").Value = hostingUnit1.NumChildren.ToString();
-            //    host.Element("Pool").Value = hostingUnit1.Pool.ToString();
-            //    host.Element("Garden").Value = hostingUnit1.Garden.ToString();
-            //    host.Element("Jacuzzi").Value = hostingUnit1.Jacuzzi.ToString();
-            //    host.Element("Meal").Value = hostingUnit1.Meal.ToString();
-            //    host.Element("Paid").Value = hostingUnit1.MoneyPaid.ToString();
-            //    //host
-            //    host.Element("Host").Element("Host Key").Value = hostingUnit1.Host.HostKey.ToString();
-            //    host.Element("Host").Element("Host Name").Value = hostingUnit1.Host.Name;
-            //    host.Element("Host").Element("Host Last").Value = hostingUnit1.Host.LastName;
-            //    host.Element("Host").Element("Email").Value = hostingUnit1.Host.Mail.Address;
-            //    host.Element("Host").Element("Clearance").Value = hostingUnit1.Host.CollectionClearance.ToString();
-            //    host.Element("Host").Element("Bank").Element("Account Number").Value = hostingUnit1.Host.Bank.BankAcountNumber.ToString();
-            //    host.Element("Host").Element("Bank").Element("Bank Name").Value = hostingUnit1.Host.Bank.BankName;
-            //    host.Element("Host").Element("Bank").Element("Bank Number").Value = hostingUnit1.Host.Bank.BankNumber.ToString();
-            //    host.Element("Host").Element("Bank").Element("Branch Number").Value = hostingUnit1.Host.Bank.BranchNumber.ToString();
-            //    host.Element("Host").Element("Bank").Element("Branch Address").Value = hostingUnit1.Host.Bank.BranchAddress;
-
-            //}
-
-            //catch
-            //{
-            //    throw new objectErrorDAL();//didn't find item
-            //}
-            //try
-            //{
-            //    hostingUnits.Save(hostingUnitPath);//saves
-            //}
-            //catch
-            //{
-            //    throw new loadExceptionDAL("unable to save elements after deleting");//error in loading or saving the file
-            //}
+            
         }
         public void addHostingUnit(HostingUnit hosting)
         {
@@ -237,10 +191,6 @@ namespace DAL
             if (change == null)//is null
                 throw new NullReferenceException();//can't proceed
             change.MoneyPaid += numDays * Configuration.TransactionFee;//changes unit
-
-            //find hosting unit, update field and save again
-            //var found = DataSource.hostingUnits.Find(u => u.HostingUnitKey == unit.HostingUnitKey);
-            //found.MoneyPaid += Configuration.TransactionFee * numDays;//adds this transaction fee to total transaction fees
             FileStream file = new FileStream(hostingUnitPath, FileMode.OpenOrCreate);//opens file
             try
             {

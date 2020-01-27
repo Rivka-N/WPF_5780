@@ -38,8 +38,7 @@ namespace DAL
 
         private void loadUnits()
         {
-            try
-            {
+            
                 if (File.Exists(hostingUnitPath))//file exists
                 {
 
@@ -57,8 +56,8 @@ namespace DAL
                     {
                         fs.Close();//closes file
                     }
-                
 
+                }
         }
         private void loadGuests()//guest file load
         {
@@ -141,8 +140,7 @@ namespace DAL
         }
     }
         public void changeOrderStatus(Func<Order, bool> p1, Enums.OrderStatus status)
-                     public void changeOrderStatus(Func<Order, bool> p1, Enums.OrderStatus status)
-                {
+        {
             var deleting = orders.Where(ord => p1(ord))
                 .Select(ord => {ord.Status = status; return ord; }).ToList();
             

@@ -669,30 +669,7 @@ namespace BL
         
 
 
-        public bool checkUnit(HostingUnit hostingUnit1)
-        {
-            if (hostingUnit1.NumAdult==0 && hostingUnit1.NumChildren==0)//no guests
-                throw new InvalidException("invalid number of guests");
-            if (hostingUnit1.Host.Name==null || hostingUnit1.Host.Name=="")//invalid name
-                throw new InvalidException("invalid first name");
-            if (hostingUnit1.Host.LastName == null || hostingUnit1.Host.LastName == "")//invalid name
-                throw new InvalidException("invalid last name");
-            if (hostingUnit1.HostingUnitName == null || hostingUnit1.HostingUnitName == "")
-                throw new InvalidException("invalid unit name");
-           
-            return true;
-            //try
-            //{
-            //    myDAL.addHostingUnit(hostingUnit1);//adds unit
-            //    return true;
-            //}
-            //catch(Exception ex)
-            //{
-            //    throw new InvalidException(ex.Message + ": unable to add unit");
-            //}
-        }
-
-
+        
 
         #endregion
         #region guest and host checks for pl
