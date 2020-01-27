@@ -67,7 +67,7 @@ namespace PL
                 }
                 ds_guestRequestDataGrid.ItemsSource = myRequests;
                 tb_SearchTextBox.BorderBrush = Brushes.Black;
-                if (myRequests.Count==0)//shows error textbox
+                if (myRequests==null || myRequests.Count==0)//shows error textbox
                 {
                     tb_req_error.Visibility = Visibility.Visible;
                     ds_guestRequestDataGrid.Visibility = Visibility.Collapsed;

@@ -532,7 +532,8 @@ namespace BL
             }
             else//no date selected
                 dateCondition = ord => condition(ord);
-
+            if (orders == null)
+                return orders;//nothing there
             ordersToReturn =
                      from ord in orders
                      let p = dateCondition(ord) //checks that all conditions apply

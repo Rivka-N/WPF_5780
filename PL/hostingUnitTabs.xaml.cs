@@ -896,23 +896,28 @@ namespace PL
 
         private void allBranches()//sets branches
         {
-
-            if (cb_bankNumberTextBox.SelectedIndex != -1)//something is selected
+            try
             {
-                foreach (var bank in bankSource.ElementAt(cb_bankNumberTextBox.SelectedIndex))
+                if (cb_bankNumberTextBox.SelectedIndex != -1)//something is selected
                 {
-                    cb_branchAddr.Items.Add(bank.BranchCity + " : " + bank.BranchAddress);//adds key of each group to list
-                    cb_branchNumber.Items.Add(bank.BranchNumber.ToString());
-                }
-                cb_branchAddr.SelectedIndex = -1;
-                cb_branchNumber.SelectedIndex = -1;
-                cb_branchAddr.IsEnabled = true;
-                cb_branchNumber.IsEnabled = true;
-                
-            }
-            else
-                pb_update.IsEnabled = false;//can't update button unti choose branch of bank
+                    foreach (var bank in bankSource.ElementAt(cb_bankNumberTextBox.SelectedIndex))
+                    {
+                        cb_branchAddr.Items.Add(bank.BranchCity + " : " + bank.BranchAddress);//adds key of each group to list
+                        cb_branchNumber.Items.Add(bank.BranchNumber.ToString());
+                    }
+                    cb_branchAddr.SelectedIndex = -1;
+                    cb_branchNumber.SelectedIndex = -1;
+                    cb_branchAddr.IsEnabled = true;
+                    cb_branchNumber.IsEnabled = true;
 
+                }
+                else
+                    pb_update.IsEnabled = false;//can't update button unti choose branch of bank
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message,"Error");
+            }
         }
         #endregion
 
