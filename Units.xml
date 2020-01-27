@@ -1,14 +1,11 @@
 <?xml version="1.0"?>
-<ArrayOfHostingUnit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<ArrayOfHostingUnit xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <HostingUnit>
     <HostingUnitName>a</HostingUnitName>
     <AreaVacation>Center</AreaVacation>
     <Host>
-      <HostKey>11111111</HostKey>
-      <Name>yoni</Name>
-      <LastName>cohen</LastName>
-      <CollectionClearance>true</CollectionClearance>
-      <EmailSerializable>rgrin4365@gmail.com</EmailSerializable>
+      <HostKey>0</HostKey>
+      <CollectionClearance>false</CollectionClearance>
     </Host>
     <HostingUnitType>Hotel</HostingUnitType>
     <HostingUnitKey>10000001</HostingUnitKey>
@@ -442,11 +439,8 @@
     <HostingUnitName>b</HostingUnitName>
     <AreaVacation>Center</AreaVacation>
     <Host>
-      <HostKey>11111111</HostKey>
-      <Name>yoni</Name>
-      <LastName>cohen</LastName>
-      <CollectionClearance>true</CollectionClearance>
-      <EmailSerializable>rgrin4365@gmail.com</EmailSerializable>
+      <HostKey>0</HostKey>
+      <CollectionClearance>false</CollectionClearance>
     </Host>
     <HostingUnitType>Hotel</HostingUnitType>
     <HostingUnitKey>10000002</HostingUnitKey>
@@ -880,11 +874,8 @@
     <HostingUnitName>c</HostingUnitName>
     <AreaVacation>Center</AreaVacation>
     <Host>
-      <HostKey>11111112</HostKey>
-      <Name>liel</Name>
-      <LastName>levi</LastName>
-      <CollectionClearance>true</CollectionClearance>
-      <EmailSerializable>rivka.hadara@gmail.com</EmailSerializable>
+      <HostKey>0</HostKey>
+      <CollectionClearance>false</CollectionClearance>
     </Host>
     <HostingUnitType>Hotel</HostingUnitType>
     <HostingUnitKey>10000003</HostingUnitKey>
@@ -1302,6 +1293,19 @@
       <boolean>false</boolean>
       <boolean>false</boolean>
       <boolean>false</boolean>
+      <boolean>false</boolean>
+      <boolean>false</boolean>
+      <boolean>false</boolean>
+      <boolean>false</boolean>
+      <boolean>false</boolean>
+      <boolean>false</boolean>
+      <boolean>false</boolean>
+      <boolean>false</boolean>
+      <boolean>false</boolean>
+      <boolean>false</boolean>
+    </Diary>
+  </HostingUnit>
+</ArrayOfHostingUnit>lean>false</boolean>
       <boolean>false</boolean>
       <boolean>false</boolean>
       <boolean>false</boolean>

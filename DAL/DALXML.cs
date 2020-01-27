@@ -76,12 +76,12 @@ namespace DAL
                 guestRequestPath = localPath + @"\Guests.xml";
                 orderPath = localPath + @"\Orders.xml";
                 configPath = localPath + @"\Config.xml";
-                { h.HostKey = 11111111; h.Name = "yoni"; h.LastName = "cohen"; h.Mail = new System.Net.Mail.MailAddress("rgrin4365@gmail.com"); h.CollectionClearance = true; };
-                { h1.HostKey = 11111112; h1.Name = "liel"; h1.LastName = "levi"; h1.Mail = new System.Net.Mail.MailAddress("rivka.hadara@gmail.com");  h1.CollectionClearance = true; }
+                //h.HostKey = 11111111; h.Name = "yoni"; h.LastName = "cohen"; h.Mail = new System.Net.Mail.MailAddress("rgrin4365@gmail.com"); h.CollectionClearance = true; 
+               // { h1.HostKey = 11111112; h1.Name = "liel"; h1.LastName = "levi"; h1.Mail = new System.Net.Mail.MailAddress("rivka.hadara@gmail.com");  h1.CollectionClearance = true; }
 
                 units.Add(item: new HostingUnit() { HostingUnitKey = 10000001, HostingUnitName = "a", AreaVacation = Enums.Area.Center, Host=h, HostingUnitType = Enums.HostingUnitType.Hotel, Pool = Enums.Preference.Yes, NumAdult = 2, NumChildren = 2, Jacuzzi = Enums.Preference.No, Garden = Enums.Preference.Yes, Meal = Enums.MealType.Full, MoneyPaid = 23 });
-                units.Add(new HostingUnit() { HostingUnitKey = 10000002, HostingUnitName = "b", Host = h, AreaVacation = Enums.Area.Center, HostingUnitType = Enums.HostingUnitType.Hotel, Pool = Enums.Preference.Yes, NumAdult = 2, NumChildren = 0, Jacuzzi = Enums.Preference.Yes, Garden = Enums.Preference.No, Meal = Enums.MealType.Full, MoneyPaid = 100 });
-                units.Add(new HostingUnit() { HostingUnitKey = 10000003, HostingUnitName = "c", Host = h1, AreaVacation = Enums.Area.Center, HostingUnitType = Enums.HostingUnitType.Hotel, Pool = Enums.Preference.No, NumAdult = 2, NumChildren = 2, Jacuzzi = Enums.Preference.No, Garden = Enums.Preference.Yes, Meal = Enums.MealType.Full });
+              // units.Add(new HostingUnit() { HostingUnitKey = 10000002, HostingUnitName = "b", Host = h, AreaVacation = Enums.Area.Center, HostingUnitType = Enums.HostingUnitType.Hotel, Pool = Enums.Preference.Yes, NumAdult = 2, NumChildren = 0, Jacuzzi = Enums.Preference.Yes, Garden = Enums.Preference.No, Meal = Enums.MealType.Full, MoneyPaid = 100 });
+               //units.Add(new HostingUnit() { HostingUnitKey = 10000003, HostingUnitName = "c", Host = h1, AreaVacation = Enums.Area.Center, HostingUnitType = Enums.HostingUnitType.Hotel, Pool = Enums.Preference.No, NumAdult = 2, NumChildren = 2, Jacuzzi = Enums.Preference.No, Garden = Enums.Preference.Yes, Meal = Enums.MealType.Full });
 
                 //units.Add(DS.DataSource.hostingUnits[0]);
                 addHostingUnit();
