@@ -32,7 +32,6 @@ namespace DAL
         #region order
         List<Order> getAllOrders();
         void addOrder(Order ord);
-        void changeOrder(Func<Order, bool> p1, Func<Order, Order> p2);
         void addCharge(HostingUnit unit, int numDays);
         void changeOrderStatus(Func<Order, bool> p1, Enums.OrderStatus status);
 
