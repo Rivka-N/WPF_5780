@@ -78,14 +78,7 @@ namespace BL
         #endregion
 
         #region add guest
-        public bool addGuest(GuestRequest guest)//add guest to the data list in DS
-        {
-            myDAL.addGuest(guest.Clone());//adds guest to list
-            if (findUnit(guest))
-                return true;//tries to find units for this guest request
-            return false;
-        }
-        bool findUnit(GuestRequest guest)//finds applicable units for request and sends mail to hosts
+        public List<HostingUnit> findUnit(GuestRequest guest)//finds applicable units for request and sends mail to hosts
         {
             var units = myDAL.getAllHostingUnits();
             List<HostingUnit> listOfUnits = new List<HostingUnit>();
@@ -97,13 +90,17 @@ namespace BL
                 }
             }
             if (listOfUnits.Count() == 0)
-                return false;
-                //throw new unfoundRequestExceptionBL();
+                throw new unfoundRequestExceptionBL();
             mail(listOfUnits, guest);  //sends mail to all of the hosts 
-            return true;
-            //return listOfUnits;
+
+            return listOfUnits;
         }
 
+        public void addGuest(GuestRequest guest)//add guest to the data list in DS
+        {
+            myDAL.addGuest(guest.Clone());//adds guest to list
+            findUnit(guest);//tries to find units for this guest request
+        }
         #endregion
 
         #region order
@@ -559,6 +556,7 @@ namespace BL
 
         #endregion
         #region gets
+
         public List<GuestRequest> getReleventRequests(HostingUnit unit)//finds requests relevent for this unit
         {
             var orders = getOrders(ord => unit.HostingUnitKey == ord.HostingUnitKey && ord.Status != Enums.OrderStatus.Closed);//finds requests for this unit that aren't closed
