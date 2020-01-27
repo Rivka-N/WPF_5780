@@ -64,8 +64,10 @@ namespace DAL
             {
                 #region xelements load
                 localPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);//saves local path for xml files
-                for (int i = 0; i < 3; i++)
+                while (localPath.Contains("PL"))//takes off all folders but PL
+                {
                     localPath = Path.GetDirectoryName(localPath);
+                }
 
                 hostingUnitPath = localPath + @"\Units.xml";
                 guestRequestPath = localPath + @"\Guests.xml";
