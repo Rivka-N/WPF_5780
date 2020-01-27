@@ -229,18 +229,7 @@ namespace BL
 
         }
 
-        public void checkOrder(Host h1, HostingUnit hu1, GuestRequest g1, GuestRequest foundGuest)
-        //checks if it's a valid order and adds it to orders
-        {
-            if (h1.HostKey != hu1.Host.HostKey)
-                throw new InvalidException("host details don't match");
-            if (g1.GuestRequestKey != foundGuest.GuestRequestKey)
-                throw new InvalidException("guest details don't match");
-            if (foundGuest.Status == Enums.OrderStatus.Closed)
-                throw new InvalidException("guest already booked");
-            order(hu1, foundGuest);//if everything is valid adds order
-        }
-        
+     
         public void order(HostingUnit unit, GuestRequest guest)//final order
                                                                //makes sure that the days in the request available
                                                                //update guest status
@@ -306,10 +295,9 @@ namespace BL
             if (unitKey < 0)
                 throw new InvalidException("invalid unit key");
             var unit = myDAL.findUnit(unitKey);
-            return (unit == null) ? throw new InvalidException("unit not found") : unit;
+            return (unit == null) ? throw new unfoundRequestExceptionBL("unit not found") : unit;
         }
 
-      
         public GuestRequest findGuest(GuestRequest g1, string text)//find guest based on text of guestnum.
         {
             int guestNum;
@@ -382,8 +370,7 @@ namespace BL
             }
             catch(Exception ex)
             {
-                if (ex is InvalidException)
-                    throw ex;
+               
                 throw new InvalidException("Unable to find items");
             }
         }
@@ -503,9 +490,9 @@ namespace BL
             catch(Exception ex)
             {
 
-                if (ex is InvalidException)
-                    throw ex;
-                throw new InvalidException("Unable to find items");
+                if (ex is NullReferenceException)
+                    return null;//no requests
+                throw new invalidFormatBL("Unable to find items");//query was is wrong format
             }
         }
 
@@ -545,7 +532,8 @@ namespace BL
             }
             else//no date selected
                 dateCondition = ord => condition(ord);
-
+            if (orders == null)
+                return orders;//nothing there
             ordersToReturn =
                      from ord in orders
                      let p = dateCondition(ord) //checks that all conditions apply
@@ -638,24 +626,33 @@ namespace BL
         {
             try
             {
+
                 HostingUnit toDelete = findUnit(unit);
-                var orders = ordersOfUnit(unit).ToList();//all orders with unit as their unit key into list
-                if (orders.Count == 0)//no orders for that unit
-                    myDAL.deleteUnit(toDelete);
-                else
+                try
                 {
-                    var requests = from ord in orders
-                                   let request = myDAL.findGuest(ord.GuestRequestKey)//sets request to the guestrequest that goes with it
-                                   where (DateTime.Today < request.ReleaseDate)//date of end of vacation is after today
-                                   select ord;
-                    if (requests == null)
-                        myDAL.deleteUnit(toDelete);//no orders after today
+                    var orders = ordersOfUnit(unit).ToList();//all orders with unit as their unit key into list
+                    if (orders.Count == 0)//no orders for that unit
+                        myDAL.deleteUnit(toDelete);
                     else
-                        throw new InvalidException("cannot delete. vacations are booked for the future");
+                    {
+                        var requests = from ord in orders
+                                       let request = myDAL.findGuest(ord.GuestRequestKey)//sets request to the guestrequest that goes with it
+                                       where (DateTime.Today < request.ReleaseDate)//date of end of vacation is after today
+                                       select ord;
+                        if (requests == null)
+                            myDAL.deleteUnit(toDelete);//no orders after today
+                        else
+                            throw new InvalidException("cannot delete. vacations are booked for the future");
+                    }
+                }
+                catch(unfoundRequestExceptionBL ex)
+                {
+                    myDAL.deleteUnit(toDelete);//no orders after today. deletes
+
                 }
             }
             catch(Exception ex)
-            {
+            { 
                 throw new InvalidException(ex.Message);
             }
             
@@ -692,9 +689,6 @@ namespace BL
 
                 if (!Regex.IsMatch(text, @"@([\w\-]+)((\.(\w){2,})+)$"))//words@
                      throw new invalidFormatBL();//not mailformat
-
-                //if (!Regex.IsMatch(text, @"^[a-zA-Z0-9]+@{1}[a-zA-Z0-9]+\.[a-zA-Z]{1,3}$"))//letters and numbers in the beginning
-                // throw new invalidFormatBL();//not mail format
 
                 var mail = new System.Net.Mail.MailAddress(text);
                 if (mail.Address != text)
@@ -740,7 +734,10 @@ namespace BL
         }
         public IEnumerable<Order>ordersOfUnit(int unitNum)
         {
+
             var allOrders = myDAL.getAllOrders();
+            if (allOrders == null || allOrders.Count == 0)
+                throw new unfoundRequestExceptionBL("no orders found");//nothing there
             var thisUnit = from order in allOrders
                            let orderKey = order.HostingUnitKey//saves unit key for easier access
                            where orderKey == unitNum

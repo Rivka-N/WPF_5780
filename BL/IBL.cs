@@ -40,7 +40,6 @@ namespace BL
         #region orders
         void addOrder(Order ord);
         List<Order> getAllOrders();
-        void checkOrder(Host h1, HostingUnit hu1, GuestRequest g1, GuestRequest foundGuest);
         void order(HostingUnit unit, GuestRequest guest);//add order
         void sendGuestMail(HostingUnit unit, GuestRequest guest);//guest and hosting unit, sends mail to guest and creates order from details
         #endregion

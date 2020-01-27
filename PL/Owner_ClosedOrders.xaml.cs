@@ -55,7 +55,7 @@ namespace PL
             {
                 myOrders = myBL.searchOrders(dp_requestDate.SelectedDate, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
                 dg_orderDataGrid.ItemsSource = myOrders;//updates data source
-                if (myOrders.Count == 0)//no ordrs found
+                if (myOrders==null|| myOrders.Count == 0)//no ordrs found
                 {
                     tb_order_error.Visibility = Visibility.Visible;//shows textbox
                     dg_orderDataGrid.Visibility = Visibility.Collapsed;

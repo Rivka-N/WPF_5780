@@ -28,9 +28,21 @@ namespace PL
             InitializeComponent();
             int sum = myBL.TotalSumCollectedFromUnits();
             tb_moneyCollected.Text = sum.ToString();//text is sum collected
-            tb_guests.Text = myBL.getRequests().Count.ToString();//total requests
-            tb_units.Text = myBL.getAllHostingUnits().Count.ToString();//total hosts
-            tb_finalguests.Text = myBL.getRequests(req => req.Status == Enums.OrderStatus.Closed).Count.ToString();//all closed requests
+            try
+            {
+                var reqs = myBL.getRequests();
+                tb_guests.Text = (reqs != null) ? reqs.Count.ToString() : "0";//total requests
+                var us = myBL.getAllHostingUnits();
+                tb_units.Text = (us != null) ? us.Count.ToString() : "0";//total units
+                var gs = myBL.getRequests(req => req.Status == Enums.OrderStatus.Closed);
+                tb_finalguests.Text = gs != null ? gs.Count.ToString() : "0";//all closed requests
+            }
+            catch
+            {
+                tb_units.Text = "invalid data";
+                tb_guests.Text= "invalid data";
+                tb_finalguests.Text= "invalid data";
+            }
         }
     }
 }

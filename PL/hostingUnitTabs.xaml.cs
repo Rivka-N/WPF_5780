@@ -352,7 +352,7 @@ namespace PL
         {
             try
             {
-                if (!Regex.IsMatch(tb_name.Text, @"[\p{L}]{2,}"))//contains some letters
+                if (!Regex.IsMatch(tb_name.Text, @"[\p{L}]+"))//contains some letters
                     throw new invalidTypeExceptionPL();//not a valid name
                 tb_unitname.BorderBrush = Brushes.Gray;
                 if (!(originalUnit.HostingUnitName == tb_unitname.Text))
@@ -850,6 +850,7 @@ namespace PL
         private void Cb_bankName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             cb_bankNumberTextBox.SelectedIndex = cb_bankName.SelectedIndex;//selects that index in the bank names
+            allBranches();//filters branches comboboxes
         }
         private void Cb_bankNumberTextBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -871,22 +872,23 @@ namespace PL
 
         private void setBank()
         {
-            var b = bankSource.ElementAt(cb_bankNumberTextBox.SelectedIndex).ElementAt(cb_branchNumber.SelectedIndex);
-            //selects from bank list this person's branch item
-            if (unit.Host.Bank.BankAcountNumber != originalUnit.Host.Bank.BankAcountNumber)//something was changed
-                pb_update.IsEnabled = true;//enables button
-            else
+            if (cb_branchNumber.SelectedIndex != -1)//selected branch
             {
-                unit.Host.Bank.BankName = b.BankName; //sets bank
-                unit.Host.Bank.BankNumber = b.BankNumber;
-                unit.Host.Bank.BranchAddress = b.BranchAddress;
-                unit.Host.Bank.BranchCity = b.BranchCity;
-                unit.Host.Bank.BranchNumber = b.BranchNumber;
-                if (unit.Host.Bank.BankNumber!=originalUnit.Host.Bank.BankNumber|| unit.Host.Bank.BranchNumber != originalUnit.Host.Bank.BranchNumber)//different bank or branch
-                    pb_update.IsEnabled = true;
-            }
-            //enables changing unit. if nothing was changed, doesn't
+                var b = bankSource.ElementAt(cb_bankNumberTextBox.SelectedIndex).ElementAt(cb_branchNumber.SelectedIndex);
+                //selects from bank list this person's branch item
+                if (unit.Host.Bank.BankNumber != originalUnit.Host.Bank.BankNumber || unit.Host.Bank.BranchNumber != originalUnit.Host.Bank.BranchNumber)//different bank or branch
+                {
+                    pb_update.IsEnabled = true;//enables button
 
+                    unit.Host.Bank.BankName = b.BankName; //sets bank
+                    unit.Host.Bank.BankNumber = b.BankNumber;
+                    unit.Host.Bank.BranchAddress = b.BranchAddress;
+                    unit.Host.Bank.BranchCity = b.BranchCity;
+                    unit.Host.Bank.BranchNumber = b.BranchNumber;
+                    pb_update.IsEnabled = true;
+                }
+                //enables changing unit. if nothing was changed, doesn't
+            }
         }
 
         #endregion
@@ -894,18 +896,27 @@ namespace PL
 
         private void allBranches()//sets branches
         {
-
-            if (cb_bankNumberTextBox.SelectedIndex != -1)//something is selected
+            try
             {
-                foreach (var bank in bankSource.ElementAt(cb_bankNumberTextBox.SelectedIndex))
+                if (cb_bankNumberTextBox.SelectedIndex != -1)//something is selected
                 {
-                    cb_branchAddr.Items.Add(bank.BranchCity + " : " + bank.BranchAddress);//adds key of each group to list
-                    cb_branchNumber.Items.Add(bank.BranchNumber.ToString());
-                    
+                    foreach (var bank in bankSource.ElementAt(cb_bankNumberTextBox.SelectedIndex))
+                    {
+                        cb_branchAddr.Items.Add(bank.BranchCity + " : " + bank.BranchAddress);//adds key of each group to list
+                        cb_branchNumber.Items.Add(bank.BranchNumber.ToString());
+                    }
+                    cb_branchAddr.SelectedIndex = -1;
+                    cb_branchNumber.SelectedIndex = -1;
+                    cb_branchAddr.IsEnabled = true;
+                    cb_branchNumber.IsEnabled = true;
+
                 }
-                cb_branchAddr.IsEnabled = true;
-                cb_branchNumber.IsEnabled = true;
-                pb_update.IsEnabled = false;//can't update button unti choose branch of bank
+                else
+                    pb_update.IsEnabled = false;//can't update button unti choose branch of bank
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message,"Error");
             }
         }
         #endregion
