@@ -11,7 +11,7 @@ namespace BL
     public interface IBL
     {
         #region guest functions
-        bool addGuest(GuestRequest guest);
+        void addGuest(GuestRequest guest);
         List<GuestRequest> getRequests();
         List<GuestRequest> getRequests(Func<GuestRequest, bool> p);
         GuestRequest findGuest(GuestRequest g1, string text);//puts text as g1's number and returns instance of it in ds if found
@@ -64,8 +64,6 @@ namespace BL
         IEnumerable<IGrouping<Enums.Area, HostingUnit>> groupUnitsByArea();
         IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupRequestsByArea();
         IEnumerable<IGrouping<Enums.MealType, GuestRequest>> groupRequestsByMeal();
-        IEnumerable<IGrouping<int, BankAccount>> groupBranchesByBank();
-
         #endregion
     }
 }
