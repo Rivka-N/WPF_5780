@@ -27,14 +27,29 @@ namespace PL
         {
             myBL = factoryBL.getBL();
             InitializeComponent();
-            unitsList = myBL.getAllHostingUnits();
-            dg_hostingUnitDataGrid.ItemsSource = unitsList;//binds to hosting units
+            filterUnits();
         }
 
         private void tb_SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            filterUnits();
+        }
+
+        private void filterUnits()//filters units based on search
+        {
             unitsList = myBL.searchUnits(tb_SearchTextBox.Text);
             dg_hostingUnitDataGrid.ItemsSource = unitsList;
+            if (unitsList.Count==0)//no units. shows error textbox
+            {
+                tb_unit_error.Visibility = Visibility.Visible;
+                dg_hostingUnitDataGrid.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                tb_unit_error.Visibility = Visibility.Collapsed;
+                dg_hostingUnitDataGrid.Visibility = Visibility.Visible;
+
+            }
         }
     }
 }

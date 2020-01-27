@@ -28,8 +28,7 @@ namespace PL
         {
             InitializeComponent();
             myBL = factoryBL.getBL();
-            myOrders= myBL.getOrders(ord => ord.Status == Enums.OrderStatus.Closed);
-            dg_orderDataGrid.ItemsSource= myOrders;//all closed orders
+            search();
            
         }
 
@@ -47,21 +46,34 @@ namespace PL
         #region searching
         private void Tb_SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            search();
+        }
+
+        private void search()//resets orders to applicable ones
+        {
             try
             {
-                myOrders=myBL.searchOrders(dp_requestDate.SelectedDate, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
+                myOrders = myBL.searchOrders(dp_requestDate.SelectedDate, tb_SearchTextBox.Text, Enums.FunctionSender.Owner);
                 dg_orderDataGrid.ItemsSource = myOrders;//updates data source
+                if (myOrders.Count == 0)//no ordrs found
+                {
+                    tb_order_error.Visibility = Visibility.Visible;//shows textbox
+                    dg_orderDataGrid.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    tb_order_error.Visibility = Visibility.Collapsed;//hides textbox
+                    dg_orderDataGrid.Visibility = Visibility.Visible;
+                }
             }
             catch
             {
                 MessageBox.Show("invalid query");
             }
         }
-
         private void searchDatePicker_SelectedDateChanged_1(object sender, SelectionChangedEventArgs e)
         {
-            Tb_SearchTextBox_TextChanged(sender, null);//calls searchtextbox function
-
+            search();
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {

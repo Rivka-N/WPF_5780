@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace BE
 {
     public class HostingUnit
-    {//makes sure running number is set correctly for all of them(Hosting Unit Key)
+    {//kes sure running number is set correctly for all of them(Hosting Unit Key)
         #region fields
         private string hostingUnitName;
         private Int32 hostingUnitKey;
@@ -21,7 +22,6 @@ namespace BE
         Enums.Preference garden;
         #endregion
         #region properties
-        public bool[,] Diary { get; set; }
         public string HostingUnitName { get => hostingUnitName; set { hostingUnitName = value; } }
         public Enums.Area AreaVacation { get => area; set { area = value; } }
         public Host Host { get=>host; set { host = value; } }
@@ -34,12 +34,21 @@ namespace BE
         public Enums.Preference Garden { get => garden; set { garden = value; } }
         public Enums.MealType Meal{ get; set; }
         public int MoneyPaid { get; set; }//paid to owner
+
+        [XmlIgnore]
+        public bool[,] Diary { get; set; }
+
+        [XmlArray("Diary")]
+        public bool[] FlatDiary
+        {
+            get { return Diary.Flatten(); }
+            set { Diary = value.Expand(31); }
+        }
         #endregion
         #region ctors
         public HostingUnit()
         {
-            HostingUnitName = null;
-            HostingUnitKey = 0;
+            
             Diary = new bool[13, 32];
             this.hostingUnitType = Enums.HostingUnitType.Zimmer;
             this.AreaVacation = Enums.Area.Center;
@@ -65,6 +74,39 @@ namespace BE
         public override string ToString()
         {
             return "Host Name: " + host.Name + " " + host.LastName + "\n" + " Type of Unit: " + HostingUnitType + " Unit Name: " + hostingUnitName+ "\n";
+        }
+    }
+
+    public static class Tools//flatten array
+    {
+        public static T[] Flatten<T>(this T[,] arr)
+        {
+            int rows = arr.GetLength(1);
+            int columns = arr.GetLength(0);
+            T[] arrFlattened = new T[rows * columns];
+            for (int j = 0; j < rows; j++)
+            {
+                for (int i = 0; i < columns; i++)
+                {
+                    var test = arr[i, j];
+                    arrFlattened[i * rows + j] = arr[i, j];
+                }
+            }
+            return arrFlattened;
+        }
+        public static T[,] Expand<T>(this T[] arr, int rows)
+        {
+            int length = arr.GetLength(0);//make sure cols and rows are set correctly
+            int columns = (length / rows);
+            T[,] arrExpanded = new T[columns, rows];
+            for (int j = 0; j < rows; j++)
+            {
+                for (int i = 0; i < columns; i++)
+                {
+                    arrExpanded[i, j] = arr[i * rows + j];
+                }
+            }
+            return arrExpanded;
         }
     }
 }

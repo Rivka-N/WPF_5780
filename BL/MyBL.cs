@@ -15,7 +15,7 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Reflection;
 using System.Net.Http;
-
+using System.Threading;
 
 namespace BL
 {
@@ -88,73 +88,114 @@ namespace BL
 
             return listOfUnits;
         }
-        public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with guest details to the host
-        {
-            //sends mail to the host
 
-        }
         #endregion
         #region order
 
-       
+        public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with guest details to the host
+        {
+            //sends mail to the hosts
+
+           
+                #region send mail to hosts
+                new Thread(() =>
+                {
+                    try
+                    {
+                        MailMessage mail = new MailMessage();
+                        foreach (HostingUnit hosting in Offers)
+                        {
+                            mail.To.Add(hosting.Host.Mail);
+
+                        }
+                        mail.From = new MailAddress("amazingvacations169@gmail.com", "Amazing Vacations");
+                        mail.Subject = "Guest Request";
+                        mail.Body = "Hello! " + guest.Name + "\nis intresting in your hostingUnit, for more datails please log in yo your personal area and connect with your guest";
+                        SmtpClient smtp = new SmtpClient();
+                        smtp.UseDefaultCredentials = false;
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.EnableSsl = true;
+                        smtp.Credentials = new System.Net.NetworkCredential("amazingvacations169@gmail.com", "vacation169");
+
+                        smtp.EnableSsl = true;
+
+
+                        smtp.Send(mail);//send mail
+                    }
+                    catch (Exception ex)
+                    {
+                        //try to send mail again with a few second wait?
+                        throw new networkErrorExceptionBL("unable to send mail: " + ex.Message);
+                    }
+                }).Start();
+                #endregion
+
+
+            
+           
+
+        }
 
         public void sendGuestMail(HostingUnit unit, GuestRequest guest)//guest and hosting unit, sends mail to guest and creates order from details
         {
-            try
+            new Thread(() =>
             {
+                try
+                {
 
-                #region send mail
-                //add new background worker here
-                MailMessage mail = new MailMessage();
-                mail.To.Add(guest.Mail);
-                mail.From = new MailAddress("amazingvacations169@gmail.com", "Amazing Vacations");
-                mail.Subject = "Hosting Unit Offer";
-                //mail.Body = "Hello " + guest.Name + "\nWe found a " + guest.TypeOfUnit + " for you.\n Here are the details:\n" + unit.ToString() +
-                //    "\nPlease respond to " + unit.Host.Mail + " and finalize the details\n";//change the to string
+                    #region send mail
+                    //add new background worker here
+                    MailMessage mail = new MailMessage();
+                    mail.To.Add(guest.Mail);
+                    mail.From = new MailAddress("amazingvacations169@gmail.com", "Amazing Vacations");
+                    mail.Subject = "Hosting Unit Offer";
+                    //mail.Body = "Hello " + guest.Name + "\nWe found a " + guest.TypeOfUnit + " for you.\n Here are the details:\n" + unit.ToString() +
+                    //    "\nPlease respond to " + unit.Host.Mail + " and finalize the details\n";//change the to string
 
-                string filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Data\HTML.html");
+                    string filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Data\HTML.html");
 
-                string mailBody = File.ReadAllText(filePath);
-                mailBody = mailBody
-                    .Replace("@@name@@", guest.Name)
-                    .Replace("@@hostingType@@", (unit.HostingUnitType).ToString())
-                    .Replace("@@hostMail@@", (unit.Host.Mail).ToString());
-                                              
-                mail.Body = mailBody;
+                    string mailBody = File.ReadAllText(filePath);
+                    mailBody = mailBody
+                        .Replace("@@name@@", guest.Name)
+                        .Replace("@@hostingType@@", (unit.HostingUnitType).ToString())
+                        .Replace("@@hostMail@@", (unit.Host.Mail).ToString());
 
-                mail.IsBodyHtml = true;
+                    mail.Body = mailBody;
 
-        SmtpClient smtp = new SmtpClient();
-                smtp.UseDefaultCredentials = false;
-                smtp.Host = "smtp.gmail.com";
-                smtp.EnableSsl = true;
-                smtp.Credentials = new System.Net.NetworkCredential("amazingvacations169@gmail.com", "vacation169");
+                    mail.IsBodyHtml = true;
 
-                smtp.EnableSsl = true;
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.UseDefaultCredentials = false;
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.EnableSsl = true;
+                    smtp.Credentials = new System.Net.NetworkCredential("amazingvacations169@gmail.com", "vacation169");
+
+                    smtp.EnableSsl = true;
 
 
-                smtp.Send(mail);//send mail
+                    smtp.Send(mail);//send mail
 
-                #endregion
+                    #endregion
 
-                myDAL.changeStatus(guest, Enums.OrderStatus.Mailed);//mailed status
-                Order ord = new Order();//makes new order
-                ord.HostingUnitKey = unit.HostingUnitKey;
-                ord.GuestRequestKey = guest.GuestRequestKey;
-                ord.HostName = unit.Host.Name +" "+ unit.Host.LastName;
-                ord.GuestName = guest.Name + " "+guest.LastName;
-                ord.OrderDate = DateTime.Today;//sent mail today
-                ord.CreateDate = guest.Registration;//original request created
-                addOrder(ord);//send to the function which adds the order to the order list
+                    myDAL.changeStatus(guest, Enums.OrderStatus.Mailed);//mailed status
+                    Order ord = new Order();//makes new order
+                    ord.HostingUnitKey = unit.HostingUnitKey;
+                    ord.GuestRequestKey = guest.GuestRequestKey;
+                    ord.HostName = unit.Host.Name + " " + unit.Host.LastName;
+                    ord.GuestName = guest.Name + " " + guest.LastName;
+                    ord.OrderDate = DateTime.Today;//sent mail today
+                    ord.CreateDate = guest.Registration;//original request created
+                    addOrder(ord);//send to the function which adds the order to the order list
 
-            }
-            catch (Exception ex)
-            {
-                //try to send mail again with a few second wait?
-                throw new networkErrorExceptionBL("unable to send mail: " + ex.Message);
-            }
+                }
+                catch (Exception ex)
+                {
+                    //try to send mail again with a few second wait?
+                    throw new networkErrorExceptionBL("unable to send mail: " + ex.Message);
+                }
+
+            }).Start();
         }
-      
 
         public bool availableDates(HostingUnit unit, GuestRequest guest)//checks if guest request's dates are available in this unit
         {
@@ -291,7 +332,8 @@ namespace BL
         }
 
         public List<HostingUnit> searchUnits(string text, Enums.FunctionSender fs=0)//returns all units that this text was found in
-        {
+        {   if (text == null || text == "")//no string
+                return getAllHostingUnits();//returns all units
             switch (fs)
             {
                 default://returns search through all units details
@@ -467,21 +509,23 @@ namespace BL
             switch (owner)//sets conditions based on who sent to function and what conditions it wants to be checked
             {
                 case Enums.FunctionSender.Owner:
-
+                    if (text!=null && text!="")//text was entered
                   condition = ord => ord.Status == status
                   && (/*(ord.HostName != null && ord.GuestName != null && ord.HostName.Contains(text) || ord.GuestName.Contains(text))//checks first that guest and host name exist
                   || */ ord.GuestRequestKey.ToString().Contains(text) || ord.HostingUnitKey.ToString().Contains(text)
                   || ord.OrderKey.ToString().Contains(text));//sets function with conditions to check
                     // sees if date selected and sets function accordingly
-                    
+                    else condition = ord => ord.Status == status;
                     break;
 
                 default:
-
-                    condition  = ord => ord.Status == status
+                    if (text != null && text != "")//text was entered
+                        condition = ord => ord.Status == status
                     && ((ord.HostName != null && ord.GuestName != null && ord.HostName.Contains(text) || ord.GuestName.Contains(text))//checks first that guest and host name exist
                     || ord.GuestRequestKey.ToString().Contains(text) || ord.HostingUnitKey.ToString().Contains(text)
                     || ord.OrderKey.ToString().Contains(text));//sets function with conditions to check
+                    else
+                        condition = ord => ord.Status == status;
                     break;
                   
                     
@@ -492,6 +536,7 @@ namespace BL
             }
             else//no date selected
                 dateCondition = ord => condition(ord);
+
             ordersToReturn =
                      from ord in orders
                      let p = dateCondition(ord) //checks that all conditions apply
