@@ -19,13 +19,12 @@ using System.Threading;
 
 namespace BL
 {
-    public class MyBL : IBL
+    public sealed class MyBL : IBL
     {
         static IDAL myDAL;
 
         #region Singleton
         private static readonly MyBL instance = new MyBL();
-
         public static MyBL Instance
         {
             get { return instance; }
@@ -33,14 +32,30 @@ namespace BL
 
         static MyBL()
         {
-            
+                        
             myDAL = factoryDAL.getDAL();
         }
-        private MyBL() { }
+        private MyBL()
+        {
+            //new Thread(() =>
+            //{ 
+            //    if (myDAL.getLastUpdatedStatus() < DateTime.Today)//only updates them if it didn't update today already
+            //    {
+            //        List<Order> orders = myDAL.getAllOrders();//all orders
+            //        var expired = from ord in orders
+            //                       where ord.Status == Enums.OrderStatus.Mailed && ord.OrderDate < DateTime.Today.AddDays(30)
+            //                       select ord;//selects all orders mailed more than 30 days ago without response
+            //        foreach (Order ord in expired)//goes over orders found
+            //        {
+            //            myDAL.updateStatus(ord, Enums.OrderStatus.Expired);//updates status to expired
+            //        }
+            //        myDAL.setLastUpdatedStatus();//updates date to datetime.today
+            //    }
+            //}).Start();//starts it
+        }
         #endregion
 
         #region add items
-       
 
         public void addHostingUnit(HostingUnit unit)//add hostingUnit to the hostingUnit list in DS
         {
@@ -90,6 +105,7 @@ namespace BL
         }
 
         #endregion
+
         #region order
 
         public void mail(List<HostingUnit> Offers, GuestRequest guest)//sends mail with guest details to the host
@@ -129,11 +145,7 @@ namespace BL
                     }
                 }).Start();
                 #endregion
-
-
             
-           
-
         }
 
         public void sendGuestMail(HostingUnit unit, GuestRequest guest)//guest and hosting unit, sends mail to guest and creates order from details
@@ -644,8 +656,7 @@ namespace BL
             //if there are orders in unit throw
         }
         #endregion
-        
-     
+       
         #region unit checks pl
         
 
@@ -711,7 +722,7 @@ namespace BL
             }
         }
             #endregion
-            #region LINQ and grouping
+        #region LINQ and grouping
 
             public IEnumerable<IGrouping<Enums.Area, HostingUnit>> groupUnitsByArea()
             {

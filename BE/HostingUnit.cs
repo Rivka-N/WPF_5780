@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace BE
-{
+{   
+    [Serializable]
+    [XmlRoot(ElementName ="Unit")]
     public class HostingUnit
     {//kes sure running number is set correctly for all of them(Hosting Unit Key)
         #region fields
@@ -37,12 +39,12 @@ namespace BE
 
         [XmlIgnore]
         public bool[,] Diary { get; set; }
-
+        
         [XmlArray("Diary")]
         public bool[] FlatDiary
         {
             get { return Diary.Flatten(); }
-            set { Diary = value.Expand(31); }
+            set { Diary = value.Expand(32); }
         }
         #endregion
         #region ctors
@@ -79,6 +81,7 @@ namespace BE
 
     public static class Tools//flatten array
     {
+
         public static T[] Flatten<T>(this T[,] arr)
         {
             int rows = arr.GetLength(1);

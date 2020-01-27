@@ -18,15 +18,18 @@ namespace DAL
 {
 
 
-        class DALXML : IDAL
+        sealed class DALXML : IDAL
     {
         #region Singleton
         private static readonly DALXML instance = new DALXML();
 
         //xelement
-        private string hostingUnitPath = @"hostingUnitsXML.xml";//saves hostingUnit path
-        private string guestRequestPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Data\guestRequestXML.xml");
-        
+        private string localPath;//saves path
+        private string guestRequestPath;
+        private string hostingUnitPath;
+        private string orderPath;
+        private string configPath;
+
         //unit list
         List<HostingUnit> units = new List<HostingUnit>();
 
@@ -59,7 +62,17 @@ namespace DAL
             try
             {
                 #region xelements load
+                localPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);//saves local path for xml files
+                for (int i = 0; i < 3; i++)
+                    localPath = Path.GetDirectoryName(localPath);
+
+                hostingUnitPath = localPath + @"\XMLFiles\Units.xml";
+                guestRequestPath = localPath + @"\XMLFiles\Guests.xml";
+                orderPath = localPath + @"\XMLFiles\Orders.xml";
+                configPath = localPath + @"\XMLFiles\Config.xml";
+
                 loadUnits();//puts units into xelement hostingUnits
+                loadGuests();//guest requests into guest requests
                 #endregion
             }
             catch(Exception ex)
@@ -67,14 +80,12 @@ namespace DAL
                 throw new loadExceptionDAL(ex.Message);
             }
 
-           
         }
         static DALXML() { }
+        #region save files in lists
         private void loadUnits()
         {
-            
-
-            try
+          try
             {
                 if (File.Exists(hostingUnitPath))//file exists
                 {
@@ -84,7 +95,6 @@ namespace DAL
                     fs.Close();//closes file
 
                 }
-                //hostingUnits = XElement.Load(guestRequestPath);//loads units into hostingUnits
                 else//creates it
                 {
                     new FileStream(hostingUnitPath, FileMode.Create);//creates file
@@ -95,14 +105,19 @@ namespace DAL
                 throw new loadExceptionDAL("Unable to load Hosting Units");
                 
             }
-            finally
-            {
-
-            }
-
         }
-
-
+        private void loadGuests()//guest file load
+        {
+            if (File.Exists(guestRequestPath))
+                guestRequest = XElement.Load(guestRequestPath);//loads guests into guestsRequest
+            else
+            {
+                guestRequest = new XElement("Requests");//creates file
+                guestRequest.Save(guestRequestPath);
+            }
+                
+        }
+        #endregion
         #endregion
         #endregion
 
@@ -621,20 +636,26 @@ namespace DAL
             try
             {
                 guest = (from p in guestRequest.Elements()
-                           where Convert.ToInt32(p.Element("guest").Value) == id
-                           select new Student()
-                           {
-                               Id = Convert.ToInt32(p.Element("id").Value),
-                               FirstName = p.Element("name").Element("firstName").Value,
-                               LastName = p.Element("name").Element("lastName").Value
-                           }).FirstOrDefault();
+                         where Convert.ToInt32(p.Element("guest").Value) == id
+                         select new GuestRequest()
+                         {
+                             //Id = Convert.ToInt32(p.Element("id").Value),
+                             //FirstName = p.Element("name").Element("firstName").Value,
+                             //LastName = p.Element("name").Element("lastName").Value
+                         }).FirstOrDefault();
             }
             catch
             {
-                student = null;
+                guest = null;
             }
-            return student;
-        }
+            return guest;
+        }
+
+        public GuestRequest findGuest(GuestRequest g1)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
         #endregion
     }
