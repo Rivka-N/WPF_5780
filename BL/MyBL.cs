@@ -604,6 +604,8 @@ namespace BL
 
         public List<Order> getOrders(Func<Order, bool> predicate)
         {
+            if (myDAL.getAllOrders() == null)
+                return null;
             var ords = from ord in myDAL.getAllOrders()
                        let p = predicate(ord)
                        where p
@@ -703,7 +705,7 @@ namespace BL
             try
             {
 
-                if (!Regex.IsMatch(text, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,})+)$"))//words@
+                if (!Regex.IsMatch(text, @"@([\w\-]+)((\.(\w){2,})+)$"))//words@
                      throw new invalidFormatBL();//not mailformat
 
                 //if (!Regex.IsMatch(text, @"^[a-zA-Z0-9]+@{1}[a-zA-Z0-9]+\.[a-zA-Z]{1,3}$"))//letters and numbers in the beginning
