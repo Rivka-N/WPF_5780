@@ -18,7 +18,7 @@ namespace DAL
 {
 
 
-        sealed class DALXML : IDAL
+        partial class DALXML : IDAL
     {
         #region Singleton
         private static readonly DALXML instance = new DALXML();
@@ -475,44 +475,6 @@ namespace DAL
 
         #endregion
         #region not implemented functions from IDAL
-
-
-     
-        //public GuestRequest findGuest(int g1)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public GuestRequest findGuest(GuestRequest g1)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public List<GuestRequest> getRequests()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void changeStatus(GuestRequest guest, Enums.OrderStatus status)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Order> getAllOrders()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void addOrder(Order ord)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void changeOrder(Func<Order, bool> p1, Func<Order, Order> p2)
-        {
-            throw new NotImplementedException();
-        }
-
         public void addCharge(HostingUnit unit, int numDays)
         {
             throw new NotImplementedException();
