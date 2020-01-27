@@ -459,15 +459,6 @@ namespace DAL
 
 
      
-        //public GuestRequest findGuest(int g1)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public GuestRequest findGuest(GuestRequest g1)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public List<GuestRequest> getRequests()
         {
@@ -512,9 +503,9 @@ namespace DAL
             try
             {
 
-                XElement guestName = new XElement("guest name", guest.Name);
-                XElement guestLastName = new XElement("guest last name", guest.LastName);
-                XElement guestKey = new XElement("guest key", guest.GuestRequestKey);
+                XElement guestName = new XElement("name", guest.Name);
+                XElement guestLastName = new XElement("lastName", guest.LastName);
+                XElement guestKey = new XElement("guestkey", guest.GuestRequestKey);
                 XElement jacuzzi = new XElement("jacuzzi", guest.Jacuzzi);
                 XElement pool = new XElement("pool", guest.Pool);
                 XElement garden = new XElement("garden", guest.Garden);
@@ -523,11 +514,11 @@ namespace DAL
                 XElement numAdults = new XElement("numAdults", guest.NumAdult);
                 XElement numChildren = new XElement("children", guest.NumChildren);
                 XElement status = new XElement("status", guest.Status);
-                XElement area = new XElement("area vacation", guest.AreaVacation);
-                XElement type = new XElement("type of unit", guest.TypeOfUnit);
-                XElement entryDate = new XElement("entry date", guest.EntryDate);
-                XElement releaseDate = new XElement("release date", guest.ReleaseDate);
-                XElement registrationDate = new XElement("registration Date", guest.Registration);
+                XElement area = new XElement("areavacation", guest.AreaVacation);
+                XElement type = new XElement("typeofunit", guest.TypeOfUnit);
+                XElement entryDate = new XElement("entrydate", guest.EntryDate);
+                XElement releaseDate = new XElement("releasedate", guest.ReleaseDate);
+                XElement registrationDate = new XElement("registrationDate", guest.Registration);
           
                 guestRequest.Add(new XElement("guest", guestLastName, guestName, guestKey, jacuzzi, pool, garden, mail,mael, numAdults, numChildren, status, area, type, entryDate, releaseDate,registrationDate));
                 guestRequest.Save(guestRequestPath);
@@ -563,21 +554,21 @@ namespace DAL
                 guest = (from p in guestRequest.Elements()//get all guestRequest
                          select new GuestRequest()
                          {
-                             Name = p.Element("name").Element("guest name").Value,
-                             LastName = p.Element("name").Element("guest last name").Value,
-                             GuestRequestKey = Convert.ToInt32(p.Element("guest key").Value),
-                             TypeOfUnit = (Enums.HostingUnitType)(Enum.Parse(typeof(Enums.HostingUnitType), p.Element("type of unit").Value)),
-                             AreaVacation = (Enums.Area)(Enum.Parse(typeof(Enums.Area), p.Element("area vacation").Value)),
+                             Name = p.Element("name").Value,
+                             LastName = p.Element("lastName").Value,
+                             GuestRequestKey = Convert.ToInt32(p.Element("guestkey").Value),
+                             TypeOfUnit = (Enums.HostingUnitType)(Enum.Parse(typeof(Enums.HostingUnitType), p.Element("typeofunit").Value)),
+                             AreaVacation = (Enums.Area)(Enum.Parse(typeof(Enums.Area), p.Element("areavacation").Value)),
                              NumAdult = Convert.ToInt32(p.Element("numAdults").Value),
                              NumChildren = Convert.ToInt32(p.Element("children").Value),
                              Pool = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), p.Element("pool").Value)),
                              Garden = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), p.Element("garden").Value)),
                              Jacuzzi = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), p.Element("jacuzzi").Value)),
                              Meal = (Enums.MealType)(Enum.Parse(typeof(Enums.MealType), p.Element("mael").Value)),
-                             EntryDate = Convert.ToDateTime(p.Element("entry date").Value),
-                             ReleaseDate = Convert.ToDateTime(p.Element("release date").Value),
-                             Registration = Convert.ToDateTime(p.Element("registration date").Value),
-                             Mail = new System.Net.Mail.MailAddress(p.Element("Email").Value, p.Element("guest name").Value + p.Element("guest last name").Value),
+                             EntryDate = Convert.ToDateTime(p.Element("entrydate").Value),
+                             ReleaseDate = Convert.ToDateTime(p.Element("releasedate").Value),
+                             Registration = Convert.ToDateTime(p.Element("registrationdate").Value),
+                             Mail = new System.Net.Mail.MailAddress(p.Element("Email").Value, p.Element("name").Value + p.Element("guest last name").Value),
                              Status = (Enums.OrderStatus)(Enum.Parse(typeof(Enums.OrderStatus), p.Element("status").Value))
 
                          }).ToList();
@@ -614,27 +605,47 @@ namespace DAL
         #endregion
 
         #region find guest
-        public GuestRequest findGuest(int id)
+        public GuestRequest findGuest(int key)//find guest by key
         {
             LoadData();
             GuestRequest guest;
             try
             {
                 guest = (from p in guestRequest.Elements()
-                           where Convert.ToInt32(p.Element("guest").Value) == id
-                           select new Student()
+                           where Convert.ToInt32(p.Element("guestkey").Value) == key
+                         select new GuestRequest()
                            {
-                               Id = Convert.ToInt32(p.Element("id").Value),
-                               FirstName = p.Element("name").Element("firstName").Value,
-                               LastName = p.Element("name").Element("lastName").Value
-                           }).FirstOrDefault();
+                             Name = p.Element("name").Value,
+                             LastName = p.Element("name").Element("guest last name").Value,
+                             GuestRequestKey = Convert.ToInt32(p.Element("guestkey").Value),
+                             TypeOfUnit = (Enums.HostingUnitType)(Enum.Parse(typeof(Enums.HostingUnitType), p.Element("typeofunit").Value)),
+                             AreaVacation = (Enums.Area)(Enum.Parse(typeof(Enums.Area), p.Element("areavacation").Value)),
+                             NumAdult = Convert.ToInt32(p.Element("numAdults").Value),
+                             NumChildren = Convert.ToInt32(p.Element("children").Value),
+                             Pool = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), p.Element("pool").Value)),
+                             Garden = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), p.Element("garden").Value)),
+                             Jacuzzi = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), p.Element("jacuzzi").Value)),
+                             Meal = (Enums.MealType)(Enum.Parse(typeof(Enums.MealType), p.Element("mael").Value)),
+                             EntryDate = Convert.ToDateTime(p.Element("entrydate").Value),
+                             ReleaseDate = Convert.ToDateTime(p.Element("releasedate").Value),
+                             Registration = Convert.ToDateTime(p.Element("registrationdate").Value),
+                             Mail = new System.Net.Mail.MailAddress(p.Element("Email").Value, p.Element("name").Value + p.Element("lastname").Value),
+                             Status = (Enums.OrderStatus)(Enum.Parse(typeof(Enums.OrderStatus), p.Element("status").Value))
+                         }).FirstOrDefault();
             }
             catch
             {
-                student = null;
+                guest = null;
             }
-            return student;
-        }
+            return guest;
+        }
+
+
+        public GuestRequest findGuest(GuestRequest g1)//find guest
+        {
+            return findGuest(g1.GuestRequestKey);
+        }
+
         #endregion
         #endregion
     }
