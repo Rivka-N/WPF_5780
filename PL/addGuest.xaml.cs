@@ -184,6 +184,7 @@ namespace PL
                 {
                     MessageBox.Show("No units found. We will contact you if any become available.",
                          "Error in request", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Close();
                    
                 }
                 else MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);

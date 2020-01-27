@@ -83,6 +83,14 @@
                                 <RowDefinition Height="Auto"/>
 
                             </Grid.RowDefinitions>
+                            <TextBox x:Name="tb_lastName" Width="120" VerticalAlignment="Top" Text="{Binding Host.LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3.4,4,0,0" Height="24" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_lastName_LostFocus"/>
+                            <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Name:"/>
+                            <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Last Name:"/>
+                            <TextBox x:Name="tb_name" Width="120" VerticalAlignment="Center" Text="{Binding Host.Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_name_LostFocus"/>
+                            <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="ID:"/>
+                            <TextBox x:Name="tb_id" Width="120" VerticalAlignment="Center" Text="{Binding Host.HostKey}" IsReadOnly="True" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+
+
                             <Label VerticalAlignment="Center" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Area Vacation:"/>
                             <ComboBox x:Name="cb_area" Width="120" VerticalAlignment="Center" Text="{Binding AreaVacation, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="6" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" SelectionChanged="Cb_area_SelectionChanged"/>
                             <Label VerticalAlignment="Center" Grid.Row="13" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Garden:"/>
@@ -104,10 +112,6 @@
                             <TextBox x:Name="tb_numChildrenTextBox" Text="{Binding NumChildren, Mode=OneTime}" Style="{StaticResource s_numPeople}" Grid.Row="9" Margin="3" Grid.Column="1" LostFocus="Tb_numChildrenTextBox_LostFocus"/>
                             <Label VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Pool:"/>
                             <CheckBox x:Name="cb_poolCheckBox" VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Unchecked="poolCheckBox_Checked" Checked="poolCheckBox_Checked"/>
-                            <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Last Name:"/>
-                            <TextBox x:Name="tb_lastName" Width="120" VerticalAlignment="Top" Text="{Binding Host.LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3.4,4,0,0" Height="24" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_lastName_LostFocus"/>
-                            <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Name:"/>
-                            <TextBox x:Name="tb_name" Width="120" VerticalAlignment="Center" Text="{Binding Host.Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_name_LostFocus"/>
                             <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Email:"/>
                             <TextBox x:Name="tb_mail" Width="120" VerticalAlignment="Top" Grid.Row="3" Margin="3,4,0,0" Height="24" HorizontalAlignment="Left" Grid.Column="1" LostFocus="Tb_mail_LostFocus"/>
 
@@ -128,17 +132,15 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Label Content="Bank Acount Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-                            <TextBox x:Name="bankAcountNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="3,0,0,4" Grid.Row="0" Text="{Binding Bank.BankAcountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Bottom" Width="120" TextChanged="BankAcountNumberTextBox_TextChanged"/>
+                            <TextBox x:Name="bankAcountNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="3,0,0,4" Grid.Row="0" Text="{Binding Bank.BankAcountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" LostFocus="BankAcountNumberTextBox_LostFocus" VerticalAlignment="Bottom" Width="120" TextChanged="BankAcountNumberTextBox_TextChanged"/>
                             <Label Content="Bank Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-                            <ComboBox x:Name="cb_bankName" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding Bank.BankName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" SelectionChanged="Cb_bankName_SelectionChanged"/>
+                            <ComboBox x:Name="cb_bankName" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" IsEditable="True" Text="{Binding Bank.BankName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" SelectionChanged="Cb_bankName_SelectionChanged"/>
                             <Label Content="Bank Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
                             <TextBox x:Name="bankNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding Bank.BankNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
                             <Label Content="Branch Address:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-                            <TextBox x:Name="branchAddressTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding Bank.BranchAddress, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                            <Label Content="Branch City:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
-                            <TextBox x:Name="branchCityTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding Bank.BranchCity, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                            <ComboBox x:Name="cb_branchAddr" Grid.Column="1" HorizontalAlignment="Left" IsEditable="True" IsEnabled="False" Height="23" Margin="3" Grid.Row="3" Text="{Binding Bank.BranchAddress, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
                             <Label Content="Branch Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
-                            <TextBox x:Name="branchNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="5" Text="{Binding Bank.BranchNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                            <TextBox x:Name="branchNumber" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="5" Text="{Binding Bank.BranchNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
                             <Label Name="lb_collectionClearance" Content="collection clearance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
                             <CheckBox x:Name="cb_collectionClearance" Grid.Column="1" Margin="3" HorizontalAlignment="Left" Grid.Row="6" IsChecked="{Binding CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Unchecked="Cb_collectionClearance_Checked" Checked="Cb_collectionClearance_Checked"/>
 

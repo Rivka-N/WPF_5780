@@ -276,25 +276,21 @@ namespace PL
                 }
                 else
                 {
-                    hosting.Host.HostKey = text;
-                    cb_phoneTextBox.BorderBrush = Brushes.Gray;
-
+                    if (isValidID(cb_phoneTextBox.Text))//if it's a valid id
+                    {
+                        hosting.Host.HostKey = text;
+                        cb_phoneTextBox.BorderBrush = Brushes.Gray;
+                        return;
+                    }
 
                 }
-            }
-            else
-            {
+            }//if it's not valid
                 cb_phoneTextBox.BorderBrush = Brushes.Red;
                 cb_phoneTextBox.Text = "";
-            }
+           
 
         }
-        public static bool IsValidUSPhoneNumber(string strPhone)
-        {
-            return true;
-            //string regExPattern = @"^[01]?[- .]?(\([2-9]\d{2}\)|[2-9]\d{2})[- .]?\d{3}[- .]?\d{4}$";
-            //return MatchStringFromRegex(strPhone, regExPattern);
-        }
+        
         public static bool MatchStringFromRegex(string str, string regexstr)
         {
             str = str.Trim();
@@ -304,7 +300,7 @@ namespace PL
 
         public static bool isValidID(string str)
         {
-           if (Regex.IsMatch(str, (".*(\\d{8})")))
+           if (Regex.IsMatch(str, (".*(\\d{9})")))
             {
                 return true;
             }
