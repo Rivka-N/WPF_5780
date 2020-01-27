@@ -161,11 +161,24 @@ namespace DAL
         }
         #endregion
         #region add order
+
+        public int getOrderKey()
+        {
+            Int32 stati = Convert.ToInt32(configuration.Element("Order").Value) + 1;
+            configuration.Element("Order").Value = stati.ToString();
+            configuration.Save(configPath);
+
+            return stati;
+
+        }
+
         public void addOrder(Order ord)
         {
             FileStream file = new FileStream(orderPath, FileMode.OpenOrCreate);//opens file
             try
             {
+                Int32 x = getOrderKey();
+                ord.OrderKey = x;
                 orders.Add(ord);//adds order to list
                 XmlSerializer xmlSer = new XmlSerializer(orders.GetType());
                 xmlSer.Serialize(file, orders);

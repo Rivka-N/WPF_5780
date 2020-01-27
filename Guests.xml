@@ -235,39 +235,75 @@
     <registrationDate>2020-01-27T00:00:00</registrationDate>
   </guest>
   <guest>
-    <lastName>is</lastName>
-    <name>myname</name>
+    <lastName>a</lastName>
+    <name>aa</name>
     <guestkey>0</guestkey>
     <jacuzzi>Maybe</jacuzzi>
     <pool>Maybe</pool>
     <garden>Maybe</garden>
-    <mail>ana@gmail.com</mail>
+    <mail>r@gmai.com</mail>
+    <mael>None</mael>
+    <numAdults>2</numAdults>
+    <children>0</children>
+    <status>Started</status>
+    <areavacation>Center</areavacation>
+    <typeofunit>Zimmer</typeofunit>
+    <entrydate>2020-01-29T00:00:00</entrydate>
+    <releasedate>2020-01-30T00:00:00</releasedate>
+    <registrationDate>2020-01-27T00:00:00</registrationDate>
+  </guest>
+  <guest>
+    <lastName>c</lastName>
+    <name>a</name>
+    <guestkey>0</guestkey>
+    <jacuzzi>Maybe</jacuzzi>
+    <pool>Maybe</pool>
+    <garden>Maybe</garden>
+    <mail>r@gmail.com</mail>
+    <mael>Half</mael>
+    <numAdults>2</numAdults>
+    <children>0</children>
+    <status>Started</status>
+    <areavacation>Center</areavacation>
+    <typeofunit>Zimmer</typeofunit>
+    <entrydate>2020-01-28T00:00:00</entrydate>
+    <releasedate>2020-01-30T00:00:00</releasedate>
+    <registrationDate>2020-01-27T00:00:00</registrationDate>
+  </guest>
+  <guest>
+    <lastName>e</lastName>
+    <name>e</name>
+    <guestkey>10000004</guestkey>
+    <jacuzzi>Maybe</jacuzzi>
+    <pool>Maybe</pool>
+    <garden>Maybe</garden>
+    <mail>e@gmail.com</mail>
     <mael>Full</mael>
     <numAdults>2</numAdults>
     <children>0</children>
     <status>Started</status>
     <areavacation>Center</areavacation>
-    <typeofunit>Hotel</typeofunit>
-    <entrydate>2020-01-30T00:00:00</entrydate>
-    <releasedate>2020-02-07T00:00:00</releasedate>
-    <registrationDate>2020-01-28T00:00:00</registrationDate>
+    <typeofunit>Zimmer</typeofunit>
+    <entrydate>2020-01-28T00:00:00</entrydate>
+    <releasedate>2020-01-31T00:00:00</releasedate>
+    <registrationDate>2020-01-27T00:00:00</registrationDate>
   </guest>
   <guest>
-    <lastName>adf</lastName>
-    <name>nad</name>
-    <guestkey>0</guestkey>
+    <lastName>a</lastName>
+    <name>aa</name>
+    <guestkey>10000005</guestkey>
     <jacuzzi>Maybe</jacuzzi>
     <pool>Maybe</pool>
     <garden>Maybe</garden>
-    <mail>ad@ga.com</mail>
-    <mael>None</mael>
-    <numAdults>0</numAdults>
-    <children>2</children>
+    <mail>a@gmail.com</mail>
+    <mael>Full</mael>
+    <numAdults>2</numAdults>
+    <children>0</children>
     <status>Started</status>
     <areavacation>Center</areavacation>
-    <typeofunit>Camping</typeofunit>
-    <entrydate>2020-01-31T00:00:00</entrydate>
-    <releasedate>2020-02-08T00:00:00</releasedate>
-    <registrationDate>2020-01-28T00:00:00</registrationDate>
+    <typeofunit>Zimmer</typeofunit>
+    <entrydate>2020-01-28T00:00:00</entrydate>
+    <releasedate>2020-01-31T00:00:00</releasedate>
+    <registrationDate>2020-01-27T00:00:00</registrationDate>
   </guest>
 </Requests>
