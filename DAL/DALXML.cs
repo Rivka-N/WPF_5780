@@ -26,12 +26,14 @@ namespace DAL
         //xelement
         private string hostingUnitPath = @"hostingUnitsXML.xml";//saves hostingUnit path
         private string guestRequestPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Data\guestRequestXML.xml");
+        private string orderPath = @"orderXML.xml";
         
         //unit list
         List<HostingUnit> units = new List<HostingUnit>();
 
         private XElement hostingUnits;
         private XElement guestRequest;
+        private XElement order;
 
         public static volatile bool bankDownloaded = false;//flag if bank was downloaded
         BackgroundWorker worker;
@@ -460,30 +462,13 @@ namespace DAL
 
      
 
-        public List<GuestRequest> getRequests()
-        {
-            throw new NotImplementedException();
-        }
+        
 
-        public void changeStatus(GuestRequest guest, Enums.OrderStatus status)
-        {
-            throw new NotImplementedException();
-        }
+        
 
-        public List<Order> getAllOrders()
-        {
-            throw new NotImplementedException();
-        }
+       
 
-        public void addOrder(Order ord)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void changeOrder(Func<Order, bool> p1, Func<Order, Order> p2)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public void addCharge(HostingUnit unit, int numDays)
         {
@@ -543,7 +528,7 @@ namespace DAL
             }
         }
 
-        public List<GuestRequest> GetguestRequestList()
+        public List<GuestRequest> getRequests()
         {
 
             LoadData();
@@ -646,6 +631,76 @@ namespace DAL
             return findGuest(g1.GuestRequestKey);
         }
 
+        #endregion
+        #endregion
+        #region order
+        #region get list of orders
+        public List<Order> getAllOrders()//returns all orders
+        {
+
+
+                LoadData();
+                List<Order> orders;
+                try
+                {
+
+                    orders = (from p in order.Elements()//get all guestRequest
+                             select new Order()
+                             {
+                                HostingUnitKey = Convert.ToInt32(p.Element("hostingKey").Value),
+                                HostName = p.Element("hostName").Value,
+                                GuestRequestKey = Convert.ToInt32(p.Element("guestKey").Value),
+                                GuestName = p.Element("guestName").Value,
+                                OrderKey = Convert.ToInt32(p.Element("orderKey").Value),
+                                OrderDate = Convert.ToDateTime(p.Element("orderDate").Value),
+                                Status = (Enums.OrderStatus)(Enum.Parse(typeof(Enums.OrderStatus), p.Element("status").Value)),
+                                CreateDate = Convert.ToDateTime(p.Element("createDate").Value)
+
+
+                             }).ToList();
+                }
+                catch
+                {
+                    orders = null;
+                }
+
+                return orders;
+            }
+        #endregion
+        #region add order
+        public void addOrder(Order ord)
+        {
+            try
+            {
+
+                XElement guestName = new XElement("guestName", ord.GuestName);
+                XElement hostName = new XElement("hostName", ord.HostName);
+                XElement guestKey = new XElement("guestKey", ord.GuestRequestKey);
+                XElement hostingKey = new XElement("hostingKey", ord.HostingUnitKey);
+                XElement orderKey = new XElement("orderKey", ord.OrderKey);
+                XElement orderDate = new XElement("orderDate", ord.OrderDate);
+                XElement status = new XElement("status", ord.Status);
+                XElement createDate = new XElement("createDate", ord.CreateDate);
+
+                order.Add(new XElement("guest", guestName, hostName, guestKey, hostingKey, orderKey, orderDate, status, createDate));
+                order.Save(orderPath);
+            }
+            catch
+            {
+                throw new loadExceptionDAL("unable to save new order to xml file");
+            }
+        }
+        #endregion
+        #region change
+        public void changeOrder(Func<Order, bool> p1, Func<Order, Order> p2)
+        {
+
+        }
+
+        public void changeStatus(GuestRequest guest, Enums.OrderStatus status)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
         #endregion
     }
