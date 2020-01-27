@@ -11,7 +11,7 @@ namespace BL
     public interface IBL
     {
         #region guest functions
-        void addGuest(GuestRequest guest);
+        bool addGuest(GuestRequest guest);
         List<GuestRequest> getRequests();
         List<GuestRequest> getRequests(Func<GuestRequest, bool> p);
         GuestRequest findGuest(GuestRequest g1, string text);//puts text as g1's number and returns instance of it in ds if found

@@ -32,8 +32,7 @@ namespace DAL
         //unit list
         List<HostingUnit> units = new List<HostingUnit>();
         List<Order> orders = new List<Order>();//orders
-        Host h = new Host();
-        Host h1 = new Host();
+      
 
         private XElement hostingUnits;
         private XElement guestRequest;
@@ -79,12 +78,11 @@ namespace DAL
                 //h.HostKey = 11111111; h.Name = "yoni"; h.LastName = "cohen"; h.Mail = new System.Net.Mail.MailAddress("rgrin4365@gmail.com"); h.CollectionClearance = true; 
                // { h1.HostKey = 11111112; h1.Name = "liel"; h1.LastName = "levi"; h1.Mail = new System.Net.Mail.MailAddress("rivka.hadara@gmail.com");  h1.CollectionClearance = true; }
 
-                units.Add(item: new HostingUnit() { HostingUnitKey = 10000001, HostingUnitName = "a", AreaVacation = Enums.Area.Center, Host=h, HostingUnitType = Enums.HostingUnitType.Hotel, Pool = Enums.Preference.Yes, NumAdult = 2, NumChildren = 2, Jacuzzi = Enums.Preference.No, Garden = Enums.Preference.Yes, Meal = Enums.MealType.Full, MoneyPaid = 23 });
+               // units.Add(item: new HostingUnit() { HostingUnitKey = 10000001, HostingUnitName = "a", AreaVacation = Enums.Area.Center, Host=h, HostingUnitType = Enums.HostingUnitType.Hotel, Pool = Enums.Preference.Yes, NumAdult = 2, NumChildren = 2, Jacuzzi = Enums.Preference.No, Garden = Enums.Preference.Yes, Meal = Enums.MealType.Full, MoneyPaid = 23 });
               // units.Add(new HostingUnit() { HostingUnitKey = 10000002, HostingUnitName = "b", Host = h, AreaVacation = Enums.Area.Center, HostingUnitType = Enums.HostingUnitType.Hotel, Pool = Enums.Preference.Yes, NumAdult = 2, NumChildren = 0, Jacuzzi = Enums.Preference.Yes, Garden = Enums.Preference.No, Meal = Enums.MealType.Full, MoneyPaid = 100 });
                //units.Add(new HostingUnit() { HostingUnitKey = 10000003, HostingUnitName = "c", Host = h1, AreaVacation = Enums.Area.Center, HostingUnitType = Enums.HostingUnitType.Hotel, Pool = Enums.Preference.No, NumAdult = 2, NumChildren = 2, Jacuzzi = Enums.Preference.No, Garden = Enums.Preference.Yes, Meal = Enums.MealType.Full });
 
                 //units.Add(DS.DataSource.hostingUnits[0]);
-                addHostingUnit();
                 loadUnits();//puts units into xelement hostingUnits
                 loadGuests();//guest requests into guest requests
                 loadOrders();
@@ -374,37 +372,29 @@ namespace DAL
             }
         }
 
-        public void addHostingUnit()//adds unit to xelement and to xml file
-        {
-            FileStream file = new FileStream(hostingUnitPath, FileMode.OpenOrCreate);
+   
 
+        public void addHostingUnit(HostingUnit hosting)
+        {
+            FileStream file = new FileStream(hostingUnitPath, FileMode.OpenOrCreate);//opens file
             try
             {
+                units.Add(hosting);//adds order to list
                 XmlSerializer xmlSer = new XmlSerializer(units.GetType());
                 xmlSer.Serialize(file, units);
-                file.Close();
-                //XmlSerializer xmlSer = new XmlSerializer(units.GetType());
-                //units.Add(unit);//adds to list
-                //xmlSer.Serialize(file, units);//save to xml
 
             }
             catch
             {
-
-                //    XElement host = new XElement("Host", hostKey, hostFirst, hostLast, mail, clearance/*, bank*/);
-                #endregion
-                //    hostingUnits.Add(new XElement("Unit", unitKey, unitName, unitType, unitArea, adults, child, pool, garden, j, meals, paid, host));
-                //}
+                throw new loadExceptionDAL("unable to add order to xml file");
             }
-        }
+            finally
+            {
+                file.Close();//closes file
+            }
 
-        public void addHostingUnit(HostingUnit hosting)
-        {
-            units.Add(hosting);
-            XmlSerializer x = new XmlSerializer(units.GetType()/*, new XmlRootAttribute("Units")*/);
-            FileStream fs = new FileStream(hostingUnitPath, FileMode.Open);
-            x.Serialize(fs, units);
-            fs.Close();//closes file
+
+        
 
         }
 
@@ -557,7 +547,7 @@ namespace DAL
         #endregion
         #endregion
 
-
+        #endregion
     }
 }
 

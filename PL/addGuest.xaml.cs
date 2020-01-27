@@ -146,8 +146,10 @@ namespace PL
                                     {
                                         if (g1.NumAdult > 0 || g1.NumChildren > 0)//checks there are people
                                         {
-                                            bl.addGuest(g1); //if it's all valid, adsds guest
-                                            MessageBox.Show("Thanks you " + g1.Name + " " + g1.LastName+ " we hope to find for you the perfect vacation!"+ " You will be contacted at " + g1.Mail.Address + " with vacation suggestions", "Added Successfully", MessageBoxButton.OK, MessageBoxImage.Information);
+                                            if (bl.addGuest(g1)) //if it's all valid, adsds guest
+                                                MessageBox.Show("Thanks you " + g1.Name + " " + g1.LastName + " we hope to find for you the perfect vacation!" + " You will be contacted at " + g1.Mail.Address + " with vacation suggestions", "Added Successfully", MessageBoxButton.OK, MessageBoxImage.Information);
+                                            else
+                                                MessageBox.Show("cant find unit");
                                             Close();//closes window
                                         }
                                         else MessageBox.Show("Number of people can't be empty", "Error", MessageBoxButton.OK, MessageBoxImage.Error);

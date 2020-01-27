@@ -43,17 +43,14 @@ namespace DAL
             {
                 if (File.Exists(hostingUnitPath))//file exists
                 {
-                    
+
                     XmlSerializer x = new XmlSerializer(units.GetType());
                     FileStream fs = new FileStream(hostingUnitPath, FileMode.Open);
                     units = (System.Collections.Generic.List<HostingUnit>)x.Deserialize(fs);
                     fs.Close();//closes file
 
                 }
-                else//creates it
-                {
-                    new FileStream(hostingUnitPath, FileMode.Create);//creates file
-                }
+
             }
             catch
             {

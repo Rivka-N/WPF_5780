@@ -76,12 +76,14 @@ namespace BL
         #endregion
 
         #region add guest
-        public void addGuest(GuestRequest guest)//add guest to the data list in DS
+        public bool addGuest(GuestRequest guest)//add guest to the data list in DS
         {
             myDAL.addGuest(guest.Clone());//adds guest to list
-            findUnit(guest);//tries to find units for this guest request
+            if (findUnit(guest))
+                return true;//tries to find units for this guest request
+            return false;
         }
-        public List<HostingUnit> findUnit(GuestRequest guest)//finds applicable units for request and sends mail to hosts
+        bool findUnit(GuestRequest guest)//finds applicable units for request and sends mail to hosts
         {
             var units = myDAL.getAllHostingUnits();
             List<HostingUnit> listOfUnits = new List<HostingUnit>();
@@ -93,10 +95,11 @@ namespace BL
                 }
             }
             if (listOfUnits.Count() == 0)
-                throw new unfoundRequestExceptionBL();
+                return false;
+                //throw new unfoundRequestExceptionBL();
             mail(listOfUnits, guest);  //sends mail to all of the hosts 
-
-            return listOfUnits;
+            return true;
+            //return listOfUnits;
         }
 
         #endregion
