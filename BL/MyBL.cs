@@ -559,17 +559,24 @@ namespace BL
 
         public List<GuestRequest> getReleventRequests(HostingUnit unit)//finds requests relevent for this unit
         {
-            var orders = getOrders(ord => unit.HostingUnitKey == ord.HostingUnitKey && ord.Status != Enums.OrderStatus.Closed);//finds requests for this unit that aren't closed
-            List<GuestRequest> relevent = new List<GuestRequest>();//makes list to keep guest requests to return 
-            var releventQuery= from g in getRequests()
-                         where matchesUnit(unit, g)
-                         select g;//selects guests the ones that can fit in unit
-            relevent = releventQuery.ToList();//saves as list
-            foreach (Order o in orders)//goes over mailed orders found
-                if (relevent.Where(g => g.GuestRequestKey == o.GuestRequestKey).Select(g => g) == null)//if didn't find other requests with the same guest request key
-                    relevent.Add(getRequests(req => req.GuestRequestKey == o.GuestRequestKey)[0]);//adds first of list of guests for this order found (it should only find one)
-            return relevent;
+            try
+            {
+                var orders = getOrders(ord => unit.HostingUnitKey == ord.HostingUnitKey && ord.Status != Enums.OrderStatus.Closed);//finds requests for this unit that aren't closed
+                List<GuestRequest> relevent = new List<GuestRequest>();//makes list to keep guest requests to return 
 
+                var releventQuery = from g in getRequests()
+                                    where matchesUnit(unit, g)
+                                    select g;//selects guests the ones that can fit in unit
+                relevent = releventQuery.ToList();//saves as list
+                foreach (Order o in orders)//goes over mailed orders found
+                    if (relevent.Where(g => g.GuestRequestKey == o.GuestRequestKey).Select(g => g) == null)//if didn't find other requests with the same guest request key
+                        relevent.Add(getRequests(req => req.GuestRequestKey == o.GuestRequestKey)[0]);//adds first of list of guests for this order found (it should only find one)
+                return relevent;
+            }
+            catch
+            {
+                return null;//none found
+            }
         }
 
 
@@ -594,6 +601,7 @@ namespace BL
         }
         public List<GuestRequest> getRequests(Func<GuestRequest, bool> predicate)
         {
+            
             var requests = from guest in myDAL.getRequests()
                            let p = predicate(guest)
                            where p
@@ -604,6 +612,8 @@ namespace BL
 
         public List<Order> getOrders(Func<Order, bool> predicate)
         {
+            if (myDAL.getAllOrders()==null)
+                return null;
             var ords = from ord in myDAL.getAllOrders()
                        let p = predicate(ord)
                        where p
@@ -659,30 +669,7 @@ namespace BL
         
 
 
-        public bool checkUnit(HostingUnit hostingUnit1)
-        {
-            if (hostingUnit1.NumAdult==0 && hostingUnit1.NumChildren==0)//no guests
-                throw new InvalidException("invalid number of guests");
-            if (hostingUnit1.Host.Name==null || hostingUnit1.Host.Name=="")//invalid name
-                throw new InvalidException("invalid first name");
-            if (hostingUnit1.Host.LastName == null || hostingUnit1.Host.LastName == "")//invalid name
-                throw new InvalidException("invalid last name");
-            if (hostingUnit1.HostingUnitName == null || hostingUnit1.HostingUnitName == "")
-                throw new InvalidException("invalid unit name");
-           
-            return true;
-            //try
-            //{
-            //    myDAL.addHostingUnit(hostingUnit1);//adds unit
-            //    return true;
-            //}
-            //catch(Exception ex)
-            //{
-            //    throw new InvalidException(ex.Message + ": unable to add unit");
-            //}
-        }
-
-
+        
 
         #endregion
         #region guest and host checks for pl

@@ -98,118 +98,7 @@ namespace DAL
         #endregion
         #endregion
 
-        //#region banks
-        ////save banks
-        //public List<BankAccount> getAllBranches()
-        //{
-
-
-        //    List<BankAccount> banks = new List<BankAccount>();
-        //    XmlDocument doc = new XmlDocument();
-        //    doc.Load(@"atm.xml");
-        //    XmlNode rootNode = doc.DocumentElement;
-        //    //DisplayNodes(rootNode);
-
-        //    XmlNodeList children = rootNode.ChildNodes;
-        //    foreach (XmlNode child in children)
-        //    {
-        //        BankAccount b = GetBranchByXmlNode(child);
-        //        if (b != null)
-        //        {
-        //            banks.Add(b);
-        //        }
-        //    }
-
-        //    return banks;
-        //}
-
-
-        //private static BankAccount GetBranchByXmlNode(XmlNode node)
-        //{
-        //    if (node.Name != "BRANCH") return null;
-        //    BankAccount branch = new BankAccount();
-        //    branch.BankAcountNumber = -1;
-
-        //    XmlNodeList children = node.ChildNodes;
-
-        //    foreach (XmlNode child in children)
-        //    {
-        //        switch (child.Name)
-        //        {
-        //            case "Bank_Code":
-        //                branch.BankNumber = int.Parse(child.InnerText);
-        //                break;
-        //            case "Bank_Name":
-        //                branch.BankName = child.InnerText;
-        //                break;
-        //            case "Branch_Code":
-        //                branch.BranchNumber = int.Parse(child.InnerText);
-        //                break;
-        //            case "Branch_Address":
-        //                branch.BranchAddress = child.InnerText;
-        //                break;
-        //            case "City":
-        //                branch.BranchCity = child.InnerText;
-        //                break;
-
-        //        }
-
-        //    }
-
-        //    if (branch.BranchNumber > 0)
-        //        return branch;
-
-        //    return null;
-
-        //}
-
-        //private void Worker_DoWork(object sender, DoWorkEventArgs e)
-        //{
-
-        //    object ob = e.Argument;
-        //    while (bankDownloaded == false)//continues until it downloads
-        //    {
-        //        try
-        //        {
-        //            DownloadBank();
-        //            Thread.Sleep(2000);//sleeps before trying
-        //        }
-        //        catch
-        //        { }
-        //    }
-
-        //    getAllBranches();//saves branches to ds
-        //}
-        //void DownloadBank()
-        //{
-        //    #region downloadBank
-        //    string xmlLocalPath = @"atm.xml";
-        //    WebClient wc = new WebClient();
-        //    try
-        //    {
-        //        string xmlServerPath =
-        //       @"https://www.boi.org.il/en/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/snifim_en.xml";
-        //        wc.DownloadFile(xmlServerPath, xmlLocalPath);
-        //        bankDownloaded = true;
-        //    }
-        //    catch
-        //    {
-
-        //        string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
-        //        wc.DownloadFile(xmlServerPath, xmlLocalPath);
-        //        bankDownloaded = true;
-
-        //    }
-        //    finally
-        //    {
-        //        wc.Dispose();
-        //    }
-        //    #endregion
-
-        //}
-
-        //#endregion
-
+       
         #region hostingUnits
         public List<HostingUnit> getAllHostingUnits()//xelement to hosting unit
                                                      //need to add convert dia
@@ -271,53 +160,7 @@ namespace DAL
                 throw new loadExceptionDAL("unable to delete unit");
 
             }
-
-
-
-            //try
-            //{
-            //    XElement host = (from unit in hostingUnits.Elements()
-            //                     where Convert.ToInt32(unit.Element("Unit Key").Value) == hostingUnit1.HostingUnitKey//this unit
-            //                     select unit).First();//first found
-            //    //updates 
-
-            //    host.Element("Unit Key").Value = hostingUnit1.HostingUnitKey.ToString();
-            //    host.Element("Unit Name").Value = hostingUnit1.HostingUnitName;
-            //    host.Element("Unit Type").Value = hostingUnit1.HostingUnitType.ToString();
-            //    host.Element("Unit Area").Value = hostingUnit1.AreaVacation.ToString();
-            //    host.Element("Adults").Value = hostingUnit1.NumAdult.ToString();
-            //    host.Element("Children").Value = hostingUnit1.NumChildren.ToString();
-            //    host.Element("Pool").Value = hostingUnit1.Pool.ToString();
-            //    host.Element("Garden").Value = hostingUnit1.Garden.ToString();
-            //    host.Element("Jacuzzi").Value = hostingUnit1.Jacuzzi.ToString();
-            //    host.Element("Meal").Value = hostingUnit1.Meal.ToString();
-            //    host.Element("Paid").Value = hostingUnit1.MoneyPaid.ToString();
-            //    //host
-            //    host.Element("Host").Element("Host Key").Value = hostingUnit1.Host.HostKey.ToString();
-            //    host.Element("Host").Element("Host Name").Value = hostingUnit1.Host.Name;
-            //    host.Element("Host").Element("Host Last").Value = hostingUnit1.Host.LastName;
-            //    host.Element("Host").Element("Email").Value = hostingUnit1.Host.Mail.Address;
-            //    host.Element("Host").Element("Clearance").Value = hostingUnit1.Host.CollectionClearance.ToString();
-            //    host.Element("Host").Element("Bank").Element("Account Number").Value = hostingUnit1.Host.Bank.BankAcountNumber.ToString();
-            //    host.Element("Host").Element("Bank").Element("Bank Name").Value = hostingUnit1.Host.Bank.BankName;
-            //    host.Element("Host").Element("Bank").Element("Bank Number").Value = hostingUnit1.Host.Bank.BankNumber.ToString();
-            //    host.Element("Host").Element("Bank").Element("Branch Number").Value = hostingUnit1.Host.Bank.BranchNumber.ToString();
-            //    host.Element("Host").Element("Bank").Element("Branch Address").Value = hostingUnit1.Host.Bank.BranchAddress;
-
-            //}
-
-            //catch
-            //{
-            //    throw new objectErrorDAL();//didn't find item
-            //}
-            //try
-            //{
-            //    hostingUnits.Save(hostingUnitPath);//saves
-            //}
-            //catch
-            //{
-            //    throw new loadExceptionDAL("unable to save elements after deleting");//error in loading or saving the file
-            //}
+            
         }
 
         public int getHostConfi()
@@ -352,18 +195,31 @@ namespace DAL
                 file.Close();//closes file
             }
 
-
-        
-
         }
         #endregion      //finish and need to checks if work
 
         #region add charge to unit
         public void addCharge(HostingUnit unit, int numDays)
         {
-            //find hosting unit, update field and save again
-            //var found = DataSource.hostingUnits.Find(u => u.HostingUnitKey == unit.HostingUnitKey);
-            //found.MoneyPaid += Configuration.TransactionFee * numDays;//adds this transaction fee to total transaction fees
+            var change=units.Find(u => u.HostingUnitKey == unit.HostingUnitKey);
+            if (change == null)//is null
+                throw new NullReferenceException();//can't proceed
+            change.MoneyPaid += numDays * Configuration.TransactionFee;//changes unit
+            FileStream file = new FileStream(hostingUnitPath, FileMode.OpenOrCreate);//opens file
+            try
+            {
+                
+                XmlSerializer xmlSer = new XmlSerializer(units.GetType());
+                xmlSer.Serialize(file, units);//resaves it
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                file.Close();
+            }
 
         }
         #endregion
@@ -447,7 +303,7 @@ namespace DAL
             }
             catch
             {
-                guest = null;
+                throw new NullReferenceException();//there were no guests
             }
 
             return guest;

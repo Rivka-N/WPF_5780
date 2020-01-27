@@ -23,10 +23,16 @@ namespace PL
 
     }
     #endregion
-    class invalidTypeExceptionPL :Exception//data doesn't match expected data type (string instead of number etc)
+    class invalidTypeExceptionPL : Exception//data doesn't match expected data type (string instead of number etc)
     {
+        public invalidTypeExceptionPL()
+        {
+        }
 
+        public invalidTypeExceptionPL(string message) : base(message)
+        {
+        }
     }
- 
+
 
 }

@@ -84,7 +84,6 @@
                 <DataGridTextColumn x:Name="dgtc_name" Binding="{Binding Host.Name}" Header="Name" Width="*" MinWidth="100" IsReadOnly="True"/>
                 <DataGridTextColumn x:Name="dgtc_lastName" Binding="{Binding Host.LastName}" Header="Last Name" Width="*" MinWidth="100" IsReadOnly="True"/>
                 <DataGridTextColumn x:Name="dgtc_hostKey" Binding="{Binding Host.HostKey}" Header="Host ID" Width="*" MinWidth="100" IsReadOnly="True"/>
-                <DataGridTextColumn x:Name="dgtc_phone" Binding="{Binding Host.Phone}" Header="Phone" Width="*" MinWidth="100" IsReadOnly="True"/>
                 <DataGridTextColumn x:Name="dgtc_unitKey" Binding="{Binding HostingUnitKey}" Header="Unit Key" Width="*" MinWidth="100" IsReadOnly="True"/>
                 <DataGridTextColumn x:Name="dgtc_unitName" Binding="{Binding HostingUnitName}" Header="Unit" Width="auto" MinWidth="100" IsReadOnly="True"/>
                 <DataGridTextColumn x:Name="dgtc_unitType" Binding="{Binding HostingUnitType}" Header="Unit Type" Width="*" MinWidth="100" IsReadOnly="True"/>

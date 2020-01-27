@@ -265,4 +265,9 @@
     <Content Include="Data\hosts.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>tasklist /fi "imagename eq iisexpress.exe" |find ":" &gt; nul
+if errorlevel 1 taskkill /f /im "iisexpress.exe"
+</PreBuildEvent>
+  </PropertyGroup>
 </Project>

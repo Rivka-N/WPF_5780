@@ -65,7 +65,10 @@ namespace DAL
             target.LastName = original.LastName;
             target.Name = original.Name;
             target.Mail = original.Mail;
-            target.Bank = original.Bank.Clone();
+            if (original.Bank == null)
+                target.Bank = new BankAccount();
+            else
+                target.Bank = original.Bank.Clone();
             return target;
             
         }

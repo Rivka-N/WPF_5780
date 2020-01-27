@@ -31,23 +31,23 @@ namespace DAL
 
         public void addHostingUnit(HostingUnit unit)
         {
-            if (unit == null)
-                throw new dataException("no unit");
+            //if (unit == null)
+                //throw new dataException("no unit");
             
             //check no other host exists with same id?
             if (unit.Host != null)//if there's a host
             {
                 var allUnits = getAllHostingUnits();
-                if (allUnits.Find(u => u.Host.HostKey == unit.Host.HostKey) != null)//if another host with same id exists
-                    throw new dataException("host already exists");
+                //if (allUnits.Find(u => u.Host.HostKey == unit.Host.HostKey) != null)//if another host with same id exists
+                    // throw new dataException("host already exists");
                 if (unit.Host.Bank != null)//if there is a bank
                 {
                     //unit.Host.Bank.BankAcountNumber = Configuration.BankAccountKey++;//sets running bank account number
                 }
 
             }
-            else
-                throw new dataException("no host");
+            //else
+            //    throw new dataException("no host");
             //unit.HostingUnitKey = Configuration.HostingUnit++;//sets unit number
             DS.DataSource.hostingUnits.Add(unit.Clone());
 
@@ -106,7 +106,7 @@ namespace DAL
             }
             catch
             {
-                throw new dataException("unable to delete item");
+                throw; //new dataException("unable to delete item");
             }
         }
 
@@ -118,7 +118,7 @@ namespace DAL
             }
             catch
             {
-                throw new dataException("no items to delete");
+                throw; //new dataException("no items to delete");
             }
             }
         #endregion
@@ -132,8 +132,8 @@ namespace DAL
         public void changeUnit(HostingUnit hostingUnit1)
         { 
             int index = DataSource.hostingUnits.FindIndex(cur=> { return hostingUnit1.HostingUnitKey == cur.HostingUnitKey; });//finds index of it in list
-            if (index == -1)
-                throw new dataException("unit not found");
+            //if (index == -1)
+            //    throw new dataException("unit not found");
             //puts new hosting unit with changed details instaed of old one
             DataSource.hostingUnits[index] = hostingUnit1.Clone();//sets it to be a copy of the new updated unit
         }
@@ -147,7 +147,7 @@ namespace DAL
             }
             catch
             {
-                throw new dataException("object not found");
+                throw; //new dataException("object not found");
                     
                     }
 
