@@ -94,117 +94,117 @@ namespace DAL
         #endregion
         #endregion
 
-        #region banks
-        //save banks
-        public List<BankAccount> getAllBranches()
-        {
+        //#region banks
+        ////save banks
+        //public List<BankAccount> getAllBranches()
+        //{
 
 
-            List<BankAccount> banks = new List<BankAccount>();
-            XmlDocument doc = new XmlDocument();
-            doc.Load(@"atm.xml");
-            XmlNode rootNode = doc.DocumentElement;
-            //DisplayNodes(rootNode);
+        //    List<BankAccount> banks = new List<BankAccount>();
+        //    XmlDocument doc = new XmlDocument();
+        //    doc.Load(@"atm.xml");
+        //    XmlNode rootNode = doc.DocumentElement;
+        //    //DisplayNodes(rootNode);
 
-            XmlNodeList children = rootNode.ChildNodes;
-            foreach (XmlNode child in children)
-            {
-                BankAccount b = GetBranchByXmlNode(child);
-                if (b != null)
-                {
-                    banks.Add(b);
-                }
-            }
+        //    XmlNodeList children = rootNode.ChildNodes;
+        //    foreach (XmlNode child in children)
+        //    {
+        //        BankAccount b = GetBranchByXmlNode(child);
+        //        if (b != null)
+        //        {
+        //            banks.Add(b);
+        //        }
+        //    }
 
-            return banks;
-        }
+        //    return banks;
+        //}
 
 
-        private static BankAccount GetBranchByXmlNode(XmlNode node)
-        {
-            if (node.Name != "BRANCH") return null;
-            BankAccount branch = new BankAccount();
-            branch.BankAcountNumber = -1;
+        //private static BankAccount GetBranchByXmlNode(XmlNode node)
+        //{
+        //    if (node.Name != "BRANCH") return null;
+        //    BankAccount branch = new BankAccount();
+        //    branch.BankAcountNumber = -1;
 
-            XmlNodeList children = node.ChildNodes;
+        //    XmlNodeList children = node.ChildNodes;
 
-            foreach (XmlNode child in children)
-            {
-                switch (child.Name)
-                {
-                    case "Bank_Code":
-                        branch.BankNumber = int.Parse(child.InnerText);
-                        break;
-                    case "Bank_Name":
-                        branch.BankName = child.InnerText;
-                        break;
-                    case "Branch_Code":
-                        branch.BranchNumber = int.Parse(child.InnerText);
-                        break;
-                    case "Branch_Address":
-                        branch.BranchAddress = child.InnerText;
-                        break;
-                    case "City":
-                        branch.BranchCity = child.InnerText;
-                        break;
+        //    foreach (XmlNode child in children)
+        //    {
+        //        switch (child.Name)
+        //        {
+        //            case "Bank_Code":
+        //                branch.BankNumber = int.Parse(child.InnerText);
+        //                break;
+        //            case "Bank_Name":
+        //                branch.BankName = child.InnerText;
+        //                break;
+        //            case "Branch_Code":
+        //                branch.BranchNumber = int.Parse(child.InnerText);
+        //                break;
+        //            case "Branch_Address":
+        //                branch.BranchAddress = child.InnerText;
+        //                break;
+        //            case "City":
+        //                branch.BranchCity = child.InnerText;
+        //                break;
 
-                }
+        //        }
 
-            }
+        //    }
 
-            if (branch.BranchNumber > 0)
-                return branch;
+        //    if (branch.BranchNumber > 0)
+        //        return branch;
 
-            return null;
+        //    return null;
 
-        }
+        //}
 
-        private void Worker_DoWork(object sender, DoWorkEventArgs e)
-        {
+        //private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        //{
 
-            object ob = e.Argument;
-            while (bankDownloaded == false)//continues until it downloads
-            {
-                try
-                {
-                    DownloadBank();
-                    Thread.Sleep(2000);//sleeps before trying
-                }
-                catch
-                { }
-            }
+        //    object ob = e.Argument;
+        //    while (bankDownloaded == false)//continues until it downloads
+        //    {
+        //        try
+        //        {
+        //            DownloadBank();
+        //            Thread.Sleep(2000);//sleeps before trying
+        //        }
+        //        catch
+        //        { }
+        //    }
 
-            getAllBranches();//saves branches to ds
-        }
-        void DownloadBank()
-        {
-            #region downloadBank
-            string xmlLocalPath = @"atm.xml";
-            WebClient wc = new WebClient();
-            try
-            {
-                string xmlServerPath =
-               @"https://www.boi.org.il/en/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/snifim_en.xml";
-                wc.DownloadFile(xmlServerPath, xmlLocalPath);
-                bankDownloaded = true;
-            }
-            catch
-            {
+        //    getAllBranches();//saves branches to ds
+        //}
+        //void DownloadBank()
+        //{
+        //    #region downloadBank
+        //    string xmlLocalPath = @"atm.xml";
+        //    WebClient wc = new WebClient();
+        //    try
+        //    {
+        //        string xmlServerPath =
+        //       @"https://www.boi.org.il/en/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/snifim_en.xml";
+        //        wc.DownloadFile(xmlServerPath, xmlLocalPath);
+        //        bankDownloaded = true;
+        //    }
+        //    catch
+        //    {
 
-                string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
-                wc.DownloadFile(xmlServerPath, xmlLocalPath);
-                bankDownloaded = true;
+        //        string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
+        //        wc.DownloadFile(xmlServerPath, xmlLocalPath);
+        //        bankDownloaded = true;
 
-            }
-            finally
-            {
-                wc.Dispose();
-            }
-            #endregion
+        //    }
+        //    finally
+        //    {
+        //        wc.Dispose();
+        //    }
+        //    #endregion
 
-        }
+        //}
 
-        #endregion
+        //#endregion
 
         #region hostingUnits
         public List<HostingUnit> getAllHostingUnits()//xelement to hosting unit

@@ -178,5 +178,118 @@ namespace DAL
         #endregion
 
         #endregion
+
+        #region banks
+        private List<BankAccount> banks = null;
+
+        public List<BankAccount> getAllBranches()
+        {
+            if (bankDownloaded)//already downloaded
+            { if (banks == null)
+                {
+                    banks = new List<BankAccount>();
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(@"atm.xml");
+                    XmlNode rootNode = doc.DocumentElement;
+                    XmlNodeList children = rootNode.ChildNodes;
+                    foreach (XmlNode child in children)
+                    {
+                        BankAccount b = GetBranchByXmlNode(child);
+                        if (b != null)
+                        {
+                            banks.Add(b);
+                        }
+                    }
+                }
+                return banks;//returns list of banks. gets them all from file if banks is empty
+            }
+            else
+                throw new notDownloadedException();//bank didn't download
         }
+
+        private static BankAccount GetBranchByXmlNode(XmlNode node)
+        {
+            if (node.Name != "BRANCH") return null;
+            BankAccount branch = new BankAccount();
+            branch.BankAcountNumber = -1;
+
+            XmlNodeList children = node.ChildNodes;
+
+            foreach (XmlNode child in children)
+            {
+                switch (child.Name)
+                {
+                    case "Bank_Code":
+                        branch.BankNumber = int.Parse(child.InnerText);
+                        break;
+                    case "Bank_Name":
+                        branch.BankName = child.InnerText;
+                        break;
+                    case "Branch_Code":
+                        branch.BranchNumber = int.Parse(child.InnerText);
+                        break;
+                    case "Branch_Address":
+                        branch.BranchAddress = child.InnerText;
+                        break;
+                    case "City":
+                        branch.BranchCity = child.InnerText;
+                        break;
+
+                }
+
+            }
+
+            if (branch.BranchNumber > 0)
+                return branch;
+
+            return null;
+
+        }
+
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+            object ob = e.Argument;
+            while (bankDownloaded == false)//continues until it downloads
+            {
+                try
+                {
+                    DownloadBank();
+                    Thread.Sleep(2000);//sleeps before trying
+                }
+                catch
+                { }
+            }
+            getAllBranches();//saves branches to ds
+        }
+        void DownloadBank()
+        {
+            #region downloadBank
+            string xmlLocalPath = @"atm.xml";
+            WebClient wc = new WebClient();
+            try
+            {
+                string xmlServerPath =
+               @"https://www.boi.org.il/en/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/snifim_en.xml";
+                wc.DownloadFile(xmlServerPath, xmlLocalPath);
+                bankDownloaded = true;
+            }
+            catch
+            {
+
+                string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
+                wc.DownloadFile(xmlServerPath, xmlLocalPath);
+                bankDownloaded = true;
+
+            }
+            finally
+            {
+                wc.Dispose();
+            }
+            #endregion
+
+        }
+
+        #endregion
+    }
 }

@@ -751,9 +751,18 @@ namespace PL
             sortGuests();//resorts guests
 
         }
+
         #endregion
 
-     
+        private void BankAcountNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Cb_bankName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //give branches of bank
+        }
     }
 }
 
