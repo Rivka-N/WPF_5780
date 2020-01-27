@@ -112,7 +112,7 @@ namespace DAL
             return Convert.ToDateTime(configuration.Element("LastStatusUpdate").Value);//returns value as datetime
         }
         #endregion
-        #region orders
+        #region orders 
         public void deleteOrders(Func<Order, bool> p)
         {
             FileStream file = new FileStream(orderPath, FileMode.OpenOrCreate);//opens file
@@ -131,13 +131,12 @@ namespace DAL
             
         }
     }
-        public void changeOrderStatus(Func<Order, bool> p1, Enums.OrderStatus status)
+        public void changeOrderStatus(Func<Order, bool> p1, Enums.OrderStatus status)//need to finish
         {
             var deleting = orders.Where(ord => p1(ord))
                 .Select(ord => {ord.Status = status; return ord; }).ToList();
             
-        }
-
+        } 
         #region get list of orders
         public List<Order> getAllOrders()//returns all orders
         {
@@ -176,7 +175,7 @@ namespace DAL
         }
         #endregion
 
-        #endregion
+        #endregion    //finish need to check
 
         #region banks
         private List<BankAccount> banks = null;
@@ -290,5 +289,7 @@ namespace DAL
         }
 
         #endregion
+
+        
     }
 }

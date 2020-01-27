@@ -343,7 +343,7 @@ namespace DAL
         
 
         }
-        #endregion
+        #endregion      //finish and need to checks if work
 
         #region add charge to unit
         public void addCharge(HostingUnit unit, int numDays)
@@ -354,6 +354,8 @@ namespace DAL
 
         }
         #endregion
+
+
         #region guestRequests
         #region add guest
         public int getConfi()
@@ -500,7 +502,7 @@ namespace DAL
         }
 
         #endregion
-        #endregion
+        #endregion     //finish and work
 
     
     }
