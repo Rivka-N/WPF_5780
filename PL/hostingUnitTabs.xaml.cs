@@ -63,6 +63,8 @@ namespace PL
             cb_poolCheckBox.IsChecked = unit.Pool == Enums.Preference.Yes ? true : false;
             cb_jacuzziCheckBox.IsChecked = unit.Jacuzzi == Enums.Preference.Yes ? true : false;
 
+            //banks combobox
+            //cb_bankName.ItemsSource=
         }
         public hostingUnitTabs(HostingUnit hosting, int tab) : this(hosting)
         {
@@ -751,9 +753,47 @@ namespace PL
             sortGuests();//resorts guests
 
         }
-        #endregion
 
-     
+        #endregion
+        #region bank
+        private void BankAcountNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+               if (Regex.IsMatch(bankAcountNumberTextBox.Text, ("^[0-9]$")))//only numbers
+            {
+                bankAcountNumberTextBox.BorderBrush = Brushes.Gray;
+                unit.Host.Bank.BankAcountNumber = Convert.ToInt32(bankAcountNumberTextBox.Text);//sets new bank number
+                if (unit.Host.Bank.BankAcountNumber != originalUnit.Host.Bank.BankAcountNumber)//if they're different
+                    pb_update.IsEnabled = true;//enables button
+
+            }
+              else
+            {
+                bankAcountNumberTextBox.BorderBrush = Brushes.Red;
+                bankAcountNumberTextBox.Text = "";
+            }
+        }
+        private void BankAcountNumberTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (Regex.IsMatch(bankAcountNumberTextBox.Text, ("^[0-9]$")))//only numbers
+            {
+                bankAcountNumberTextBox.BorderBrush = Brushes.Gray;
+                
+            }
+            else
+            {
+                bankAcountNumberTextBox.BorderBrush = Brushes.Red;
+                bankAcountNumberTextBox.Text = "";
+            }
+        }
+
+        private void Cb_bankName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //give branches of bank
+        }
+
+
+        #endregion
     }
 }
 

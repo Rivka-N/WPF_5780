@@ -44,5 +44,10 @@ namespace DAL
 
         #endregion
         #endregion
+
+        #region bank 
+        List<BankAccount> getAllBranches();
+        #endregion
     }
+
 }

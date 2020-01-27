@@ -33,4 +33,6 @@ namespace DAL
 
     class duplicateErrorDAL:Exception//trying to use create duplicate information
     { }
+    class notDownloadedException:Exception//didn't finish downloading
+    { }
 }
