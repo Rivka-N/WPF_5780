@@ -1,21 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Requests>
   <guest>
-    <GuestRequestKey>10000013</GuestRequestKey>
-    <Name>a</Name>
-    <LastName>a</LastName>
-    <MailSerializable>a@a.co.il</MailSerializable>
-    <Status>Started</Status>
+    <GuestRequestKey>10000001</GuestRequestKey>
+    <Name>rina</Name>
+    <LastName>lev</LastName>
+    <MailSerializable>rgrin4365@gmail.com</MailSerializable>
+    <Status>Closed</Status>
     <Registration>28/01/2020 00:00:00</Registration>
     <EntryDate>29/01/2020 00:00:00</EntryDate>
     <ReleaseDate>31/01/2020 00:00:00</ReleaseDate>
     <AreaVacation>Center</AreaVacation>
-    <TypeOfUnit>Hotel</TypeOfUnit>
-    <NumAdult>0</NumAdult>
-    <NumChildren>2</NumChildren>
-    <Pool>Maybe</Pool>
+    <TypeOfUnit>Zimmer</TypeOfUnit>
+    <NumAdult>2</NumAdult>
+    <NumChildren>0</NumChildren>
+    <Pool>Yes</Pool>
     <Jacuzzi>Maybe</Jacuzzi>
     <Garden>Maybe</Garden>
-    <Meal>Half</Meal>
+    <Meal>Full</Meal>
+  </guest>
+  <guest>
+    <GuestRequestKey>10000002</GuestRequestKey>
+    <Name>a</Name>
+    <LastName>a</LastName>
+    <MailSerializable>a@gmail.com</MailSerializable>
+    <Status>Closed</Status>
+    <Registration>28/01/2020 00:00:00</Registration>
+    <EntryDate>29/01/2020 00:00:00</EntryDate>
+    <ReleaseDate>31/01/2020 00:00:00</ReleaseDate>
+    <AreaVacation>Center</AreaVacation>
+    <TypeOfUnit>Zimmer</TypeOfUnit>
+    <NumAdult>2</NumAdult>
+    <NumChildren>0</NumChildren>
+    <Pool>Yes</Pool>
+    <Jacuzzi>Maybe</Jacuzzi>
+    <Garden>Yes</Garden>
+    <Meal>Full</Meal>
   </guest>
 </Requests>

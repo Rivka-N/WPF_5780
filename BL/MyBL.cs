@@ -123,7 +123,7 @@ namespace BL
                         }
                         mail.From = new MailAddress("amazingvacations169@gmail.com", "Amazing Vacations");
                         mail.Subject = "Guest Request";
-                        mail.Body = "Hello! " + guest.Name + "\nis intresting in your hostingUnit, for more datails please log in yo your personal area and connect with your guest";
+                        mail.Body = "Hello! \n" + guest.Name + "is intresting in your hostingUnit, for more datails please log in yo your personal area and connect with your guest";
                         SmtpClient smtp = new SmtpClient();
                         smtp.UseDefaultCredentials = false;
                         smtp.Host = "smtp.gmail.com";
@@ -280,7 +280,7 @@ namespace BL
         {
             if (unit.Host.CollectionClearance && guest.Status!=Enums.OrderStatus.Closed)//if the host has collection clearance and the guest isn't already booked
                 if (guest.TypeOfUnit == unit.HostingUnitType && guest.AreaVacation == unit.AreaVacation && availableDates(unit, guest))
-                    if ((guest.NumAdult+guest.NumChildren) <= (unit.NumAdult + unit.NumChildren))//if the size of the hotel almost matches request
+                    if ((guest.NumAdult+guest.NumChildren) <= (unit.NumAdult + unit.NumChildren +5))//if the size of the hotel almost matches request
                         return true;//this person can be in his unit
             return false; //can't have anyone in his unit
         }
@@ -556,10 +556,13 @@ namespace BL
                                     where matchesUnit(unit, g)
                                     select g;//selects guests the ones that can fit in unit
                 relevent = releventQuery.ToList();//saves as list
-                foreach (Order o in orders)//goes over mailed orders found
-                    if (relevent.Where(g => g.GuestRequestKey == o.GuestRequestKey).Select(g => g) == null)//if didn't find other requests with the same guest request key
-                        relevent.Add(getRequests(req => req.GuestRequestKey == o.GuestRequestKey)[0]);//adds first of list of guests for this order found (it should only find one)
-                return relevent;
+                if (orders != null)
+                {
+                    foreach (Order o in orders)//goes over mailed orders found
+                        if (relevent.Where(g => g.GuestRequestKey == o.GuestRequestKey).Select(g => g) == null)//if didn't find other requests with the same guest request key
+                            relevent.Add(getRequests(req => req.GuestRequestKey == o.GuestRequestKey)[0]);//adds first of list of guests for this order found (it should only find one)
+                }
+                    return relevent;
             }
             catch
             {

@@ -143,6 +143,8 @@ namespace PL
 
             if (myOrders == null || myOrders.Count == 0)//nothing to show
             {
+                if (myOrders == null)
+                    myOrders = new List<Order>();//makes empty list
                 tb_order_error.Visibility = Visibility.Visible;//shows textbox
                 dg_orderDataGrid.Visibility = Visibility.Collapsed;
                 tb_order_error.Text = "No relevent orders\n";
@@ -162,9 +164,10 @@ namespace PL
             if (dg_guestRequestDataGrid.SelectedItem != null)//something was selected
             {
                 GuestRequest row = (GuestRequest)dg_guestRequestDataGrid.SelectedItem;
+                
                 var curOrder = myBL.getOrders(ord => ord.GuestRequestKey == row.GuestRequestKey && ord.HostingUnitKey == unit.HostingUnitKey);//finds the applicable order
                 {
-                    if (curOrder.Count == 0)//there is no order existing yet
+                    if ((curOrder!=null && curOrder.Count == 0) || curOrder==null)//there is no order existing yet
                     {
                         pb_sendMail.IsEnabled = true;//has to send mail first
                         pb_addOrder.IsEnabled = false;//disables buttons

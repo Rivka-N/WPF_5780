@@ -136,7 +136,7 @@ namespace DAL
             finally
             {
                 file.Close();//closes file
-                throw new loadExceptionDAL("unable to delete orders");
+                
             
         }
     }
