@@ -27,6 +27,7 @@ namespace PL
         private readonly HostingUnit originalUnit;//to compare changed one to
         List<Order> myOrders;
         List<GuestRequest> addOrders;
+        IEnumerable<IGrouping<int, BankAccount>> bankSource;//bank combobox source
         bool closeProgram;//for exiting window
         #region c-tors
         public hostingUnitTabs(HostingUnit hosting)
@@ -63,8 +64,10 @@ namespace PL
             cb_poolCheckBox.IsChecked = unit.Pool == Enums.Preference.Yes ? true : false;
             cb_jacuzziCheckBox.IsChecked = unit.Jacuzzi == Enums.Preference.Yes ? true : false;
 
-            //banks combobox
-            //cb_bankName.ItemsSource=
+            //bank init
+            dg_bank.DataContext = unit.Host;
+            bankSource = myBL.groupBranchesByBank();//branches grouped by bank
+            initBank();//sets banks and comboboxes. 
         }
         public hostingUnitTabs(HostingUnit hosting, int tab) : this(hosting)
         {
@@ -83,8 +86,7 @@ namespace PL
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (!closeProgram)//if doesn't want to close program
-                new AllUnitsList().Show();//opens previous window again
+            
 
         }
         #endregion
@@ -140,6 +142,8 @@ namespace PL
 
             if (myOrders == null || myOrders.Count == 0)//nothing to show
             {
+                if (myOrders == null)
+                    myOrders = new List<Order>();//makes empty list
                 tb_order_error.Visibility = Visibility.Visible;//shows textbox
                 dg_orderDataGrid.Visibility = Visibility.Collapsed;
                 tb_order_error.Text = "No relevent orders\n";
@@ -159,9 +163,10 @@ namespace PL
             if (dg_guestRequestDataGrid.SelectedItem != null)//something was selected
             {
                 GuestRequest row = (GuestRequest)dg_guestRequestDataGrid.SelectedItem;
+                
                 var curOrder = myBL.getOrders(ord => ord.GuestRequestKey == row.GuestRequestKey && ord.HostingUnitKey == unit.HostingUnitKey);//finds the applicable order
                 {
-                    if (curOrder.Count == 0)//there is no order existing yet
+                    if ((curOrder!=null && curOrder.Count == 0) || curOrder==null)//there is no order existing yet
                     {
                         pb_sendMail.IsEnabled = true;//has to send mail first
                         pb_addOrder.IsEnabled = false;//disables buttons
@@ -196,15 +201,20 @@ namespace PL
         private void Pb_back_Click(object sender, RoutedEventArgs e)
         {
             Close();//closes window and returns to other window
-
+            
         }
         private void Pb_UnitBack_Click(object sender, RoutedEventArgs e)
         {
-            if (pb_update.IsEnabled)//if there were changes
+            if (pb_update.IsEnabled || cb_branchNumber.SelectedIndex == -1)//if there were changes (changes or unselected bank branch)
+            {
                 if (MessageBox.Show("Are you sure you want to exit without saving changes?", "unsaved changes", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
                     //wants to exit
+                    //otherwise does nothing
+
                     Close();//closes window
-                            //otherwise does nothing
+            }
+            else
+                Close();
         }
         #endregion
         #region tabs
@@ -339,17 +349,17 @@ namespace PL
             }
             else//checked
                 if (!originalUnit.Host.CollectionClearance)//check if was allowed before
-                    MessageBox.Show("go over to your add Orders tab to start talking to customers", "Unit Allowed", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("go over to your add Orders tab to email customers", "Unit Allowed", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         #endregion
-     
+        #region update unit
         #region updateUnit text lost focus
         //checks if item was updated, if it's valid, and if both then updates new host and allows update button
         private void Tb_unitname_LostFocus(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (!Regex.IsMatch(tb_name.Text, @"[\p{L}]{2,}"))//contains some letters
+                if (!Regex.IsMatch(tb_name.Text, @"[\p{L}]+"))//contains some letters
                     throw new invalidTypeExceptionPL();//not a valid name
                 tb_unitname.BorderBrush = Brushes.Gray;
                 if (!(originalUnit.HostingUnitName == tb_unitname.Text))
@@ -366,7 +376,6 @@ namespace PL
             }
         }
 
-       
         private void Tb_lastName_LostFocus(object sender, RoutedEventArgs e)
         {
             try
@@ -575,17 +584,24 @@ namespace PL
         #region unitUpdateTab buttons
         private void pb_update_Click(object sender, RoutedEventArgs e)
         {
-            if (myBL.checkUnit(unit))
+            try
             {
+                if (unit.NumAdult == 0 && unit.NumChildren == 0)//no people now
+                    throw new invalidTypeExceptionPL("Invalid number of guests");
+                if (unit.Host.Bank.BankAcountNumber <= 0)
+                    throw new invalidTypeExceptionPL("Invalid bank account number");
+                if (unit.HostingUnitName == "")
+                    throw new invalidTypeExceptionPL("Invalid unit name");
+                //if unit is valid
+                //updates
                 myBL.changeUnit(unit);
                 MessageBox.Show("The unit was updated\n", "Unit update", MessageBoxButton.OK, MessageBoxImage.Asterisk);//prints message
                 Close();
-
             }
-            else//didn't update anything
-                if (MessageBox.Show("No changes were made.\n Exit anyway?\n", "unit update", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)//prints message
-                Close();//closes
-            //otherwise does nothing
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void pb_delete_Click(object sender, RoutedEventArgs e)
@@ -756,10 +772,69 @@ namespace PL
 
         #endregion
         #region bank
+        private void initBank(bool start = false)//binding between bank and bank source
+        {
+            try
+            {
+                int curBank = -1;//current index of bank
+
+                foreach (var bank in bankSource)
+                {
+                    cb_bankName.Items.Add(bank.First().BankName);//adds key of each group to list
+                    cb_bankNumberTextBox.Items.Add(bank.First().BankNumber.ToString());
+                }
+                //give branches of bank
+                foreach (var bank in bankSource)//sets based on index of this number
+                {
+                    curBank++;
+                    if (bank.Key == unit.Host.Bank.BankNumber)
+                        break;
+                }
+
+                cb_bankName.SelectedIndex = curBank;
+                cb_bankNumberTextBox.SelectedIndex = curBank;
+
+
+                int curBranch = -1;
+                int i = -1;
+                foreach (var bank in bankSource.ElementAt(curBank))
+                {
+                    i++;
+                    cb_branchAddr.Items.Add(bank.BranchCity + " : " + bank.BranchAddress);//adds key of each group to list
+                    cb_branchNumber.Items.Add(bank.BranchNumber.ToString());
+                    if (start == true && bank.BranchNumber == unit.Host.Bank.BranchNumber)//if this is the first round
+                        curBranch = i;
+                }
+                if (curBranch == -1)//none was selected.resets
+                {
+                    cb_branchAddr.Items.Clear();
+                    cb_branchAddr.Items.Add(unit.Host.Bank.BranchAddress);
+                    cb_branchAddr.SelectedIndex = 0;//selects first
+                    cb_branchNumber.Items.Clear();
+                    cb_branchNumber.Items.Add(unit.Host.Bank.BranchNumber);
+                    cb_branchNumber.SelectedIndex = 0;
+                }
+                if (curBranch != -1)
+                {
+                    cb_branchNumber.SelectedIndex = curBranch;
+                    cb_branchAddr.SelectedIndex = curBranch;//selects index
+                    cb_branchAddr.IsEnabled = true;
+                    cb_branchNumber.IsEnabled = true;
+                }
+            }
+            catch
+            {
+                cb_branchNumber.SelectedIndex = -1;
+                cb_branchAddr.SelectedIndex = -1;//selects index
+                MessageBox.Show("Error in loading bank data", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+        }
+        #region bank number checks
         private void BankAcountNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
-               if (Regex.IsMatch(bankAcountNumberTextBox.Text, ("^[0-9]$")))//only numbers
+               if (Regex.IsMatch(bankAcountNumberTextBox.Text, ("^[0-9]+$")))//only numbers
             {
                 bankAcountNumberTextBox.BorderBrush = Brushes.Gray;
                 unit.Host.Bank.BankAcountNumber = Convert.ToInt32(bankAcountNumberTextBox.Text);//sets new bank number
@@ -770,7 +845,7 @@ namespace PL
               else
             {
                 bankAcountNumberTextBox.BorderBrush = Brushes.Red;
-                bankAcountNumberTextBox.Text = "";
+                bankAcountNumberTextBox.Text = originalUnit.Host.Bank.BankAcountNumber.ToString();
             }
         }
         private void BankAcountNumberTextBox_LostFocus(object sender, RoutedEventArgs e)
@@ -786,14 +861,85 @@ namespace PL
                 bankAcountNumberTextBox.Text = "";
             }
         }
-
+        #endregion
+        #region comboboxes
         private void Cb_bankName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //give branches of bank
+            cb_bankNumberTextBox.SelectedIndex = cb_bankName.SelectedIndex;//selects that index in the bank names
+            allBranches();//filters branches comboboxes
+        }
+        private void Cb_bankNumberTextBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cb_bankName.SelectedIndex =cb_bankNumberTextBox.SelectedIndex;//selects that index in the bank numbers
         }
 
+        #region branch
+        private void Cb_branchAddr_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cb_branchNumber.SelectedIndex = cb_branchAddr.SelectedIndex;
+        }
+
+        private void Cb_branchNumber_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cb_branchAddr.SelectedIndex = cb_branchNumber.SelectedIndex;//sets others index
+            setBank();//sets to functoin to set host's bank and enable button if it's different than origianl
+           
+        }
+
+        private void setBank()
+        {
+            if (cb_branchNumber.SelectedIndex != -1)//selected branch
+            {
+                var b = bankSource.ElementAt(cb_bankNumberTextBox.SelectedIndex).ElementAt(cb_branchNumber.SelectedIndex);
+                //selects from bank list this person's branch item
+                if (unit.Host.Bank.BankNumber != originalUnit.Host.Bank.BankNumber || unit.Host.Bank.BranchNumber != originalUnit.Host.Bank.BranchNumber)//different bank or branch
+                {
+                    pb_update.IsEnabled = true;//enables button
+
+                    unit.Host.Bank.BankName = b.BankName; //sets bank
+                    unit.Host.Bank.BankNumber = b.BankNumber;
+                    unit.Host.Bank.BranchAddress = b.BranchAddress;
+                    unit.Host.Bank.BranchCity = b.BranchCity;
+                    unit.Host.Bank.BranchNumber = b.BranchNumber;
+                    pb_update.IsEnabled = true;
+                }
+                //enables changing unit. if nothing was changed, doesn't
+            }
+        }
 
         #endregion
+
+
+        private void allBranches()//sets branches
+        {
+            try
+            {
+                if (cb_bankNumberTextBox.SelectedIndex != -1)//something is selected
+                {
+                    foreach (var bank in bankSource.ElementAt(cb_bankNumberTextBox.SelectedIndex))
+                    {
+                        cb_branchAddr.Items.Add(bank.BranchCity + " : " + bank.BranchAddress);//adds key of each group to list
+                        cb_branchNumber.Items.Add(bank.BranchNumber.ToString());
+                    }
+                    cb_branchAddr.SelectedIndex = -1;
+                    cb_branchNumber.SelectedIndex = -1;
+                    cb_branchAddr.IsEnabled = true;
+                    cb_branchNumber.IsEnabled = true;
+
+                }
+                else
+                    pb_update.IsEnabled = false;//can't update button unti choose branch of bank
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message,"Error");
+            }
+        }
+        #endregion
+
+        #endregion
+        #endregion
+
     }
 }
 

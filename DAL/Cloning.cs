@@ -15,12 +15,12 @@ namespace DAL
                 return null;
             GuestRequest target = new GuestRequest(original.GuestRequestKey, original.Registration);
             target.Name = original.Name;
+            target.GuestRequestKey = original.GuestRequestKey;
             target.LastName = original.LastName;
             target.Mail= original.Mail;
             target.EntryDate = original.EntryDate;
             target.ReleaseDate = original.ReleaseDate;
             target.AreaVacation = original.AreaVacation;
-            target.SubArea = original.SubArea;
             target.TypeOfUnit = original.TypeOfUnit;
             target.NumAdult = original.NumAdult;
             target.NumChildren = original.NumChildren;
@@ -65,7 +65,10 @@ namespace DAL
             target.LastName = original.LastName;
             target.Name = original.Name;
             target.Mail = original.Mail;
-            target.Bank = original.Bank.Clone();
+            if (original.Bank == null)
+                target.Bank = new BankAccount();
+            else
+                target.Bank = original.Bank.Clone();
             return target;
             
         }

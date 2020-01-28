@@ -27,8 +27,7 @@ namespace DAL
                     XmlSerializer x = new XmlSerializer(orders.GetType());
                     FileStream fs = new FileStream(orderPath, FileMode.Open);
                     orders = (List<Order>)x.Deserialize(fs);
-                    fs.Close();//closes file
-
+                    fs.Close();
                 }
             }
             catch
@@ -39,27 +38,30 @@ namespace DAL
 
         private void loadUnits()
         {
-            try
-            {
+            
                 if (File.Exists(hostingUnitPath))//file exists
                 {
 
                     XmlSerializer x = new XmlSerializer(units.GetType());
                     FileStream fs = new FileStream(hostingUnitPath, FileMode.Open);
-                    units = (System.Collections.Generic.List<HostingUnit>)x.Deserialize(fs);
-                    fs.Close();//closes file
+                    try
+                    {
+                        units = (System.Collections.Generic.List<HostingUnit>)x.Deserialize(fs);
+                    }
+                    catch
+                    {
+                        throw new loadExceptionDAL("Unable to load Hosting Units");
+                    }
+                    finally
+                    {
+                        fs.Close();//closes file
+                    }
 
                 }
-
-            }
-            catch
-            {
-                throw new loadExceptionDAL("Unable to load Hosting Units");
-
-            }
         }
         private void loadGuests()//guest file load
         {
+
             try
             {
                 if (File.Exists(guestRequestPath))
@@ -91,6 +93,7 @@ namespace DAL
                 else
                 {
                     configuration = XElement.Load(configPath);//loads existing configs
+                    configuration.Save(configPath);
                 }
             }
             catch
@@ -103,14 +106,17 @@ namespace DAL
         #region last Update order status time
         public void setLastUpdatedStatus()//save today's date to config file 
         {
+            
             configuration.Element("LastStatusUpdate").Value=DateTime.Today.ToString();//sets value to be today
+            configuration.Save(configPath);
         }
         public DateTime getLastUpdatedStatus()
         {
             return Convert.ToDateTime(configuration.Element("LastStatusUpdate").Value);//returns value as datetime
         }
+        
         #endregion
-        #region orders
+        #region orders 
         public void deleteOrders(Func<Order, bool> p)
         {
             FileStream file = new FileStream(orderPath, FileMode.OpenOrCreate);//opens file
@@ -124,18 +130,44 @@ namespace DAL
             }
             catch
             {
-                file.Close();//closes file
                 throw new loadExceptionDAL("unable to delete orders");
+            
+        }
+            finally
+            {
+                file.Close();//closes file
+                
             
         }
     }
         public void changeOrderStatus(Func<Order, bool> p1, Enums.OrderStatus status)
         {
-            var deleting = orders.Where(ord => p1(ord))
-                .Select(ord => {ord.Status = status; return ord; }).ToList();
-            
-        }
+            try
+            {
+                var deleting = orders.Where(ord => p1(ord))
+                    .Select(ord => { ord.Status = status; return ord; }).ToList();
+            }
+            catch
+            {
+                throw new NullReferenceException();//no data
+            }
+            FileStream file = new FileStream(orderPath, FileMode.OpenOrCreate);//opens file
 
+            try
+            {
+                XmlSerializer xmlSer = new XmlSerializer(orders.GetType());
+                xmlSer.Serialize(file, orders);//saves updated orders 
+
+            }
+            catch
+            {
+                throw new loadExceptionDAL();
+            }
+            finally
+            {
+                file.Close();//closes file
+            }
+        } 
         #region get list of orders
         public List<Order> getAllOrders()//returns all orders
         {
@@ -152,11 +184,24 @@ namespace DAL
         }
         #endregion
         #region add order
+
+        public int getOrderKey()
+        {
+            Int32 stati = Convert.ToInt32(configuration.Element("Order").Value) + 1;
+            configuration.Element("Order").Value = stati.ToString();
+            configuration.Save(configPath);
+
+            return stati;
+
+        }
+
         public void addOrder(Order ord)
         {
             FileStream file = new FileStream(orderPath, FileMode.OpenOrCreate);//opens file
             try
             {
+                Int32 x = getOrderKey();
+                ord.OrderKey = x;
                 orders.Add(ord);//adds order to list
                 XmlSerializer xmlSer = new XmlSerializer(orders.GetType());
                 xmlSer.Serialize(file, orders);
@@ -174,7 +219,7 @@ namespace DAL
         }
         #endregion
 
-        #endregion
+        #endregion    //finish need to check
 
         #region banks
         private List<BankAccount> banks = null;
@@ -252,7 +297,9 @@ namespace DAL
                 try
                 {
                     DownloadBank();
+                    new XmlDocument().Load(@"atm.xml");//checks to see if there's an error and file wasn't downloaded correctly
                     Thread.Sleep(2000);//sleeps before trying
+
                 }
                 catch
                 { }

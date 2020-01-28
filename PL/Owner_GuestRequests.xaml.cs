@@ -25,15 +25,23 @@ namespace PL
         List<GuestRequest> myRequests;
         public Owner_GuestRequests()
         {
+
             myBL = factoryBL.getBL();
             InitializeComponent();
-            myRequests = new List<GuestRequest>();
-            search();//shows guest requests
-            var add = Enum.GetValues(typeof(Enums.OrderStatus));
-            cb_status.Items.Add("All");
-            foreach (Enums.OrderStatus item in add)
-                cb_status.Items.Add(item);//adds all statuses to combobox options
+            try {
+                myRequests = new List<GuestRequest>();
+                search();//shows guest requests
+                var add = Enum.GetValues(typeof(Enums.OrderStatus));
+                cb_status.Items.Add("All");
+                foreach (Enums.OrderStatus item in add)
+                    cb_status.Items.Add(item);//adds all statuses to combobox options
             }
+            catch
+            {
+                //empty list of requests
+            }
+            }
+
       
         private void Dp_Registration_SelectedDateChanged(object sender, SelectionChangedEventArgs e)//changes date back to original date selected
         {
@@ -67,7 +75,7 @@ namespace PL
                 }
                 ds_guestRequestDataGrid.ItemsSource = myRequests;
                 tb_SearchTextBox.BorderBrush = Brushes.Black;
-                if (myRequests.Count==0)//shows error textbox
+                if (myRequests==null || myRequests.Count==0)//shows error textbox
                 {
                     tb_req_error.Visibility = Visibility.Visible;
                     ds_guestRequestDataGrid.Visibility = Visibility.Collapsed;
@@ -80,9 +88,8 @@ namespace PL
             }
             catch
             {
-                MessageBox.Show("invalid query");
-                tb_SearchTextBox.BorderBrush = Brushes.Red;
-
+                MessageBox.Show("No requests found");
+                
             }
         }
         private void Cb_status_SelectionChanged(object sender, SelectionChangedEventArgs e)

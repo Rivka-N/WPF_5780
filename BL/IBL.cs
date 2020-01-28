@@ -28,7 +28,6 @@ namespace BL
         void changeUnit(HostingUnit hostingUnit1);
         List<HostingUnit> searchUnits(string text, Enums.FunctionSender fs=0);
         List<HostingUnit> searchUnits(string text, int unitType, int area, Enums.FunctionSender sender);
-        bool checkUnit(HostingUnit hostingUnit1);
         HostingUnit copy(HostingUnit hosting);
 
         List<GuestRequest> getReleventRequests(HostingUnit unit);//returns all requests that are applicable for unit
@@ -41,7 +40,6 @@ namespace BL
         #region orders
         void addOrder(Order ord);
         List<Order> getAllOrders();
-        void checkOrder(Host h1, HostingUnit hu1, GuestRequest g1, GuestRequest foundGuest);
         void order(HostingUnit unit, GuestRequest guest);//add order
         void sendGuestMail(HostingUnit unit, GuestRequest guest);//guest and hosting unit, sends mail to guest and creates order from details
         #endregion
@@ -64,6 +62,8 @@ namespace BL
         IEnumerable<IGrouping<Enums.Area, HostingUnit>> groupUnitsByArea();
         IEnumerable<IGrouping<Enums.Area, GuestRequest>> groupRequestsByArea();
         IEnumerable<IGrouping<Enums.MealType, GuestRequest>> groupRequestsByMeal();
+        IEnumerable<IGrouping<int, BankAccount>> groupBranchesByBank();
+
         #endregion
     }
 }

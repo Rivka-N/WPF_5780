@@ -35,20 +35,17 @@ namespace PL
 
         private void pb_owner_Click(object sender, RoutedEventArgs e)
         {
-            new OwnerTabs().Show();
-            this.Close();//closes current window. opens owner window.
+            new OwnerTabs().ShowDialog();
         }
 
         private void pb_guest_Click(object sender, RoutedEventArgs e)
         {
-            new addGuest().Show();//open guest window
-           this.Close();
+            new addGuest().ShowDialog();//open guest window
         }
 
         private void pb_host_Click(object sender, RoutedEventArgs e)
         {
-            new AllUnitsList().Show();
-            Close();//closes current and opens other window
+            new AllUnitsList().ShowDialog();
         }
 
     }

@@ -57,9 +57,8 @@ namespace PL
         {
             if (dg_hostingUnitDataGrid.SelectedItem != null && dg_hostingUnitDataGrid.SelectedItem is HostingUnit)
             {
-                new hostingUnitTabs((HostingUnit)dg_hostingUnitDataGrid.SelectedItem, 1).Show();
-                closeOpenMain = false;//don't open main after closing
-                this.Close();
+                new hostingUnitTabs((HostingUnit)dg_hostingUnitDataGrid.SelectedItem, 1).ShowDialog();
+                
             }
             else MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
 
@@ -74,8 +73,6 @@ namespace PL
 
         private void Pb_back_Click(object sender, RoutedEventArgs e)
         {
-            if (closeOpenMain!=false)//asks if should open main
-                new MainWindow().Show();//opens main
             Close();
         }
         #endregion
@@ -84,9 +81,7 @@ namespace PL
         {
             if (dg_hostingUnitDataGrid.SelectedItem != null && dg_hostingUnitDataGrid.SelectedItem is HostingUnit)
             {
-                new hostingUnitTabs((HostingUnit)dg_hostingUnitDataGrid.SelectedItem).Show();
-                closeOpenMain = false;//don't open main after closing
-                this.Close();
+                new hostingUnitTabs((HostingUnit)dg_hostingUnitDataGrid.SelectedItem).ShowDialog();
             }
         }//sends to unit information with data of current row to bind to
 
@@ -160,10 +155,7 @@ namespace PL
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //if (closeOpenMain == true)
-            //    new MainWindow().Show();//opens main window again
-            //else
-            //    closeOpenMain = true;//otherwise resets flag
+            
         }
 
        
