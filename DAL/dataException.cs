@@ -6,6 +6,10 @@ namespace DAL
     [Serializable]
     class loadExceptionDAL : Exception//loading to and from xml files error
     {
+        public loadExceptionDAL()
+        {
+        }
+
         public loadExceptionDAL(string message) : base(message)
         {
         }

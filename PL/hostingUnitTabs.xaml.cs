@@ -345,7 +345,7 @@ namespace PL
             }
             else//checked
                 if (!originalUnit.Host.CollectionClearance)//check if was allowed before
-                    MessageBox.Show("go over to your add Orders tab to start talking to customers", "Unit Allowed", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("go over to your add Orders tab to email customers", "Unit Allowed", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         #endregion
         #region update unit
@@ -770,9 +770,11 @@ namespace PL
         #region bank
         private void initBank(bool start = false)//binding between bank and bank source
         {
-            int curBank = -1;//current index of bank
+            try
+            {
+                int curBank = -1;//current index of bank
 
-            foreach (var bank in bankSource)
+                foreach (var bank in bankSource)
                 {
                     cb_bankName.Items.Add(bank.First().BankName);//adds key of each group to list
                     cb_bankNumberTextBox.Items.Add(bank.First().BankNumber.ToString());
@@ -787,35 +789,42 @@ namespace PL
 
                 cb_bankName.SelectedIndex = curBank;
                 cb_bankNumberTextBox.SelectedIndex = curBank;
-            
-            
-            int curBranch =-1;
-            int i = -1;
-            foreach (var bank in bankSource.ElementAt(curBank))
-            {
-                i++;
-                cb_branchAddr.Items.Add(bank.BranchCity + " : " + bank.BranchAddress);//adds key of each group to list
-                cb_branchNumber.Items.Add(bank.BranchNumber.ToString());
-                if (start==true && bank.BranchNumber == unit.Host.Bank.BranchNumber)//if this is the first round
-                    curBranch= i;
-            }
-            if (curBranch==-1)//none was selected.resets
-            {
-                cb_branchAddr.Items.Clear();
-                cb_branchAddr.Items.Add(unit.Host.Bank.BranchAddress);
-                cb_branchAddr.SelectedIndex = 0;//selects first
-                cb_branchNumber.Items.Clear();
-                cb_branchNumber.Items.Add(unit.Host.Bank.BranchNumber);
-                cb_branchNumber.SelectedIndex = 0;
-            }
-            if (curBranch!=-1)
-            {
-                cb_branchNumber.SelectedIndex = curBranch;
-                cb_branchAddr.SelectedIndex = curBranch;//selects index
-                cb_branchAddr.IsEnabled = true;
-                cb_branchNumber.IsEnabled = true;
-            }
 
+
+                int curBranch = -1;
+                int i = -1;
+                foreach (var bank in bankSource.ElementAt(curBank))
+                {
+                    i++;
+                    cb_branchAddr.Items.Add(bank.BranchCity + " : " + bank.BranchAddress);//adds key of each group to list
+                    cb_branchNumber.Items.Add(bank.BranchNumber.ToString());
+                    if (start == true && bank.BranchNumber == unit.Host.Bank.BranchNumber)//if this is the first round
+                        curBranch = i;
+                }
+                if (curBranch == -1)//none was selected.resets
+                {
+                    cb_branchAddr.Items.Clear();
+                    cb_branchAddr.Items.Add(unit.Host.Bank.BranchAddress);
+                    cb_branchAddr.SelectedIndex = 0;//selects first
+                    cb_branchNumber.Items.Clear();
+                    cb_branchNumber.Items.Add(unit.Host.Bank.BranchNumber);
+                    cb_branchNumber.SelectedIndex = 0;
+                }
+                if (curBranch != -1)
+                {
+                    cb_branchNumber.SelectedIndex = curBranch;
+                    cb_branchAddr.SelectedIndex = curBranch;//selects index
+                    cb_branchAddr.IsEnabled = true;
+                    cb_branchNumber.IsEnabled = true;
+                }
+            }
+            catch
+            {
+                cb_branchNumber.SelectedIndex = -1;
+                cb_branchAddr.SelectedIndex = -1;//selects index
+                MessageBox.Show("Error in loading bank data", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
         }
         #region bank number checks
         private void BankAcountNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)

@@ -142,9 +142,31 @@ namespace DAL
     }
         public void changeOrderStatus(Func<Order, bool> p1, Enums.OrderStatus status)
         {
-            var deleting = orders.Where(ord => p1(ord))
-                .Select(ord => {ord.Status = status; return ord; }).ToList();
-            
+            try
+            {
+                var deleting = orders.Where(ord => p1(ord))
+                    .Select(ord => { ord.Status = status; return ord; }).ToList();
+            }
+            catch
+            {
+                throw new NullReferenceException();//no data
+            }
+            FileStream file = new FileStream(orderPath, FileMode.OpenOrCreate);//opens file
+
+            try
+            {
+                XmlSerializer xmlSer = new XmlSerializer(orders.GetType());
+                xmlSer.Serialize(file, orders);//saves updated orders 
+
+            }
+            catch
+            {
+                throw new loadExceptionDAL();
+            }
+            finally
+            {
+                file.Close();//closes file
+            }
         } 
         #region get list of orders
         public List<Order> getAllOrders()//returns all orders

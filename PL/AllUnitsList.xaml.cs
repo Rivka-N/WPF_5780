@@ -57,9 +57,8 @@ namespace PL
         {
             if (dg_hostingUnitDataGrid.SelectedItem != null && dg_hostingUnitDataGrid.SelectedItem is HostingUnit)
             {
-                new hostingUnitTabs((HostingUnit)dg_hostingUnitDataGrid.SelectedItem, 1).Show();
-                closeOpenMain = false;//don't open main after closing
-                this.Close();
+                new hostingUnitTabs((HostingUnit)dg_hostingUnitDataGrid.SelectedItem, 1).ShowDialog();
+                
             }
             else MessageBox.Show("error! Please try again", "error", MessageBoxButton.OK, MessageBoxImage.Error);
 
@@ -84,9 +83,7 @@ namespace PL
         {
             if (dg_hostingUnitDataGrid.SelectedItem != null && dg_hostingUnitDataGrid.SelectedItem is HostingUnit)
             {
-                new hostingUnitTabs((HostingUnit)dg_hostingUnitDataGrid.SelectedItem).Show();
-                closeOpenMain = false;//don't open main after closing
-                this.Close();
+                new hostingUnitTabs((HostingUnit)dg_hostingUnitDataGrid.SelectedItem).ShowDialog();
             }
         }//sends to unit information with data of current row to bind to
 
