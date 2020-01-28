@@ -73,8 +73,6 @@ namespace PL
 
         private void Pb_back_Click(object sender, RoutedEventArgs e)
         {
-            if (closeOpenMain!=false)//asks if should open main
-                new MainWindow().Show();//opens main
             Close();
         }
         #endregion
@@ -157,10 +155,7 @@ namespace PL
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //if (closeOpenMain == true)
-            //    new MainWindow().Show();//opens main window again
-            //else
-            //    closeOpenMain = true;//otherwise resets flag
+            
         }
 
        

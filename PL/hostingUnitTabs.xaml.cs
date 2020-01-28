@@ -86,8 +86,7 @@ namespace PL
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (!closeProgram)//if doesn't want to close program
-                new AllUnitsList().Show();//opens previous window again
+            
 
         }
         #endregion
@@ -206,11 +205,16 @@ namespace PL
         }
         private void Pb_UnitBack_Click(object sender, RoutedEventArgs e)
         {
-            if (pb_update.IsEnabled ||cb_branchNumber.SelectedIndex==-1)//if there were changes (changes or unselected bank branch)
+            if (pb_update.IsEnabled || cb_branchNumber.SelectedIndex == -1)//if there were changes (changes or unselected bank branch)
+            {
                 if (MessageBox.Show("Are you sure you want to exit without saving changes?", "unsaved changes", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
                     //wants to exit
+                    //otherwise does nothing
+
                     Close();//closes window
-                            //otherwise does nothing
+            }
+            else
+                Close();
         }
         #endregion
         #region tabs

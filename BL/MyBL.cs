@@ -257,6 +257,7 @@ namespace BL
                 //changes current order status
                 myDAL.changeStatus(guest, Enums.OrderStatus.Closed);//changes guest status
                 int numDays = numOfDays(guest.EntryDate, guest.ReleaseDate);
+                myDAL.changeUnit(unit.Clone());//updates unit matrix
                 myDAL.addCharge(unit, numDays);//adds charge for number of days guest is staying
             }
             catch (Exception ex)

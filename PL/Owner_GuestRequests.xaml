@@ -49,7 +49,7 @@
             </TextBlock.Effect>
         </TextBlock>
         <DataGrid x:Name="ds_guestRequestDataGrid" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible"
-                  AlternatingRowBackground="AliceBlue" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" Background="Transparent" AutoGenerateColumns="False" IsReadOnly="True" Height="auto" Padding="10" Grid.Row="1">
+                  AlternatingRowBackground="AliceBlue" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding }" EnableRowVirtualization="True" Background="Transparent" AutoGenerateColumns="False" IsReadOnly="True" Height="auto" Padding="10" Grid.Row="1">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="nameColumn" MinWidth="100" Width="*" Header="Name" Binding="{Binding Name}"  IsReadOnly="True" />
                 <DataGridTextColumn x:Name="lastNameColumn" MinWidth="100" Width="*" Header="Last Name" Binding="{Binding LastName}" IsReadOnly="True"/>

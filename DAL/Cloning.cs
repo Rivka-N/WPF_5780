@@ -15,6 +15,7 @@ namespace DAL
                 return null;
             GuestRequest target = new GuestRequest(original.GuestRequestKey, original.Registration);
             target.Name = original.Name;
+            target.GuestRequestKey = original.GuestRequestKey;
             target.LastName = original.LastName;
             target.Mail= original.Mail;
             target.EntryDate = original.EntryDate;

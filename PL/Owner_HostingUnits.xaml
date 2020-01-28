@@ -35,7 +35,7 @@
                     <DropShadowEffect/>
                 </TextBlock.Effect>
             </TextBlock>
-            <DataGrid x:Name="dg_hostingUnitDataGrid" Grid.Row="2" AlternatingRowBackground="Pink" Background="Transparent"
+            <DataGrid x:Name="dg_hostingUnitDataGrid" Grid.Row="2" Background="Transparent"
                   RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" EnableRowVirtualization="True" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
                     <DataGridTextColumn x:Name="hostKeyColumn" Binding="{Binding Host.HostKey}" Header="Host Id" Width="*" MinWidth="100" IsReadOnly="True"/>

@@ -36,4 +36,58 @@
     <Garden>Yes</Garden>
     <Meal>Full</Meal>
   </guest>
+  <guest>
+    <GuestRequestKey>10000003</GuestRequestKey>
+    <Name>ab</Name>
+    <LastName>cd</LastName>
+    <MailSerializable>ad@cd.ef</MailSerializable>
+    <Status>Started</Status>
+    <Registration>28/01/2020 0:00:00</Registration>
+    <EntryDate>30/01/2020 0:00:00</EntryDate>
+    <ReleaseDate>31/01/2020 0:00:00</ReleaseDate>
+    <AreaVacation>Center</AreaVacation>
+    <TypeOfUnit>Hotel</TypeOfUnit>
+    <NumAdult>0</NumAdult>
+    <NumChildren>2</NumChildren>
+    <Pool>Maybe</Pool>
+    <Jacuzzi>Maybe</Jacuzzi>
+    <Garden>Maybe</Garden>
+    <Meal>None</Meal>
+  </guest>
+  <guest>
+    <GuestRequestKey>10000004</GuestRequestKey>
+    <Name>a</Name>
+    <LastName>d</LastName>
+    <MailSerializable>ad@ad.co</MailSerializable>
+    <Status>Started</Status>
+    <Registration>28/01/2020 0:00:00</Registration>
+    <EntryDate>31/01/2020 0:00:00</EntryDate>
+    <ReleaseDate>01/02/2020 0:00:00</ReleaseDate>
+    <AreaVacation>Center</AreaVacation>
+    <TypeOfUnit>Hotel</TypeOfUnit>
+    <NumAdult>1</NumAdult>
+    <NumChildren>1</NumChildren>
+    <Pool>Maybe</Pool>
+    <Jacuzzi>Maybe</Jacuzzi>
+    <Garden>Yes</Garden>
+    <Meal>None</Meal>
+  </guest>
+  <guest>
+    <GuestRequestKey>10000005</GuestRequestKey>
+    <Name>a</Name>
+    <LastName>d</LastName>
+    <MailSerializable>2@ad.co</MailSerializable>
+    <Status>Closed</Status>
+    <Registration>28/01/2020 0:00:00</Registration>
+    <EntryDate>28/01/2020 0:00:00</EntryDate>
+    <ReleaseDate>01/02/2020 0:00:00</ReleaseDate>
+    <AreaVacation>Center</AreaVacation>
+    <TypeOfUnit>Zimmer</TypeOfUnit>
+    <NumAdult>2</NumAdult>
+    <NumChildren>1</NumChildren>
+    <Pool>Maybe</Pool>
+    <Jacuzzi>Maybe</Jacuzzi>
+    <Garden>Maybe</Garden>
+    <Meal>None</Meal>
+  </guest>
 </Requests>

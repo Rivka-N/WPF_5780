@@ -10,4 +10,14 @@
     <HostName>eli levi</HostName>
     <GuestName>a a</GuestName>
   </Order>
+  <Order>
+    <HostingUnitKey>10000001</HostingUnitKey>
+    <GuestRequestKey>10000005</GuestRequestKey>
+    <OrderKey>10000005</OrderKey>
+    <CreateDate>2020-01-28T00:00:00</CreateDate>
+    <OrderDate>2020-01-28T00:00:00+02:00</OrderDate>
+    <Status>Closed</Status>
+    <HostName>eli levi</HostName>
+    <GuestName>a d</GuestName>
+  </Order>
 </ArrayOfOrder>

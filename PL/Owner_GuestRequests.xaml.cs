@@ -87,11 +87,9 @@ namespace PL
                 }
             }
             catch
-            {   
+            {
+                MessageBox.Show("No requests found");
                 
-                MessageBox.Show("invalid query");
-                tb_SearchTextBox.BorderBrush = Brushes.Red;
-
             }
         }
         private void Cb_status_SelectionChanged(object sender, SelectionChangedEventArgs e)
