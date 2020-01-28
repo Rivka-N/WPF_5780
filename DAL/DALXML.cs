@@ -32,7 +32,6 @@ namespace DAL
         //unit list
         List<HostingUnit> units = new List<HostingUnit>();
         List<Order> orders = new List<Order>();//orders
-        List<GuestRequest> guests = new List<GuestRequest>();
       
         private XElement hostingUnits;
         private XElement guestRequest;
@@ -241,93 +240,113 @@ namespace DAL
         public void addGuest(GuestRequest guest)
         {
 
-            FileStream file = new FileStream(guestRequestPath, FileMode.OpenOrCreate);//opens file
             try
             {
                 Int32 x = getConfi();
-                guest.GuestRequestKey = x;
-                guests.Add(guest);//adds order to list
-                XmlSerializer xmlSer = new XmlSerializer(guests.GetType());
-                xmlSer.Serialize(file, guests);
+                XElement guestKey = new XElement("GuestRequestKey", x.ToString());
 
+                XElement guestName = new XElement("Name", guest.Name);
+                XElement guestLastName = new XElement("LastName", guest.LastName);
+                XElement mail = new XElement("MailSerializable", guest.Mail.Address.ToString());
+   
+                XElement jacuzzi = new XElement("Jacuzzi", guest.Jacuzzi.ToString());
+                XElement pool = new XElement("Pool", guest.Pool.ToString());
+                XElement garden = new XElement("Garden", guest.Garden.ToString());
+                XElement mael = new XElement("Meal", guest.Meal.ToString());
+                XElement numAdults = new XElement("NumAdult", guest.NumAdult.ToString());
+                XElement numChildren = new XElement("NumChildren", guest.NumChildren.ToString());
+                XElement status = new XElement("Status", guest.Status.ToString());
+                XElement area = new XElement("AreaVacation", guest.AreaVacation.ToString());
+                XElement type = new XElement("TypeOfUnit", guest.TypeOfUnit.ToString());
+                XElement entryDate = new XElement("EntryDate", guest.EntryDate.ToString());
+                XElement releaseDate = new XElement("ReleaseDate", guest.ReleaseDate.ToString());
+                XElement registrationDate = new XElement("Registration", guest.Registration.ToString());
+
+                guestRequest.Add(new XElement("guest", guestKey, guestName, guestLastName, mail, status, registrationDate, entryDate, releaseDate, area, type, numAdults, numChildren, pool, jacuzzi, garden,  mael));
+                guestRequest.Save(guestRequestPath);
             }
             catch
             {
-                throw new loadExceptionDAL("unable to add guest to xml file");
+                throw new loadExceptionDAL("unable to save new guest to xml file");
             }
-            finally
-            {
-                file.Close();//closes file
-            }
-
-            //try
-            //{
-            //    Int32 x = getConfi();
-            //    XElement guestName = new XElement("name", guest.Name);
-            //    XElement guestLastName = new XElement("lastName", guest.LastName);
-            //    XElement guestKey = new XElement("guestkey", x);
-            //    XElement jacuzzi = new XElement("jacuzzi", guest.Jacuzzi);
-            //    XElement pool = new XElement("pool", guest.Pool);
-            //    XElement garden = new XElement("garden", guest.Garden);
-            //    XElement mail = new XElement("mail", guest.Mail);
-            //    XElement mael = new XElement("mael", guest.Meal);
-            //    XElement numAdults = new XElement("numAdults", guest.NumAdult);
-            //    XElement numChildren = new XElement("children", guest.NumChildren);
-            //    XElement status = new XElement("status", guest.Status);
-            //    XElement area = new XElement("areavacation", guest.AreaVacation);
-            //    XElement type = new XElement("typeofunit", guest.TypeOfUnit);
-            //    XElement entryDate = new XElement("entrydate", guest.EntryDate);
-            //    XElement releaseDate = new XElement("releasedate", guest.ReleaseDate);
-            //    XElement registrationDate = new XElement("registrationDate", guest.Registration);
-
-            //    guestRequest.Add(new XElement("guest", guestLastName, guestName, guestKey, jacuzzi, pool, garden, mail, mael, numAdults, numChildren, status, area, type, entryDate, releaseDate, registrationDate));
-            //    guestRequest.Save(guestRequestPath);
-            //}
-            //catch
-            //{
-            //    throw new loadExceptionDAL("unable to save new guest to xml file");
-            //}
 
         }
         #endregion
         #region get list
 
+        GuestRequest ConvertGuest(XElement element)
+        {
+            GuestRequest g = new GuestRequest();
+
+            foreach (PropertyInfo item in typeof(GuestRequest).GetProperties())
+            {
+                TypeConverter typeConverter = TypeDescriptor.GetConverter(item.PropertyType);
+                if (item.Name != "Mail")
+                {
+                    object convertValue = typeConverter.ConvertFromString(element.Element(item.Name).Value);
+                    item.SetValue(g, convertValue);
+
+                }
+            }
+
+            return g;
+        }
+
         public List<GuestRequest> getRequests()
         {
-
-            List<GuestRequest> guest;
-            try
+            loadGuests();
+            List<GuestRequest> guest = new List<GuestRequest>();
+            foreach (XElement o in guestRequest.Elements())
             {
-                loadGuests();
-                guest = (from p in guestRequest.Elements()//get all guestRequest
-                         select new GuestRequest()
-                         {
-                             Name = p.Element("name").Value,
-                             LastName = p.Element("lastName").Value,
-                             GuestRequestKey = Convert.ToInt32(p.Element("guestkey").Value),
-                             TypeOfUnit = (Enums.HostingUnitType)(Enum.Parse(typeof(Enums.HostingUnitType), p.Element("typeofunit").Value)),
-                             AreaVacation = (Enums.Area)(Enum.Parse(typeof(Enums.Area), p.Element("areavacation").Value)),
-                             NumAdult = Convert.ToInt32(p.Element("numAdults").Value),
-                             NumChildren = Convert.ToInt32(p.Element("children").Value),
-                             Pool = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), p.Element("pool").Value)),
-                             Garden = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), p.Element("garden").Value)),
-                             Jacuzzi = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), p.Element("jacuzzi").Value)),
-                             Meal = (Enums.MealType)(Enum.Parse(typeof(Enums.MealType), p.Element("mael").Value)),
-                             EntryDate = Convert.ToDateTime(p.Element("entrydate").Value),
-                             ReleaseDate = Convert.ToDateTime(p.Element("releasedate").Value),
-                             Registration = Convert.ToDateTime(p.Element("registrationdate").Value),
-                             Mail = new System.Net.Mail.MailAddress(p.Element("Email").Value, p.Element("name").Value + p.Element("guest last name").Value),
-                             Status = (Enums.OrderStatus)(Enum.Parse(typeof(Enums.OrderStatus), p.Element("status").Value))
+                GuestRequest t = ConvertGuest(o);
 
-                         }).ToList();
+                guest.Add(t);
             }
-            catch
-            {
-                throw new NullReferenceException();//there were no guests
-            }
-
             return guest;
+
         }
+
+
+
+
+
+        //public List<GuestRequest> getRequests()
+        //{
+
+        //    List<GuestRequest> guest;
+
+        //    try
+        //    {
+
+         //  guest = (from p in guestRequest.Elements()//get all guestRequest
+        //                 select new GuestRequest()
+        //                 {
+        //                     Name = p.Element("name").Value,
+        //                     LastName = p.Element("lastName").Value,
+        //                     GuestRequestKey = Convert.ToInt32(p.Element("guestkey").Value),
+        //                     TypeOfUnit = (Enums.HostingUnitType)(Enum.Parse(typeof(Enums.HostingUnitType), p.Element("typeofunit").Value)),
+        //                     AreaVacation = (Enums.Area)(Enum.Parse(typeof(Enums.Area), p.Element("areavacation").Value)),
+        //                     NumAdult = Convert.ToInt32(p.Element("numAdults").Value),
+        //                     NumChildren = Convert.ToInt32(p.Element("children").Value),
+        //                     Pool = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), p.Element("pool").Value)),
+        //                     Garden = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), p.Element("garden").Value)),
+        //                     Jacuzzi = (Enums.Preference)(Enum.Parse(typeof(Enums.Preference), p.Element("jacuzzi").Value)),
+        //                     Meal = (Enums.MealType)(Enum.Parse(typeof(Enums.MealType), p.Element("mael").Value)),
+        //                     EntryDate = Convert.ToDateTime(p.Element("entrydate").Value),
+        //                     ReleaseDate = Convert.ToDateTime(p.Element("releasedate").Value),
+        //                     Registration = Convert.ToDateTime(p.Element("registrationdate").Value),
+        //                     Mail = new System.Net.Mail.MailAddress(p.Element("Email").Value, p.Element("name").Value + p.Element("guest last name").Value),
+        //                     Status = (Enums.OrderStatus)(Enum.Parse(typeof(Enums.OrderStatus), p.Element("status").Value))
+
+        //                 }).ToList();
+        //    }
+        //    catch
+        //    {
+        //        throw new NullReferenceException();//there were no guests
+        //    }
+
+        //    return guest;
+        //}
         #endregion
         #region change status
         public void changeStatus(GuestRequest guest, Enums.OrderStatus status)//change status

@@ -25,15 +25,23 @@ namespace PL
         List<GuestRequest> myRequests;
         public Owner_GuestRequests()
         {
+
             myBL = factoryBL.getBL();
             InitializeComponent();
-            myRequests = new List<GuestRequest>();
-            search();//shows guest requests
-            var add = Enum.GetValues(typeof(Enums.OrderStatus));
-            cb_status.Items.Add("All");
-            foreach (Enums.OrderStatus item in add)
-                cb_status.Items.Add(item);//adds all statuses to combobox options
+            try {
+                myRequests = new List<GuestRequest>();
+                search();//shows guest requests
+                var add = Enum.GetValues(typeof(Enums.OrderStatus));
+                cb_status.Items.Add("All");
+                foreach (Enums.OrderStatus item in add)
+                    cb_status.Items.Add(item);//adds all statuses to combobox options
             }
+            catch
+            {
+                //empty list of requests
+            }
+            }
+
       
         private void Dp_Registration_SelectedDateChanged(object sender, SelectionChangedEventArgs e)//changes date back to original date selected
         {
@@ -80,6 +88,7 @@ namespace PL
             }
             catch
             {   
+                
                 MessageBox.Show("invalid query");
                 tb_SearchTextBox.BorderBrush = Brushes.Red;
 

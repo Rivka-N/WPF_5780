@@ -3,19 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace BE
 {
     public class GuestRequest
     {
         #region fields
+        #region email
+        [XmlIgnore]
+        public System.Net.Mail.MailAddress Mail { get => new System.Net.Mail.MailAddress(mail); set { mail = value.Address; } }
+        private string mail;
+
+        public string MailSerializable { get => mail; set { mail = value; } }
+        #endregion
         public int GuestRequestKey { get; set; }
         string name;
         public string Name { get => name; set { name = value; } }
         string lastName;
         public string LastName { get => lastName; set { lastName = value; } }
-        System.Net.Mail.MailAddress mail;
-        public System.Net.Mail.MailAddress Mail { get => mail; set { mail = value; } }
+
+      
         public Enums.OrderStatus Status { get; set; }
         DateTime registration;
         public DateTime Registration { get => registration; set { registration = value; } }
@@ -25,8 +33,6 @@ namespace BE
         public DateTime ReleaseDate { get => releaseDate; set { releaseDate = value; } }
         Enums.Area area;
         public Enums.Area AreaVacation { get => area; set { area = value; } }
-        string subArea;
-        public string  SubArea { get => subArea; set { subArea = value; } }
         Enums.HostingUnitType typeOfUnit;
         public Enums.HostingUnitType TypeOfUnit { get => typeOfUnit; set { typeOfUnit = value; } }
         int numAdult;
@@ -42,6 +48,8 @@ namespace BE
         public Enums.MealType Meal { get; set; }
 
         #endregion
+
+       
         #region ctors
 
         public GuestRequest(int guestKey=0, DateTime registerDate=default(DateTime))
@@ -53,7 +61,6 @@ namespace BE
             entryDate = new DateTime();
             releaseDate = new DateTime();
             area = Enums.Area.Center;
-            subArea = null;
             typeOfUnit = Enums.HostingUnitType.Hotel;
             numAdult = 0;
             numChildren = 0;

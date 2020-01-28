@@ -20,7 +20,6 @@ namespace DAL
             target.EntryDate = original.EntryDate;
             target.ReleaseDate = original.ReleaseDate;
             target.AreaVacation = original.AreaVacation;
-            target.SubArea = original.SubArea;
             target.TypeOfUnit = original.TypeOfUnit;
             target.NumAdult = original.NumAdult;
             target.NumChildren = original.NumChildren;
